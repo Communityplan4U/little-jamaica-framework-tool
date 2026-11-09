@@ -29,11 +29,12 @@
         1
       ],
       "outcomeFlags": {
-        "coord": 0,
-        "remain": 0,
+        "coord": 1,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 1
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 0
     },
@@ -65,10 +66,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
-        "power": 0,
-        "systemic": 0
+        "remain": 0,
+        "power": 1,
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 1
     },
@@ -99,11 +101,12 @@
         4
       ],
       "outcomeFlags": {
-        "coord": 0,
-        "remain": 0,
+        "coord": 1,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 2
     },
@@ -135,10 +138,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
-        "power": 0,
-        "systemic": 0
+        "remain": 0,
+        "power": 1,
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 3
     },
@@ -170,10 +174,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 1,
+        "wellbeing": 0
       },
       "sourceIndex": 4
     },
@@ -205,10 +210,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
-        "power": 0,
-        "systemic": 0
+        "remain": 0,
+        "power": 1,
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 5
     },
@@ -240,10 +246,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 1,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 6
     },
@@ -275,10 +282,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 1,
+        "wellbeing": 0
       },
       "sourceIndex": 7
     },
@@ -309,11 +317,12 @@
         4
       ],
       "outcomeFlags": {
-        "coord": 1,
-        "remain": 0,
+        "coord": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 1
       },
       "sourceIndex": 8
     },
@@ -344,11 +353,12 @@
         4
       ],
       "outcomeFlags": {
-        "coord": 1,
-        "remain": 0,
+        "coord": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 1
       },
       "sourceIndex": 9
     },
@@ -379,11 +389,12 @@
         4
       ],
       "outcomeFlags": {
-        "coord": 0,
-        "remain": 0,
+        "coord": 1,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 10
     },
@@ -415,10 +426,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 1,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 11
     },
@@ -450,10 +462,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 1
       },
       "sourceIndex": 12
     },
@@ -485,10 +498,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 1,
+        "wellbeing": 0
       },
       "sourceIndex": 13
     },
@@ -520,10 +534,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 1,
+        "wellbeing": 0
       },
       "sourceIndex": 14
     },
@@ -555,10 +570,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 1,
+        "wellbeing": 0
       },
       "sourceIndex": 15
     },
@@ -590,10 +606,11 @@
       ],
       "outcomeFlags": {
         "coord": 1,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 16
     },
@@ -625,10 +642,11 @@
       ],
       "outcomeFlags": {
         "coord": 1,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 17
     },
@@ -660,10 +678,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
+        "wealth": 0,
         "remain": 0,
-        "wealth": 1,
         "power": 1,
-        "systemic": 1
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 18
     },
@@ -694,11 +713,12 @@
         3
       ],
       "outcomeFlags": {
-        "coord": 0,
-        "remain": 0,
+        "coord": 1,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 19
     },
@@ -729,11 +749,12 @@
         3
       ],
       "outcomeFlags": {
-        "coord": 1,
+        "coord": 0,
+        "wealth": 0,
         "remain": 1,
-        "wealth": 1,
         "power": 0,
-        "systemic": 1
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 20
     },
@@ -764,11 +785,12 @@
         2
       ],
       "outcomeFlags": {
-        "coord": 1,
-        "remain": 0,
+        "coord": 0,
         "wealth": 1,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 21
     },
@@ -800,10 +822,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 1,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 22
     },
@@ -834,11 +857,12 @@
         1
       ],
       "outcomeFlags": {
-        "coord": 1,
-        "remain": 1,
+        "coord": 0,
         "wealth": 0,
+        "remain": 1,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 23
     },
@@ -869,11 +893,12 @@
         4
       ],
       "outcomeFlags": {
-        "coord": 1,
-        "remain": 0,
+        "coord": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 1
       },
       "sourceIndex": 24
     },
@@ -905,10 +930,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 1
+        "belong": 0,
+        "wellbeing": 1
       },
       "sourceIndex": 25
     },
@@ -940,10 +966,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 1
       },
       "sourceIndex": 26
     },
@@ -975,10 +1002,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 1
+        "belong": 0,
+        "wellbeing": 1
       },
       "sourceIndex": 27
     },
@@ -1009,11 +1037,12 @@
         1
       ],
       "outcomeFlags": {
-        "coord": 1,
-        "remain": 1,
+        "coord": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 1,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 28
     },
@@ -1044,11 +1073,12 @@
         2
       ],
       "outcomeFlags": {
-        "coord": 1,
-        "remain": 0,
+        "coord": 0,
         "wealth": 0,
+        "remain": 0,
         "power": 1,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 29
     },
@@ -1080,10 +1110,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 1,
         "wealth": 0,
+        "remain": 1,
         "power": 0,
-        "systemic": 0
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 30
     },
@@ -1114,11 +1145,12 @@
         1
       ],
       "outcomeFlags": {
-        "coord": 0,
-        "remain": 0,
+        "coord": 1,
         "wealth": 0,
+        "remain": 0,
         "power": 0,
-        "systemic": 1
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 31
     },
@@ -1150,10 +1182,11 @@
       ],
       "outcomeFlags": {
         "coord": 0,
-        "remain": 0,
         "wealth": 1,
+        "remain": 0,
         "power": 0,
-        "systemic": 1
+        "belong": 0,
+        "wellbeing": 0
       },
       "sourceIndex": 32
     }

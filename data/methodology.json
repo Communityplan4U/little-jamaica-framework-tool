@@ -1,5 +1,5 @@
 {
-  "id": "ljov-20261109-33top10-bottom4-60-37-3-v2",
+  "id": "ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3",
   "topicCount": 33,
   "themeRankPoints": [
     10,
@@ -12,15 +12,11 @@
   ],
   "outcomeRankMultipliers": [
     2,
-    1.75,
-    1.5,
-    1.25,
+    1.8,
+    1.6,
+    1.4,
+    1.2,
     1
-  ],
-  "overlapDivisors": [
-    1,
-    8,
-    16
   ],
   "groupCounts": [
     10,
@@ -46,30 +42,37 @@
     {
       "id": "coord",
       "title": "Government Investment and Accountable Delivery",
-      "desc": "Ensure governments commit the funding, services, protections and coordinated action needed to meet community needs, with measurable targets, clear responsibilities and accountability for delivery."
-    },
-    {
-      "id": "remain",
-      "title": "Right to Remain and Return",
-      "desc": "Protect residents and local businesses from displacement, ensure affordable and meaningful opportunities to remain or return, and address harms caused by past displacement."
+      "desc": "Governments uphold their human rights obligations, assess and address discriminatory impacts, invest in community priorities, and deliver measurable improvements through coordinated action and transparent accountability."
     },
     {
       "id": "wealth",
       "title": "Community Wealth and Inclusive Local Economies",
-      "desc": "Expand community ownership of land and spaces, protect local businesses, create decent jobs, and ensure residents benefit equitably from neighbourhood investment and economic growth."
+      "desc": "Residents and community organizations build and retain economic assets, access decent jobs and affordable commercial opportunities, and share equitably in the benefits of investment."
+    },
+    {
+      "id": "remain",
+      "title": "Right to Remain and Return",
+      "desc": "Existing residents and businesses are protected from displacement and have meaningful, affordable opportunities to remain or return as their neighbourhood changes."
     },
     {
       "id": "power",
       "title": "Community Decision-Making and Reparative Justice",
-      "desc": "Give residents and community organizations meaningful, resourced authority over planning and implementation decisions, while providing remedies for harms caused by past government actions."
+      "desc": "Residents and community organizations exercise meaningful authority over planning and implementation; Indigenous rights and governance are respected, and public institutions acknowledge and remedy harms caused by past decisions."
     },
     {
-      "id": "systemic",
-      "title": "Human Rights, Anti-Racism and Accessibility",
-      "desc": "Confront systemic racism, ageism and ableism through human rights-based planning, removing barriers to accessible housing, community services, economic opportunities and culturally appropriate participation."
+      "id": "belong",
+      "title": "Belonging and Cultural Continuity",
+      "desc": "Residents experience belonging, see their histories and contributions recognized, and sustain the cultural practices, institutions and community relationships that connect them to place."
+    },
+    {
+      "id": "wellbeing",
+      "title": "Adequate Standard of Living and Wellbeing",
+      "desc": "Residents have access to affordable and appropriate housing, essential services, safe mobility and healthy, climate-resilient living conditions, including support for multigenerational households, older adults and people experiencing homelessness."
     }
   ],
   "sourceFile": "LJOVPF_Comparator_Assessment.xlsx",
   "aggregation": "each completed response contributes once; provisional averages available from first completion",
-  "explicitChoice": "Ten highest topics are suggested from ranked themes and outcomes; participants can pin other topics to the highest ten, automatically displacing the lowest-ranked unpinned suggestion, and can move any highest topic to the middle, replacing it with the next eligible suggestion; participants select four lowest from the middle, leaving nineteen in the middle."
+  "explicitChoice": "Ten highest topics are suggested from ranked themes and outcomes; participants can pin other topics to the highest ten, automatically displacing the lowest-ranked unpinned suggestion, and can move any highest topic to the middle, replacing it with the next eligible suggestion; participants select four lowest from the middle, leaving nineteen in the middle.",
+  "outcomeAssignmentPolicy": "Each topic belongs to exactly one primary outcome. Outcomes each cover at least two planning themes; suggestions combine the participant's theme rank with the rank of the topic's single primary outcome. Human rights and Indigenous rights are assessed across outcomes as requirements, not as a separately ranked outcome.",
+  "humanRightsLens": "All six outcomes must respect applicable housing and human rights obligations, confront anti-Black and anti-Indigenous racism and other forms of systemic discrimination, address age- and disability-related barriers, and respect distinct Indigenous rights, treaties and governance. Topic-level human rights obligations are explicitly assessed through A-8 and R-3; this cross-cutting lens does not create additional score points or alter the documentary ratings."
 }

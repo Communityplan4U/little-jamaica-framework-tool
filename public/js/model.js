@@ -1,14 +1,14 @@
 'use strict';
-// Themes and outcomes propose ten highest topics; participants can demote suggestions and select four lowest from the middle.
+// Seven theme ranks and six mutually exclusive outcome ranks propose ten highest topics; participants may revise them.
 const outcomeCodes=Object.fromEntries(OUTCOMES.map(k=>[k,WB.topics.filter(t=>t.outcomeFlags[k]===1).map(t=>t.code)]));
 function outcomeFactors(){return Object.fromEntries(state.outcomeRanking.map((id,i)=>[id,METHOD.outcomeRankMultipliers[i]]));}
 function suggestions(){
  const th=Object.fromEntries(state.ranking.map((name,i)=>[name,METHOD.themeRankPoints[i]]));
  const out=outcomeFactors();
  const vals=WB.topics.map(t=>{
-  const components=OUTCOMES.filter(id=>t.outcomeFlags[id]===1).map(id=>out[id]).sort((a,b)=>b-a).slice(0,3);
-  let factor=components.length?components.reduce((total,x,i)=>total+x/METHOD.overlapDivisors[i],0):1;
-  return {code:t.code,score:th[t.theme]*factor,title:t.title};
+  const assigned=OUTCOMES.filter(id=>t.outcomeFlags[id]===1);
+  if(assigned.length!==1)throw Error('Each assessment topic must have exactly one outcome.');
+  return {code:t.code,score:th[t.theme]*out[assigned[0]],title:t.title};
  });
  // The tie-break is alphabetical by topic code, never spreadsheet position.
  return vals.sort((a,b)=>b.score-a.score||a.code.localeCompare(b.code)).map(x=>x.code);
@@ -47,7 +47,7 @@ function calculate(){
 }
 function snapshot(){
  const c=calculate(),pages=record?.continuedPages||[];
- return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v2',sourceVersion:METHOD.id,
+ return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v3',sourceVersion:METHOD.id,
   responseId:record?.responseId,themeRanking:state.ranking.slice(),outcomeRanking:state.outcomeRanking.slice(),
   topSelected:state.top.slice(),bottomSelected:state.bottom.slice(),excludedTop:state.excludedTop.slice(),
   promotedTop:state.promotedTop.slice(),
