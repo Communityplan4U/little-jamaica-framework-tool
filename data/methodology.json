@@ -45,28 +45,28 @@
   "outcomes": [
     {
       "id": "coord",
-      "title": "Requires coordination and support across the City and higher levels of government",
-      "desc": "Give priority to actions requiring coordination and support from City divisions and other levels of government."
+      "title": "Government Investment and Accountable Delivery",
+      "desc": "Ensure governments commit the funding, services, protections and coordinated action needed to meet community needs, with measurable targets, clear responsibilities and accountability for delivery."
     },
     {
       "id": "remain",
       "title": "Right to Remain and Return",
-      "desc": "Protect existing residential and commercial tenants from displacement and support the right to return."
+      "desc": "Protect residents and local businesses from displacement, ensure affordable and meaningful opportunities to remain or return, and address harms caused by past displacement."
     },
     {
       "id": "wealth",
-      "title": "Community Wealth and Ownership",
-      "desc": "Advance community ownership of assets, decent jobs, local enterprise, and equitable economic returns."
+      "title": "Community Wealth and Inclusive Local Economies",
+      "desc": "Expand community ownership of land and spaces, protect local businesses, create decent jobs, and ensure residents benefit equitably from neighbourhood investment and economic growth."
     },
     {
       "id": "power",
-      "title": "Community Power and Reparative Justice",
-      "desc": "Strengthen resident and community organization authority, resourced partnerships and remedies for historical harms."
+      "title": "Community Decision-Making and Reparative Justice",
+      "desc": "Give residents and community organizations meaningful, resourced authority over planning and implementation decisions, while providing remedies for harms caused by past government actions."
     },
     {
       "id": "systemic",
-      "title": "Targeted address of systemic racism, ageism and ableism",
-      "desc": "Address the distinct structural barriers created by racism, ageism and ableism in planning, service access and delivery."
+      "title": "Human Rights, Anti-Racism and Accessibility",
+      "desc": "Confront systemic racism, ageism and ableism through human rights-based planning, removing barriers to accessible housing, community services, economic opportunities and culturally appropriate participation."
     }
   ],
   "sourceFile": "LJOVPF_Comparator_Assessment.xlsx",
