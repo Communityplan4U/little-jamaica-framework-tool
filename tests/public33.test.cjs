@@ -210,3 +210,21 @@ test('Five revised community outcomes retain stable IDs, source version and subs
   assert.ok(mapped.length>=3, 'Outcome mapping lost for '+o.id);
  }
 });
+
+test('Mobile layout constrains outer grid and isolates horizontal scrolling',()=>{
+ const css=fs.readFileSync('public/css/survey.css','utf8');
+ const html=fs.readFileSync('public/index.html','utf8');
+ assert.match(html,/name="viewport" content="width=device-width, initial-scale=1"/);
+ const responsive=css.split('/* Mobile viewport containment:')[1];
+ assert.ok(responsive,'Mobile containment stylesheet is present');
+ assert.match(responsive,/@media \(max-width:850px\)/);
+ assert.match(responsive,/\.wide\.layout \{grid-template-columns:minmax\(0,1fr\)\}/);
+ assert.match(responsive,/\.layout>\.sidebar,\.layout>\.mainpanel,\.panel-body,#stage/);
+ assert.match(responsive,/\.sidebar #steps \{[\s\S]*?overflow-x:auto;/);
+ assert.match(responsive,/\.sidebar #steps button \{[\s\S]*?flex:0 0 136px;/);
+ assert.match(responsive,/\.table-scroll,\.breakdown-scroll \{[\s\S]*?overflow-x:auto;/);
+ assert.match(responsive,/@media \(max-width:530px\)/);
+ assert.match(responsive,/\.rank-item \{[\s\S]*?grid-template-areas:/);
+ assert.match(responsive,/\.rank-buttons button \{[\s\S]*?min-height:44px;/);
+ assert.match(responsive,/\.score-row \{grid-template-columns:23px minmax\(0,1fr\) auto\}/);
+});
