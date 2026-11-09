@@ -151,6 +151,37 @@ function connectionForm(){
   '<p class="help">These permissions are independent and unchecked by default. Messages are not sent automatically by this survey.</p>'+
   '<details class="privacy"><summary>Privacy and community averages</summary><p>Community in Public stores survey answers separately from optional contact details. Completed participants may view aggregate priorities from the first completed response onward. When very few people have responded, averages can closely reflect an individual respondent’s choices. Keep your private return link confidential; it provides access to your response and allows revisions before the closing date.</p></details></section>';
 }
+function topicBrowserResults(){
+ const highest=new Set(syncTop()),q=(state.topicSearch||'').trim().toLowerCase();
+ const eligible=suggestions().filter(code=>!highest.has(code));
+ const visible=eligible.filter(code=>{
+  const t=byCode[code];
+  return !q||[t.code,t.title,t.theme,t.summary,t.assesses].some(x=>String(x||'').toLowerCase().includes(q));
+ });
+ const limitReached=state.promotedTop.length>=10;
+ return '<p class="help" role="status">'+visible.length+' of '+eligible.length+' topics outside your current top ten'+
+  (q?' match your search.':'.')+'</p>'+
+  (limitReached?'<p class="help">Remove an earlier addition if you want to add a different topic.</p>':'')+
+  (visible.map(code=>{
+   const t=byCode[code];
+   return '<article class="topic-browser-row"><div class="topic-browser-body"><span class="topic-id">'+esc(code)+'</span> <small>'+esc(t.theme)+'</small>'+
+    '<strong>'+esc(t.title)+'</strong><p>'+esc(t.summary||t.assesses)+'</p>'+
+    '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details></div>'+
+    '<button type="button" class="topic-add" data-add-top="'+esc(code)+'" '+(!canEdit()||limitReached?'disabled':'')+
+    '>Add to top 10 ↑</button></article>';
+  }).join('')||'<p class="help">No other topics match this search.</p>');
+}
+function topicBrowser(){
+ const chosen=state.promotedTop.filter(code=>state.top.includes(code));
+ return '<section class="subpanel topic-browser" id="browse-topics"><h3>Explore all other planning topics</h3>'+
+  '<p>Search or browse topics outside your current top ten. You can add any topic that matters more to you. Each addition moves the lowest-ranked unselected suggestion into the middle.</p>'+
+  '<p class="weight-note">Your highest group always contains ten topics.</p>'+
+  (chosen.length?'<div class="topic-browser-pins"><strong>Topics you added directly</strong>'+
+   chosen.map(code=>'<button type="button" data-unpin-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Remove</button>').join('')+'</div>':'')+
+  '<label class="field-label" for="topic-search">Search by keyword, title, code or theme</label>'+
+  '<input id="topic-search" class="search" type="search" autocomplete="off" value="'+esc(state.topicSearch||'')+'" placeholder="e.g. tenant, displacement, cultural space, housing">'+
+  '<div id="topic-browser-results" class="topic-browser-results">'+topicBrowserResults()+'</div></section>';
+}
 function topicTile(t,kind,index){
  const action=kind==='top'?'Move to middle priorities':'Move to lowest priorities';
  return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
@@ -164,7 +195,7 @@ function selectionPage(kind){
  if(kind==='top'){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
   return '<div class="selection-intro"><h3>Review your suggested top 10</h3>'+
-   '<p>Based on the planning themes and community outcomes you ranked, these ten topics are proposed for the highest priority group.</p>'+
+   '<p>These ten topics reflect your theme and outcome rankings, plus any you added directly in Step 2.</p>'+
    '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
@@ -229,7 +260,7 @@ function render(){
  document.getElementById('step-title').textContent=STEPS[step];
  document.getElementById('step-detail').textContent=[
   'Put the seven planning themes in order. These rankings help generate topic suggestions.',
-  'Rank five outcomes by their importance. These rankings suggest topics; they do not change the final group weights.',
+  'Rank the outcomes, then search other topics and add any you want in the highest-priority ten.',
   'Review the suggested ten highest topics based on your theme and outcome rankings. Move any to middle where the next eligible suggestion fills its place.',
   'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
@@ -238,7 +269,7 @@ function render(){
  const root=document.getElementById('stage');
  root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>The themes are listed in alphabetical order at first. Drag themes to reorder them, or use the arrow buttons. Put the most important at the top.</p>'+optionRank(THEMES,'ranking')+'</div>':
   step===1?'<div class="subpanel"><h3>Rank the five community outcomes</h3><p>Move the most important outcome to the top. Select “See covered topics” under an outcome to view its connections.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
-   METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
+   METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>'+topicBrowser():
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
  const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
  actions.innerHTML=(step===0?'':'<button type="button" id="back" class="secondary">← Back</button>')+
