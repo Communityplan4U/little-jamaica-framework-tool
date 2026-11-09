@@ -1,17 +1,25 @@
 'use strict';
 // Seven theme ranks and six mutually exclusive outcome ranks propose ten highest topics; participants may revise them.
 const outcomeCodes=Object.fromEntries(OUTCOMES.map(k=>[k,WB.topics.filter(t=>t.outcomeFlags[k]===1).map(t=>t.code)]));
-function outcomeFactors(){return Object.fromEntries(state.outcomeRanking.map((id,i)=>[id,METHOD.outcomeRankMultipliers[i]]));}
-function suggestions(){
- const th=Object.fromEntries(state.ranking.map((name,i)=>[name,METHOD.themeRankPoints[i]]));
- const out=outcomeFactors();
- const vals=WB.topics.map(t=>{
+// Suggestion scores use separately normalized theme and outcome ranks.
+// This affects provisional ordering only, never the 60/37/3 final group weights.
+function suggestionScores(){
+ const themePoints=METHOD.themeRankPoints,outcomePoints=METHOD.outcomeRankPoints;
+ const tMin=Math.min(...themePoints),tSpan=Math.max(...themePoints)-tMin;
+ const oMin=Math.min(...outcomePoints),oSpan=Math.max(...outcomePoints)-oMin;
+ const mix=METHOD.suggestionBlend;
+ if(tSpan<=0||oSpan<=0||Math.abs(mix.themes+mix.outcomes-1)>1e-12)throw Error('Invalid ranking normalization.');
+ const th=Object.fromEntries(state.ranking.map((name,i)=>[name,(themePoints[i]-tMin)/tSpan]));
+ const out=Object.fromEntries(state.outcomeRanking.map((id,i)=>[id,(outcomePoints[i]-oMin)/oSpan]));
+ return WB.topics.map(t=>{
   const assigned=OUTCOMES.filter(id=>t.outcomeFlags[id]===1);
   if(assigned.length!==1)throw Error('Each assessment topic must have exactly one outcome.');
-  return {code:t.code,score:th[t.theme]*out[assigned[0]],title:t.title};
+  return {code:t.code,score:100*(mix.themes*th[t.theme]+mix.outcomes*out[assigned[0]]),title:t.title};
  });
- // The tie-break is alphabetical by topic code, never spreadsheet position.
- return vals.sort((a,b)=>b.score-a.score||a.code.localeCompare(b.code)).map(x=>x.code);
+}
+function suggestions(){
+ // Ties resolve alphabetically by code, not workbook row position.
+ return suggestionScores().sort((a,b)=>b.score-a.score||a.code.localeCompare(b.code)).map(x=>x.code);
 }
 // The first ten eligible suggestions form the highest group. Demotions are never
 // promoted again automatically; an eligible replacement takes the vacated place.
@@ -47,7 +55,7 @@ function calculate(){
 }
 function snapshot(){
  const c=calculate(),pages=record?.continuedPages||[];
- return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v3',sourceVersion:METHOD.id,
+ return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v4',sourceVersion:METHOD.id,
   responseId:record?.responseId,themeRanking:state.ranking.slice(),outcomeRanking:state.outcomeRanking.slice(),
   topSelected:state.top.slice(),bottomSelected:state.bottom.slice(),excludedTop:state.excludedTop.slice(),
   promotedTop:state.promotedTop.slice(),
