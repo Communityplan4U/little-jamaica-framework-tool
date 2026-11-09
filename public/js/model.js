@@ -36,7 +36,7 @@ function calculate(){
 }
 function snapshot(){
  const c=calculate(),pages=record?.continuedPages||[];
- return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v1',sourceVersion:METHOD.id,
+ return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v2',sourceVersion:METHOD.id,
   responseId:record?.responseId,themeRanking:state.ranking.slice(),outcomeRanking:state.outcomeRanking.slice(),
   topSelected:state.top.slice(),bottomSelected:state.bottom.slice(),
   connections:state.connections.slice(),email:state.email.trim(),
