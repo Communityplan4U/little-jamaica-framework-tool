@@ -192,3 +192,21 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  vm.runInContext('state.step=2;render()',ctx);
  assert.match(element('stage').innerHTML,new RegExp('data-code="'+toAdd+'"'));
 });
+
+test('Five revised community outcomes retain stable IDs, source version and substantive descriptions',()=>{
+ const expected=[
+  ['coord','Government Investment and Accountable Delivery','Ensure governments commit the funding, services, protections and coordinated action needed to meet community needs, with measurable targets, clear responsibilities and accountability for delivery.'],
+  ['remain','Right to Remain and Return','Protect residents and local businesses from displacement, ensure affordable and meaningful opportunities to remain or return, and address harms caused by past displacement.'],
+  ['wealth','Community Wealth and Inclusive Local Economies','Expand community ownership of land and spaces, protect local businesses, create decent jobs, and ensure residents benefit equitably from neighbourhood investment and economic growth.'],
+  ['power','Community Decision-Making and Reparative Justice','Give residents and community organizations meaningful, resourced authority over planning and implementation decisions, while providing remedies for harms caused by past government actions.'],
+  ['systemic','Human Rights, Anti-Racism and Accessibility','Confront systemic racism, ageism and ableism through human rights-based planning, removing barriers to accessible housing, community services, economic opportunities and culturally appropriate participation.']
+ ];
+ assert.deepEqual(S.M.outcomes.map(({id,title,desc})=>[id,title,desc]),expected);
+ assert.equal(S.M.id,'ljov-20261109-33top10-bottom4-60-37-3-v2');
+ assert.deepEqual(S.M.groupCounts,[10,19,4]);
+ assert.deepEqual(S.M.groupShares,[60,37,3]);
+ for(const o of S.M.outcomes){
+  const mapped=S.WB.topics.filter(t=>t.outcomeFlags[o.id]===1);
+  assert.ok(mapped.length>=3, 'Outcome mapping lost for '+o.id);
+ }
+});
