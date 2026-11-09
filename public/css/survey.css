@@ -39,3 +39,51 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
 .review-demotions strong{flex-basis:100%;font-size:.88rem}
 .review-demotions button{border:1px solid #b8a1c8;background:white;border-radius:8px;padding:7px 10px;font-size:.84rem;color:#553267;cursor:pointer}
 @media(max-width:530px){.rank-item{grid-template-columns:17px 29px minmax(0,1fr) auto}}
+
+/* Step 2: browse non-selected topics without hiding the ranked outcomes. */
+.topic-browser{margin-top:22px}
+.topic-browser-pins{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.topic-browser-pins strong{flex-basis:100%;font-size:.89rem}
+.topic-browser-pins button{border:1px solid #b8a1c8;background:#fff;color:#553267;border-radius:8px;padding:7px 10px;font-size:.83rem;text-align:left}
+.topic-browser-results{display:grid;gap:10px;margin-top:14px}
+.topic-browser-row{display:flex;align-items:center;justify-content:space-between;gap:15px;border:1px solid #e2d8e6;border-radius:12px;padding:14px;background:#fff}
+.topic-browser-body{flex:1;min-width:0}
+.topic-browser-body>small{font-size:.77rem;color:#71657a;margin-left:6px}
+.topic-browser-body>strong{display:block;margin:8px 0 3px;font-size:.98rem}
+.topic-browser-body>p{font-size:.86rem;color:#675e6c;margin:3px 0 5px}
+.topic-browser-body details{font-size:.81rem;color:#675e6c}
+.topic-browser-body summary{cursor:pointer;color:#603478}
+.topic-add{flex-shrink:0;border:1px solid #69407d;border-radius:9px;background:#59316b;color:#fff;font-size:.83rem;font-weight:700;padding:9px 12px}
+
+/* Step 5: zero-centered, signed document differences. */
+.framework-link{color:#503067;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.framework-link:hover{color:#321940}
+.framework-link span{display:inline-block;font-size:.81em;white-space:nowrap}
+.score-name small{display:block;font-size:.76rem;color:#766681;margin-top:3px;font-weight:400}
+.relative-score-row>strong{font-variant-numeric:tabular-nums}
+.relative-track{grid-column:2 / 4;height:13px;border-radius:6px;background:#eee8f1;position:relative;overflow:hidden}
+.relative-track .zero-axis{position:absolute;left:50%;width:2px;top:0;bottom:0;background:#563b6c;z-index:2}
+.relative-track i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.relative-track .positive-bar{background:#376e57}
+.relative-track .negative-bar{background:#a05269}
+.delta-positive{color:#236144!important}
+.delta-negative{color:#973951!important}
+.breakdowns{margin:25px 0;padding:18px;border:1px solid #e4d9e7;border-radius:15px}
+.breakdowns>p{color:#665d6c;font-size:.91rem}
+.breakdown-section{margin-top:20px}
+.breakdown-section h4{margin:0 0 5px;color:#4d2d62;font-size:1.02rem}
+.breakdown-scroll{border:1px solid #e6dce9;border-radius:10px;max-width:100%}
+.breakdown-table{min-width:1040px}
+.breakdown-table th,.breakdown-table td{padding:10px 11px;vertical-align:top;white-space:nowrap;font-variant-numeric:tabular-nums}
+.breakdown-table thead th{background:#f2edf5;white-space:normal;position:sticky;top:0;z-index:2;min-width:84px}
+.breakdown-table thead th:first-child{min-width:210px}
+.breakdown-table tbody th{font-weight:680;min-width:210px;max-width:270px;white-space:normal}
+.breakdown-table tbody th small{font-weight:400;color:#786c80;display:block;margin-top:3px}
+.breakdown-table td.matrix-delta{text-align:center;font-weight:750}
+.breakdown-table td.matrix-weight{text-align:right;font-weight:650}
+.breakdown-table .reference-cell{background:#f3ecf8;color:#55326b}
+@media(max-width:680px){
+ .topic-browser-row{flex-direction:column;align-items:stretch}
+ .topic-add{align-self:flex-start}
+ .breakdowns{padding:13px}
+}

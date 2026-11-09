@@ -17,7 +17,9 @@ function suggestions(){
 // promoted again automatically; an eligible replacement takes the vacated place.
 function suggestedTop(){
  const excluded=new Set([...(state.excludedTop||[]),...state.bottom]);
- return suggestions().filter(code=>!excluded.has(code)).slice(0,10);
+ const promoted=[...new Set(state.promotedTop||[])].filter(code=>byCode[code]&&!excluded.has(code)).slice(0,10);
+ const next=suggestions().filter(code=>!excluded.has(code)&&!promoted.includes(code));
+ return [...promoted,...next].slice(0,10);
 }
 function syncTop(){state.top=suggestedTop();return state.top;}
 function orderedGroups(){
@@ -48,6 +50,7 @@ function snapshot(){
  return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v2',sourceVersion:METHOD.id,
   responseId:record?.responseId,themeRanking:state.ranking.slice(),outcomeRanking:state.outcomeRanking.slice(),
   topSelected:state.top.slice(),bottomSelected:state.bottom.slice(),excludedTop:state.excludedTop.slice(),
+  promotedTop:state.promotedTop.slice(),
    selectionMethod:'suggested-top10-middle-review',
   connections:state.connections.slice(),email:state.email.trim(),
   communications:{resultsUpdates:!!state.email.trim(),newsletter:state.newsletterOptIn,littleJamaicaUpdates:state.planningOptIn},

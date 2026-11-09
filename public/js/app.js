@@ -1,6 +1,24 @@
 'use strict';
-const STEPS=['Rank planning themes','Rank community outcomes','Review suggested top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning themes','Rank community outcomes','Review your top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.v2.';
+
+// Direct source documents; framework columns follow WB.comparators in the assessment workbook.
+const FRAMEWORK_REPORTS={
+ local:'https://www.toronto.ca/legdocs/mmis/2026/ph/bgrd/backgroundfile-285675.pdf',
+ comparators:[
+  'https://www.toronto.ca/legdocs/mmis/2026/te/bgrd/backgroundfile-288691.pdf',
+  'https://www.toronto.ca/wp-content/uploads/2021/12/8d32-CityPlanning-Picture-Mount-Dennis-Planning-Framework-Final-Report.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2025/ec/bgrd/backgroundfile-260161.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2026/te/bgrd/backgroundfile-284297.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2021/te/bgrd/backgroundfile-167765.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2020/te/bgrd/backgroundfile-141418.pdf',
+  'https://www.waterfrontoronto.ca/sites/default/files/documents/port-lands-planning-framework-aoda---reduced.pdf'
+ ]
+};
+function reportLink(label,href){
+ return '<a class="framework-link" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" title="Open the source planning report in a new tab">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
+}
+
 let record=null,collection={isOpen:false,checked:false,closesAt:null,mode:'public'},saving=false;
 function freshId(){return crypto.randomUUID();}
 function write(){try{localStorage.setItem(STORE+record.responseId,JSON.stringify({record,state:{...state,community:null,loading:false,communityError:'',flash:''}}));localStorage.setItem(STORE+'active',record.responseId);}catch(e){notice('Browser storage is unavailable. Keep a copy of your private return link.','warning');}}
@@ -8,7 +26,7 @@ function init(){
  let saved=null;try{const id=localStorage.getItem(STORE+'active');saved=id?JSON.parse(localStorage.getItem(STORE+id)||'null'):null;}catch{}
  if(saved&&saved.record?.sourceVersion===METHOD.id){
   record=saved.record;const d=saved.state||{};
-  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
+  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','promotedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
    if(Object.prototype.hasOwnProperty.call(d,key))state[key]=d[key];
   }
   if(!Array.isArray(d.excludedTop)&&Array.isArray(d.top)&&d.top.length===10)
@@ -35,7 +53,7 @@ async function status(){
  render();
 }
 function privateLink(){return location.origin+location.pathname+'#resume='+encodeURIComponent(record.responseId+'.'+record.responseToken);}
-function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,connections:state.connections,
+function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,promotedTop:state.promotedTop,connections:state.connections,
  feedback:state.feedback,scope:state.scope,email:'',newsletterOptIn:false,planningOptIn:false};}
 function checkpoint(kind){
  if(!canEdit())throw Error('The survey is closed. No changes can be submitted.');
@@ -91,7 +109,7 @@ async function restore(raw){
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
   Object.assign(state,{step:d.firstCompletedAt?4:Math.max(0,Math.min(3,p.page||0)),
-   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===10?CODES.filter(code=>!top.includes(code)):[]),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
+   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===10?CODES.filter(code=>!top.includes(code)):[]),promotedTop:Array.isArray(p.promotedTop)?p.promotedTop:[],connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
    email:p.email||'',newsletterOptIn:!!p.newsletterOptIn,planningOptIn:!!p.planningOptIn,complete:!!d.firstCompletedAt,community:null});
   record={responseId:m[1],responseToken:m[2],sourceVersion:METHOD.id,
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
@@ -102,7 +120,7 @@ async function restore(raw){
 }
 function selectPage(i){
  if(i<0||i>=STEPS.length)return;
- if(i>=4&&!record.firstCompletedAt){notice('Complete your highest and lowest priorities to unlock results.','warning');return;}
+ if(i>=4&&(!record.firstCompletedAt||state.bottom.length!==4)){notice('Complete your highest and four lowest priorities before viewing the results.','warning');return;}
  if(!record.firstCompletedAt&&i>state.step+1){notice('Finish the earlier steps first so your survey answers are saved in sequence.','warning');return;}
  if(i===state.step)return;state.step=i;record.visitedPages=[...new Set([...record.visitedPages,i+1])];state.community=null;write();render();
  window.scrollTo({top:0,behavior:'smooth'});
@@ -133,10 +151,41 @@ function connectionForm(){
   '<p class="help">These permissions are independent and unchecked by default. Messages are not sent automatically by this survey.</p>'+
   '<details class="privacy"><summary>Privacy and community averages</summary><p>Community in Public stores survey answers separately from optional contact details. Completed participants may view aggregate priorities from the first completed response onward. When very few people have responded, averages can closely reflect an individual respondent’s choices. Keep your private return link confidential; it provides access to your response and allows revisions before the closing date.</p></details></section>';
 }
+function topicBrowserResults(){
+ const highest=new Set(syncTop()),q=(state.topicSearch||'').trim().toLowerCase();
+ const eligible=suggestions().filter(code=>!highest.has(code));
+ const visible=eligible.filter(code=>{
+  const t=byCode[code];
+  return !q||[t.code,t.title,t.theme,t.summary,t.assesses].some(x=>String(x||'').toLowerCase().includes(q));
+ });
+ const limitReached=state.promotedTop.length>=10;
+ return '<p class="help" role="status">'+visible.length+' of '+eligible.length+' topics outside your current top ten'+
+  (q?' match your search.':'.')+'</p>'+
+  (limitReached?'<p class="help">Remove an earlier addition if you want to add a different topic.</p>':'')+
+  (visible.map(code=>{
+   const t=byCode[code];
+   return '<article class="topic-browser-row"><div class="topic-browser-body"><span class="topic-id">'+esc(code)+'</span> <small>'+esc(t.theme)+'</small>'+
+    '<strong>'+esc(t.title)+'</strong><p>'+esc(t.summary||t.assesses)+'</p>'+
+    '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details></div>'+
+    '<button type="button" class="topic-add" data-add-top="'+esc(code)+'" '+(!canEdit()||limitReached?'disabled':'')+
+    '>Add to top 10 ↑</button></article>';
+  }).join('')||'<p class="help">No other topics match this search.</p>');
+}
+function topicBrowser(){
+ const chosen=state.promotedTop.filter(code=>state.top.includes(code));
+ return '<section class="subpanel topic-browser" id="browse-topics"><h3>Explore all other planning topics</h3>'+
+  '<p>Search or browse topics outside your current top ten. You can add any topic that matters more to you. Each addition moves the lowest-ranked unselected suggestion into the middle.</p>'+
+  '<p class="weight-note">Your highest group always contains ten topics.</p>'+
+  (chosen.length?'<div class="topic-browser-pins"><strong>Topics you added directly</strong>'+
+   chosen.map(code=>'<button type="button" data-unpin-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Remove</button>').join('')+'</div>':'')+
+  '<label class="field-label" for="topic-search">Search by keyword, title, code or theme</label>'+
+  '<input id="topic-search" class="search" type="search" autocomplete="off" value="'+esc(state.topicSearch||'')+'" placeholder="e.g. tenant, displacement, cultural space, housing">'+
+  '<div id="topic-browser-results" class="topic-browser-results">'+topicBrowserResults()+'</div></section>';
+}
 function topicTile(t,kind,index){
  const action=kind==='top'?'Move to middle priorities':'Move to lowest priorities';
  return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
-  '<span class="topic-proposed">#'+index+' · '+(kind==='top'?'Suggested highest priority':'Middle priority')+'</span>'+
+  '<span class="topic-proposed"> #'+index+' · '+(kind==='top'?(state.promotedTop.includes(t.code)?'Added by you':'Suggested highest priority'):'Middle priority')+'</span>'+
   '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
   '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details>'+
   '<button type="button" class="pick" data-demote="'+kind+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+action+' ↓</button></article>';
@@ -145,8 +194,8 @@ function selectionPage(kind){
  const proposed=suggestions(),highest=syncTop();
  if(kind==='top'){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
-  return '<div class="selection-intro"><h3>Review your suggested top 10</h3>'+
-   '<p>Based on the planning themes and community outcomes you ranked, these ten topics are proposed for the highest priority group.</p>'+
+  return '<div class="selection-intro"><h3>Review your top 10 priorities</h3>'+
+   '<p>These ten topics reflect your theme and outcome rankings, plus any you added directly in Step 2.</p>'+
    '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
@@ -162,22 +211,82 @@ function selectionPage(kind){
   '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any four topics from the middle below.')+'</div></div>'+
   '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
 }
+function relativeScore(v,places=2){
+ const tiny=Math.pow(10,-places)/2;
+ if(!Number.isFinite(v)||Math.abs(v)<tiny)return (0).toFixed(places);
+ return (v>0?'+':'')+fmt(v,places);
+}
+function groupDifference(c,codes,planIdx,scope){
+ if(planIdx===-1)return 0;
+ return sum(codes.map(code=>{
+  const t=c.byCode[code],rating=scope==='full'?t.comparatorFull[planIdx]:t.comparatorVision[planIdx];
+  return t.weight*(rating-t.score);
+ }));
+}
+function resultFrameworks(c,scope){
+ return [{name:'Little Jamaica / Oakwood Vaughan (draft)',relative:0,local:true,idx:-1,url:FRAMEWORK_REPORTS.local}]
+  .concat(c.comparators.map((p,i)=>({
+   name:p.name,relative:p[scope]-c.baseline,local:false,idx:i,url:FRAMEWORK_REPORTS.comparators[i]
+  }))).sort((a,b)=>b.relative-a.relative||a.name.localeCompare(b.name));
+}
+function breakdownMatrix(c,scope,title,groups,ordered){
+ const header=ordered.map(p=>'<th scope="col" title="'+esc(p.name)+'">'+
+  reportLink(p.local?'Little Jamaica (0)':'Plan '+(p.idx+1),p.url)+'</th>').join('');
+ const rows=groups.map(group=>{
+  const share=sum(group.codes.map(code=>c.byCode[code].weight))*100;
+  const scores=ordered.map(p=>{
+   const value=groupDifference(c,group.codes,p.idx,scope);
+   return '<td class="matrix-delta '+(value<0?'delta-negative':value>0?'delta-positive':'')+' '+(p.local?'reference-cell':'')+'">'+relativeScore(value,3)+'</td>';
+  }).join('');
+  return '<tr><th scope="row">'+esc(group.name)+' <small>'+group.codes.length+' topics</small></th>'+
+   '<td class="matrix-weight">'+fmt(share,1)+'%</td>'+scores+'</tr>';
+ }).join('');
+ return '<section class="breakdown-section"><h4>'+esc(title)+'</h4><p class="help">Scroll horizontally to compare each framework. The report titles above are links.</p>'+
+  '<div class="table-scroll breakdown-scroll" role="region" tabindex="0" aria-label="Relative planning scores by '+esc(title)+'">'+
+   '<table class="breakdown-table"><thead><tr><th scope="col">'+esc(title)+'</th><th scope="col">Your weight</th>'+header+
+   '</tr></thead><tbody>'+rows+'</tbody></table></div></section>';
+}
 function resultsPage(){
- const c=calculate(),full=state.scope==='full',key=full?'full':'vision';
- const sorted=[{name:'Little Jamaica / Oakwood Vaughan (draft)',value:c.baseline,local:true}].concat(c.comparators.map(o=>({name:o.name,value:o[key],local:false}))).sort((a,b)=>b.value-a.value);
- const rows=sorted.map((r,i)=>'<div class="score-row '+(r.local?'home-score':'')+'"><span class="score-rank">'+(i+1)+'</span><span class="score-name">'+esc(r.name)+'</span><strong>'+fmt(r.value,2)+'/5</strong><div class="score-track"><i style="width:'+(r.value/5*100)+'%"></i></div></div>').join('');
- const topicRows=c.topics.slice().sort((a,b)=>a.position-b.position).map(t=>'<tr><td>'+esc(t.code)+'</td><td>'+esc(t.title)+'</td><td>'+esc(t.group)+'</td><td>'+fmt(t.weight*100,2)+'%</td><td>'+fmt(t.score,0)+'/5</td></tr>').join('');
- return '<section class="results-intro"><h3>Your priorities applied to the planning documents</h3>'+
- '<p>These ratings assess what the written documents address—not whether governments have delivered their commitments. Higher scores mean the document addresses more of the topics you emphasized.</p>'+
- '<div class="score-feature"><span>Little Jamaica draft, weighted score</span><strong>'+fmt(c.baseline,2)+' <small>/ 5</small></strong></div>'+
- '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div></section>'+
- '<div class="scores">'+rows+'</div>'+
- '<details class="full-breakdown"><summary>See all 33 topic weights and Little Jamaica ratings</summary><div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Group</th><th>Weight</th><th>Draft rating</th></tr></thead><tbody>'+topicRows+'</tbody></table></div></details>'+
- '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
- '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
- '<button class="secondary" id="save-comment" type="button">Save comments and changes</button>'+
- '<div class="return-actions"><button class="secondary" id="private-link" type="button">Copy my private return link</button>'+
- '<button class="secondary" id="download-my-response" type="button">Download my topic priorities (CSV)</button></div></section>';
+ const c=calculate(),full=state.scope==='full',scope=full?'full':'vision';
+ const ordered=resultFrameworks(c,scope);
+ const maxDifference=Math.max(0.01,...ordered.map(p=>Math.abs(p.relative)));
+ const scores=ordered.map((p,i)=>{
+  const width=Math.min(49,Math.abs(p.relative)/maxDifference*49),left=p.relative<0?50-width:50;
+  return '<div class="score-row relative-score-row '+(p.local?'home-score':'')+'"><span class="score-rank">'+(i+1)+'</span>'+
+   '<span class="score-name">'+reportLink(p.local?p.name:'Plan '+(p.idx+1)+' · '+p.name,p.url)+(p.local?'<small>Comparison baseline</small>':'')+'</span>'+
+   '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
+   '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
+   (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div></div>';
+ }).join('');
+ const themeGroups=state.ranking.map(name=>({name,codes:c.topics.filter(t=>t.theme===name).map(t=>t.code)}));
+ const outcomeGroups=state.outcomeRanking.map(id=>{
+  const o=METHOD.outcomes.find(x=>x.id===id);
+  return {name:o.title,codes:outcomeCodes[id]};
+ });
+ const topics=c.topics.slice().sort((a,b)=>a.position-b.position).map(t=>
+  '<tr><td>'+esc(t.code)+'</td><td>'+esc(t.title)+'</td><td>'+esc(t.theme)+'</td>'+
+   '<td>'+esc(t.group)+'</td><td>'+fmt(t.weight*100,2)+'%</td></tr>'
+ ).join('');
+ return '<section class="results-intro"><h3>Your priorities applied to the Planning Frameworks</h3>'+
+  '<p>All scores are <strong>weighted differences from the Little Jamaica draft (0)</strong>, not raw document ratings. Positive values mean another framework addresses your weighted topics more comprehensively; negative values mean less comprehensively. These are assessments of written documents, not verified implementation outcomes.</p>'+
+  '<div class="score-feature"><span>Little Jamaica / Oakwood Vaughan reference score</span><strong>0.00</strong></div>'+
+  '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
+  (full?'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>':'')+
+  '<p class="help">Click any framework name to open the underlying planning report in a new tab. The Port Lands source is a large PDF.</p></section>'+
+  '<div class="scores">'+scores+'</div>'+
+  '<section class="breakdowns"><h3>Compare by planning theme and community outcome</h3>'+
+  '<p>The values below show each theme or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
+  breakdownMatrix(c,scope,'Planning theme',themeGroups,ordered)+
+  breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
+  '<p class="help">Planning themes do not overlap: their differences add up to each framework’s overall difference. A topic may advance several community outcomes, so outcome values overlap and do not add up to the overall score.</p></section>'+
+  '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
+   '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
+   '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Theme</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
+  '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
+   '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
+   '<button class="secondary" id="save-comment" type="button">Save comments and changes</button>'+
+   '<div class="return-actions"><button class="secondary" id="private-link" type="button">Copy my private return link</button>'+
+   '<button class="secondary" id="download-my-response" type="button">Download my topic priorities (CSV)</button></div></section>';
 }
 function communityPage(){
  const c=calculate(),d=state.community,ready=d&&d.available===true;
@@ -211,7 +320,7 @@ function render(){
  document.getElementById('step-title').textContent=STEPS[step];
  document.getElementById('step-detail').textContent=[
   'Put the seven planning themes in order. These rankings help generate topic suggestions.',
-  'Rank five outcomes by their importance. These rankings suggest topics; they do not change the final group weights.',
+  'Rank the outcomes, then search other topics and add any you want in the highest-priority ten.',
   'Review the suggested ten highest topics based on your theme and outcome rankings. Move any to middle where the next eligible suggestion fills its place.',
   'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
@@ -220,7 +329,7 @@ function render(){
  const root=document.getElementById('stage');
  root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>The themes are listed in alphabetical order at first. Drag themes to reorder them, or use the arrow buttons. Put the most important at the top.</p>'+optionRank(THEMES,'ranking')+'</div>':
   step===1?'<div class="subpanel"><h3>Rank the five community outcomes</h3><p>Move the most important outcome to the top. Select “See covered topics” under an outcome to view its connections.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
-   METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
+   METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>'+topicBrowser():
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
  const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
  actions.innerHTML=(step===0?'':'<button type="button" id="back" class="secondary">← Back</button>')+
@@ -265,6 +374,30 @@ function render(){
   });
   item.addEventListener('dragend',()=>{dragging=null;item.classList.remove('is-dragging');document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});
  });
+ // The search field updates just the topic list, preserving its focus and cursor.
+ const search=document.getElementById('topic-search'),results=document.getElementById('topic-browser-results');
+ if(search&&results){
+  search.addEventListener('input',()=>{state.topicSearch=search.value;results.innerHTML=topicBrowserResults();});
+  results.addEventListener('click',e=>{
+   const button=e.target.closest('[data-add-top]');
+   if(!button||!canEdit())return;
+   const code=button.dataset.addTop;
+   if(state.top.includes(code))return;
+   if(state.promotedTop.length>=10){
+    notice('Remove one of your directly added topics before adding another.','warning');return;
+   }
+   state.promotedTop=[...state.promotedTop,code];
+   state.excludedTop=state.excludedTop.filter(x=>x!==code);
+   state.bottom=state.bottom.filter(x=>x!==code);
+   syncTop();state.community=null;write();render();
+   notice('Added '+byCode[code].title+' to your highest-priority ten. Review your full list in Step 3.');
+  });
+ }
+ document.querySelectorAll('[data-unpin-top]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;
+  state.promotedTop=state.promotedTop.filter(code=>code!==el.dataset.unpinTop);
+  syncTop();state.community=null;write();render();
+ }));
  document.querySelectorAll('[data-demote]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;
   const code=el.dataset.code;
@@ -274,6 +407,7 @@ function render(){
     notice('At least ten topics must stay eligible for the highest group. Restore an earlier topic before moving another.','warning');return;
    }
    state.excludedTop=excluded;
+   state.promotedTop=state.promotedTop.filter(x=>x!==code);
   }else{
    if(state.bottom.length>=4){notice('Four topics are already in the lowest group. Undo one before selecting another.','warning');return;}
    if(state.top.includes(code))return;
@@ -283,8 +417,13 @@ function render(){
  }));
  document.querySelectorAll('[data-restore-top]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;
-  state.excludedTop=state.excludedTop.filter(code=>code!==el.dataset.restoreTop);
-  state.bottom=state.bottom.filter(code=>code!==el.dataset.restoreTop);
+  const code=el.dataset.restoreTop;
+  if(!state.promotedTop.includes(code)&&state.promotedTop.length>=10){
+   notice('Remove a directly added topic before restoring another to the top ten.','warning');return;
+  }
+  state.excludedTop=state.excludedTop.filter(x=>x!==code);
+  state.bottom=state.bottom.filter(x=>x!==code);
+  if(!state.promotedTop.includes(code))state.promotedTop=[...state.promotedTop,code];
   syncTop();state.community=null;write();render();
  }));
  document.querySelectorAll('[data-restore-middle]').forEach(el=>el.addEventListener('click',()=>{
@@ -298,7 +437,7 @@ function render(){
  document.getElementById('save-comment')?.addEventListener('click',async()=>{state.feedback=document.getElementById('comment').value;const ok=await save('comments_shared');if(ok)notice('Your comments and current priorities were saved online.');});
  document.getElementById('private-link')?.addEventListener('click',copyLink);
  document.getElementById('download-my-response')?.addEventListener('click',downloadCsv);
- document.querySelectorAll('[data-rank],[data-demote],[data-restore-top],[data-restore-middle],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
+ document.querySelectorAll('[data-rank],[data-add-top],[data-unpin-top],[data-demote],[data-restore-top],[data-restore-middle],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
  renderSaveBadge();
 }
 async function next(){
