@@ -1,0 +1,404 @@
+{
+  "description": "Synthetic regression scenarios from approved trial; not participant responses",
+  "fixtures": [
+    {
+      "theme": [
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity"
+      ],
+      "outcome": [
+        "coord",
+        "remain",
+        "wealth",
+        "power",
+        "systemic"
+      ],
+      "hash": "86dad02d66116f3a08cd52c90cd4393414c9b01e43ac4fe4890dfe0603b59fbc"
+    },
+    {
+      "theme": [
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity"
+      ],
+      "outcome": [
+        "systemic",
+        "power",
+        "wealth",
+        "remain",
+        "coord"
+      ],
+      "hash": "09ae2da226dd563771f1680afd47aff59227f33c43b6176a3fb2884d7a4212ba"
+    },
+    {
+      "theme": [
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity"
+      ],
+      "outcome": [
+        "wealth",
+        "power",
+        "systemic",
+        "coord",
+        "remain"
+      ],
+      "hash": "e4d6103fc8c9de3fceb0ec258bca695964b2f8debb9520895e9c2f36b5eb9b36"
+    },
+    {
+      "theme": [
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement"
+      ],
+      "outcome": [
+        "coord",
+        "remain",
+        "wealth",
+        "power",
+        "systemic"
+      ],
+      "hash": "a75bad92ecc52395819740fc307d116baf910b5f6837e3d61382ba2be5cecfc4"
+    },
+    {
+      "theme": [
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement"
+      ],
+      "outcome": [
+        "systemic",
+        "power",
+        "wealth",
+        "remain",
+        "coord"
+      ],
+      "hash": "3d10a9b198265293046c63eb5fb40533124a09d3a64b7f37b89e600bbc0cee97"
+    },
+    {
+      "theme": [
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement"
+      ],
+      "outcome": [
+        "wealth",
+        "power",
+        "systemic",
+        "coord",
+        "remain"
+      ],
+      "hash": "f51542fe88bfb2b8d0dcbef7c7a6099a3afdadb4082058f950c6274c58ad3500"
+    },
+    {
+      "theme": [
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces"
+      ],
+      "outcome": [
+        "coord",
+        "remain",
+        "wealth",
+        "power",
+        "systemic"
+      ],
+      "hash": "1bcefcd897904783d533857bb5fea2f6eb559599d81a01ebac2890a78697e2a2"
+    },
+    {
+      "theme": [
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces"
+      ],
+      "outcome": [
+        "systemic",
+        "power",
+        "wealth",
+        "remain",
+        "coord"
+      ],
+      "hash": "7a2726be46033c9b734d68117b46a154cb74f8416445b526741c81b0e10c1cf4"
+    },
+    {
+      "theme": [
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces"
+      ],
+      "outcome": [
+        "wealth",
+        "power",
+        "systemic",
+        "coord",
+        "remain"
+      ],
+      "hash": "81ac4eecd6f087f58eebcace581e74584d99c7b47365f717c628dd5ca89ffe3e"
+    },
+    {
+      "theme": [
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity"
+      ],
+      "outcome": [
+        "coord",
+        "remain",
+        "wealth",
+        "power",
+        "systemic"
+      ],
+      "hash": "6bf72251e3c640a0b5fc288f466424bded82e2b22889a85d04a663d006fc2bde"
+    },
+    {
+      "theme": [
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity"
+      ],
+      "outcome": [
+        "systemic",
+        "power",
+        "wealth",
+        "remain",
+        "coord"
+      ],
+      "hash": "8938543eb75c1e5a1aa3afee25af8224fb6bc176568e27ffaa6946d33078cdfd"
+    },
+    {
+      "theme": [
+        "Delivery",
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity"
+      ],
+      "outcome": [
+        "wealth",
+        "power",
+        "systemic",
+        "coord",
+        "remain"
+      ],
+      "hash": "96c03593a19cc0f0cbbd2ba2b3f2f7464cca7a10f4e7ae469913f28420c8dea7"
+    },
+    {
+      "theme": [
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery"
+      ],
+      "outcome": [
+        "coord",
+        "remain",
+        "wealth",
+        "power",
+        "systemic"
+      ],
+      "hash": "a1d8bcf67f15baad6cbdcb4cc6c42c1a5d87daf419e13efa0d7ccc58ea154401"
+    },
+    {
+      "theme": [
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery"
+      ],
+      "outcome": [
+        "systemic",
+        "power",
+        "wealth",
+        "remain",
+        "coord"
+      ],
+      "hash": "902a483cb3edde74aed0aa5d70913c4c68b84c11878a24d846c39417dac29ba0"
+    },
+    {
+      "theme": [
+        "Economic opportunity",
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery"
+      ],
+      "outcome": [
+        "wealth",
+        "power",
+        "systemic",
+        "coord",
+        "remain"
+      ],
+      "hash": "b75d4fb9cdab783966eada296d5c09297cd162bd508b0f68fc69a5e45146a8dc"
+    },
+    {
+      "theme": [
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity"
+      ],
+      "outcome": [
+        "coord",
+        "remain",
+        "wealth",
+        "power",
+        "systemic"
+      ],
+      "hash": "a53a4b4976430874449afbbeee78b77a36905357af382183d8003cacd849c7d0"
+    },
+    {
+      "theme": [
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity"
+      ],
+      "outcome": [
+        "systemic",
+        "power",
+        "wealth",
+        "remain",
+        "coord"
+      ],
+      "hash": "9e2744880377bb1caeae900ab96a5865d2cd7c3d6dbc233e2b4d940a666bed20"
+    },
+    {
+      "theme": [
+        "Housing",
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity"
+      ],
+      "outcome": [
+        "wealth",
+        "power",
+        "systemic",
+        "coord",
+        "remain"
+      ],
+      "hash": "b7453c96546094781ba58a4e034fdaa4f05b7606eec29fa8ec641be3efa32ff4"
+    },
+    {
+      "theme": [
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing"
+      ],
+      "outcome": [
+        "coord",
+        "remain",
+        "wealth",
+        "power",
+        "systemic"
+      ],
+      "hash": "a3dece513a81dff7179cb994540d3c17f9e4c29f76d313c55f7a1e7562236326"
+    },
+    {
+      "theme": [
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing"
+      ],
+      "outcome": [
+        "systemic",
+        "power",
+        "wealth",
+        "remain",
+        "coord"
+      ],
+      "hash": "5144d52168b5d75e77052215b87f78b4c894760fdc40cc8b3d8fa20876200088"
+    },
+    {
+      "theme": [
+        "Rights and equity",
+        "Acknowledgement",
+        "Community and public spaces",
+        "Culture and identity",
+        "Delivery",
+        "Economic opportunity",
+        "Housing"
+      ],
+      "outcome": [
+        "wealth",
+        "power",
+        "systemic",
+        "coord",
+        "remain"
+      ],
+      "hash": "c795f09e72f488a8f0fca3c2410681386ebd6e75f9fdd817f6cbb28931e6ff28"
+    }
+  ]
+}

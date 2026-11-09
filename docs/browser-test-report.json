@@ -1,0 +1,174 @@
+{
+  "passed": 42,
+  "environment": "Local in-document rendering with simulated localStorage; URL navigation unavailable; no live database test",
+  "checks": [
+    {
+      "test": "1440: email not required",
+      "passed": true
+    },
+    {
+      "test": "1440: alphabetical theme order",
+      "passed": true
+    },
+    {
+      "test": "1440: no selections summary",
+      "passed": true
+    },
+    {
+      "test": "1440: separate consent off",
+      "passed": true
+    },
+    {
+      "test": "1440: email dark",
+      "passed": true
+    },
+    {
+      "test": "1440: independent opt ins",
+      "passed": true
+    },
+    {
+      "test": "1440: invalid address stays on page",
+      "passed": true
+    },
+    {
+      "test": "1440: clearing resets permissions",
+      "passed": true
+    },
+    {
+      "test": "1440: blank address advances",
+      "passed": true
+    },
+    {
+      "test": "1440: See wording",
+      "passed": true
+    },
+    {
+      "test": "1440: Learn wording gone",
+      "passed": true
+    },
+    {
+      "test": "1440: seven highest topics",
+      "passed": true
+    },
+    {
+      "test": "1440: completes without email",
+      "passed": true
+    },
+    {
+      "test": "1440: completion recorded",
+      "passed": true
+    },
+    {
+      "test": "1440: normalized weights",
+      "passed": true
+    },
+    {
+      "test": "1440: no token in export",
+      "passed": true
+    },
+    {
+      "test": "1440: consent payload",
+      "passed": true
+    },
+    {
+      "test": "1440: saved ID restored",
+      "passed": true
+    },
+    {
+      "test": "1440: contact preferences restored",
+      "passed": true
+    },
+    {
+      "test": "1440: no overflow",
+      "passed": true
+    },
+    {
+      "test": "1440: no errors",
+      "passed": true
+    },
+    {
+      "test": "390: email not required",
+      "passed": true
+    },
+    {
+      "test": "390: alphabetical theme order",
+      "passed": true
+    },
+    {
+      "test": "390: no selections summary",
+      "passed": true
+    },
+    {
+      "test": "390: separate consent off",
+      "passed": true
+    },
+    {
+      "test": "390: email dark",
+      "passed": true
+    },
+    {
+      "test": "390: independent opt ins",
+      "passed": true
+    },
+    {
+      "test": "390: invalid address stays on page",
+      "passed": true
+    },
+    {
+      "test": "390: clearing resets permissions",
+      "passed": true
+    },
+    {
+      "test": "390: blank address advances",
+      "passed": true
+    },
+    {
+      "test": "390: See wording",
+      "passed": true
+    },
+    {
+      "test": "390: Learn wording gone",
+      "passed": true
+    },
+    {
+      "test": "390: seven highest topics",
+      "passed": true
+    },
+    {
+      "test": "390: completes without email",
+      "passed": true
+    },
+    {
+      "test": "390: completion recorded",
+      "passed": true
+    },
+    {
+      "test": "390: normalized weights",
+      "passed": true
+    },
+    {
+      "test": "390: no token in export",
+      "passed": true
+    },
+    {
+      "test": "390: consent payload",
+      "passed": true
+    },
+    {
+      "test": "390: saved ID restored",
+      "passed": true
+    },
+    {
+      "test": "390: contact preferences restored",
+      "passed": true
+    },
+    {
+      "test": "390: no overflow",
+      "passed": true
+    },
+    {
+      "test": "390: no errors",
+      "passed": true
+    }
+  ]
+}

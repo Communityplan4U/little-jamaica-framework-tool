@@ -1,0 +1,15 @@
+{
+  "name": "little-jamaica-framework-tool",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Little Jamaica community priorities - Round 2",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.cjs",
+    "start": "node scripts/serve.mjs",
+    "check": "node --check public/js/state.js && node --check public/js/model.js && node --check public/js/app.js && npm test && npm run build"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

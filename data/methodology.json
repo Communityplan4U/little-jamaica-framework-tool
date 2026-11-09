@@ -1,0 +1,93 @@
+{
+  "id": "ljov-20261109-seven-comparators-40-35-v4",
+  "topicCount": 39,
+  "themeRankPoints": [
+    10,
+    9,
+    8,
+    7,
+    6,
+    5,
+    4
+  ],
+  "outcomeRankMultipliers": [
+    2,
+    1.75,
+    1.5,
+    1.25,
+    1
+  ],
+  "overlapDivisors": [
+    1,
+    8,
+    16
+  ],
+  "groupCounts": [
+    7,
+    7,
+    8,
+    7,
+    6,
+    4
+  ],
+  "groupShares": [
+    40,
+    35,
+    11.23,
+    8.56,
+    3.21,
+    2
+  ],
+  "groupNames": [
+    "Highest priority",
+    "Second-highest priority",
+    "Upper-middle priority",
+    "Lower-middle priority",
+    "Second-lowest priority",
+    "Lowest priority"
+  ],
+  "groupInternalLabels": [
+    "First seven",
+    "Second seven",
+    "Upper-middle",
+    "Lower-middle",
+    "Second-lowest",
+    "Lowest"
+  ],
+  "outcomes": [
+    {
+      "id": "coord",
+      "title": "Requires coordination and support across the City and higher levels of government",
+      "desc": "Give priority to actions requiring coordination and support from City divisions and other levels of government.",
+      "source": "Topics!G"
+    },
+    {
+      "id": "remain",
+      "title": "Right to Remain and Return",
+      "desc": "Protect existing residential and commercial tenants from displacement and support the right to return.",
+      "source": "Topics!H"
+    },
+    {
+      "id": "wealth",
+      "title": "Community Wealth and Ownership",
+      "desc": "Advance community ownership of assets, decent jobs, local enterprise, and equitable economic returns.",
+      "source": "Topics!I"
+    },
+    {
+      "id": "power",
+      "title": "Community Power and Reparative Justice",
+      "desc": "Strengthen resident and community organization authority, resourced partnerships and remedies for historical harms.",
+      "source": "Topics!J"
+    },
+    {
+      "id": "systemic",
+      "title": "Targeted address of systemic racism, ageism and ableism",
+      "desc": "Address the distinct structural barriers created by racism, ageism and ableism in planning, service access and delivery.",
+      "source": "Topics!K"
+    }
+  ],
+  "sourceFile": "Little_Jamaica_Weighting_Tool_Simplified_Steps.html",
+  "sourceSHA256": "018f639237f07b7c3109b72e27d830fe308c80e3dc7c0045469005be97bf1d01",
+  "ties": "Retain workbook row order",
+  "communityMinimumResponses": 5
+}

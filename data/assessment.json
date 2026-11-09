@@ -1,0 +1,1455 @@
+{
+  "topics": [
+    {
+      "theme": "Acknowledgement",
+      "code": "A-1",
+      "title": "Acknowledge city-led Discriminatory Housing and Planning Harms",
+      "summary": "Acknowledgment of municipal decisions contributing to harm and displacement",
+      "assesses": "Tests whether documented past discriminatory housing, zoning, redevelopment, infrastructure and other municipal decisions are identified, with the mechanism of exclusion, affected groups and consequences for housing or economic security or displacement explained. Separate acknowledgement from proposed remedies.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        3,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        3,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Acknowledgement",
+      "code": "A-2",
+      "title": "Acknowledge Prior City Studies and Designations",
+      "summary": "Formal recognition of prior City-led studies and designations for the neighbourhood/area",
+      "assesses": "Tests whether relevant prior City studies, adopted plans, designations and Council directions are identified accurately and whether the framework connects neighbourhood-level priorities to applicable municipal and higher-level policy, legal powers and implementation tools. Distinguish adopted direction from a proposal or study finding.",
+      "components": [],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        2,
+        1,
+        2,
+        3
+      ],
+      "comparatorFull": [
+        3,
+        3,
+        3,
+        2,
+        2,
+        2,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Acknowledgement",
+      "code": "A-3",
+      "title": "Acknowledge Community Organizing and Prior Plans",
+      "summary": "Formal recognition of prior community-led organizing, plans, and communication of priorities",
+      "assesses": "Tests whether prior community organizing, resident-led plans, stated priorities and lived knowledge are credited accurately and demonstrably reflected in the framework. Separate from decision-making authority over this plan.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        3,
+        1,
+        2,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        2,
+        4,
+        4,
+        1,
+        2,
+        2,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Acknowledgement",
+      "code": "A-4",
+      "title": "Acknowledge Community Origins and Migration Histories",
+      "summary": "How the community formed, including early settlement, migration waves, early presence of marginalized communities",
+      "assesses": "Tests whether settlement and migration histories, including Indigenous, Black and other historically marginalized communities, are described accurately and without erasure. Where supported by records, explain how discriminatory housing access, land-use decisions or exclusion shaped settlement and tenure patterns.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        3,
+        3,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        2,
+        2,
+        3,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Acknowledgement",
+      "code": "A-5",
+      "title": "Acknowledge Indigenous Lands, Treaties and Presence",
+      "summary": "Indigenous territory, treaties and continuing presence",
+      "assesses": "Tests whether Indigenous territories, treaties, continuing presence, relationships to land and governance are recognized accurately and connected to relevant planning/stewardship decisions. Where documented, acknowledge land dispossession and discriminatory planning impacts, without conflating Indigenous rights or sovereignty with other equity categories.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        1,
+        3,
+        3,
+        2,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        2,
+        4,
+        4,
+        2,
+        2,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Acknowledgement",
+      "code": "A-6",
+      "title": "Acknowledge Displacement Risks and Investment Pressures",
+      "summary": "Acknowledging displacement pressure, including who is at risk, and what investment patterns are driving it",
+      "assesses": "Tests whether current and foreseeable residential, commercial and cultural displacement risks are assessed at neighbourhood/plan scale, including the people and institutions most at risk and the role of public investment, redevelopment and housing/space costs in creating these risks. Identify documented disproportionate impacts, evidence gaps and the limits of available data; distinguish diagnosis from remedies.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        3,
+        3,
+        1,
+        1,
+        1,
+        3
+      ],
+      "comparatorFull": [
+        2,
+        3,
+        4,
+        2,
+        2,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Acknowledgement",
+      "code": "A-7",
+      "title": "Acknowledge Low-Income Residents and Community Belonging",
+      "summary": "Recognition of low income people as part of community fabric",
+      "assesses": "Tests whether low-income residents, including renters and people facing exclusion, are recognized as contributors to the neighbourhood's identity, relationships and future, rather than only described as recipients of assistance.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        3,
+        2,
+        2,
+        2,
+        2,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Acknowledgement",
+      "code": "A-8",
+      "title": "City Human Rights Commitments and Obligations",
+      "summary": "Naming the City's rights and equity commitments (Housing Charter, HousingTO, Action Plan to Confront Anti-Black Racism, ReconciliationTO)",
+      "assesses": "Tests whether the framework accurately names relevant City housing-rights, equity, anti-Black racism and reconciliation commitments, including the Housing Charter, HousingTO and related City action plans, and shows how they guide proposed decisions.",
+      "components": [
+        2
+      ],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        1,
+        4,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Community and public spaces",
+      "code": "CP-1",
+      "title": "Community Ownership and Land Stewardship",
+      "summary": "Community ownership, acquisition and long-term stewardship of land and space",
+      "assesses": "Tests whether community, non-profit or public-interest actors have identified local opportunities and funded mechanisms to acquire, own and steward land/buildings. Look for community representation in governance, municipal and higher-level support, financing or program conditions, and durable affordability/anti-displacement protections.",
+      "components": [],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        3,
+        3,
+        4,
+        1,
+        1,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 1,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Community and public spaces",
+      "code": "CP-2",
+      "title": "Cultural and Community Space Protection",
+      "summary": "Protecting and expanding cultural and community spaces and institutions, conserving heritage buildings and sites",
+      "assesses": "Tests whether existing and needed cultural/community spaces, institutions and heritage properties are protected or expanded with equitable access, retention/replacement provisions, secure tenure or agreements, an identified operator, and operating resources.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3
+      ],
+      "comparatorFull": [
+        4,
+        4,
+        4,
+        3,
+        4,
+        2,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Community and public spaces",
+      "code": "CP-3",
+      "title": "Complete communities - services",
+      "summary": "Accessible community resources including services, facilities, childcare, schools, and recreation",
+      "assesses": "Tests whether identified needs for childcare, schools, health and social services, libraries, recreation, community hubs and free or affordable youth programs are matched to accessible facilities, programming and delivery measures. Excludes utilities and everyday mobility.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Community and public spaces",
+      "code": "CP-4",
+      "title": "Climate Resilience and Environmental Equity",
+      "summary": "Climate resilience, environmental justice and tree equity",
+      "assesses": "Tests whether heat, flood exposure, tree canopy and shade, green space, air or environmental burdens are addressed through climate resilience and equity measures benefiting current residents, with geographically specific actions where warranted.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        1,
+        2,
+        1,
+        2,
+        2,
+        1,
+        3
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        1,
+        4,
+        2,
+        2,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Community and public spaces",
+      "code": "CP-5",
+      "title": "Safe and Affordable Everyday Mobility",
+      "summary": "Safe, accessible and affordable everyday mobility, prioritizing walking, wheeling, and taking transit",
+      "assesses": "Tests whether walking, wheeling and public transit are prioritized through accessible connected routes, safe crossings, reliable connections, manageable travel costs and practical access to work, schools, parks and community facilities; cycling connections where relevant.",
+      "components": [
+        2
+      ],
+      "score": 3,
+      "comparatorVision": [
+        2,
+        2,
+        1,
+        3,
+        3,
+        3,
+        3
+      ],
+      "comparatorFull": [
+        4,
+        4,
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Community and public spaces",
+      "code": "CP-6",
+      "title": "Food Security and Community Food Systems",
+      "summary": "Food security and community control of food systems",
+      "assesses": "Tests whether residents can access affordable, nutritious and culturally appropriate food, supported where appropriate by local food retail, community kitchens, gardens, markets, food programs and community-led food systems or food sovereignty initiatives.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        2,
+        3,
+        1,
+        3,
+        2,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Community and public spaces",
+      "code": "CP-7",
+      "title": "Complete communities - infrastructure",
+      "summary": "Physical infrastructure capacity, reliability and investment",
+      "assesses": "Tests whether capacity and reliability of water, wastewater, stormwater, electricity and other essential infrastructure are considered against current needs and projected growth, with required upgrades, responsible agencies, financing and timing identified.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        3
+      ],
+      "comparatorFull": [
+        1,
+        4,
+        1,
+        3,
+        3,
+        1,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Culture and identity",
+      "code": "CU-1",
+      "title": "Music, Cultural Expression and Funding",
+      "summary": "Music, cultural expression, including honouring knowledge holders and providing sustained cultural programming",
+      "assesses": "Tests whether music, artistic expression and cultural histories are sustained beyond symbolic recognition through community-led programming, knowledge-holder and youth roles, intergenerational exchange, accessible cultural facilities and dependable operating/program funding with identifiable delivery partners.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        1,
+        2,
+        2,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        4,
+        2,
+        2,
+        2,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Culture and identity",
+      "code": "CU-2",
+      "title": "Identified Cultural Corridors and Assets",
+      "summary": "Identified and supported cultural corridors, including focus areas and protection of cultural assets",
+      "assesses": "Tests whether culturally significant corridors, focus areas and assets are identified and supported by mapped or place-specific directions for protection, continuity, access and stewardship. Distinct from the broad spatial distribution of growth.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        2,
+        3,
+        1,
+        1,
+        1,
+        1,
+        3
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        1,
+        3,
+        3,
+        2,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Delivery",
+      "code": "D-1",
+      "title": "Community Oversight of Municipal Implementation",
+      "summary": "Resourced community implementation body with meaningful oversight responsibilities",
+      "assesses": "Tests whether a representative, adequately resourced community body has an ongoing, defined role in overseeing implementation, accessing information, reviewing results, raising concerns and influencing corrective actions.",
+      "components": [],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        1,
+        2,
+        4,
+        1,
+        1,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 1,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Delivery",
+      "code": "D-2",
+      "title": "Implementation and Community Planning Funding",
+      "summary": "Dedicated funding for implementation and community-led planning",
+      "assesses": "Tests whether credible funding sources, amounts, duration and program conditions are identified for independent community-led planning - with sources, governance and control of funds stated. Neighbourhood-level community led governnace of funding for community-led planning.",
+      "components": [
+        2
+      ],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        1,
+        2,
+        4,
+        2,
+        3,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Delivery",
+      "code": "D-3",
+      "title": "Implementation Targets, Timelines and Accountability",
+      "summary": "Quantified implementation targets, timelines, sequencing and implementation scope assigned to specified roles/teams",
+      "assesses": "Tests whether actions have neighbourhood-specific targets, milestones, sequencing, dependencies, named accountable teams and publicly verifiable outputs or community-impact measures - rather than only general aspirations. Interdivisional leadership is assessed under D-8.",
+      "components": [],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        3
+      ],
+      "comparatorFull": [
+        2,
+        3,
+        4,
+        2,
+        3,
+        2,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Delivery",
+      "code": "D-4",
+      "title": "Resourced Indigenous, Black or other Person of Colour Community Delivery Partnerships",
+      "summary": "Resourced Indigenous-, Black- and other racialized-led community delivery partnerships",
+      "assesses": "Tests whether Indigenous, Black, or POC-led community organizations have specifically identified and resourced roles in delivery, with partnership arrangements, participation in decisions, practical support and accountability.",
+      "components": [],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        2,
+        2,
+        3,
+        2,
+        1,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 1,
+        "power": 1,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Delivery",
+      "code": "D-7",
+      "title": "Public Progress and Community Impact Reporting",
+      "summary": "Commitment to accessible public communication, progress tracking and corrective follow-through",
+      "assesses": "Tests whether progress is reported at predictable intervals through accessible local communications and a public action tracker, showing commitments, achievements, delays, accountable leads, responses to community input and corrective follow-through. ",
+      "components": [],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        1,
+        2,
+        4,
+        1,
+        2,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Delivery",
+      "code": "D-8",
+      "title": "Assign Shared City Responsibility and Leadership",
+      "summary": "Shared responsibility, commitments, and assigned leadership across City divisions",
+      "assesses": "Tests whether responsible City divisions and agencies have formally identified a shared delivery structure, accountable leads, coordinated roles and decision pathways, including who can authorize, fund and report on commitments. Distinct from resourced community delivery partnerships (D-4).",
+      "components": [
+        2
+      ],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        1,
+        3,
+        4,
+        2,
+        2,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Economic opportunity",
+      "code": "E-1",
+      "title": "Affordable Commercial Space Supply",
+      "summary": "Quantified provision and retention of affordable commercial spaces",
+      "assesses": "Tests whether the supply of affordable commercial premises is quantified in units/area, location, suitable sizes, rent definitions and duration, including retention or replacement of space at risk. Identify practical planning and financing tools.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        1,
+        2,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        3,
+        3,
+        4,
+        3,
+        2,
+        1,
+        1
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 1,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Economic opportunity",
+      "code": "E-2",
+      "title": "Local and Culturally Significant Businesses",
+      "summary": "Retaining and supporting local, culturally significant and independent businesses",
+      "assesses": "Tests whether long-standing, independent and culturally significant local businesses receive specific retention, capacity-building, access or other supports to remain and thrive; distinct from space-supply targets (E-1) and commercial tenancy protections (E-4).",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        2,
+        3,
+        2,
+        2,
+        2,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        4,
+        3,
+        2,
+        2,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 1,
+        "power": 0,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Economic opportunity",
+      "code": "E-3",
+      "title": "Decent Local Jobs and Training",
+      "summary": "Local decent jobs, hiring targets, training and community benefits",
+      "assesses": "Tests whether local residents gain access to decent employment through clear local hiring/apprenticeship, training and community-benefit goals, defined employer, union, nonprofit and public-sector roles, appropriate agreement or procurement conditions, fair wages/benefits and publicly reported outcomes for affected communities.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        1,
+        4,
+        1,
+        2,
+        1,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 1,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Economic opportunity",
+      "code": "E-4",
+      "title": "Commercial Tenant Stability and Eviction Protection",
+      "summary": "Commercial tenancy stability, anti-displacement and transition protections",
+      "assesses": "Tests whether feasible measures address commercial rent/tenure instability, redevelopment-related closure, transition, relocation and re-entry. Identifies City tools, higher-level government responsibilities, negotiated lease or funding conditions, and concrete resources.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        2,
+        3,
+        2,
+        1,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 1,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Housing",
+      "code": "H-1",
+      "title": "Residential Tenant Stability and Eviction Protection",
+      "summary": "Residential tenant security, repair without displacement and anti-eviction supports including supporting tenant associations",
+      "assesses": "Tests whether existing renters have measures addressing eviction or renoviction risk, rent instability, unsafe repair-related displacement and barriers to organizing or obtaining tenant support. Distinct from the quality of new supply and replacement after displacement.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        1,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        4,
+        2,
+        1,
+        1,
+        1
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 1,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Housing",
+      "code": "H-2",
+      "title": "Intergenerational and Multigenerational Housing Options",
+      "summary": "Housing for intergenerational households",
+      "assesses": "Tests whether the housing mix includes suitable and affordable options for intergenerational and multigenerational households, including appropriate unit sizes, adaptable layouts and arrangements supporting extended family living. Distinct from senior-specific supportive housing.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        1,
+        2,
+        1,
+        2,
+        1,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        1,
+        2,
+        1,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Housing",
+      "code": "H-3",
+      "title": "Supportive Housing and Homelessness",
+      "summary": "Supportive housing, including emergency shelter for those experiencing homelessness",
+      "assesses": "Tests whether the housing and service needs of people experiencing homelessness or requiring intensive support are identified locally, and linked to accessible emergency, supportive and deeply affordable options. Identifies implementation partners, housing/health service coordination and plausible municipal/provincial funding responsibilities.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        2,
+        3,
+        1,
+        2,
+        2,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Housing",
+      "code": "H-4",
+      "title": "Affordable Housing Scale and Depth",
+      "summary": "Affordable and deeply affordable housing at a scale and depth matched to need",
+      "assesses": "Tests whether neighbourhood-scale affordable and deeply affordable housing targets respond to documented need by income, rent, tenure, size, accessibility and long-term affordability period. Specify credible public/nonprofit/private delivery pathways and funding or regulatory instruments, distinguishing proposed targets from approved units, secured agreements and occupied homes.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        3,
+        3,
+        3,
+        1,
+        4
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Housing",
+      "code": "H-5",
+      "title": "Supportive Housing for Aging in Place",
+      "summary": "Seniors supportive housing, to support aging in place",
+      "assesses": "Tests whether older residents can age in place through accessible, affordable seniors housing, supportive services, appropriate adaptations to existing homes and suitable new housing options. Distinct from intergenerational housing mix (H-2) and general supportive housing (H-3).",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        1,
+        2,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        3,
+        2,
+        1,
+        3,
+        1,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Rights and equity",
+      "code": "R-1",
+      "title": "The Right to Remain",
+      "summary": "The Right to Remain as a stated aim for commercial and residential tenants",
+      "assesses": "Tests whether the right to remain for existing residential and commercial tenants is explicitly stated as a guiding purpose of the framework and meaningfully connected to its priorities. Practical displacement protections are assessed under R-2.",
+      "components": [
+        2
+      ],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        3,
+        2,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 1,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Rights and equity",
+      "code": "R-2",
+      "title": "Replacement Units and Right of Return",
+      "summary": "Protection, replacement, relocation assistance and right of return after displacement for commercial and residential tenants",
+      "assesses": "Tests whether displaced or at-risk residential and commercial tenants receive concrete protections, appropriate replacement accommodation or space, relocation assistance and feasible return arrangements; distinguishes statutory rights from proposed priority-access or support programs.",
+      "components": [
+        2
+      ],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        4,
+        4,
+        3,
+        2,
+        1,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 1,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Rights and equity",
+      "code": "R-3",
+      "title": "Human Rights and Anti-Racism Assessment",
+      "summary": "Applied human-rights and anti-racism tests for planning and investment, including confronting anti-Black racism and anti-Indigenous racism",
+      "assesses": "Tests whether land-use choices and investments are examined for discriminatory effects, particularly anti-Black and anti-Indigenous racism, with affected groups, barriers, mitigation and responsible actors identified, beyond a generic human-rights lens.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        1,
+        2,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        1,
+        3,
+        4,
+        2,
+        1,
+        1,
+        1
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Rights and equity",
+      "code": "R-4",
+      "title": "Equitable Distribution of Growth Benefits",
+      "summary": "Growth benefits focused on marginalized and/or low-income residents",
+      "assesses": "Tests whether growth and public investment are tied to explicit equitable-access goals for marginalized and low-income existing residents, with measurable housing, jobs, community services or cultural benefits and safeguards against displacement. Identify who is expected to benefit, accountable instruments and public community-impact measures, disaggregated where feasible.",
+      "components": [],
+      "score": 2,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        2
+      ],
+      "comparatorFull": [
+        2,
+        3,
+        4,
+        3,
+        3,
+        1,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 1,
+        "power": 0,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Rights and equity",
+      "code": "R-5",
+      "title": "Inclusive Neighbourhoods Across Ages and Abilities",
+      "summary": "Inclusion across ages, abilities and cultures, including aging in place, accessibility, culturally appropriate supports",
+      "assesses": "Tests whether age, disability, income, language and cultural differences are addressed in access to housing, programs, services, public spaces and opportunities to participate, with practical accessibility and culturally appropriate measures.",
+      "components": [],
+      "score": 3,
+      "comparatorVision": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "comparatorFull": [
+        3,
+        4,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 0,
+        "systemic": 1
+      }
+    },
+    {
+      "theme": "Rights and equity",
+      "code": "R-6",
+      "title": "Identifies Redress and Remedies for Past Municipal Harms",
+      "summary": "Identifies redress remedies for harms arising from past municial decisions",
+      "assesses": "Tests whether documented harm arising from past public decisions is connected to proposed repair or remedial measures, affected-community participation, responsible agencies, resources and follow-through. In particular, this includes redress payments for tenants displaced or with reduced tenancy security.",
+      "components": [
+        2
+      ],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "remain": 1,
+        "wealth": 0,
+        "power": 1,
+        "systemic": 0
+      }
+    },
+    {
+      "theme": "Rights and equity",
+      "code": "R-7",
+      "title": "Community Authority Over this Plan",
+      "summary": "Community decision-making or evaluation authority over this planning strategy",
+      "assesses": "Tests whether affected residents and community organizations have defined roles in setting priorities, developing options, reviewing proposals and influencing this plan, alongside appropriate nonprofit, private-sector and labour participants. Identify decision rights, representation, resources, public explanations of responses and limits of authority; do not assume a veto or statutory approval power.",
+      "components": [],
+      "score": 1,
+      "comparatorVision": [
+        1,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "comparatorFull": [
+        2,
+        2,
+        3,
+        1,
+        1,
+        1,
+        2
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "remain": 0,
+        "wealth": 0,
+        "power": 1,
+        "systemic": 0
+      }
+    }
+  ],
+  "themes": [
+    {
+      "name": "Acknowledgement",
+      "description": "History, prior plans, displacement pressures and community belonging",
+      "count": 8
+    },
+    {
+      "name": "Community and public spaces",
+      "description": "Land, services, infrastructure, mobility, food and public space",
+      "count": 7
+    },
+    {
+      "name": "Culture and identity",
+      "description": "Cultural expression, corridors and community assets",
+      "count": 2
+    },
+    {
+      "name": "Delivery",
+      "description": "Governance, resources, targets, partnerships and accountability",
+      "count": 6
+    },
+    {
+      "name": "Economic opportunity",
+      "description": "Local businesses, affordable premises, decent work and stability",
+      "count": 4
+    },
+    {
+      "name": "Housing",
+      "description": "Tenant protections, affordability and diverse housing needs",
+      "count": 5
+    },
+    {
+      "name": "Rights and equity",
+      "description": "Right to remain, redress, equity and community authority",
+      "count": 7
+    }
+  ],
+  "components": [
+    {
+      "id": 1,
+      "title": "acknowledging past discrimination in housing policies",
+      "description": "Past discrimination in housing policies, land-use decisions and public investment is documented rather than implied."
+    },
+    {
+      "id": 2,
+      "title": "scaling efforts to the neighbourhood level with support from municipal and higher-level government frameworks",
+      "description": "Neighbourhood-specific priorities are backed by municipal and higher-level government frameworks, capacity or investment."
+    },
+    {
+      "id": 3,
+      "title": "establishing shared governance among nonprofits, community groups, private sectors, and labour organizations",
+      "description": "Non-profits, community groups, private-sector participants and labour organizations share appropriate governance roles and responsibilities."
+    },
+    {
+      "id": 4,
+      "title": "defining clear, values-based goals for equitable access to essential services",
+      "description": "Clear, values-based goals guide equitable access to adequate housing, essential services and community opportunities."
+    },
+    {
+      "id": 5,
+      "title": "Implementing transparent reporting on diversity and community impact",
+      "description": "Regular public reporting shows diversity, distribution of benefits/harms and measurable community effects."
+    },
+    {
+      "id": 6,
+      "title": "ensuring enforceable commitments through frameworks and funding programs",
+      "description": "Commitments are implemented through the appropriate legal/policy tools, funding programs and accountable delivery agreements."
+    }
+  ],
+  "comparators": [
+    "Chinatown Tomorrow",
+    "Picture Mount Dennis",
+    "Mount Dennis Community for All Action Plan",
+    "St. Clair Avenue West and Bathurst Street",
+    "Bloor Street: St. Helen's Avenue to Perth Avenue",
+    "Yonge-St. Clair Planning Framework",
+    "Port Lands Planning Framework"
+  ],
+  "filename": "LJOVPF_Planning_Framework_Assessment.xlsx",
+  "elup2LinkedTopicCount": 14,
+  "classificationSource": "Topics!G:K in LJOVPF_Planning_Framework_Assessment.xlsx",
+  "outcomeCounts": {
+    "coord": 14,
+    "remain": 5,
+    "wealth": 6,
+    "power": 4,
+    "systemic": 8
+  },
+  "overlapCount": 11,
+  "tripleOverlapCount": 2,
+  "exclusions": [
+    {
+      "name": "North York at the Centre",
+      "reason": "Ongoing Secondary Plan study; excluded by participant-design decision to improve document comparability."
+    }
+  ],
+  "comparatorSelection": "Seven planning framework or community-development comparator documents, excluding North York at the Centre."
+}

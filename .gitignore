@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vercel/
+.env
+.env.*
+*.sqlite
+*.sqlite3
+*.db
+*checkpoints*.json
+*topic-weights*.csv
+.DS_Store
+!.env.example
