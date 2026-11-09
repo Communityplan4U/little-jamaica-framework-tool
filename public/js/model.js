@@ -1,5 +1,5 @@
 'use strict';
-// Theme and outcome rankings suggest topics; only explicit topic selections determine final weights.
+// Themes and outcomes propose ten highest topics; participants can demote suggestions and select four lowest from the middle.
 const outcomeCodes=Object.fromEntries(OUTCOMES.map(k=>[k,WB.topics.filter(t=>t.outcomeFlags[k]===1).map(t=>t.code)]));
 function outcomeFactors(){return Object.fromEntries(state.outcomeRanking.map((id,i)=>[id,METHOD.outcomeRankMultipliers[i]]));}
 function suggestions(){
@@ -13,11 +13,20 @@ function suggestions(){
  // The tie-break is alphabetical by topic code, never spreadsheet position.
  return vals.sort((a,b)=>b.score-a.score||a.code.localeCompare(b.code)).map(x=>x.code);
 }
+// The first ten eligible suggestions form the highest group. Demotions are never
+// promoted again automatically; an eligible replacement takes the vacated place.
+function suggestedTop(){
+ const excluded=new Set([...(state.excludedTop||[]),...state.bottom]);
+ return suggestions().filter(code=>!excluded.has(code)).slice(0,10);
+}
+function syncTop(){state.top=suggestedTop();return state.top;}
 function orderedGroups(){
- const proposed=suggestions(),top=state.top.slice(),bottom=state.bottom.slice();
- for(const code of proposed){if(top.length>=10)break;if(!top.includes(code)&&!bottom.includes(code))top.push(code);}
- for(const code of proposed.slice().reverse()){if(bottom.length>=4)break;if(!top.includes(code)&&!bottom.includes(code))bottom.unshift(code);}
- const used=new Set([...top,...bottom]);
+ const proposed=suggestions(),top=syncTop().slice(),bottom=state.bottom.slice(),used=new Set([...top,...bottom]);
+ // Before Step 4 is finished, provide a provisional lowest-four for partial saves.
+ for(const code of proposed.slice().reverse()){
+  if(bottom.length>=4)break;
+  if(!used.has(code)){bottom.unshift(code);used.add(code);}
+ }
  const middle=proposed.filter(code=>!used.has(code));
  return [top,middle,bottom];
 }
@@ -38,7 +47,8 @@ function snapshot(){
  const c=calculate(),pages=record?.continuedPages||[];
  return {type:'Little Jamaica community weighting survey',version:'ljov-33-public-v2',sourceVersion:METHOD.id,
   responseId:record?.responseId,themeRanking:state.ranking.slice(),outcomeRanking:state.outcomeRanking.slice(),
-  topSelected:state.top.slice(),bottomSelected:state.bottom.slice(),
+  topSelected:state.top.slice(),bottomSelected:state.bottom.slice(),excludedTop:state.excludedTop.slice(),
+   selectionMethod:'suggested-top10-middle-review',
   connections:state.connections.slice(),email:state.email.trim(),
   communications:{resultsUpdates:!!state.email.trim(),newsletter:state.newsletterOptIn,littleJamaicaUpdates:state.planningOptIn},
   topicWeights:c.topics.map(t=>({code:t.code,position:t.position,group:t.group,weight:t.weight})),
