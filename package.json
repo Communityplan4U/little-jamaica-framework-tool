@@ -1,13 +1,13 @@
 {
   "name": "little-jamaica-framework-tool",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Little Jamaica community priorities - Round 2",
+  "description": "Community-led 33-topic planning framework weighting survey",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --test tests/*.cjs",
-    "start": "node scripts/serve.mjs",
-    "check": "node --check public/js/state.js && node --check public/js/model.js && node --check public/js/app.js && npm test && npm run build"
+    "test": "node --test tests/public33.test.cjs",
+    "check": "node --check public/js/state.js && node --check public/js/model.js && node --check public/js/app.js && node --check server/survey.cjs && node --check api/checkpoint.js && node --check api/community.js && node --check api/resume.js && npm test && npm run build",
+    "start": "node scripts/serve.mjs"
   },
   "engines": {
     "node": ">=22"

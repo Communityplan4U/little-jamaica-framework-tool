@@ -7,8 +7,8 @@ module.exports=S.endpoint(async(req,res)=>{
  S.uuid(b.responseId,'response ID');
  if(b.sourceVersion!==S.M.id)throw new S.ApiError(409,'This response belongs to a different survey version.');
  await S.rateLimit(req);
- const own=await S.rpc('ljov_resume_response',{
-  p_response_id:b.responseId,p_token_hash:hash,p_source_version:S.M.id
+ const own=await S.rpc('ljov_resume_response_for_mode',{
+  p_response_id:b.responseId,p_token_hash:hash,p_source_version:S.M.id,p_mode:S.mode()
  });
  if(!own.firstCompletedAt)throw new S.ApiError(403,'Complete your priorities before viewing the community comparison.');
  const d=await S.rpc('ljov_community_average',{p_source:S.M.id,p_mode:S.mode()});
