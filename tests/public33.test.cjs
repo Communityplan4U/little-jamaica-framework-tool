@@ -151,3 +151,37 @@ test('Browser model supports additional top-ten selections with fixed 10/19/4 gr
   }
  }
 });
+
+test('Step 2 add-to-top click updates the saved selection and Step 3 shows it',()=>{
+ const vm=require('node:vm'),path=require('node:path');
+ const get=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ const elements=new Map(),storage=new Map();
+ const element=id=>{
+  if(!elements.has(id))elements.set(id,{
+   id,value:'',innerHTML:'',textContent:'',hidden:false,events:{},
+   addEventListener(type,handler){this.events[type]=handler;},
+   setAttribute(){},getAttribute(){return null;}
+  });
+  return elements.get(id);
+ };
+ const ctx=vm.createContext({
+  window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}},
+  document:{getElementById:element,querySelectorAll:()=>[]},
+  localStorage:{setItem:(key,value)=>storage.set(key,value),getItem:key=>storage.get(key)||null}
+ });
+ const app=get('public/js/app.js').split("window.addEventListener('online'")[0];
+ vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js')+'\n'+app,ctx);
+ vm.runInContext("collection={checked:true,isOpen:true};record={responseId:'bda6cc17-94ad-4a87-8cc6-374a09b9aa32',outbox:[],confirmedRevision:0};state.step=1;render();",ctx);
+ const state=vm.runInContext('state',ctx),before=state.top.slice();
+ const toAdd=C.find(code=>!before.includes(code));
+ assert.match(element('stage').innerHTML,/id="topic-search"/);
+ const handler=element('topic-browser-results').events.click;
+ assert.equal(typeof handler,'function');
+ handler({target:{closest:()=>({dataset:{addTop:toAdd}})}});
+ assert.equal(state.top.length,10);
+ assert.ok(state.top.includes(toAdd));
+ assert.ok(state.promotedTop.includes(toAdd));
+ assert.ok(storage.size>=1);
+ vm.runInContext('state.step=2;render()',ctx);
+ assert.match(element('stage').innerHTML,new RegExp('data-code="'+toAdd+'"'));
+});
