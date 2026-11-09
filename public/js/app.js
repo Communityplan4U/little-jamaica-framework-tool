@@ -11,6 +11,8 @@ function init(){
   for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
    if(Object.prototype.hasOwnProperty.call(d,key))state[key]=d[key];
   }
+  if(!Array.isArray(d.excludedTop)&&Array.isArray(d.top)&&d.top.length===10)
+   state.excludedTop=CODES.filter(code=>!d.top.includes(code));
  }
  if(!record){
   record={responseId:freshId(),responseToken:freshId().replace(/-/g,'')+freshId().replace(/-/g,''),
@@ -89,13 +91,13 @@ async function restore(raw){
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
   Object.assign(state,{step:d.firstCompletedAt?4:Math.max(0,Math.min(3,p.page||0)),
-   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:suggestions().filter(code=>!top.includes(code)).slice(0,10),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
+   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:CODES.filter(code=>!top.includes(code)),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
    email:p.email||'',newsletterOptIn:!!p.newsletterOptIn,planningOptIn:!!p.planningOptIn,complete:!!d.firstCompletedAt,community:null});
   record={responseId:m[1],responseToken:m[2],sourceVersion:METHOD.id,
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
    visitedPages:d.visitedPages||[1],firstCompletedAt:d.firstCompletedAt||null,confirmedRevision:d.revision||0,
    createdAt:d.createdAt,outbox:[],lastSnapshot:null};
-  write();notice('Your response has been restored. You may revise it until the survey closes.');render();
+  syncTop();write();notice('Your response has been restored. You may revise it until the survey closes.');render();
  }catch(e){notice(e.message+' Your existing browser response was not changed.','warning');}
 }
 function selectPage(i){
