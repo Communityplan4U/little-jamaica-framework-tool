@@ -1,4 +1,6 @@
 'use strict';
+// Read-only state is server-authored. The database remains the final authority.
+let collectionState={checked:false,isOpen:location.protocol==='file:',closesAt:null,mode:'test'};
 function stages(){return ['Rank planning themes','Rank community outcomes','Review highest priorities','Compare planning documents','Adjust individual topics','Compare with community'];}
 function nav(){
  const short=['Planning themes','Community outcomes','Highest priorities','Results','Adjust individual topics','Community comparison'];
@@ -28,7 +30,7 @@ function rankingPage(c){
   ['worker','I work here'],['organization','I participate in a local community organization'],
   ['culture','I visit for cultural, religious or community activities'],['services','I use local services or facilities'],['other','Another connection']
  ];
- const identity=`<section class="connection-panel" aria-labelledby="connection-title"><h3 id="connection-title">What connects you to Little Jamaica / Oakwood Vaughan?</h3><p>Select any that apply. You may leave this section blank.</p><div class="connection-options">${connections.map(([id,label])=>`<label class="connection-choice"><input type="checkbox" data-connection="${id}" ${state.connections.includes(id)?'checked':''}><span>${label}</span></label>`).join('')}</div><label class="email-label" for="participant-email">Email address <span>(optional)</span></label><input id="participant-email" class="email-field" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="you@example.com" aria-describedby="email-help" value="${esc(state.email)}"><p id="email-help" class="privacy-help">Add your email so Community in Public can send you your results and keep you updated on the final results of everyone's voting. You can complete the survey without an email address.</p><fieldset class="email-opt-ins"><legend>Other updates you would like (optional)</legend><label class="connection-choice"><input type="checkbox" id="newsletter-opt-in" ${state.newsletterOptIn?'checked':''}><span>Send me the Community in Public newsletter.</span></label><label class="connection-choice"><input type="checkbox" id="planning-opt-in" ${state.planningOptIn?'checked':''}><span>Send me other updates on the Little Jamaica planning process.</span></label><p class="privacy-help" id="opt-in-help">Add an email above to enable these choices. Neither subscription is required to participate.</p></fieldset><details class="privacy-details"><summary>How your information is used</summary><p>Community in Public uses your rankings and comments to understand community priorities. Each time you continue, your answers and any revisions are saved. Your email is optional, stored separately from your survey answers, and never shown in community comparisons. Adding it requests survey-result updates; the two checkboxes are separate permissions for other messages. Return to this page to change your preferences, or contact Community in Public to request removal of your contact details.</p></details></section>`;
+ const identity=`<section class="connection-panel" aria-labelledby="connection-title"><h3 id="connection-title">What connects you to Little Jamaica / Oakwood Vaughan?</h3><p>Select any that apply. You may leave this section blank.</p><div class="connection-options">${connections.map(([id,label])=>`<label class="connection-choice"><input type="checkbox" data-connection="${id}" ${state.connections.includes(id)?'checked':''}><span>${label}</span></label>`).join('')}</div><label class="email-label" for="participant-email">Email address <span>(optional)</span></label><input id="participant-email" class="email-field" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="you@example.com" aria-describedby="email-help" value="${esc(state.email)}"><p id="email-help" class="privacy-help">Add your email so Community in Public can send you your results and keep you updated on the final results of everyone's voting. You can complete the survey without an email address.</p><fieldset class="email-opt-ins"><legend>Other updates you would like (optional)</legend><label class="connection-choice"><input type="checkbox" id="newsletter-opt-in" ${state.newsletterOptIn?'checked':''}><span>Send me the Community in Public newsletter.</span></label><label class="connection-choice"><input type="checkbox" id="planning-opt-in" ${state.planningOptIn?'checked':''}><span>Send me other updates on the Little Jamaica planning process.</span></label><p class="privacy-help" id="opt-in-help">Add an email above to enable these choices. Neither subscription is required to participate.</p></fieldset><details class="privacy-details"><summary>How your information is used</summary><p>Community in Public uses your rankings and comments to understand community priorities. Each time you continue, your answers and any revisions are saved. Your email is optional, stored separately from your survey answers, and never shown in community comparisons. Community averages appear after the first completed response; at first, an average may reveal an individual respondent's priorities. Adding it requests survey-result updates; the two checkboxes are separate permissions for other messages. Return to this page to change your preferences, or contact Community in Public to request removal of your contact details.</p></details></section>`;
  const list=state.ranking.map((name,i)=>{
   const th=WB.themes.find(t=>t.name===name);
   return `<div class="rankitem" draggable="true" data-rank="${i}"><div class="draggrip" aria-hidden="true">⋮⋮</div><div class="ranknum">${i+1}</div><div class="rankbody"><strong>${esc(name)}</strong><small>${esc(th?.description||'')}</small></div><div class="rankswap"><button type="button" data-shift="-1" data-index="${i}" aria-label="Move ${esc(name)} up" ${i===0?'disabled':''}>↑</button><button type="button" data-shift="1" data-index="${i}" aria-label="Move ${esc(name)} down" ${i===6?'disabled':''}>↓</button></div></div>`;
@@ -402,7 +404,10 @@ async function loadCommunityAverage(force=false){
  state.communityLoading=true;state.communityError='';render();
  try{
   await flushCheckpoints();
-  const reply=await fetch(endpoint,{method:'GET',credentials:'same-origin',cache:'no-store',headers:{'Accept':'application/json'}});
+  if(!record?.responseToken||!record?.firstCompletedAt||record.outbox.length)throw Error('Your completed response has not been received yet.');
+  const reply=await fetch(endpoint,{method:'POST',credentials:'same-origin',cache:'no-store',
+   headers:{'Accept':'application/json','Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},
+   body:JSON.stringify({responseId:record.responseId,sourceVersion:SOURCE_VERSION})});
   if(!reply.ok)throw Error('Community comparison service not available');
   const data=await reply.json();
   if(!data||typeof data.count!=='number'||typeof data.available!=='boolean')throw Error('Invalid community summary');
@@ -433,9 +438,9 @@ function communityPage(c){
  if(state.communityLoading)status='<div class="community-state" role="status">Loading completed community responses...</div>';
  else if(state.communityError)status=`<div class="community-state" role="status">${esc(state.communityError)}<div><button type="button" id="community-refresh" class="btn secondary">Try again</button></div></div>`;
  else if(data&&!data.available)status=`<div class="community-state" role="status"><strong>Community comparison not available yet.</strong> ${data.count} completed response${data.count===1?'':'s'} collected. The average will appear once at least ${data.minimum} completed responses are available.<div><button type="button" id="community-refresh" class="btn secondary">Check for new responses</button></div></div>`;
- else if(ready)status=`<div class="community-state"><strong>Based on ${data.count} distinct completed survey responses.</strong> Each response is counted once, using its latest saved topic placements. Your own completed response is included when it has reached the collection service. <button type="button" id="community-refresh" class="btn secondary">Refresh community average</button></div>`;
+ else if(ready)status=`<div class="community-state"><strong>Based on ${data.count} completed response${data.count===1?'':'s'}.</strong> ${data.count===1?'The first average reflects one person\'s priorities.':data.count<5?'This early average may change substantially as more people participate.':'The average reflects the latest completed priorities.'} Each response is counted once, including yours after it has been received. <button type="button" id="community-refresh" class="btn secondary">Refresh community average</button></div>`;
  const tabs=[['topics','39 topics'],['themes','7 planning themes'],['outcomes','5 community outcomes']].map(([id,label])=>`<button type="button" data-community-view="${id}" aria-pressed="${view===id}">${label}</button>`).join('');
- return `<section class="community-intro"><h3>See where your priorities align with the community</h3><p>Compare the share of evaluation weight you assigned with the average share from completed survey responses. The difference column is measured in percentage points.</p></section>${status}<div class="community-tabs" role="group" aria-label="Community comparison level">${tabs}</div><div class="community-legend"><span>Your priorities</span><span class="average">Community average</span></div><p class="community-average-note">Sorted by your highest to lowest weight. ${view==='outcomes'?'Because topics can belong to several outcomes, outcome percentages overlap and do not add to 100%.':view==='themes'?'Theme percentages add to 100%.':'All 39 topic weights add to 100%.'}</p><div class="community-rows">${rowHtml}</div><p class="community-average-note">Differences here describe <strong>importance weights</strong>, not the City's document scores. No email addresses or other participants' individual answers are shown.</p>`;
+ return `<section class="community-intro"><h3>See where your priorities align with the community</h3><p>Compare the share of evaluation weight you assigned with the average share from completed survey responses. The difference column is measured in percentage points.</p></section>${status}<div class="community-tabs" role="group" aria-label="Community comparison level">${tabs}</div><div class="community-legend"><span>Your priorities</span><span class="average">Community average</span></div><p class="community-average-note">Sorted by your highest to lowest weight. ${view==='outcomes'?'Because topics can belong to several outcomes, outcome percentages overlap and do not add to 100%.':view==='themes'?'Theme percentages add to 100%.':'All 39 topic weights add to 100%.'}</p><div class="community-rows">${rowHtml}</div><p class="community-average-note">Differences here describe <strong>importance weights</strong>, not the City's document scores. Emails and individual response records are not shown. When very few people have responded, however, averages can closely reflect individual choices.</p>`;
 }
 function wireCommunityPage(){
  document.querySelectorAll('[data-community-view]').forEach(btn=>btn.onclick=()=>{state.communityView=btn.dataset.communityView;render();});
@@ -617,6 +622,18 @@ function wireCompletion(){
  document.getElementById('exportcsv').onclick=()=>download('LJ-'+record.responseId+'-39-topic-weights.csv','text/csv;charset=utf-8',csvText(calc()));
  document.getElementById('exportjson').onclick=downloadRecord;const resumeBtn=document.getElementById('copy-return-link');if(resumeBtn)resumeBtn.onclick=copyPrivateReturnLink;
 }
+function applyReadonly(){
+ const closed=location.protocol!=='file:' && (!collectionState.checked||!collectionState.isOpen);
+ document.body.classList.toggle('survey-readonly',closed);
+ if(!closed)return;
+ const controls=['#stage input','#stage textarea','#stage select',
+  '[data-shift]','[data-shift-outcome]','[data-topic-action]','[data-restore]',
+  '[data-open-move]','#move-confirm','#undo','#clear','#share-comments',
+  '#clear-gap','#editor-reset'];
+ for(const el of document.querySelectorAll(controls.join(',')))el.disabled=true;
+ for(const el of document.querySelectorAll('#stage [draggable="true"]'))el.draggable=false;
+ if(state.page<=2){const next=document.getElementById('next');if(next)next.disabled=true;}
+}
 function render(){
  state.resultsMode='gap';state.matrixWeighting='weighted';const c=calc();document.body.dataset.page=String(state.page+1);nav();hdr();insight(c);const stage=document.getElementById('stage');
  if(state.page===0){stage.innerHTML=rankingPage(c);wireRank();wireParticipantDetails();}
@@ -658,11 +675,14 @@ function render(){
  if(state.flash){notice=document.createElement('div');notice.id='trial-flash';notice.className='trial-flash';notice.setAttribute('role','status');notice.textContent=state.flash;stage.prepend(notice);state.flash='';}
  document.getElementById('picker-overlay')?.remove();if(state.picker){document.body.insertAdjacentHTML('beforeend',pickerHtml());wirePicker();}
  document.getElementById('move-overlay')?.remove();if(state.moveDraft){document.body.insertAdjacentHTML('beforeend',moveModalHtml(calc()));wireMoveModal();}
- saveDraft();
+ saveDraft();applyReadonly();
 }
 function scrollPage(){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});document.getElementById('page-heading')?.focus({preventScroll:true});}
 function navigate(page,kind='navigation'){
  page=Math.max(0,Math.min(5,page));if(page>=3&&!record?.firstCompletedAt)return;if(page===state.page)return;
+ if(collectionState.checked&&!collectionState.isOpen){
+  state.page=page;state.picker=null;state.moveDraft=null;render();scrollPage();return;
+ }
  checkpoint(kind,{destinationPage:page+1});
  if(page>=3&&!record.firstResultsAt){
   record.preResultsSnapshot=copy(surveyPayload());checkpoint('before_first_results',{destinationPage:page+1});record.firstResultsAt=new Date().toISOString();
@@ -769,12 +789,13 @@ async function flushCheckpoints(){
    let reply;
    try{reply=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},credentials:'same-origin',body:JSON.stringify(event),signal:abort.signal});}
    finally{clearTimeout(timer);}
+   if(reply.status===423){collectionState.isOpen=false;collectionState.checked=true;applyReadonly();throw Error('Survey closed');}
    if(!reply.ok)throw Error('Save service returned '+reply.status);
    const receipt=await reply.json();
    if(receipt.eventId!==id||!receipt.receivedAt)throw Error('The save service did not confirm this checkpoint');
    record.outbox.shift();record.lastServerReceiptAt=receipt.receivedAt;record.confirmedRevision=Math.max(record.confirmedRevision||0,event.revision);persistRecord();
   }
- }catch(e){networkProblem='Your answers have not reached Community in Public yet. They remain on this device. Please retry when connected.';}
+ }catch(e){networkProblem=e.message==='Survey closed'?'This survey has closed. Earlier saved responses remain available, but unsent changes cannot be accepted.':'Your answers have not reached Community in Public yet. They remain on this device. Please retry when connected.';}
  finally{syncing=false;updateSaveStatus();updateCompletionMessage();}
 }
 function updateSaveStatus(){
@@ -808,7 +829,22 @@ if(window.LJOV_RESUME)resumeRemoteResponse(window.LJOV_RESUME);else flushCheckpo
 if(TRACKING_CONFIG.statusEndpoint)checkCollectionStatus();
 
 async function checkCollectionStatus(){
- try{const response=await fetch(TRACKING_CONFIG.statusEndpoint,{cache:'no-store'});const info=await response.json();const note=document.getElementById('round-notice');if(note)note.textContent=info.configured?'Round 2 testing: online response collection is enabled. Test responses are separate from future public responses.':'Round 2 testing: online saving is not connected yet. Answers remain on this device.';}catch{}
+ const note=document.getElementById('round-notice');
+ try{
+  const response=await fetch(TRACKING_CONFIG.statusEndpoint,{cache:'no-store'});
+  if(!response.ok)throw Error('Status unavailable');
+  const info=await response.json();
+  collectionState={checked:true,isOpen:info.configured===true&&info.isOpen===true,
+   closesAt:info.closesAt||null,mode:info.mode||'test'};
+  const closing='January 15, 2027, at 11:59 p.m. Toronto time';
+  if(note)note.textContent=!info.configured?'Online saving is unavailable. Please return later.':
+   collectionState.isOpen?'Test survey: responses are saved separately from public voting. You may revise until '+closing+'.':
+   'The survey is closed. You may review your saved response using your private link.';
+ }catch{
+  collectionState.checked=true;collectionState.isOpen=false;
+  if(note)note.textContent='Survey availability could not be verified. Please check your connection.';
+ }
+ render();
 }
 async function copyPrivateReturnLink(){
  await flushCheckpoints();const button=document.getElementById('copy-return-link');
@@ -830,6 +866,6 @@ async function resumeRemoteResponse(value){
   for(const key of SAVE_FIELDS)if(key in data.resumeState)state[key]=data.resumeState[key];
   record={responseId:match[1],responseToken:match[2],surveyVersion:SURVEY_VERSION,sourceVersion:SOURCE_VERSION,createdAt:data.createdAt,lastSavedAt:null,lastServerReceiptAt:data.updatedAt,revision:data.revision,answerRevision:data.answerRevision,lastAnswer:null,events:[],outbox:[],draft:null,visitedPages:data.visitedPages||[],continuedPages:data.continuedPages||[],reviewedPage3Groups:data.reviewedPage3Groups||[],status:data.status,firstResultsAt:data.firstResultsAt,preResultsSnapshot:data.preResultsSnapshot||null,firstCompletedAt:data.firstCompletedAt,lastCompletedAt:data.lastCompletedAt,lastCompletedAnswer:null,confirmedRevision:data.revision,initialDisplayOrder:data.initialDisplayOrder};
   record.lastAnswer=copy(answerData());if(record.firstCompletedAt)record.lastCompletedAnswer=JSON.stringify(answerData());
-  state.page=record.firstCompletedAt?3:Math.max(0,Math.min(2,Number(state.page)||0));state.flash='Your saved priorities have been restored.';saveDraft();render();
+  state.page=record.firstCompletedAt?3:Math.max(0,Math.min(2,Number(state.page)||0));state.flash='Your saved priorities have been restored.';saveDraft();render();applyReadonly();
  }catch(e){state.flash=e.message+' Please retry using the same private return link.';render();}
 }
