@@ -120,7 +120,7 @@ async function restore(raw){
 }
 function selectPage(i){
  if(i<0||i>=STEPS.length)return;
- if(i>=4&&!record.firstCompletedAt){notice('Complete your highest and lowest priorities to unlock results.','warning');return;}
+ if(i>=4&&(!record.firstCompletedAt||state.bottom.length!==4)){notice('Complete your highest and four lowest priorities before viewing the results.','warning');return;}
  if(!record.firstCompletedAt&&i>state.step+1){notice('Finish the earlier steps first so your survey answers are saved in sequence.','warning');return;}
  if(i===state.step)return;state.step=i;record.visitedPages=[...new Set([...record.visitedPages,i+1])];state.community=null;write();render();
  window.scrollTo({top:0,behavior:'smooth'});
@@ -211,9 +211,10 @@ function selectionPage(kind){
   '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any four topics from the middle below.')+'</div></div>'+
   '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
 }
-function relativeScore(v){
- if(!Number.isFinite(v)||Math.abs(v)<0.0000001)return '0.00';
- return (v>0?'+':'')+fmt(v,2);
+function relativeScore(v,places=2){
+ const tiny=Math.pow(10,-places)/2;
+ if(!Number.isFinite(v)||Math.abs(v)<tiny)return (0).toFixed(places);
+ return (v>0?'+':'')+fmt(v,places);
 }
 function groupDifference(c,codes,planIdx,scope){
  if(planIdx===-1)return 0;
@@ -235,7 +236,7 @@ function breakdownMatrix(c,scope,title,groups,ordered){
   const share=sum(group.codes.map(code=>c.byCode[code].weight))*100;
   const scores=ordered.map(p=>{
    const value=groupDifference(c,group.codes,p.idx,scope);
-   return '<td class="matrix-delta '+(value<0?'delta-negative':value>0?'delta-positive':'')+' '+(p.local?'reference-cell':'')+'">'+relativeScore(value)+'</td>';
+   return '<td class="matrix-delta '+(value<0?'delta-negative':value>0?'delta-positive':'')+' '+(p.local?'reference-cell':'')+'">'+relativeScore(value,3)+'</td>';
   }).join('');
   return '<tr><th scope="row">'+esc(group.name)+' <small>'+group.codes.length+' topics</small></th>'+
    '<td class="matrix-weight">'+fmt(share,1)+'%</td>'+scores+'</tr>';
