@@ -241,17 +241,54 @@ function render(){
  for(const [id,key] of [['newsletter','newsletterOptIn'],['planning-updates','planningOptIn']]){
   const el=document.getElementById(id);if(el){el.disabled=!state.email;el.addEventListener('change',()=>{state[key]=el.checked;write();});}
  }
- document.querySelectorAll('[data-select],[data-remove]').forEach(el=>el.addEventListener('click',()=>{
-  if(!canEdit())return;const kind=el.dataset.select||el.dataset.remove,key=kind==='top'?'top':'bottom',max=key==='top'?10:4;
-  const code=el.dataset.code,chosen=state[key],already=chosen.includes(code);
-  if(already)state[key]=chosen.filter(x=>x!==code);
-  else if(chosen.length<max){state[key]=[...chosen,code];if(key==='top')state.bottom=state.bottom.filter(x=>x!==code);}
-  else {notice('You have selected '+max+' topics. Remove one before choosing another.','warning');return;}
-  state.community=null;write();render();
+ let dragging=null;
+ document.querySelectorAll('[data-drag-rank]').forEach(item=>{
+  item.addEventListener('dragstart',e=>{
+   if(!canEdit())return e.preventDefault();
+   dragging={key:item.dataset.dragRank,index:+item.dataset.index};
+   e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragging.key+':'+dragging.index);
+   item.classList.add('is-dragging');
+  });
+  item.addEventListener('dragover',e=>{if(dragging&&dragging.key===item.dataset.dragRank){e.preventDefault();item.classList.add('drag-over');}});
+  item.addEventListener('dragleave',()=>item.classList.remove('drag-over'));
+  item.addEventListener('drop',e=>{
+   e.preventDefault();item.classList.remove('drag-over');
+   if(!canEdit()||!dragging||dragging.key!==item.dataset.dragRank)return;
+   const list=state[dragging.key],to=+item.dataset.index;
+   if(dragging.index!==to){
+    const [moved]=list.splice(dragging.index,1);list.splice(to,0,moved);
+    state.excludedTop=[];state.bottom=[];syncTop();state.community=null;write();render();
+   }
+   dragging=null;
+  });
+  item.addEventListener('dragend',()=>{dragging=null;item.classList.remove('is-dragging');document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});
+ });
+ document.querySelectorAll('[data-demote]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;
+  const code=el.dataset.code;
+  if(el.dataset.demote==='top'){
+   const excluded=[...new Set([...state.excludedTop,code])];
+   if(suggestions().filter(x=>!excluded.includes(x)&&!state.bottom.includes(x)).length<10){
+    notice('At least ten topics must stay eligible for the highest group. Restore an earlier topic before moving another.','warning');return;
+   }
+   state.excludedTop=excluded;
+  }else{
+   if(state.bottom.length>=4){notice('Four topics are already in the lowest group. Undo one before selecting another.','warning');return;}
+   if(state.top.includes(code))return;
+   state.bottom=[...state.bottom,code];
+  }
+  syncTop();state.community=null;write();render();
  }));
- const search=document.getElementById('topic-search');if(search){
-  search.addEventListener('input',()=>{state.search=search.value;const at=search.selectionStart;render();const next=document.getElementById('topic-search');next?.focus();next?.setSelectionRange(at,at);});
- }
+ document.querySelectorAll('[data-restore-top]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;
+  state.excludedTop=state.excludedTop.filter(code=>code!==el.dataset.restoreTop);
+  state.bottom=state.bottom.filter(code=>code!==el.dataset.restoreTop);
+  syncTop();state.community=null;write();render();
+ }));
+ document.querySelectorAll('[data-restore-middle]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;state.bottom=state.bottom.filter(code=>code!==el.dataset.restoreMiddle);
+  syncTop();state.community=null;write();render();
+ }));
  document.querySelectorAll('[data-scope]').forEach(el=>el.addEventListener('click',()=>{state.scope=el.dataset.scope;write();render();}));
  document.querySelectorAll('[data-community-view]').forEach(el=>el.addEventListener('click',()=>{state.communityView=el.dataset.communityView;render();}));
  document.getElementById('refresh-averages')?.addEventListener('click',()=>loadCommunity(true));
