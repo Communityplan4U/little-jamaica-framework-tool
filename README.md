@@ -8,8 +8,8 @@ Community in Public's community-led evaluation tool, based on the user's consoli
 
 | Group | Topics | Weight of group | Weight per topic |
 |---|---:|---:|---:|
-| Highest | 10 | 50% | 5% |
-| Middle | 19 | 47% | 47/19% (approx. 2.4737%) |
+| Highest | 10 | 60% | 6% |
+| Middle | 19 | 37% | 37/19% (approx. 1.9474%) |
 | Lowest | 4 | 3% | 0.75% |
 
 Only the explicit topic selections determine the final weights. Theme and outcome rankings generate **suggested topic order**; ties are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
@@ -65,3 +65,7 @@ Public and testing environments use **separate server-only tokens and response c
 - `supabase/functions/survey-storage/index.ts`: tightly allowlisted credential-scoped storage gateway
 
 To validate: `npm ci --ignore-scripts && npm run check`.
+
+### Updated weight distribution (November 9, 2026)
+
+Before the first recorded public submission, the weights were revised from 50% / 47% / 3% to **60% / 37% / 3%**, retaining the 10 / 19 / 4 allocation. The survey source version is `ljov-20261109-33top10-bottom4-60-37-3-v2`; drafts created on a previous version start a new response rather than mixing incompatible weights. The previous source version remains separately recorded and closed to further public submissions.
