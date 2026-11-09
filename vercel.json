@@ -1,6 +1,6 @@
 {
   "framework": null,
-  "buildCommand": "npm run check",
+  "buildCommand": "npm run build",
   "installCommand": "npm ci --ignore-scripts",
   "outputDirectory": "dist",
   "headers": [
@@ -8,20 +8,12 @@
       "source": "/(.*)",
       "headers": [
         {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive"
-        },
-        {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         },
         {
           "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
+          "value": "no-referrer"
         },
         {
           "key": "Permissions-Policy",
@@ -29,7 +21,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors https://communityinpublic.ca https://www.communityinpublic.ca https://crcd.to https://www.crcd.to"
         }
       ]
     }
