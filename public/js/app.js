@@ -1,6 +1,6 @@
 'use strict';
 const STEPS=['Rank planning themes','Rank community outcomes','Review your top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
-const STORE='cip.ljov.33.top10.bottom4.v2.';
+const STORE='cip.ljov.33.top10.bottom4.six-outcomes.v3.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
 const FRAMEWORK_REPORTS={
