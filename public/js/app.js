@@ -1,6 +1,6 @@
 'use strict';
 const STEPS=['Rank planning themes','Rank community outcomes','Select your 10 highest priorities','Select your 4 lowest priorities','Compare planning frameworks','Your priorities and the community'];
-const STORE='cip.ljov.33.top10.bottom4.v1.';
+const STORE='cip.ljov.33.top10.bottom4.v2.';
 let record=null,collection={isOpen:false,checked:false,closesAt:null,mode:'public'},saving=false;
 function freshId(){return crypto.randomUUID();}
 function write(){try{localStorage.setItem(STORE+record.responseId,JSON.stringify({record,state:{...state,community:null,loading:false,communityError:'',flash:''}}));localStorage.setItem(STORE+'active',record.responseId);}catch(e){notice('Browser storage is unavailable. Keep a copy of your private return link.','warning');}}
@@ -146,8 +146,8 @@ function selectionPage(kind){
  const heading=isTop?'Choose your ten highest-priority topics':'Choose your four lowest-priority topics';
  const sub=isTop?'Which ten topics should carry the greatest weight in evaluating the Planning Framework?':
   'Which four topics should carry the least weight relative to the others? This does not mean that you oppose them.';
- const note=isTop?'Each selected topic receives 5% of the total evaluation weight.':
-  'Each selected topic receives 0.75%. The remaining nineteen topics form an equally weighted middle group (about 2.47% each).';
+ const note=isTop?'Each selected topic receives 6% of the total evaluation weight.':
+  'Each selected topic receives 0.75%. The remaining nineteen topics form an equally weighted middle group (about 1.95% each).';
  return '<div class="selection-intro"><h3>'+heading+'</h3><p>'+sub+'</p><p class="weight-note">'+note+'</p>'+
  '<div class="selection-counter" role="status"><strong>'+chosen.length+' / '+n+'</strong> topics selected</div>'+
  '<div class="selection-current">'+(chosen.length?chosen.map(code=>'<button data-remove="'+kind+'" data-code="'+esc(code)+'">'+esc(code)+' · '+esc(byCode[code].title)+' ×</button>').join(''):'Select topics below. Suggestions are sorted by your earlier theme and outcome rankings.')+'</div>'+
@@ -205,8 +205,8 @@ function render(){
  document.getElementById('step-detail').textContent=[
   'Put the seven planning themes in order. These rankings help generate topic suggestions.',
   'Rank five outcomes by their importance. These rankings suggest topics; they do not change the final group weights.',
-  'Select exactly ten topics to receive the highest collective weight of 50%.',
-  'Select exactly four topics to receive the lowest collective weight of 3%. The middle nineteen share 47%.',
+  'Select exactly ten topics to receive the highest collective weight of 60%.',
+  'Select exactly four topics to receive the lowest collective weight of 3%. The middle nineteen share 37%.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
