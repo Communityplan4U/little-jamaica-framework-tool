@@ -152,7 +152,7 @@ test('Browser model supports additional top-ten selections with fixed 10/19/4 gr
  }
 });
 
-test('Step 2 add-to-top click updates the saved selection and Step 3 shows it',()=>{
+test('Step 3 shows all searchable other topics, permits promotion and saves selection; Step 2 does not',()=>{
  const vm=require('node:vm'),path=require('node:path');
  const get=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
  const elements=new Map(),storage=new Map();
@@ -172,9 +172,16 @@ test('Step 2 add-to-top click updates the saved selection and Step 3 shows it',(
  const app=get('public/js/app.js').split("window.addEventListener('online'")[0];
  vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js')+'\n'+app,ctx);
  vm.runInContext("collection={checked:true,isOpen:true};record={responseId:'bda6cc17-94ad-4a87-8cc6-374a09b9aa32',outbox:[],confirmedRevision:0};state.step=1;render();",ctx);
+ assert.doesNotMatch(element('stage').innerHTML,/id="topic-search"/);
+ assert.match(element('stage').innerHTML,/Rank the five community outcomes/);
+ vm.runInContext('state.step=2;render()',ctx);
  const state=vm.runInContext('state',ctx),before=state.top.slice();
  const toAdd=C.find(code=>!before.includes(code));
  assert.match(element('stage').innerHTML,/id="topic-search"/);
+ assert.match(element('stage').innerHTML,/Review your top 10 priorities/);
+ element('topic-search').value=toAdd;
+ element('topic-search').events.input();
+ assert.match(element('topic-browser-results').innerHTML,new RegExp('data-add-top="'+toAdd+'"'));
  const handler=element('topic-browser-results').events.click;
  assert.equal(typeof handler,'function');
  handler({target:{closest:()=>({dataset:{addTop:toAdd}})}});
