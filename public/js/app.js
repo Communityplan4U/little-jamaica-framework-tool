@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning themes','Rank community outcomes','Select your 10 highest priorities','Select your 4 lowest priorities','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning themes','Rank community outcomes','Review suggested top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.v2.';
 let record=null,collection={isOpen:false,checked:false,closesAt:null,mode:'public'},saving=false;
 function freshId(){return crypto.randomUUID();}
@@ -8,7 +8,7 @@ function init(){
  let saved=null;try{const id=localStorage.getItem(STORE+'active');saved=id?JSON.parse(localStorage.getItem(STORE+id)||'null'):null;}catch{}
  if(saved&&saved.record?.sourceVersion===METHOD.id){
   record=saved.record;const d=saved.state||{};
-  for(const key of ['step','ranking','outcomeRanking','top','bottom','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
+  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
    if(Object.prototype.hasOwnProperty.call(d,key))state[key]=d[key];
   }
  }
@@ -17,7 +17,7 @@ function init(){
    sourceVersion:METHOD.id,revision:0,answerRevision:0,continuedPages:[],visitedPages:[1],
    firstCompletedAt:null,confirmedRevision:0,outbox:[],createdAt:new Date().toISOString(),lastSnapshot:null};
  }
- write();
+ syncTop();write();
 }
 function notice(s,kind='info'){const n=document.getElementById('notice');if(!n)return;n.textContent=s;n.dataset.kind=kind;n.hidden=false;}
 function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=true;}
@@ -33,7 +33,7 @@ async function status(){
  render();
 }
 function privateLink(){return location.origin+location.pathname+'#resume='+encodeURIComponent(record.responseId+'.'+record.responseToken);}
-function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,connections:state.connections,
+function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,connections:state.connections,
  feedback:state.feedback,scope:state.scope,email:'',newsletterOptIn:false,planningOptIn:false};}
 function checkpoint(kind){
  if(!canEdit())throw Error('The survey is closed. No changes can be submitted.');
@@ -89,7 +89,7 @@ async function restore(raw){
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
   Object.assign(state,{step:d.firstCompletedAt?4:Math.max(0,Math.min(3,p.page||0)),
-   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
+   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:suggestions().filter(code=>!top.includes(code)).slice(0,10),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
    email:p.email||'',newsletterOptIn:!!p.newsletterOptIn,planningOptIn:!!p.planningOptIn,complete:!!d.firstCompletedAt,community:null});
   record={responseId:m[1],responseToken:m[2],sourceVersion:METHOD.id,
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
@@ -205,13 +205,13 @@ function render(){
  document.getElementById('step-detail').textContent=[
   'Put the seven planning themes in order. These rankings help generate topic suggestions.',
   'Rank five outcomes by their importance. These rankings suggest topics; they do not change the final group weights.',
-  'Select exactly ten topics to receive the highest collective weight of 60%.',
-  'Select exactly four topics to receive the lowest collective weight of 3%. The middle nineteen share 37%.',
+  'Review the suggested ten highest topics based on your theme and outcome rankings. Move any to middle where the next eligible suggestion fills its place.',
+  'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
  const root=document.getElementById('stage');
- root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>The themes are listed in alphabetical order at first. Put the most important at the top.</p>'+optionRank(THEMES,'ranking')+'</div>':
+ root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>The themes are listed in alphabetical order at first. Drag themes to reorder them, or use the arrow buttons. Put the most important at the top.</p>'+optionRank(THEMES,'ranking')+'</div>':
   step===1?'<div class="subpanel"><h3>Rank the five community outcomes</h3><p>Move the most important outcome to the top. Select “See covered topics” under an outcome to view its connections.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
    METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
@@ -223,7 +223,7 @@ function render(){
  document.querySelectorAll('[data-step]').forEach(el=>el.addEventListener('click',()=>selectPage(+el.dataset.step)));
  document.querySelectorAll('[data-rank]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;const list=state[el.dataset.rank],i=+el.dataset.index,j=i+(+el.dataset.dir);
-  if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];state.community=null;write();render();
+  if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];state.excludedTop=[];state.bottom=[];syncTop();state.community=null;write();render();
  }));
  document.querySelectorAll('[data-connection]').forEach(el=>el.addEventListener('change',()=>{
   state.connections=el.checked?[...new Set([...state.connections,el.dataset.connection])]:state.connections.filter(x=>x!==el.dataset.connection);write();
@@ -254,7 +254,7 @@ function render(){
  document.getElementById('save-comment')?.addEventListener('click',async()=>{state.feedback=document.getElementById('comment').value;const ok=await save('comments_shared');if(ok)notice('Your comments and current priorities were saved online.');});
  document.getElementById('private-link')?.addEventListener('click',copyLink);
  document.getElementById('download-my-response')?.addEventListener('click',downloadCsv);
- document.querySelectorAll('[data-rank],[data-select],[data-remove],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
+ document.querySelectorAll('[data-rank],[data-demote],[data-restore-top],[data-restore-middle],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
  renderSaveBadge();
 }
 async function next(){
@@ -264,7 +264,7 @@ async function next(){
   if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){notice('Enter a valid email or leave it blank.','warning');return;}
   state.email=email;
  }
- if(state.step===2&&state.top.length!==10){notice('Please select exactly ten highest-priority topics before continuing.','warning');return;}
+ if(state.step===2&&syncTop().length!==10){notice('Ten highest-priority topics are required. Restore an earlier topic.','warning');return;}
  if(state.step===3&&state.bottom.length!==4){notice('Please select exactly four lowest-priority topics before continuing.','warning');return;}
  if(state.step>=4){selectPage(state.step+1);return;}
  const nextStep=state.step+1;
