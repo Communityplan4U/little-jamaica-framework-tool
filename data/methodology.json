@@ -71,5 +71,5 @@
   ],
   "sourceFile": "LJOVPF_Comparator_Assessment.xlsx",
   "aggregation": "each completed response contributes once; provisional averages available from first completion",
-  "explicitChoice": "participant selects 10 highest and 4 lowest topics; remaining 19 middle; group weights fixed regardless of tie order"
+  "explicitChoice": "Ten highest topics are suggested from the ranked themes and outcomes; participants may move suggested topics to the middle, automatically filling each slot with the next eligible suggestion; participants select four lowest from the remaining middle topics, leaving nineteen in the middle."
 }

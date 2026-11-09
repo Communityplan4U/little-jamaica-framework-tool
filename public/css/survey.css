@@ -28,3 +28,14 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
 .save-state{margin:0 0 18px;font-size:.79rem;color:#6c5c75}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{position:static}.sidebar #steps{display:flex;overflow:auto}.sidebar #steps button{min-width:125px}.sidebar h3{margin:0 0 5px}.topic-grid{grid-template-columns:1fr}}
 @media(max-width:530px){.wide{padding-left:14px;padding-right:14px}.lead{padding-top:22px}.layout{gap:12px}.sitehead .wide{min-height:65px}.tagline{display:none}.connections{grid-template-columns:1fr}.panel-head,.panel-body,.panel-actions{padding-left:16px;padding-right:16px}.subpanel{padding:15px}.rank-item{grid-template-columns:29px 1fr auto;padding:9px}.score-row{font-size:.85rem}.score-feature{align-items:flex-start;flex-direction:column}.compare-bars{grid-template-columns:1fr}}
+
+.rank-item{grid-template-columns:20px 34px minmax(0,1fr) auto;cursor:grab}
+.rank-item:active{cursor:grabbing}
+.drag-handle{font-size:1.2rem;color:#795689;font-weight:900;letter-spacing:-.13em;user-select:none}
+.rank-item.is-dragging{opacity:.55}
+.rank-item.drag-over{border-color:#62357a;box-shadow:0 0 0 2px #b99ad0;background:#f7f0fb}
+.topic-proposed{display:block;font-size:.76rem;font-weight:750;color:#68427b}
+.review-demotions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.review-demotions strong{flex-basis:100%;font-size:.88rem}
+.review-demotions button{border:1px solid #b8a1c8;background:white;border-radius:8px;padding:7px 10px;font-size:.84rem;color:#553267;cursor:pointer}
+@media(max-width:530px){.rank-item{grid-template-columns:17px 29px minmax(0,1fr) auto}}

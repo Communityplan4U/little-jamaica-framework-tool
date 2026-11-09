@@ -6,7 +6,7 @@ const PRIORITY_NAMES=METHOD.groupNames,COUNTS=METHOD.groupCounts,SHARES=METHOD.g
 const weights=SHARES.map((share,i)=>share/100/COUNTS[i]);
 const configs=window.LJOV_CONFIG||{};
 const state={step:0,ranking:THEMES.slice(),outcomeRanking:OUTCOMES.slice(),
-  top:[],bottom:[],email:'',newsletterOptIn:false,planningOptIn:false,connections:[],
+  top:[],bottom:[],excludedTop:[],email:'',newsletterOptIn:false,planningOptIn:false,connections:[],
   feedback:'',scope:'vision',communityView:'topics',community:null,communityError:'',loading:false,complete:false,flash:''};
 const fmt=(n,d=1)=>Number(n).toFixed(d);
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));

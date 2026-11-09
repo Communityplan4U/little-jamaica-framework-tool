@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning themes','Rank community outcomes','Select your 10 highest priorities','Select your 4 lowest priorities','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning themes','Rank community outcomes','Review suggested top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.v2.';
 let record=null,collection={isOpen:false,checked:false,closesAt:null,mode:'public'},saving=false;
 function freshId(){return crypto.randomUUID();}
@@ -8,16 +8,18 @@ function init(){
  let saved=null;try{const id=localStorage.getItem(STORE+'active');saved=id?JSON.parse(localStorage.getItem(STORE+id)||'null'):null;}catch{}
  if(saved&&saved.record?.sourceVersion===METHOD.id){
   record=saved.record;const d=saved.state||{};
-  for(const key of ['step','ranking','outcomeRanking','top','bottom','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
+  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
    if(Object.prototype.hasOwnProperty.call(d,key))state[key]=d[key];
   }
+  if(!Array.isArray(d.excludedTop)&&Array.isArray(d.top)&&d.top.length===10)
+   state.excludedTop=CODES.filter(code=>!d.top.includes(code));
  }
  if(!record){
   record={responseId:freshId(),responseToken:freshId().replace(/-/g,'')+freshId().replace(/-/g,''),
    sourceVersion:METHOD.id,revision:0,answerRevision:0,continuedPages:[],visitedPages:[1],
    firstCompletedAt:null,confirmedRevision:0,outbox:[],createdAt:new Date().toISOString(),lastSnapshot:null};
  }
- write();
+ syncTop();write();
 }
 function notice(s,kind='info'){const n=document.getElementById('notice');if(!n)return;n.textContent=s;n.dataset.kind=kind;n.hidden=false;}
 function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=true;}
@@ -33,7 +35,7 @@ async function status(){
  render();
 }
 function privateLink(){return location.origin+location.pathname+'#resume='+encodeURIComponent(record.responseId+'.'+record.responseToken);}
-function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,connections:state.connections,
+function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,connections:state.connections,
  feedback:state.feedback,scope:state.scope,email:'',newsletterOptIn:false,planningOptIn:false};}
 function checkpoint(kind){
  if(!canEdit())throw Error('The survey is closed. No changes can be submitted.');
@@ -89,13 +91,13 @@ async function restore(raw){
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
   Object.assign(state,{step:d.firstCompletedAt?4:Math.max(0,Math.min(3,p.page||0)),
-   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
+   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===10?CODES.filter(code=>!top.includes(code)):[]),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
    email:p.email||'',newsletterOptIn:!!p.newsletterOptIn,planningOptIn:!!p.planningOptIn,complete:!!d.firstCompletedAt,community:null});
   record={responseId:m[1],responseToken:m[2],sourceVersion:METHOD.id,
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
    visitedPages:d.visitedPages||[1],firstCompletedAt:d.firstCompletedAt||null,confirmedRevision:d.revision||0,
    createdAt:d.createdAt,outbox:[],lastSnapshot:null};
-  write();notice('Your response has been restored. You may revise it until the survey closes.');render();
+  syncTop();write();notice('Your response has been restored. You may revise it until the survey closes.');render();
  }catch(e){notice(e.message+' Your existing browser response was not changed.','warning');}
 }
 function selectPage(i){
@@ -107,13 +109,13 @@ function selectPage(i){
  if(i===5)loadCommunity();
 }
 function optionRank(items,listKey){
- const values=state[listKey];
- return '<div class="rank-items">'+values.map((id,i)=>{
+ return '<div class="rank-items">'+state[listKey].map((id,i)=>{
   const title=listKey==='ranking'?id:METHOD.outcomes.find(o=>o.id===id).title;
-  const help=listKey==='ranking'?(''+WB.themes.find(t=>t.name===id).count+' assessment topics'):(METHOD.outcomes.find(o=>o.id===id).desc);
-  return '<div class="rank-item"><div class="rank-number">'+(i+1)+'</div><div><strong>'+esc(title)+'</strong><p>'+esc(help)+'</p></div><div class="rank-buttons">'+
-   '<button data-rank="'+esc(listKey)+'" data-index="'+i+'" data-dir="-1" '+(i===0?'disabled':'')+' aria-label="Move '+esc(title)+' up">↑</button>'+
-   '<button data-rank="'+esc(listKey)+'" data-index="'+i+'" data-dir="1" '+(i===values.length-1?'disabled':'')+' aria-label="Move '+esc(title)+' down">↓</button></div></div>';
+  const help=listKey==='ranking'?WB.themes.find(t=>t.name===id).count+' assessment topics':METHOD.outcomes.find(o=>o.id===id).desc;
+  return '<div class="rank-item" draggable="'+canEdit()+'" data-drag-rank="'+listKey+'" data-index="'+i+'"><span class="drag-handle" aria-hidden="true">⋮⋮</span>'+
+   '<div class="rank-number">'+(i+1)+'</div><div><strong>'+esc(title)+'</strong><p>'+esc(help)+'</p></div><div class="rank-buttons">'+
+   '<button type="button" data-rank="'+listKey+'" data-index="'+i+'" data-dir="-1" '+(i===0?'disabled':'')+' aria-label="Move '+esc(title)+' up">↑</button>'+
+   '<button type="button" data-rank="'+listKey+'" data-index="'+i+'" data-dir="1" '+(i===state[listKey].length-1?'disabled':'')+' aria-label="Move '+esc(title)+' down">↓</button></div></div>';
  }).join('')+'</div>';
 }
 function connectionForm(){
@@ -131,29 +133,34 @@ function connectionForm(){
   '<p class="help">These permissions are independent and unchecked by default. Messages are not sent automatically by this survey.</p>'+
   '<details class="privacy"><summary>Privacy and community averages</summary><p>Community in Public stores survey answers separately from optional contact details. Completed participants may view aggregate priorities from the first completed response onward. When very few people have responded, averages can closely reflect an individual respondent’s choices. Keep your private return link confidential; it provides access to your response and allows revisions before the closing date.</p></details></section>';
 }
-function topicTile(t,kind){
- const active=kind==='top'?state.top.includes(t.code):state.bottom.includes(t.code);
- const help=t.summary||t.assesses;
- return '<article class="topic-tile '+(active?'chosen':'')+'"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
- '<h3>'+esc(t.title)+'</h3><p>'+esc(help)+'</p><details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details>'+
- '<button type="button" data-select="'+kind+'" data-code="'+esc(t.code)+'" aria-pressed="'+active+'" '+(!canEdit()?'disabled':'')+
- ' class="pick '+(active?'picked':'')+'">'+(active?'✓ Selected':kind==='top'?'Select as highest priority':'Select as lowest priority')+'</button></article>';
+function topicTile(t,kind,index){
+ const action=kind==='top'?'Move to middle priorities':'Move to lowest priorities';
+ return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
+  '<span class="topic-proposed">#'+index+' · '+(kind==='top'?'Suggested highest priority':'Middle priority')+'</span>'+
+  '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
+  '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details>'+
+  '<button type="button" class="pick" data-demote="'+kind+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+action+' ↓</button></article>';
 }
 function selectionPage(kind){
- const isTop=kind==='top',n=isTop?10:4,chosen=isTop?state.top:state.bottom;
- const candidates=isTop?suggestions():suggestions().slice().reverse().filter(code=>!state.top.includes(code));
- const filtered=candidates.filter(code=>!state.search||byCode[code].title.toLowerCase().includes(state.search.toLowerCase())||code.toLowerCase().includes(state.search.toLowerCase())||byCode[code].theme.toLowerCase().includes(state.search.toLowerCase()));
- const heading=isTop?'Choose your ten highest-priority topics':'Choose your four lowest-priority topics';
- const sub=isTop?'Which ten topics should carry the greatest weight in evaluating the Planning Framework?':
-  'Which four topics should carry the least weight relative to the others? This does not mean that you oppose them.';
- const note=isTop?'Each selected topic receives 6% of the total evaluation weight.':
-  'Each selected topic receives 0.75%. The remaining nineteen topics form an equally weighted middle group (about 1.95% each).';
- return '<div class="selection-intro"><h3>'+heading+'</h3><p>'+sub+'</p><p class="weight-note">'+note+'</p>'+
- '<div class="selection-counter" role="status"><strong>'+chosen.length+' / '+n+'</strong> topics selected</div>'+
- '<div class="selection-current">'+(chosen.length?chosen.map(code=>'<button data-remove="'+kind+'" data-code="'+esc(code)+'">'+esc(code)+' · '+esc(byCode[code].title)+' ×</button>').join(''):'Select topics below. Suggestions are sorted by your earlier theme and outcome rankings.')+'</div>'+
- '<p class="help">Your earlier rankings suggest an order, but only your explicit selections determine the final weights. You can choose any topics, regardless of their suggested position.</p>'+
- '<label class="field-label" for="topic-search">Find a topic</label><input class="search" id="topic-search" value="'+esc(state.search||'')+'" placeholder="Search by topic or theme"></div>'+
- '<div class="topic-grid">'+filtered.map(code=>topicTile(byCode[code],kind)).join('')+'</div>';
+ const proposed=suggestions(),highest=syncTop();
+ if(kind==='top'){
+  const rejected=proposed.filter(code=>state.excludedTop.includes(code));
+  return '<div class="selection-intro"><h3>Review your suggested top 10</h3>'+
+   '<p>Based on the planning themes and community outcomes you ranked, these ten topics are proposed for the highest priority group.</p>'+
+   '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
+   '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
+   '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
+   (rejected.length?'<div class="review-demotions"><strong>Moved to middle · select to restore</strong>'+
+    rejected.map(code=>'<button type="button" data-restore-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' ↶ Restore</button>').join('')+'</div>':'')+'</div>'+
+   '<div class="topic-grid">'+highest.map((code,i)=>topicTile(byCode[code],'top',i+1)).join('')+'</div>';
+ }
+ const middle=proposed.filter(code=>!highest.includes(code)&&!state.bottom.includes(code));
+ return '<div class="selection-intro"><h3>Move four middle topics to lowest priority</h3>'+
+  '<p>These topics are in the middle after Step 3. Choose four to carry the lowest relative weight. This does not mean you oppose them.</p>'+
+  '<p class="weight-note">The lowest four share 3% (0.75% each). The remaining nineteen middle topics share 37% (about 1.95% each).</p>'+
+  '<div class="selection-counter"><strong>'+state.bottom.length+' / 4</strong> lowest-priority topics selected</div>'+
+  '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any four topics from the middle below.')+'</div></div>'+
+  '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
 }
 function resultsPage(){
  const c=calculate(),full=state.scope==='full',key=full?'full':'vision';
@@ -205,13 +212,13 @@ function render(){
  document.getElementById('step-detail').textContent=[
   'Put the seven planning themes in order. These rankings help generate topic suggestions.',
   'Rank five outcomes by their importance. These rankings suggest topics; they do not change the final group weights.',
-  'Select exactly ten topics to receive the highest collective weight of 60%.',
-  'Select exactly four topics to receive the lowest collective weight of 3%. The middle nineteen share 37%.',
+  'Review the suggested ten highest topics based on your theme and outcome rankings. Move any to middle where the next eligible suggestion fills its place.',
+  'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
  const root=document.getElementById('stage');
- root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>The themes are listed in alphabetical order at first. Put the most important at the top.</p>'+optionRank(THEMES,'ranking')+'</div>':
+ root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>The themes are listed in alphabetical order at first. Drag themes to reorder them, or use the arrow buttons. Put the most important at the top.</p>'+optionRank(THEMES,'ranking')+'</div>':
   step===1?'<div class="subpanel"><h3>Rank the five community outcomes</h3><p>Move the most important outcome to the top. Select “See covered topics” under an outcome to view its connections.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
    METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
@@ -223,7 +230,7 @@ function render(){
  document.querySelectorAll('[data-step]').forEach(el=>el.addEventListener('click',()=>selectPage(+el.dataset.step)));
  document.querySelectorAll('[data-rank]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;const list=state[el.dataset.rank],i=+el.dataset.index,j=i+(+el.dataset.dir);
-  if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];state.community=null;write();render();
+  if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];state.excludedTop=[];state.bottom=[];syncTop();state.community=null;write();render();
  }));
  document.querySelectorAll('[data-connection]').forEach(el=>el.addEventListener('change',()=>{
   state.connections=el.checked?[...new Set([...state.connections,el.dataset.connection])]:state.connections.filter(x=>x!==el.dataset.connection);write();
@@ -236,17 +243,54 @@ function render(){
  for(const [id,key] of [['newsletter','newsletterOptIn'],['planning-updates','planningOptIn']]){
   const el=document.getElementById(id);if(el){el.disabled=!state.email;el.addEventListener('change',()=>{state[key]=el.checked;write();});}
  }
- document.querySelectorAll('[data-select],[data-remove]').forEach(el=>el.addEventListener('click',()=>{
-  if(!canEdit())return;const kind=el.dataset.select||el.dataset.remove,key=kind==='top'?'top':'bottom',max=key==='top'?10:4;
-  const code=el.dataset.code,chosen=state[key],already=chosen.includes(code);
-  if(already)state[key]=chosen.filter(x=>x!==code);
-  else if(chosen.length<max){state[key]=[...chosen,code];if(key==='top')state.bottom=state.bottom.filter(x=>x!==code);}
-  else {notice('You have selected '+max+' topics. Remove one before choosing another.','warning');return;}
-  state.community=null;write();render();
+ let dragging=null;
+ document.querySelectorAll('[data-drag-rank]').forEach(item=>{
+  item.addEventListener('dragstart',e=>{
+   if(!canEdit())return e.preventDefault();
+   dragging={key:item.dataset.dragRank,index:+item.dataset.index};
+   e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragging.key+':'+dragging.index);
+   item.classList.add('is-dragging');
+  });
+  item.addEventListener('dragover',e=>{if(dragging&&dragging.key===item.dataset.dragRank){e.preventDefault();item.classList.add('drag-over');}});
+  item.addEventListener('dragleave',()=>item.classList.remove('drag-over'));
+  item.addEventListener('drop',e=>{
+   e.preventDefault();item.classList.remove('drag-over');
+   if(!canEdit()||!dragging||dragging.key!==item.dataset.dragRank)return;
+   const list=state[dragging.key],to=+item.dataset.index;
+   if(dragging.index!==to){
+    const [moved]=list.splice(dragging.index,1);list.splice(to,0,moved);
+    state.excludedTop=[];state.bottom=[];syncTop();state.community=null;write();render();
+   }
+   dragging=null;
+  });
+  item.addEventListener('dragend',()=>{dragging=null;item.classList.remove('is-dragging');document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});
+ });
+ document.querySelectorAll('[data-demote]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;
+  const code=el.dataset.code;
+  if(el.dataset.demote==='top'){
+   const excluded=[...new Set([...state.excludedTop,code])];
+   if(suggestions().filter(x=>!excluded.includes(x)&&!state.bottom.includes(x)).length<10){
+    notice('At least ten topics must stay eligible for the highest group. Restore an earlier topic before moving another.','warning');return;
+   }
+   state.excludedTop=excluded;
+  }else{
+   if(state.bottom.length>=4){notice('Four topics are already in the lowest group. Undo one before selecting another.','warning');return;}
+   if(state.top.includes(code))return;
+   state.bottom=[...state.bottom,code];
+  }
+  syncTop();state.community=null;write();render();
  }));
- const search=document.getElementById('topic-search');if(search){
-  search.addEventListener('input',()=>{state.search=search.value;const at=search.selectionStart;render();const next=document.getElementById('topic-search');next?.focus();next?.setSelectionRange(at,at);});
- }
+ document.querySelectorAll('[data-restore-top]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;
+  state.excludedTop=state.excludedTop.filter(code=>code!==el.dataset.restoreTop);
+  state.bottom=state.bottom.filter(code=>code!==el.dataset.restoreTop);
+  syncTop();state.community=null;write();render();
+ }));
+ document.querySelectorAll('[data-restore-middle]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;state.bottom=state.bottom.filter(code=>code!==el.dataset.restoreMiddle);
+  syncTop();state.community=null;write();render();
+ }));
  document.querySelectorAll('[data-scope]').forEach(el=>el.addEventListener('click',()=>{state.scope=el.dataset.scope;write();render();}));
  document.querySelectorAll('[data-community-view]').forEach(el=>el.addEventListener('click',()=>{state.communityView=el.dataset.communityView;render();}));
  document.getElementById('refresh-averages')?.addEventListener('click',()=>loadCommunity(true));
@@ -254,7 +298,7 @@ function render(){
  document.getElementById('save-comment')?.addEventListener('click',async()=>{state.feedback=document.getElementById('comment').value;const ok=await save('comments_shared');if(ok)notice('Your comments and current priorities were saved online.');});
  document.getElementById('private-link')?.addEventListener('click',copyLink);
  document.getElementById('download-my-response')?.addEventListener('click',downloadCsv);
- document.querySelectorAll('[data-rank],[data-select],[data-remove],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
+ document.querySelectorAll('[data-rank],[data-demote],[data-restore-top],[data-restore-middle],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
  renderSaveBadge();
 }
 async function next(){
@@ -264,7 +308,7 @@ async function next(){
   if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){notice('Enter a valid email or leave it blank.','warning');return;}
   state.email=email;
  }
- if(state.step===2&&state.top.length!==10){notice('Please select exactly ten highest-priority topics before continuing.','warning');return;}
+ if(state.step===2&&syncTop().length!==10){notice('Ten highest-priority topics are required. Restore an earlier topic.','warning');return;}
  if(state.step===3&&state.bottom.length!==4){notice('Please select exactly four lowest-priority topics before continuing.','warning');return;}
  if(state.step>=4){selectPage(state.step+1);return;}
  const nextStep=state.step+1;
