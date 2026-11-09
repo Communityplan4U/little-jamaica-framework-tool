@@ -841,7 +841,7 @@ async function checkCollectionStatus(){
   collectionState.checked=true;collectionState.isOpen=false;
   if(note)note.textContent='Survey availability could not be verified. Please check your connection.';
  }
- applyReadonly();
+ render();
 }
 async function copyPrivateReturnLink(){
  await flushCheckpoints();const button=document.getElementById('copy-return-link');
