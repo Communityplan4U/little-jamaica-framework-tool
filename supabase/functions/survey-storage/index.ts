@@ -1,7 +1,7 @@
 // Restricted server-to-server gateway, with separate production and test tokens.
 // Only the SHA256 digests appear here. Vercel keeps the actual tokens encrypted.
 const TEST_DIGEST='4e55269a086cff01d8e818bc544247f8c63f644da1b027c240836be6bbdc0fa2';
-const PUBLIC_DIGEST='__PUBLIC_DIGEST__';
+const PUBLIC_DIGEST='7ec26ae6ed790124ae2274fbf3ef510e67746c42bb1e9bc3d9822d8e413a619a';
 const OPS=new Set(['ljov_check_rate','ljov_save_checkpoint','ljov_resume_response_for_mode','ljov_collection_status','ljov_community_average']);
 const encoder=new TextEncoder();
 function reply(status:number,value:unknown){return new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});}
