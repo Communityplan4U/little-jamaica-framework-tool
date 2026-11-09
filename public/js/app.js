@@ -107,13 +107,13 @@ function selectPage(i){
  if(i===5)loadCommunity();
 }
 function optionRank(items,listKey){
- const values=state[listKey];
- return '<div class="rank-items">'+values.map((id,i)=>{
+ return '<div class="rank-items">'+state[listKey].map((id,i)=>{
   const title=listKey==='ranking'?id:METHOD.outcomes.find(o=>o.id===id).title;
-  const help=listKey==='ranking'?(''+WB.themes.find(t=>t.name===id).count+' assessment topics'):(METHOD.outcomes.find(o=>o.id===id).desc);
-  return '<div class="rank-item"><div class="rank-number">'+(i+1)+'</div><div><strong>'+esc(title)+'</strong><p>'+esc(help)+'</p></div><div class="rank-buttons">'+
-   '<button data-rank="'+esc(listKey)+'" data-index="'+i+'" data-dir="-1" '+(i===0?'disabled':'')+' aria-label="Move '+esc(title)+' up">↑</button>'+
-   '<button data-rank="'+esc(listKey)+'" data-index="'+i+'" data-dir="1" '+(i===values.length-1?'disabled':'')+' aria-label="Move '+esc(title)+' down">↓</button></div></div>';
+  const help=listKey==='ranking'?WB.themes.find(t=>t.name===id).count+' assessment topics':METHOD.outcomes.find(o=>o.id===id).desc;
+  return '<div class="rank-item" draggable="'+canEdit()+'" data-drag-rank="'+listKey+'" data-index="'+i+'"><span class="drag-handle" aria-hidden="true">⋮⋮</span>'+
+   '<div class="rank-number">'+(i+1)+'</div><div><strong>'+esc(title)+'</strong><p>'+esc(help)+'</p></div><div class="rank-buttons">'+
+   '<button type="button" data-rank="'+listKey+'" data-index="'+i+'" data-dir="-1" '+(i===0?'disabled':'')+' aria-label="Move '+esc(title)+' up">↑</button>'+
+   '<button type="button" data-rank="'+listKey+'" data-index="'+i+'" data-dir="1" '+(i===state[listKey].length-1?'disabled':'')+' aria-label="Move '+esc(title)+' down">↓</button></div></div>';
  }).join('')+'</div>';
 }
 function connectionForm(){
