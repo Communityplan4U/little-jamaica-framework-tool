@@ -10,4 +10,8 @@ From **Table Editor**, choose schema `survey_private`. Open `v_responses` for ea
 
 Email is optional. Newsletter and Little Jamaica updates use separate unchecked permissions. No email sending is active.
 
-The public Page 6 endpoint exposes only aggregate results after at least five completed responses. Test responses are excluded from the public average.
+The public Page 6 endpoint exposes only aggregate results after the first completed response. Test responses are excluded from the public average.
+
+## Small-group privacy
+
+Page 6 is available only to someone with a valid private return link for a **completed** response. A one-response average is identical to that person's answer, and even small multi-response averages may reveal information by subtraction. Participants are informed of this in the survey. There is no anonymous comparison API. Avoid exporting or publishing early averages outside the completed-participant interface.
