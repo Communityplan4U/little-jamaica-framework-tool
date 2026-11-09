@@ -131,29 +131,34 @@ function connectionForm(){
   '<p class="help">These permissions are independent and unchecked by default. Messages are not sent automatically by this survey.</p>'+
   '<details class="privacy"><summary>Privacy and community averages</summary><p>Community in Public stores survey answers separately from optional contact details. Completed participants may view aggregate priorities from the first completed response onward. When very few people have responded, averages can closely reflect an individual respondent’s choices. Keep your private return link confidential; it provides access to your response and allows revisions before the closing date.</p></details></section>';
 }
-function topicTile(t,kind){
- const active=kind==='top'?state.top.includes(t.code):state.bottom.includes(t.code);
- const help=t.summary||t.assesses;
- return '<article class="topic-tile '+(active?'chosen':'')+'"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
- '<h3>'+esc(t.title)+'</h3><p>'+esc(help)+'</p><details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details>'+
- '<button type="button" data-select="'+kind+'" data-code="'+esc(t.code)+'" aria-pressed="'+active+'" '+(!canEdit()?'disabled':'')+
- ' class="pick '+(active?'picked':'')+'">'+(active?'✓ Selected':kind==='top'?'Select as highest priority':'Select as lowest priority')+'</button></article>';
+function topicTile(t,kind,index){
+ const action=kind==='top'?'Move to middle priorities':'Move to lowest priorities';
+ return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
+  '<span class="topic-proposed">#'+index+' · '+(kind==='top'?'Suggested highest priority':'Middle priority')+'</span>'+
+  '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
+  '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details>'+
+  '<button type="button" class="pick" data-demote="'+kind+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+action+' ↓</button></article>';
 }
 function selectionPage(kind){
- const isTop=kind==='top',n=isTop?10:4,chosen=isTop?state.top:state.bottom;
- const candidates=isTop?suggestions():suggestions().slice().reverse().filter(code=>!state.top.includes(code));
- const filtered=candidates.filter(code=>!state.search||byCode[code].title.toLowerCase().includes(state.search.toLowerCase())||code.toLowerCase().includes(state.search.toLowerCase())||byCode[code].theme.toLowerCase().includes(state.search.toLowerCase()));
- const heading=isTop?'Choose your ten highest-priority topics':'Choose your four lowest-priority topics';
- const sub=isTop?'Which ten topics should carry the greatest weight in evaluating the Planning Framework?':
-  'Which four topics should carry the least weight relative to the others? This does not mean that you oppose them.';
- const note=isTop?'Each selected topic receives 6% of the total evaluation weight.':
-  'Each selected topic receives 0.75%. The remaining nineteen topics form an equally weighted middle group (about 1.95% each).';
- return '<div class="selection-intro"><h3>'+heading+'</h3><p>'+sub+'</p><p class="weight-note">'+note+'</p>'+
- '<div class="selection-counter" role="status"><strong>'+chosen.length+' / '+n+'</strong> topics selected</div>'+
- '<div class="selection-current">'+(chosen.length?chosen.map(code=>'<button data-remove="'+kind+'" data-code="'+esc(code)+'">'+esc(code)+' · '+esc(byCode[code].title)+' ×</button>').join(''):'Select topics below. Suggestions are sorted by your earlier theme and outcome rankings.')+'</div>'+
- '<p class="help">Your earlier rankings suggest an order, but only your explicit selections determine the final weights. You can choose any topics, regardless of their suggested position.</p>'+
- '<label class="field-label" for="topic-search">Find a topic</label><input class="search" id="topic-search" value="'+esc(state.search||'')+'" placeholder="Search by topic or theme"></div>'+
- '<div class="topic-grid">'+filtered.map(code=>topicTile(byCode[code],kind)).join('')+'</div>';
+ const proposed=suggestions(),highest=syncTop();
+ if(kind==='top'){
+  const rejected=proposed.filter(code=>state.excludedTop.includes(code));
+  return '<div class="selection-intro"><h3>Review your suggested top 10</h3>'+
+   '<p>Based on the planning themes and community outcomes you ranked, these ten topics are proposed for the highest priority group.</p>'+
+   '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
+   '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
+   '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
+   (rejected.length?'<div class="review-demotions"><strong>Moved to middle · select to restore</strong>'+
+    rejected.map(code=>'<button type="button" data-restore-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' ↶ Restore</button>').join('')+'</div>':'')+'</div>'+
+   '<div class="topic-grid">'+highest.map((code,i)=>topicTile(byCode[code],'top',i+1)).join('')+'</div>';
+ }
+ const middle=proposed.filter(code=>!highest.includes(code)&&!state.bottom.includes(code));
+ return '<div class="selection-intro"><h3>Move four middle topics to lowest priority</h3>'+
+  '<p>These topics are in the middle after Step 3. Choose four to carry the lowest relative weight. This does not mean you oppose them.</p>'+
+  '<p class="weight-note">The lowest four share 3% (0.75% each). The remaining nineteen middle topics share 37% (about 1.95% each).</p>'+
+  '<div class="selection-counter"><strong>'+state.bottom.length+' / 4</strong> lowest-priority topics selected</div>'+
+  '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any four topics from the middle below.')+'</div></div>'+
+  '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
 }
 function resultsPage(){
  const c=calculate(),full=state.scope==='full',key=full?'full':'vision';
