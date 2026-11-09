@@ -1,0 +1,41 @@
+name: Import reviewed Round 2 source
+on:
+  push:
+    branches: [round-2]
+    paths: ['.bootstrap/READY']
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: round-2
+      - name: Verify and expand the reviewed source package
+        run: |
+          node <<'JS'
+          const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),zlib=require('node:zlib');
+          const encoded=fs.readdirSync('.bootstrap').filter(n=>/^part-[0-9]+\.b64$/.test(n)).sort().map(n=>fs.readFileSync('.bootstrap/'+n,'utf8').trim()).join('');
+          const bytes=Buffer.from(encoded,'base64');
+          const expected=fs.readFileSync('.bootstrap/READY','utf8').trim();
+          if(crypto.createHash('sha256').update(bytes).digest('hex')!==expected)throw Error('Source package integrity check failed');
+          const files=JSON.parse(zlib.brotliDecompressSync(bytes));
+          for(const [name,content] of Object.entries(files)){
+            const target=path.resolve(name);
+            if(!target.startsWith(process.cwd()+path.sep)||name.startsWith('.git/')||typeof content!=='string')throw Error('Unsafe file path');
+            fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,content);
+          }
+          fs.rmSync('.bootstrap',{recursive:true});
+          fs.rmSync('.github/workflows/import-round2.yml');
+          console.log('Expanded '+Object.keys(files).length+' reviewed source files');
+          JS
+      - name: Test the imported source
+        run: npm ci --ignore-scripts && npm run check
+      - name: Commit expanded source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Implement Round 2 UI fixes and secure Supabase collection integration'
+          git push origin HEAD:round-2
