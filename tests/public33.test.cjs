@@ -262,7 +262,7 @@ test('New normalized additive methodology rejects previous multiplier snapshots'
  const s=snap();assert.equal(S.canonicalSnapshot(s,id).coreCompleted,true);
  const ui=fs.readFileSync('public/js/app.js','utf8');
  assert.match(ui,/planning themes \(60%\) and community outcomes \(40%\)/);
- assert.match(ui,/>6 outcomes<\\/button>/);
+ assert.ok(ui.includes('>6 outcomes</button>'));
  assert.ok(ui.includes('six-outcomes.additive60-40.v4.'));
 });
 test('Ranking pages contain the requested corrected prompts and rights guidance',()=>{
