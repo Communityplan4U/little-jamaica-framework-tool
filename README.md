@@ -2,7 +2,7 @@
 
 **Published:** https://little-jamaica-framework-tool-community-in-public.vercel.app/
 
-Community in Public's community-led evaluation tool, based on the user's consolidated **33-topic** assessment workbook. Participants rank seven planning themes and five community outcomes, explicitly select their **ten highest** and **four lowest** priorities, and then compare planning documents and community averages.
+Community in Public's community-led evaluation tool, based on the user's consolidated **33-topic** assessment workbook. Participants rank seven planning themes and five community outcomes, review their **ten suggested highest** priorities, move any suggested topics into the middle, and choose **four lowest** priorities from the middle, and then compare planning documents and community averages.
 
 ## The approved weighting method
 
@@ -12,16 +12,16 @@ Community in Public's community-led evaluation tool, based on the user's consoli
 | Middle | 19 | 37% | 37/19% (approx. 1.9474%) |
 | Lowest | 4 | 3% | 0.75% |
 
-Only the explicit topic selections determine the final weights. Theme and outcome rankings generate **suggested topic order**; ties are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
+Theme and outcome rankings generate the **suggested ten highest topics**. Participants may demote any suggested topic to the middle; the next eligible topic automatically fills the highest group. From the resulting middle list, participants select four topics for the lowest group. The final groups remain fixed at 10/19/4. Ties in the suggestions are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
 
 The source is `LJOVPF_Comparator_Assessment.xlsx`, using `Topics`, `Comparison by Topic` and `LJOVPF by Topic` sheets. Seven comparators are: Chinatown Tomorrow, Picture Mount Dennis, Mount Dennis Community for All, St. Clair Avenue West and Bathurst Street, Bloor Street, Yonge-St. Clair, and Port Lands. Scores are evidence-based documentary ratings from 1 to 5, not verified implementation outcomes.
 
 ## Participant experience
 
-1. Rank seven planning themes and optionally share an email/contact preferences.
+1. Drag and drop the seven planning themes into rank order (arrow buttons are available for keyboard and touch), and optionally share an email/contact preferences.
 2. Rank five outcomes, which inform topic suggestions.
-3. Explicitly select 10 highest-priority topics.
-4. Explicitly select 4 lowest-priority topics (the other 19 are automatically middle priority).
+3. Review ten automatically suggested highest-priority topics, moving any down to the middle (which promotes the next eligible suggestion).
+4. From the middle list, choose exactly four topics to move into the lowest group (the other 19 stay in the middle).
 5. Compare the seven planning frameworks with the Little Jamaica draft.
 6. Compare the participant's priorities with community averages after at least one completed response.
 
