@@ -101,6 +101,7 @@ async function restore(raw){
 function selectPage(i){
  if(i<0||i>=STEPS.length)return;
  if(i>=4&&!record.firstCompletedAt){notice('Complete your highest and lowest priorities to unlock results.','warning');return;}
+ if(!record.firstCompletedAt&&i>state.step+1){notice('Finish the earlier steps first so your survey answers are saved in sequence.','warning');return;}
  if(i===state.step)return;state.step=i;record.visitedPages=[...new Set([...record.visitedPages,i+1])];state.community=null;write();render();
  window.scrollTo({top:0,behavior:'smooth'});
  if(i===5)loadCommunity();
@@ -229,10 +230,11 @@ function render(){
  }));
  const email=document.getElementById('participant-email');if(email)email.addEventListener('input',()=>{
   state.email=email.value.trim();if(!state.email){state.newsletterOptIn=false;state.planningOptIn=false;}
+  for(const id of ['newsletter','planning-updates']){const box=document.getElementById(id);if(box){box.disabled=!state.email;if(!state.email)box.checked=false;}}
   write();
  });
  for(const [id,key] of [['newsletter','newsletterOptIn'],['planning-updates','planningOptIn']]){
-  const el=document.getElementById(id);if(el)el.addEventListener('change',()=>{state[key]=el.checked;write();});
+  const el=document.getElementById(id);if(el){el.disabled=!state.email;el.addEventListener('change',()=>{state[key]=el.checked;write();});}
  }
  document.querySelectorAll('[data-select],[data-remove]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;const kind=el.dataset.select||el.dataset.remove,key=kind==='top'?'top':'bottom',max=key==='top'?10:4;
