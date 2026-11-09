@@ -1,4 +1,6 @@
 'use strict';
+// Read-only state is server-authored. The database remains the final authority.
+let collectionState={checked:false,isOpen:location.protocol==='file:',closesAt:null,mode:'test'};
 function stages(){return ['Rank planning themes','Rank community outcomes','Review highest priorities','Compare planning documents','Adjust individual topics','Compare with community'];}
 function nav(){
  const short=['Planning themes','Community outcomes','Highest priorities','Results','Adjust individual topics','Community comparison'];
@@ -617,6 +619,18 @@ function wireCompletion(){
  document.getElementById('exportcsv').onclick=()=>download('LJ-'+record.responseId+'-39-topic-weights.csv','text/csv;charset=utf-8',csvText(calc()));
  document.getElementById('exportjson').onclick=downloadRecord;const resumeBtn=document.getElementById('copy-return-link');if(resumeBtn)resumeBtn.onclick=copyPrivateReturnLink;
 }
+function applyReadonly(){
+ const closed=location.protocol!=='file:' && (!collectionState.checked||!collectionState.isOpen);
+ document.body.classList.toggle('survey-readonly',closed);
+ if(!closed)return;
+ const controls=['#stage input','#stage textarea','#stage select',
+  '[data-shift]','[data-shift-outcome]','[data-topic-action]','[data-restore]',
+  '[data-open-move]','#move-confirm','#undo','#clear','#share-comments',
+  '#clear-gap','#editor-reset'];
+ for(const el of document.querySelectorAll(controls.join(',')))el.disabled=true;
+ for(const el of document.querySelectorAll('#stage [draggable="true"]'))el.draggable=false;
+ if(state.page<=2){const next=document.getElementById('next');if(next)next.disabled=true;}
+}
 function render(){
  state.resultsMode='gap';state.matrixWeighting='weighted';const c=calc();document.body.dataset.page=String(state.page+1);nav();hdr();insight(c);const stage=document.getElementById('stage');
  if(state.page===0){stage.innerHTML=rankingPage(c);wireRank();wireParticipantDetails();}
@@ -658,11 +672,14 @@ function render(){
  if(state.flash){notice=document.createElement('div');notice.id='trial-flash';notice.className='trial-flash';notice.setAttribute('role','status');notice.textContent=state.flash;stage.prepend(notice);state.flash='';}
  document.getElementById('picker-overlay')?.remove();if(state.picker){document.body.insertAdjacentHTML('beforeend',pickerHtml());wirePicker();}
  document.getElementById('move-overlay')?.remove();if(state.moveDraft){document.body.insertAdjacentHTML('beforeend',moveModalHtml(calc()));wireMoveModal();}
- saveDraft();
+ saveDraft();applyReadonly();
 }
 function scrollPage(){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});document.getElementById('page-heading')?.focus({preventScroll:true});}
 function navigate(page,kind='navigation'){
  page=Math.max(0,Math.min(5,page));if(page>=3&&!record?.firstCompletedAt)return;if(page===state.page)return;
+ if(collectionState.checked&&!collectionState.isOpen){
+  state.page=page;state.picker=null;state.moveDraft=null;render();scrollPage();return;
+ }
  checkpoint(kind,{destinationPage:page+1});
  if(page>=3&&!record.firstResultsAt){
   record.preResultsSnapshot=copy(surveyPayload());checkpoint('before_first_results',{destinationPage:page+1});record.firstResultsAt=new Date().toISOString();
@@ -769,12 +786,13 @@ async function flushCheckpoints(){
    let reply;
    try{reply=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},credentials:'same-origin',body:JSON.stringify(event),signal:abort.signal});}
    finally{clearTimeout(timer);}
+   if(reply.status===423){collectionState.isOpen=false;collectionState.checked=true;applyReadonly();throw Error('Survey closed');}
    if(!reply.ok)throw Error('Save service returned '+reply.status);
    const receipt=await reply.json();
    if(receipt.eventId!==id||!receipt.receivedAt)throw Error('The save service did not confirm this checkpoint');
    record.outbox.shift();record.lastServerReceiptAt=receipt.receivedAt;record.confirmedRevision=Math.max(record.confirmedRevision||0,event.revision);persistRecord();
   }
- }catch(e){networkProblem='Your answers have not reached Community in Public yet. They remain on this device. Please retry when connected.';}
+ }catch(e){networkProblem=e.message==='Survey closed'?'This survey has closed. Earlier saved responses remain available, but unsent changes cannot be accepted.':'Your answers have not reached Community in Public yet. They remain on this device. Please retry when connected.';}
  finally{syncing=false;updateSaveStatus();updateCompletionMessage();}
 }
 function updateSaveStatus(){
@@ -808,7 +826,22 @@ if(window.LJOV_RESUME)resumeRemoteResponse(window.LJOV_RESUME);else flushCheckpo
 if(TRACKING_CONFIG.statusEndpoint)checkCollectionStatus();
 
 async function checkCollectionStatus(){
- try{const response=await fetch(TRACKING_CONFIG.statusEndpoint,{cache:'no-store'});const info=await response.json();const note=document.getElementById('round-notice');if(note)note.textContent=info.configured?'Round 2 testing: online response collection is enabled. Test responses are separate from future public responses.':'Round 2 testing: online saving is not connected yet. Answers remain on this device.';}catch{}
+ const note=document.getElementById('round-notice');
+ try{
+  const response=await fetch(TRACKING_CONFIG.statusEndpoint,{cache:'no-store'});
+  if(!response.ok)throw Error('Status unavailable');
+  const info=await response.json();
+  collectionState={checked:true,isOpen:info.configured===true&&info.isOpen===true,
+   closesAt:info.closesAt||null,mode:info.mode||'test'};
+  const closing='January 15, 2027, at 11:59 p.m. Toronto time';
+  if(note)note.textContent=!info.configured?'Online saving is unavailable. Please return later.':
+   collectionState.isOpen?'Test survey: responses are saved separately from public voting. You may revise until '+closing+'.':
+   'The survey is closed. You may review your saved response using your private link.';
+ }catch{
+  collectionState.checked=true;collectionState.isOpen=false;
+  if(note)note.textContent='Survey availability could not be verified. Please check your connection.';
+ }
+ applyReadonly();
 }
 async function copyPrivateReturnLink(){
  await flushCheckpoints();const button=document.getElementById('copy-return-link');
@@ -830,6 +863,6 @@ async function resumeRemoteResponse(value){
   for(const key of SAVE_FIELDS)if(key in data.resumeState)state[key]=data.resumeState[key];
   record={responseId:match[1],responseToken:match[2],surveyVersion:SURVEY_VERSION,sourceVersion:SOURCE_VERSION,createdAt:data.createdAt,lastSavedAt:null,lastServerReceiptAt:data.updatedAt,revision:data.revision,answerRevision:data.answerRevision,lastAnswer:null,events:[],outbox:[],draft:null,visitedPages:data.visitedPages||[],continuedPages:data.continuedPages||[],reviewedPage3Groups:data.reviewedPage3Groups||[],status:data.status,firstResultsAt:data.firstResultsAt,preResultsSnapshot:data.preResultsSnapshot||null,firstCompletedAt:data.firstCompletedAt,lastCompletedAt:data.lastCompletedAt,lastCompletedAnswer:null,confirmedRevision:data.revision,initialDisplayOrder:data.initialDisplayOrder};
   record.lastAnswer=copy(answerData());if(record.firstCompletedAt)record.lastCompletedAnswer=JSON.stringify(answerData());
-  state.page=record.firstCompletedAt?3:Math.max(0,Math.min(2,Number(state.page)||0));state.flash='Your saved priorities have been restored.';saveDraft();render();
+  state.page=record.firstCompletedAt?3:Math.max(0,Math.min(2,Number(state.page)||0));state.flash='Your saved priorities have been restored.';saveDraft();render();applyReadonly();
  }catch(e){state.flash=e.message+' Please retry using the same private return link.';render();}
 }
