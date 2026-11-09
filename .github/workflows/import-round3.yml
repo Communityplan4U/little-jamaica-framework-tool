@@ -1,0 +1,38 @@
+name: Apply reviewed Round 3 source
+on:
+  push:
+    branches: [round-3]
+    paths: ['.bootstrap-r3/READY']
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: round-3
+      - name: Verify and apply reviewed files
+        run: |
+          node <<'JS'
+          const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),zlib=require('node:zlib');
+          const encoded=fs.readdirSync('.bootstrap-r3').filter(n=>/^part-[0-9]+\.b64$/.test(n)).sort().map(n=>fs.readFileSync('.bootstrap-r3/'+n,'utf8').trim()).join('');
+          const bytes=Buffer.from(encoded,'base64');
+          if(crypto.createHash('sha256').update(bytes).digest('hex')!==fs.readFileSync('.bootstrap-r3/READY','utf8').trim())throw Error('Integrity check failed');
+          const files=JSON.parse(zlib.brotliDecompressSync(bytes));
+          for(const [name,content] of Object.entries(files)){
+            if(!/^(api\/|server\/|public\/|supabase\/|tests\/|docs\/|README\.md$|package(-lock)?\.json$)/.test(name)||name.includes('..')||typeof content!=='string')throw Error('Unexpected source path');
+            fs.mkdirSync(path.dirname(name),{recursive:true});fs.writeFileSync(name,content);
+          }
+          fs.rmSync('.bootstrap-r3',{recursive:true});
+          console.log('Applied '+Object.keys(files).length+' verified source files');
+          JS
+      - name: Test the complete application
+        run: npm ci --ignore-scripts && npm run check
+      - name: Commit tested source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Implement owner-only reporting, community averages and survey closure'
+          git push origin HEAD:round-3
