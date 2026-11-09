@@ -1,7 +1,7 @@
 // Server-to-server only. Custom authentication replaces Supabase JWT validation.
 // The digest below is NOT the private token; the token exists only in Vercel preview secrets.
 const EXPECTED_DIGEST='4e55269a086cff01d8e818bc544247f8c63f644da1b027c240836be6bbdc0fa2';
-const ALLOWED=new Set(['ljov_check_rate','ljov_save_checkpoint','ljov_resume_response']);
+const ALLOWED=new Set(['ljov_check_rate','ljov_save_checkpoint','ljov_resume_response','ljov_collection_status','ljov_community_average']);
 const encoder=new TextEncoder();
 function reply(status:number,value:unknown){return new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});}
 async function authorized(req:Request){const m=/^Bearer ([A-Za-z0-9_-]{64,128})$/.exec(req.headers.get('authorization')||'');if(!m)return false;const d=new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode(m[1])));let diff=0;for(let i=0;i<32;i++)diff|=d[i]^parseInt(EXPECTED_DIGEST.slice(i*2,i*2+2),16);return diff===0;}
@@ -17,7 +17,7 @@ Deno.serve(async(req:Request)=>{
   const headers:Record<string,string>={'apikey':key,'Content-Type':'application/json'};if(key.startsWith('eyJ'))headers.Authorization='Bearer '+key;
   const upstream=await fetch(url+'/rest/v1/rpc/'+input.name,{method:'POST',headers,body:JSON.stringify(input.args),signal:AbortSignal.timeout(8000)});
   const result=await upstream.json().catch(()=>({}));
-  if(!upstream.ok){const raw=result.code==='PT409'?'40001':result.code;const code=['42501','23505','40001'].includes(raw)?raw:'storage_error';return reply(upstream.status,{code});}
+  if(!upstream.ok){if(result.code==='P0001'||String(result.message||'').includes('Survey is not accepting changes'))return reply(423,{code:'SURVEY_CLOSED'});const raw=result.code==='PT409'?'40001':result.code;const code=['42501','23505','40001'].includes(raw)?raw:'storage_error';return reply(upstream.status,{code});}
   return reply(200,result);
  }catch{return reply(503,{code:'storage_unavailable'});}
 });
