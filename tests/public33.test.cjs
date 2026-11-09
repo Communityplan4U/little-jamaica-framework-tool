@@ -109,3 +109,45 @@ test('Participant may move a demoted top suggestion from middle to lowest',()=>{
  assert.equal(result.coreCompleted,true);
  assert.ok(result.snapshot.bottomSelected.includes(demoted));
 });
+
+test('Participant-selected top-ten topics are preserved and cannot be forged outside the highest group',()=>{
+ const x=snap();x.promotedTop=[C[0],C[1]];
+ assert.deepEqual(S.canonicalSnapshot(x,id).snapshot.promotedTop,[C[0],C[1]]);
+ const checkpoint=S.validateEvent({
+  eventId:event,responseId:id,revision:1,answerRevision:1,eventType:'continue',page:2,snapshot:x,resumeState:{page:2}
+ });
+ assert.deepEqual(checkpoint.event.resumeState.promotedTop,[C[0],C[1]]);
+ x.promotedTop=[C[28]];
+ assert.throws(()=>S.canonicalSnapshot(x,id),/must remain in the highest group/);
+});
+
+test('Browser model supports additional top-ten selections with fixed 10/19/4 groups',()=>{
+ const vm=require('node:vm'),path=require('node:path');
+ const load=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
+ const app=load('public/js/app.js').split("window.addEventListener('online'")[0];
+ vm.runInContext(load('public/js/state.js')+'\n'+load('public/js/model.js')+'\n'+app,ctx);
+ const x=vm.runInContext('({state,suggestions,syncTop,calculate,topicBrowser,resultsPage,FRAMEWORK_REPORTS,groupDifference})',ctx);
+ const initial=x.suggestions(),added=initial[15];
+ x.state.promotedTop=[added];x.syncTop();
+ assert.equal(x.state.top.length,10);
+ assert.ok(x.state.top.includes(added));
+ assert.equal(x.calculate().groups.map(g=>g.length).join(','),'10,19,4');
+ assert.match(x.topicBrowser(),/id="topic-search"/);
+ assert.match(x.topicBrowser(),/Add to top 10/);
+ const output=x.resultsPage();
+ assert.match(output,/Compare by planning theme and community outcome/);
+ assert.match(output,/Community outcome/);
+ assert.match(output,/Little Jamaica \(0\)/);
+ assert.doesNotMatch(output,/\/5/);
+ assert.equal((output.match(/class="framework-link"/g)||[]).length,24);
+ assert.equal(x.FRAMEWORK_REPORTS.comparators.length,7);
+ for(const scope of ['vision','full']){
+  const calc=x.calculate();
+  for(let j=0;j<S.WB.comparators.length;j++){
+   const parts=S.WB.themes.map(t=>x.groupDifference(calc,calc.topics.filter(row=>row.theme===t.name).map(row=>row.code),j,scope));
+   const expected=calc.comparators[j][scope]-calc.baseline;
+   assert.ok(Math.abs(parts.reduce((sum,val)=>sum+val,0)-expected)<1e-10);
+  }
+ }
+});
