@@ -91,7 +91,7 @@ async function restore(raw){
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
   Object.assign(state,{step:d.firstCompletedAt?4:Math.max(0,Math.min(3,p.page||0)),
-   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:CODES.filter(code=>!top.includes(code)),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
+   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===10?CODES.filter(code=>!top.includes(code)):[]),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
    email:p.email||'',newsletterOptIn:!!p.newsletterOptIn,planningOptIn:!!p.planningOptIn,complete:!!d.firstCompletedAt,community:null});
   record={responseId:m[1],responseToken:m[2],sourceVersion:METHOD.id,
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
