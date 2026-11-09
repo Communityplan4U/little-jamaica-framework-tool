@@ -68,5 +68,19 @@ To validate: `npm ci --ignore-scripts && npm run check`.
 
 ### Updated weight distribution (November 9, 2026)
 
-Before the first recorded public submission, the weights were revised from 50% / 47% / 3% to **60% / 37% / 3%**, retaining the 10 / 19 / 4 allocation. The current six-outcome survey source version is `ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3`; earlier five-outcome responses retain their original `ljov-20261109-33top10-bottom4-60-37-3-v2` source version and remain separate in the database. Existing private links do not automatically transfer between methodologies. The previous source version remains separately recorded and closed to further public submissions.
-\n### Six cross-cutting outcome framework (November 9, 2026)\n\n1. Government Investment and Accountable Delivery (7 topics)\n2. Community Wealth and Inclusive Local Economies (4 topics)\n3. Right to Remain and Return (4 topics)\n4. Community Decision-Making and Reparative Justice (6 topics)\n5. Belonging and Cultural Continuity (5 topics)\n6. Adequate Standard of Living and Wellbeing (7 topics)\n\nThemes prompt: **Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top.**\n\nOutcomes prompt: **What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.**\n\nThe outcome ranks use multipliers 2, 1.8, 1.6, 1.4, 1.2, 1.0 by rank; topic suggestion scores multiply the theme rank points by the factor for the topic's one primary outcome. The group weights remain 60% / 37% / 3%. Existing documentary rubric scores were not changed.\n
+Before the first recorded public submission, the weights were revised from 50% / 47% / 3% to **60% / 37% / 3%**, retaining the 10 / 19 / 4 allocation. The current additive 60/40 source version is `ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-additive-60t-40o-v4`. Earlier six-outcome multiplier responses remain under `ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3`, and earlier five-outcome responses remain under `ljov-20261109-33top10-bottom4-60-37-3-v2`. All three groups are kept separate in the database. Existing private links do not automatically transfer between methodologies. The previous source version remains separately recorded and closed to further public submissions.
+
+### Six cross-cutting outcome framework (November 9, 2026)
+
+1. Government Investment and Accountable Delivery (7 topics)
+2. Community Wealth and Inclusive Local Economies (4 topics)
+3. Right to Remain and Return (4 topics)
+4. Community Decision-Making and Reparative Justice (6 topics)
+5. Belonging and Cultural Continuity (5 topics)
+6. Adequate Standard of Living and Wellbeing (7 topics)
+
+Themes prompt: **Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top.**
+
+Outcomes prompt: **What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.**
+
+Suggested topics use **normalized additive scoring: 60% planning themes + 40% community outcomes**. Each dimension is normalized across its full ranked range: themes 1–7 have points 10–4 and normalized scores (points − 4) / 6; outcomes 1–6 have points 6–1 and normalized scores (points − 1) / 5. The suggestion score is `100 × [0.60 × normalized theme + 0.40 × normalized outcome]`. This selects the provisional top ten only; participant revisions remain authoritative. Final group weights remain **60% highest ten / 37% middle nineteen / 3% lowest four**. Document ratings were not changed.
