@@ -87,3 +87,25 @@ test('The weighted shares are 60% highest, 37% middle and 3% lowest',()=>{
  }
  assert.ok(!S.M.id.includes('50-47'));
 });
+
+test('Server persists highest-to-middle demotions for private resume',()=>{
+ const x=snap();
+ x.excludedTop=[C[12]];
+ const result=S.canonicalSnapshot(x,id);
+ assert.deepEqual(result.snapshot.excludedTop,[C[12]]);
+ const checkpoint=S.validateEvent({
+  eventId:event,responseId:id,revision:1,answerRevision:1,eventType:'continue',page:3,
+  snapshot:x,resumeState:{page:3}
+ });
+ assert.deepEqual(checkpoint.event.resumeState.excludedTop,[C[12]]);
+});
+test('Server disallows a demoted topic remaining in highest ten',()=>{
+ const x=snap();x.excludedTop=[C[0]];
+ assert.throws(()=>S.canonicalSnapshot(x,id),/moved to middle/);
+});
+test('Participant may move a demoted top suggestion from middle to lowest',()=>{
+ const x=snap();const demoted=C[29];x.excludedTop=[demoted];
+ const result=S.canonicalSnapshot(x,id);
+ assert.equal(result.coreCompleted,true);
+ assert.ok(result.snapshot.bottomSelected.includes(demoted));
+});
