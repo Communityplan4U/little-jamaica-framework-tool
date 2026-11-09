@@ -203,8 +203,10 @@ test('Six mutually exclusive community outcomes span at least two planning theme
   wellbeing:['CP-3','CP-4','CP-5','H-2','H-3','H-4','H-5']
  };
  assert.deepEqual(O,['coord','wealth','remain','power','belong','wellbeing']);
- assert.equal(S.M.id,'ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3');
- assert.deepEqual(S.M.outcomeRankMultipliers,[2,1.8,1.6,1.4,1.2,1]);
+ assert.equal(S.M.id,'ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-additive-60t-40o-v4');
+ assert.deepEqual(S.M.outcomeRankPoints,[6,5,4,3,2,1]);
+ assert.deepEqual(S.M.suggestionBlend,{themes:0.6,outcomes:0.4});
+ assert.ok(!('outcomeRankMultipliers' in S.M));
  assert.equal(S.M.outcomes.length,6);
  assert.deepEqual(S.M.groupCounts,[10,19,4]);
  assert.deepEqual(S.M.groupShares,[60,37,3]);
@@ -238,6 +240,31 @@ test('Outcome ranking changes proposed top-ten suggestions and validates all six
  assert.throws(()=>S.canonicalSnapshot(response,id),/Invalid outcomes/);
 });
 
+test('60/40 normalized additive suggestions give precise extreme scores',()=>{
+ const vm=require('node:vm');
+ const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
+ vm.runInContext(fs.readFileSync('public/js/state.js','utf8')+'\n'+fs.readFileSync('public/js/model.js','utf8'),ctx);
+ const score=()=>vm.runInContext("suggestionScores().find(t=>t.code==='A-2').score",ctx);
+ assert.equal(score(),100,'First-ranked theme and outcome');
+ vm.runInContext("state.outcomeRanking=[...OUTCOMES.slice(1),OUTCOMES[0]]",ctx);
+ assert.equal(score(),60,'First-ranked theme, last-ranked outcome');
+ vm.runInContext("state.ranking=[...THEMES.slice(1),THEMES[0]];state.outcomeRanking=OUTCOMES.slice()",ctx);
+ assert.equal(score(),40,'Last-ranked theme, first-ranked outcome');
+ vm.runInContext("state.outcomeRanking=[...OUTCOMES.slice(1),OUTCOMES[0]]",ctx);
+ assert.equal(score(),0,'Last-ranked theme and outcome');
+ const scores=Array.from(vm.runInContext('suggestionScores()',ctx),x=>x.score);
+ assert.ok(scores.every(x=>x>=0&&x<=100));
+});
+
+test('New normalized additive methodology rejects previous multiplier snapshots',()=>{
+ const previous=snap();previous.sourceVersion='ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3';
+ assert.throws(()=>S.canonicalSnapshot(previous,id),/version mismatch/i);
+ const s=snap();assert.equal(S.canonicalSnapshot(s,id).coreCompleted,true);
+ const ui=fs.readFileSync('public/js/app.js','utf8');
+ assert.match(ui,/planning themes \(60%\) and community outcomes \(40%\)/);
+ assert.match(ui,/>6 outcomes<\\/button>/);
+ assert.ok(ui.includes('six-outcomes.additive60-40.v4.'));
+});
 test('Ranking pages contain the requested corrected prompts and rights guidance',()=>{
  const ui=fs.readFileSync('public/js/app.js','utf8');
  assert.match(ui,/Which planning subjects are most important for the Framework to focus on\?/);
