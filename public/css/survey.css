@@ -40,7 +40,7 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
 .review-demotions button{border:1px solid #b8a1c8;background:white;border-radius:8px;padding:7px 10px;font-size:.84rem;color:#553267;cursor:pointer}
 @media(max-width:530px){.rank-item{grid-template-columns:17px 29px minmax(0,1fr) auto}}
 
-/* Step 2: browse non-selected topics without hiding the ranked outcomes. */
+/* Step 3: browse other topics while reviewing the highest ten. */
 .topic-browser{margin-top:22px}
 .topic-browser-pins{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
 .topic-browser-pins strong{flex-basis:100%;font-size:.89rem}
@@ -86,4 +86,97 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
  .topic-browser-row{flex-direction:column;align-items:stretch}
  .topic-add{align-self:flex-start}
  .breakdowns{padding:13px}
+}
+
+
+/* Mobile viewport containment: wide content must scroll within its panel,
+   never enlarge the page or the six-step survey navigation. */
+@media (max-width:850px) {
+  .wide.layout {grid-template-columns:minmax(0,1fr)}
+  .layout,.layout>.sidebar,.layout>.mainpanel,.panel-body,#stage {
+    min-width:0;
+    max-width:100%;
+  }
+  .sidebar #steps {
+    display:flex;
+    flex-wrap:nowrap;
+    gap:5px;
+    min-width:0;
+    max-width:100%;
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    scroll-snap-type:x proximity;
+    padding-bottom:7px;
+  }
+  .sidebar #steps button {
+    flex:0 0 136px;
+    min-width:0;
+    white-space:normal;
+    scroll-snap-align:start;
+  }
+  .mainpanel,.panel-head,.subpanel,.selection-intro,.topic-grid,
+  .topic-tile,.topic-browser,.topic-browser-results,.topic-browser-row,
+  .topic-browser-body,.rank-items,.rank-item,.scores,.score-row,
+  .breakdowns,.breakdown-section,.full-breakdown,.compare-list,
+  .compare-item {
+    min-width:0;
+    max-width:100%;
+  }
+  .topic-grid {grid-template-columns:minmax(0,1fr)}
+  .rank-item>div:not(.rank-number):not(.rank-buttons),
+  .score-name,.topic-tile,.topic-browser-body,.compare-item {
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+  .table-scroll,.breakdown-scroll {
+    display:block;
+    min-width:0;
+    max-width:100%;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .breakdown-table {min-width:1040px}
+  .return-actions button,.panel-actions button {max-width:100%}
+}
+@media (max-width:530px) {
+  .wide,.sitehead .wide,.footer .wide {min-width:0;max-width:100%}
+  .brand {min-width:0;overflow-wrap:anywhere;font-size:.94rem}
+  .lead h1 {font-size:clamp(1.7rem,7.5vw,2.1rem)}
+  .panel-head,.panel-body,.panel-actions {min-width:0;max-width:100%}
+  .subpanel,.selection-intro,.full-breakdown,.breakdowns {max-width:100%}
+  .rank-item {
+    grid-template-columns:18px 30px minmax(0,1fr);
+    grid-template-areas:
+      "handle number detail"
+      ". . actions";
+    gap:8px;
+    align-items:start;
+  }
+  .rank-item>.drag-handle {grid-area:handle}
+  .rank-item>.rank-number {grid-area:number}
+  .rank-item>div:nth-child(3) {grid-area:detail;min-width:0}
+  .rank-item>.rank-buttons {
+    grid-area:actions;
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-end;
+    gap:8px;
+  }
+  .rank-buttons button {
+    min-width:44px;
+    min-height:44px;
+    padding:6px 10px;
+  }
+  .topic-browser-pins button,.review-demotions button,
+  .selection-current button {max-width:100%;overflow-wrap:anywhere}
+  .score-row {grid-template-columns:23px minmax(0,1fr) auto}
+  .score-row .framework-link {overflow-wrap:anywhere}
+  .relative-track,.score-track {min-width:0}
+  .panel-actions {gap:10px}
+  .panel-actions button {white-space:normal}
 }
