@@ -23,7 +23,9 @@ function canonicalSnapshot(input,rid){
  const outcomes=permutation(input.outcomeRanking,OUTCOMES,'outcomes');
  const top=selected(input.topSelected||[],10,'top-ten selection');
  const bottom=selected(input.bottomSelected||[],4,'lowest-four selection');
+ const excludedTop=selected(input.excludedTop||[],23,'demoted top suggestions');
  if(top.some(x=>bottom.includes(x)))fail(400,'A topic cannot be highest and lowest');
+ if(top.some(x=>excludedTop.includes(x)))fail(400,'A topic moved to middle cannot remain in the highest group');
  const order=permutation((input.topicWeights||[]).slice().sort((a,b)=>a.position-b.position).map(x=>x.code),CODES,'topic order');
  const completeChoices=top.length===10&&bottom.length===4;
  if(completeChoices){
@@ -45,7 +47,7 @@ function canonicalSnapshot(input,rid){
  const coreCompleted=completeChoices&&[1,2,3,4].every(n=>pages.includes(n));
  const score=WB.topics.reduce((sum,t)=>sum+WEIGHTS[weighted.find(w=>w.code===t.code).group]*t.score,0);
  const snap={type:'Little Jamaica community weighting survey',version:text(input.version||'',100,'survey version'),sourceVersion:M.id,responseId:rid,topicCount:33,sourceWorkbook:WB.filename,
-  themeRanking:ranking,outcomeRanking:outcomes,topSelected:top,bottomSelected:bottom,connections,notes,score,
+  themeRanking:ranking,outcomeRanking:outcomes,topSelected:top,bottomSelected:bottom,excludedTop,connections,notes,score,
   comparisonScope:input.comparisonScope==='full'?'full':'vision',topicWeights:weighted,
   priorityGroups:M.groupNames.map((name,k)=>({group:name,totalShare:M.groupShares[k]/100,topics:weighted.filter(w=>w.group===name).map(w=>w.code)})),
   inputEvidence:{continuedPages:pages,coreStepsCompleted:coreCompleted,explicitTopTen:top.length===10,explicitLowestFour:bottom.length===4}};
@@ -61,7 +63,7 @@ function validateEvent(raw){
  const c=canonicalSnapshot(raw.snapshot,rid);
  if(raw.eventType==='complete'&&!c.coreCompleted)fail(400,'Complete the topic selections first');
  const resumeState={page:Math.min(5,Math.max(0,Number.isInteger(raw.resumeState?.page)?raw.resumeState.page:0)),
-  ranking:c.snapshot.themeRanking,outcomeRanking:c.snapshot.outcomeRanking,top:c.snapshot.topSelected,bottom:c.snapshot.bottomSelected,
+  ranking:c.snapshot.themeRanking,outcomeRanking:c.snapshot.outcomeRanking,top:c.snapshot.topSelected,bottom:c.snapshot.bottomSelected,excludedTop:c.snapshot.excludedTop,
   connections:c.snapshot.connections,feedback:c.snapshot.notes,scope:c.snapshot.comparisonScope,
   email:'',newsletterOptIn:false,planningOptIn:false,completed:c.coreCompleted};
  const event={eventId:eid,responseId:rid,revision:rev,answerRevision:ar,eventType:raw.eventType,
