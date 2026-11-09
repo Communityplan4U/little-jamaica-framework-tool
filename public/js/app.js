@@ -278,7 +278,7 @@ function resultsPage(){
   '<p>The values below show each theme or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
   breakdownMatrix(c,scope,'Planning theme',themeGroups,ordered)+
   breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
-  '<p class="help">Planning themes do not overlap: their differences add up to each framework’s overall difference. A topic may advance several community outcomes, so outcome values overlap and do not add up to the overall score.</p></section>'+
+  '<p class="help">Each topic has one primary theme and one primary community outcome, so the differences in either breakdown add up to each framework’s overall difference. Human rights and Indigenous rights remain cross-cutting considerations in the topic-level assessment.</p></section>'+
   '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
    '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
    '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Theme</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
@@ -311,7 +311,7 @@ function communityPage(){
  '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">33 topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">7 themes</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">5 outcomes</button></div>'+
  '<button class="secondary" id="refresh-averages" type="button">Refresh community averages</button></section>'+
  '<div class="compare-list">'+rows+'</div>'+
- '<p class="help">Outcome percentages can overlap because a topic may advance more than one outcome. Topic and theme percentages each total 100%.</p>';
+ '<p class="help">Each topic belongs to one primary outcome and one planning theme. Topic, theme and outcome weights each total 100%. Human rights and Indigenous rights remain cross-cutting considerations.</p>';
 }
 function render(){
  const step=Math.min(5,Math.max(0,state.step));state.step=step;
@@ -319,16 +319,16 @@ function render(){
  document.getElementById('step-label').textContent='Step '+(step+1)+' of 6';
  document.getElementById('step-title').textContent=STEPS[step];
  document.getElementById('step-detail').textContent=[
-  'Put the seven planning themes in order. These rankings help generate topic suggestions.',
-  'Rank the five community outcomes. Your rankings will inform the suggested priorities shown in Step 3.',
+  'Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top.',
+  'What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.',
   'Review your suggested top ten, move any to the middle, and search all other topics to add overlooked priorities.',
   'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
  const root=document.getElementById('stage');
- root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>The themes are listed in alphabetical order at first. Drag themes to reorder them, or use the arrow buttons. Put the most important at the top.</p>'+optionRank(THEMES,'ranking')+'</div>':
-  step===1?'<div class="subpanel"><h3>Rank the five community outcomes</h3><p>Move the most important outcome to the top. Select “See covered topics” under an outcome to view its connections.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
+ root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
+  step===1?'<div class="subpanel"><h3>Rank the six community outcomes</h3><p>What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p><p class="help">Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome. The related assessment requirements remain part of the 33 planning topics.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
    METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
  const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
