@@ -1,6 +1,6 @@
 'use strict';
 const STEPS=['Rank planning themes','Rank community outcomes','Review your top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
-const STORE='cip.ljov.33.top10.bottom4.six-outcomes.v3.';
+const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
 const FRAMEWORK_REPORTS={
@@ -195,7 +195,7 @@ function selectionPage(kind){
  if(kind==='top'){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
   return '<div class="selection-intro"><h3>Review your top 10 priorities</h3>'+
-   '<p>These ten topics reflect your theme and outcome rankings, including any additional topics you choose from the searchable list below.</p>'+
+   '<p>These ten topics are suggested from your rankings of planning themes (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
    '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
@@ -308,7 +308,7 @@ function communityPage(){
  return '<section class="results-intro"><h3>Your priorities and the community</h3><p>Compare the importance you gave to topics with the average across completed responses. The first response makes an average available.</p>'+
  '<p class="community-status" role="status">'+esc(info)+'</p>'+
  '<p class="help">At low response counts, an average can closely reflect an individual respondent’s priorities. No email addresses or private response records are shown here.</p>'+
- '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">33 topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">7 themes</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">5 outcomes</button></div>'+
+ '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">33 topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">7 themes</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
  '<button class="secondary" id="refresh-averages" type="button">Refresh community averages</button></section>'+
  '<div class="compare-list">'+rows+'</div>'+
  '<p class="help">Each topic belongs to one primary outcome and one planning theme. Topic, theme and outcome weights each total 100%. Human rights and Indigenous rights remain cross-cutting considerations.</p>';
