@@ -4,7 +4,7 @@ const S=require('../server/survey.cjs');
 const C=S.WB.topics.map(t=>t.code),T=S.WB.themes.map(t=>t.name),O=S.M.outcomes.map(o=>o.id);
 const id='bda6cc17-94ad-4a87-8cc6-374a09b9aa32',event='cda6cc17-94ad-4a87-8cc6-374a09b9aa32';
 function snap(){
- const weights=C.map((code,i)=>({code,position:i+1,group:S.M.groupNames[i<10?0:i<29?1:2],weight:i<10?.05:i<29?.47/19:.0075}));
+ const weights=C.map((code,i)=>({code,position:i+1,group:S.M.groupNames[i<10?0:i<29?1:2],weight:i<10?.06:i<29?.37/19:.0075}));
  return {sourceVersion:S.M.id,responseId:id,themeRanking:T,outcomeRanking:O,
  topSelected:C.slice(0,10),bottomSelected:C.slice(29),topicWeights:weights,connections:[],
  email:'',notes:'',communications:{},inputEvidence:{continuedPages:[1,2,3,4]}};
@@ -13,10 +13,10 @@ test('The workbook supplies exactly 33 distinct topics across seven themes',()=>
  assert.equal(C.length,33);assert.equal(new Set(C).size,33);assert.equal(T.length,7);
  assert.equal(S.WB.comparators.length,7);assert.equal(O.length,5);
 });
-test('Group weights total 100% and use 10/19/4 and 50/47/3',()=>{
- assert.deepEqual(S.M.groupCounts,[10,19,4]);assert.deepEqual(S.M.groupShares,[50,47,3]);
+test('Group weights total 100% and use 10/19/4 and 60/37/3',()=>{
+ assert.deepEqual(S.M.groupCounts,[10,19,4]);assert.deepEqual(S.M.groupShares,[60,37,3]);
  assert.equal(S.M.groupCounts.reduce((a,b)=>a+b),33);assert.equal(S.M.groupShares.reduce((a,b)=>a+b),100);
- assert.ok((50/10)>(47/19));assert.ok((47/19)>(3/4));
+ assert.ok((60/10)>(37/19));assert.ok((37/19)>(3/4));
 });
 test('All comparator and baseline ratings are within 1–5',()=>{
  for(const t of S.WB.topics){
@@ -29,8 +29,8 @@ test('Server recomputes group weights, score and optional consent',()=>{
  const x=S.canonicalSnapshot(snap(),id);
  assert.equal(x.coreCompleted,true);assert.equal(x.snapshot.topicWeights.length,33);
  assert.ok(Math.abs(x.snapshot.topicWeights.reduce((a,t)=>a+t.weight,0)-1)<1e-12);
- assert.equal(x.snapshot.topicWeights[0].weight,.05);
- assert.ok(Math.abs(x.snapshot.topicWeights[15].weight-47/1900)<1e-12);
+ assert.equal(x.snapshot.topicWeights[0].weight,.06);
+ assert.ok(Math.abs(x.snapshot.topicWeights[15].weight-37/1900)<1e-12);
  assert.equal(x.snapshot.topicWeights[32].weight,.0075);
  assert.equal(x.contact.email,null);assert.equal(x.contact.newsletter,false);
 });
@@ -56,7 +56,7 @@ test('Survey scores are derived from user choices, not client-supplied weights',
  const x=snap();x.topicWeights.forEach(t=>t.weight=777);x.score=9000;
  const result=S.canonicalSnapshot(x,id).snapshot;
  assert.ok(result.score<=5&&result.score>=1);
- assert.equal(result.topicWeights[0].weight,.05);
+ assert.equal(result.topicWeights[0].weight,.06);
 });
 test('New source version keeps old 39-topic responses separate',()=>{
  assert.ok(S.M.id.includes('33top10-bottom4'));
@@ -77,4 +77,13 @@ test('Public comparison endpoint requires a completed private link',()=>{
 test('No emailing infrastructure is enabled',()=>{
  const ui=fs.readFileSync('public/js/app.js','utf8');
  assert.ok(!ui.includes('sendEmail('));assert.ok(!ui.includes('subscribeContact('));
+});
+
+test('The weighted shares are 60% highest, 37% middle and 3% lowest',()=>{
+ const weights=S.canonicalSnapshot(snap(),id).snapshot.topicWeights;
+ assert.equal(weights.length,33);
+ for(const [start,end,expected] of [[0,10,.60],[10,29,.37],[29,33,.03]]){
+  assert.ok(Math.abs(weights.slice(start,end).reduce((a,t)=>a+t.weight,0)-expected)<1e-10);
+ }
+ assert.ok(!S.M.id.includes('50-47'));
 });
