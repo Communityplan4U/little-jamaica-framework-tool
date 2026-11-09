@@ -11,7 +11,7 @@ function snap(){
 }
 test('The workbook supplies exactly 33 distinct topics across seven themes',()=>{
  assert.equal(C.length,33);assert.equal(new Set(C).size,33);assert.equal(T.length,7);
- assert.equal(S.WB.comparators.length,7);assert.equal(O.length,5);
+ assert.equal(S.WB.comparators.length,7);assert.equal(O.length,6);
 });
 test('Group weights total 100% and use 10/19/4 and 60/37/3',()=>{
  assert.deepEqual(S.M.groupCounts,[10,19,4]);assert.deepEqual(S.M.groupShares,[60,37,3]);
@@ -173,7 +173,7 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js')+'\n'+app,ctx);
  vm.runInContext("collection={checked:true,isOpen:true};record={responseId:'bda6cc17-94ad-4a87-8cc6-374a09b9aa32',outbox:[],confirmedRevision:0};state.step=1;render();",ctx);
  assert.doesNotMatch(element('stage').innerHTML,/id="topic-search"/);
- assert.match(element('stage').innerHTML,/Rank the five community outcomes/);
+ assert.match(element('stage').innerHTML,/Rank the six community outcomes/);
  vm.runInContext('state.step=2;render()',ctx);
  const state=vm.runInContext('state',ctx),before=state.top.slice();
  const toAdd=C.find(code=>!before.includes(code));
@@ -193,24 +193,59 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  assert.match(element('stage').innerHTML,new RegExp('data-code="'+toAdd+'"'));
 });
 
-test('Five revised community outcomes retain stable IDs, source version and substantive descriptions',()=>{
- const expected=[
-  ['coord','Government Investment and Accountable Delivery','Ensure governments commit the funding, services, protections and coordinated action needed to meet community needs, with measurable targets, clear responsibilities and accountability for delivery.'],
-  ['remain','Right to Remain and Return','Protect residents and local businesses from displacement, ensure affordable and meaningful opportunities to remain or return, and address harms caused by past displacement.'],
-  ['wealth','Community Wealth and Inclusive Local Economies','Expand community ownership of land and spaces, protect local businesses, create decent jobs, and ensure residents benefit equitably from neighbourhood investment and economic growth.'],
-  ['power','Community Decision-Making and Reparative Justice','Give residents and community organizations meaningful, resourced authority over planning and implementation decisions, while providing remedies for harms caused by past government actions.'],
-  ['systemic','Human Rights, Anti-Racism and Accessibility','Confront systemic racism, ageism and ableism through human rights-based planning, removing barriers to accessible housing, community services, economic opportunities and culturally appropriate participation.']
- ];
- assert.deepEqual(S.M.outcomes.map(({id,title,desc})=>[id,title,desc]),expected);
- assert.equal(S.M.id,'ljov-20261109-33top10-bottom4-60-37-3-v2');
+test('Six mutually exclusive community outcomes span at least two planning themes',()=>{
+ const groups={
+  coord:['A-2','A-8','CP-7','D-2','D-3','D-7','R-3'],
+  wealth:['CP-1','E-1','E-3','R-4'],
+  remain:['A-6','E-2','H-1','R-1'],
+  power:['A-1','A-3','A-5','D-4','R-6','R-7'],
+  belong:['A-4','A-7','CP-6','CU-1','CU-2'],
+  wellbeing:['CP-3','CP-4','CP-5','H-2','H-3','H-4','H-5']
+ };
+ assert.deepEqual(O,['coord','wealth','remain','power','belong','wellbeing']);
+ assert.equal(S.M.id,'ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3');
+ assert.deepEqual(S.M.outcomeRankMultipliers,[2,1.8,1.6,1.4,1.2,1]);
+ assert.equal(S.M.outcomes.length,6);
  assert.deepEqual(S.M.groupCounts,[10,19,4]);
  assert.deepEqual(S.M.groupShares,[60,37,3]);
+ assert.ok(S.M.humanRightsLens.includes('Indigenous rights'));
+ const all=new Set();
  for(const o of S.M.outcomes){
-  const mapped=S.WB.topics.filter(t=>t.outcomeFlags[o.id]===1);
-  assert.ok(mapped.length>=3, 'Outcome mapping lost for '+o.id);
+  const actual=S.WB.topics.filter(t=>t.outcomeFlags[o.id]===1);
+  assert.deepEqual(actual.map(t=>t.code).sort(),groups[o.id].slice().sort());
+  assert.ok(new Set(actual.map(t=>t.theme)).size>=2,'Outcome is not cross-cutting: '+o.id);
+  for(const t of actual){assert.ok(!all.has(t.code),'Topic assigned to multiple outcomes: '+t.code);all.add(t.code);}
  }
+ assert.equal(all.size,33);
+ for(const t of S.WB.topics)assert.equal(Object.values(t.outcomeFlags).reduce((s,n)=>s+n,0),1);
+ assert.ok(!S.M.outcomes.some(x=>x.id==='systemic'));
 });
 
+test('Outcome ranking changes proposed top-ten suggestions and validates all six ranks',()=>{
+ const vm=require('node:vm'),path=require('node:path');
+ const get=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
+ vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js'),ctx);
+ const first=Array.from(vm.runInContext('suggestions()',ctx));
+ vm.runInContext('state.outcomeRanking.reverse()',ctx);
+ const second=Array.from(vm.runInContext('suggestions()',ctx));
+ assert.notDeepEqual(first,second);
+ assert.equal(first.length,33);
+ assert.equal(new Set(first).size,33);
+ const response=snap();
+ assert.equal(S.canonicalSnapshot(response,id).coreCompleted,true);
+ response.outcomeRanking=response.outcomeRanking.slice(1);
+ assert.throws(()=>S.canonicalSnapshot(response,id),/Invalid outcomes/);
+});
+
+test('Ranking pages contain the requested corrected prompts and rights guidance',()=>{
+ const ui=fs.readFileSync('public/js/app.js','utf8');
+ assert.match(ui,/Which planning subjects are most important for the Framework to focus on\?/);
+ assert.match(ui,/What improvements do you most want to see the Framework focus on\?/);
+ assert.match(ui,/Rank them in order of importance, with the most important at the top/);
+ assert.match(ui,/Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome/);
+ assert.ok(!ui.includes('Rank the five community outcomes'));
+});
 test('Mobile layout constrains outer grid and isolates horizontal scrolling',()=>{
  const css=fs.readFileSync('public/css/survey.css','utf8');
  const html=fs.readFileSync('public/index.html','utf8');
