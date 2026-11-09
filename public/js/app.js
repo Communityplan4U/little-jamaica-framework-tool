@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning themes','Rank community outcomes','Review suggested top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning themes','Rank community outcomes','Review your top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.v2.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
@@ -185,7 +185,7 @@ function topicBrowser(){
 function topicTile(t,kind,index){
  const action=kind==='top'?'Move to middle priorities':'Move to lowest priorities';
  return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
-  '<span class="topic-proposed">#'+index+' · '+(kind==='top'?'Suggested highest priority':'Middle priority')+'</span>'+
+  '<span class="topic-proposed"> #'+index+' · '+(kind==='top'?(state.promotedTop.includes(t.code)?'Added by you':'Suggested highest priority'):'Middle priority')+'</span>'+
   '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
   '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details>'+
   '<button type="button" class="pick" data-demote="'+kind+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+action+' ↓</button></article>';
@@ -194,7 +194,7 @@ function selectionPage(kind){
  const proposed=suggestions(),highest=syncTop();
  if(kind==='top'){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
-  return '<div class="selection-intro"><h3>Review your suggested top 10</h3>'+
+  return '<div class="selection-intro"><h3>Review your top 10 priorities</h3>'+
    '<p>These ten topics reflect your theme and outcome rankings, plus any you added directly in Step 2.</p>'+
    '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
