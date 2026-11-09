@@ -158,7 +158,7 @@ test('Step 2 add-to-top click updates the saved selection and Step 3 shows it',(
  const elements=new Map(),storage=new Map();
  const element=id=>{
   if(!elements.has(id))elements.set(id,{
-   id,value:'',innerHTML:'',textContent:'',hidden:false,events:{},
+   id,value:'',innerHTML:'',textContent:'',hidden:false,dataset:{},events:{},
    addEventListener(type,handler){this.events[type]=handler;},
    setAttribute(){},getAttribute(){return null;}
   });
