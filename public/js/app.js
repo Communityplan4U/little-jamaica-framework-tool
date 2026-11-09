@@ -1,6 +1,24 @@
 'use strict';
 const STEPS=['Rank planning themes','Rank community outcomes','Review suggested top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.v2.';
+
+// Direct source documents; framework columns follow WB.comparators in the assessment workbook.
+const FRAMEWORK_REPORTS={
+ local:'https://www.toronto.ca/legdocs/mmis/2026/ph/bgrd/backgroundfile-285675.pdf',
+ comparators:[
+  'https://www.toronto.ca/legdocs/mmis/2026/te/bgrd/backgroundfile-288691.pdf',
+  'https://www.toronto.ca/wp-content/uploads/2021/12/8d32-CityPlanning-Picture-Mount-Dennis-Planning-Framework-Final-Report.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2025/ec/bgrd/backgroundfile-260161.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2026/te/bgrd/backgroundfile-284297.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2021/te/bgrd/backgroundfile-167765.pdf',
+  'https://www.toronto.ca/legdocs/mmis/2020/te/bgrd/backgroundfile-141418.pdf',
+  'https://www.waterfrontoronto.ca/sites/default/files/documents/port-lands-planning-framework-aoda---reduced.pdf'
+ ]
+};
+function reportLink(label,href){
+ return '<a class="framework-link" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" title="Open the source planning report in a new tab">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
+}
+
 let record=null,collection={isOpen:false,checked:false,closesAt:null,mode:'public'},saving=false;
 function freshId(){return crypto.randomUUID();}
 function write(){try{localStorage.setItem(STORE+record.responseId,JSON.stringify({record,state:{...state,community:null,loading:false,communityError:'',flash:''}}));localStorage.setItem(STORE+'active',record.responseId);}catch(e){notice('Browser storage is unavailable. Keep a copy of your private return link.','warning');}}
@@ -8,7 +26,7 @@ function init(){
  let saved=null;try{const id=localStorage.getItem(STORE+'active');saved=id?JSON.parse(localStorage.getItem(STORE+id)||'null'):null;}catch{}
  if(saved&&saved.record?.sourceVersion===METHOD.id){
   record=saved.record;const d=saved.state||{};
-  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
+  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','promotedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
    if(Object.prototype.hasOwnProperty.call(d,key))state[key]=d[key];
   }
   if(!Array.isArray(d.excludedTop)&&Array.isArray(d.top)&&d.top.length===10)
@@ -35,7 +53,7 @@ async function status(){
  render();
 }
 function privateLink(){return location.origin+location.pathname+'#resume='+encodeURIComponent(record.responseId+'.'+record.responseToken);}
-function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,connections:state.connections,
+function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,promotedTop:state.promotedTop,connections:state.connections,
  feedback:state.feedback,scope:state.scope,email:'',newsletterOptIn:false,planningOptIn:false};}
 function checkpoint(kind){
  if(!canEdit())throw Error('The survey is closed. No changes can be submitted.');
@@ -91,7 +109,7 @@ async function restore(raw){
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
   Object.assign(state,{step:d.firstCompletedAt?4:Math.max(0,Math.min(3,p.page||0)),
-   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===10?CODES.filter(code=>!top.includes(code)):[]),connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
+   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===10?CODES.filter(code=>!top.includes(code)):[]),promotedTop:Array.isArray(p.promotedTop)?p.promotedTop:[],connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
    email:p.email||'',newsletterOptIn:!!p.newsletterOptIn,planningOptIn:!!p.planningOptIn,complete:!!d.firstCompletedAt,community:null});
   record={responseId:m[1],responseToken:m[2],sourceVersion:METHOD.id,
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
