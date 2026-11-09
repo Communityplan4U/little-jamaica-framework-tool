@@ -1,39 +1,67 @@
-# Little Jamaica Planning Framework Weighting Tool
+# Little Jamaica Planning Framework — Community Priorities Survey
 
-Community in Public's six-page survey of planning priorities. The approved assessment methodology remains: **39 topics, seven comparator plans, five community outcomes**, and group counts **7 / 7 / 8 / 7 / 6 / 4** with collective shares **40% / 35% / 11.23% / 8.56% / 3.21% / 2%**.
+**Published:** https://little-jamaica-framework-tool-community-in-public.vercel.app/
 
-## Round 3 preview
+Community in Public's community-led evaluation tool, based on the user's consolidated **33-topic** assessment workbook. Participants rank seven planning themes and five community outcomes, explicitly select their **ten highest** and **four lowest** priorities, and then compare planning documents and community averages.
 
-- The protected Vercel preview connects to the dedicated Little Jamaica Supabase project. Test records stay separate from future public records.
-- Each Continue saves a checkpoint; optional email and two independent communication opt-ins remain in private contact records.
-- Participants may reopen their saved response via its private link and revise it before survey closure.
-- The **database** already enforces the closing date: **January 15, 2027**, end of day in Toronto (**January 16 at 00:00 EST / 05:00 UTC**).
-- Page 6 compares individual weights with averages once the first completed response is available in the same collection mode.
-- There is no separate web administrator login. View individual answers with your existing Supabase account, under the private `survey_private` schema. See [Supabase results guide](docs/SUPABASE_RESULTS_GUIDE.md) and [read-only queries](supabase/owner_queries.sql).
-- Website visitors cannot access individual records via the public API; however, anyone granted sufficiently privileged Supabase project access could. Verify organization membership before launch.
-- The public survey is still **in draft mode**. The preview is for review/testing only. No automated emails are sent.
+## The approved weighting method
 
-## Services
+| Group | Topics | Weight of group | Weight per topic |
+|---|---:|---:|---:|
+| Highest | 10 | 50% | 5% |
+| Middle | 19 | 47% | 47/19% (approx. 2.4737%) |
+| Lowest | 4 | 3% | 0.75% |
 
-GitHub: `Communityplan4U/little-jamaica-framework-tool`  
-Vercel: `little-jamaica-framework-tool`  
-Supabase: dedicated project `eumwsssqjliljbzxhsgc` (Canada Central).  
-**Do not alter the separate Mapping-project database.**
+Only the explicit topic selections determine the final weights. Theme and outcome rankings generate **suggested topic order**; ties are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
 
-## Development
+The source is `LJOVPF_Comparator_Assessment.xlsx`, using `Topics`, `Comparison by Topic` and `LJOVPF by Topic` sheets. Seven comparators are: Chinatown Tomorrow, Picture Mount Dennis, Mount Dennis Community for All, St. Clair Avenue West and Bathurst Street, Bloor Street, Yonge-St. Clair, and Port Lands. Scores are evidence-based documentary ratings from 1 to 5, not verified implementation outcomes.
 
-```bash
-npm ci --ignore-scripts
-npm run check
-npm start
+## Participant experience
+
+1. Rank seven planning themes and optionally share an email/contact preferences.
+2. Rank five outcomes, which inform topic suggestions.
+3. Explicitly select 10 highest-priority topics.
+4. Explicitly select 4 lowest-priority topics (the other 19 are automatically middle priority).
+5. Compare the seven planning frameworks with the Little Jamaica draft.
+6. Compare the participant's priorities with community averages after at least one completed response.
+
+Each completed response receives a private return link, which allows revision until the database-enforced deadline **January 15, 2027 at 11:59 p.m. Toronto time**. The server closes new changes at midnight January 16 Toronto time. No account or email is needed to participate. Email updates are **manual only**; they are not sent automatically.
+
+Community averages are visible only through the private link of a completed participant, from the first completed response. At very low counts, an average may reveal a person's priorities; the survey informs participants of this limitation.
+
+## Public website embedding
+
+Use the GoDaddy HTML embed component:
+
+```html
+<iframe
+  src="https://little-jamaica-framework-tool-community-in-public.vercel.app/"
+  title="Little Jamaica community priorities survey"
+  width="100%"
+  height="1100"
+  loading="lazy"
+  style="width:100%;min-height:1100px;border:0;"
+></iframe>
 ```
 
-Keep server-to-server gateway credentials in Vercel preview environment variables, not the browser or repository. The Supabase `survey-storage` Edge Function uses a restricted operation allowlist and only accepts authenticated gateway calls. The current gateway is test-only. Before the public launch, establish a distinct production gateway credential, verify backups, accessibility, consent language, and publish a reviewed production build with explicit launch approval.
+Or link directly to the published URL. Vercel Content-Security-Policy permits framing by `communityinpublic.ca`, `www.communityinpublic.ca`, `crcd.to`, and `www.crcd.to`.
 
-The project contact for this survey is **Cheryll.Case@CPplanning.ca**; this does not create a new login.
+## Secure storage and privacy
 
-### Community comparisons from the first completion
+Supabase dedicated Little Jamaica project: `eumwsssqjliljbzxhsgc` (Canada Central). The Mapping-project database is untouched.
 
-The response-average threshold is **1**, not 5. Page 6 requests the aggregate using the participant's completed private response link, so unauthenticated visitors cannot query it. Each comparison displays the completed-response count and notes that early figures may reflect an individual's preferences. Low sample sizes can still permit inference of individual choices; this tradeoff must be considered when promoting the survey.
+Public and testing environments use **separate server-only tokens and response cohorts**. A new source-version ID segregates the current 33-topic methodology from all previous 39-topic survey answers. Private response records and optional contact information remain separate in the database. The public site does not have an administrative API to list individual responses.
 
-**Email delivery remains manual.** Results and consent preferences may be exported from Supabase by the project owner. The application does not send emails or subscribe anyone to mailing lists.
+**Direct access to individual responses:** log into the existing [Supabase dashboard](https://supabase.com/dashboard/project/eumwsssqjliljbzxhsgc) and use private views `survey_private.v_responses`, `survey_private.v_topic_weights`, `survey_private.v_participation` or the SQL Editor. Check your organization's Team Members to ensure only authorized people have access; Supabase owners and sufficiently privileged collaborators may access project data. Enable MFA.
+
+## Maintainers
+
+- `main`: the published site
+- `data/assessment.json`: 33-topic workbook-derived rubric and scores
+- `data/methodology.json`: fixed weighting rules, unique methodology ID, theme/outcome ranking parameters
+- `server/survey.cjs`: authoritative validation and server-recalculated weights
+- `public/js/`: participant experience; no server credentials
+- `api/`: same-origin storage, resume, status and completed-only aggregate endpoints
+- `supabase/functions/survey-storage/index.ts`: tightly allowlisted credential-scoped storage gateway
+
+To validate: `npm ci --ignore-scripts && npm run check`.
