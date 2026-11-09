@@ -2,6 +2,12 @@
 
 Community in Public's six-step community-priorities survey. Round 2 preserves the approved methodology and adds private response persistence.
 
+## Current status
+
+The dedicated **Little Jamaica Planning Framework Survey** Supabase project is active, and the Vercel Round 2 preview now saves real test responses. The existing mapping database is unchanged. This is not the public launch.
+
+GitHub development remains on `round-2`, with draft pull request #1. The production branch has not been merged or released. Use the newest Vercel preview for testing; older deployment URLs may use earlier configuration.
+
 ## Local preview
 
 Requires Node 22 or newer; no runtime packages are needed.
@@ -12,32 +18,33 @@ npm run check
 npm start
 ```
 
-The UI works without database configuration. It reports that online saving is unavailable instead of claiming answers were received.
+The static local preview does not run server endpoints. Without a configured server, the UI reports that online saving is unavailable rather than claiming answers were received.
 
-## Round 2 changes
+## Round 2 interface changes
 
 - Optional, dark-text email field; blank addresses never block completion.
 - Independent, unchecked newsletter and Little Jamaica planning-update permissions.
-- Alphabetical starting order for themes; outcomes remain randomized once per response.
+- Alphabetical starting themes; outcomes remain randomized once per response.
 - No Your selections sidebar. Outcome details use See which topics are covered.
 - Same-origin server endpoints for checkpoints and private return links.
-- Server-side validation and calculation; private contact records and consent history.
 
 ## Frozen assessment
 
-39 topics, seven comparators, five outcomes. The original data and model are unchanged. Group counts are 7/7/8/7/6/4 and collective shares are 40/35/11.23/8.56/3.21/2 percent. Every topic receives its theme's full rank points. Outcome overlap uses the largest multiplier plus the second divided by 8 and the third divided by 16.
+39 topics, seven comparators, five outcomes. The assessment data and model are unchanged. Group counts are 7/7/8/7/6/4 and collective shares are 40/35/11.23/8.56/3.21/2 percent (the middle shares retain full precision). Every topic receives its theme's full rank points. Outcome overlap uses the largest multiplier plus the second divided by 8 and the third divided by 16.
 
-## Dedicated Supabase project -- provisioning pending
+## Dedicated Supabase project
 
-Create a separate Little Jamaica project in the Community in Public organization, not in the existing mapping database. The connector quoted $0/month but requires explicit approval before creation.
+Project reference: `eumwsssqjliljbzxhsgc`, in Community in Public's existing organization, database region `ca-central-1`. Created under the approved free plan. No mapping-tool tables or settings were changed.
 
-1. Run `supabase/schema.sql` as an administrator in the dedicated project.
-2. Run the privilege checks in `supabase/reporting.sql` and Supabase security advisors.
-3. Configure `SUPABASE_URL` and a server-only `SUPABASE_SECRET_KEY` in the Vercel project settings, never in Git or client code.
-4. Keep `SURVEY_COLLECTION_MODE=test` for this round. Preview deployments always record test responses.
-5. Redeploy and test saves, retries, two-device resume, revoked access, completion and revisions against the live database.
+For a fresh setup:
 
-No live database verification has been completed while creation awaits approval. Do not invite public participation yet.
+1. Run `supabase/schema.sql`, then `supabase/activate-round2.sql`, as an administrator in the dedicated project.
+2. Deploy `supabase/functions/survey-storage/index.ts` with JWT verification disabled. The gateway performs its own mandatory server-token authentication; it is not an unauthenticated database API.
+3. Set server-only Vercel Preview variables `SUPABASE_URL`, `SURVEY_GATEWAY_TOKEN`, and `SURVEY_COLLECTION_MODE=test`. The gateway token must match the SHA256 digest configured in the Edge Function. Never put the token in Git or browser code.
+4. Supabase's privileged database key remains inside its Edge Function runtime. The gateway allows only the three explicitly named survey RPC operations.
+5. Redeploy the Vercel preview, then verify checkpoint saving, revision conflicts and private-link recovery.
+
+The gateway currently rejects any attempt to write a public-mode response. Changing this for launch is an explicit Round 3 task.
 
 ## Storage and security
 
@@ -45,18 +52,20 @@ A random response ID is paired with a high-entropy capability token. Only its SH
 
 Every Continue creates a versioned checkpoint. Duplicate requests are idempotent; conflicting and out-of-order revisions are rejected. The server recomputes topic weights from validated positions instead of trusting browser-supplied scores. First completion and pre-results snapshots remain available alongside later revisions.
 
-Survey answers are stored in `survey_private.responses` and `survey_private.checkpoints`. Optional emails and independent permissions are isolated in `contacts` and `contact_history`. Private tables have RLS and no public/anonymous/authenticated grants. All persistence functions are SECURITY INVOKER and executable only by the server role.
+Answers are stored in `survey_private.responses` and `survey_private.checkpoints`. Optional email and independent communication permissions are isolated in `contacts` and `contact_history`. All five private tables have RLS and no public/anonymous/authenticated grants. No RLS policies is intentional deny-by-default here; all persistence functions are SECURITY INVOKER and executable only by the server role.
 
-The response ID is not proof of a unique person. A person using another browser can create another response. No fingerprinting is used. Return links should be kept private because possession grants access to that response.
+The response ID is not proof of a unique person. Another browser can create another response. No fingerprinting is used. Return links should be kept private because possession grants access to that response.
 
 ## Consent and communication
 
-Providing an email requests survey results and final voting-result updates. The two checkboxes separately record newsletter and broader Little Jamaica planning updates. Clearing email clears effective communication permissions. The app stores these choices; it does not send email or subscribe people to a third-party mailing platform.
+Providing an email requests survey results and final voting-result updates. The two checkboxes separately record newsletter and broader Little Jamaica planning updates. Clearing email clears effective communication permissions. The app records these choices; it does not send email or subscribe people to a mailing platform.
+
+## Verification
+
+Seventeen live integration checks passed against the Vercel handlers and Supabase storage: blank-email saving, idempotent retries, pre-results preservation, completion, results viewing, later revisions, private-link restoration, independent contact permissions, contact separation, wrong/missing-token rejection, another response's isolation, stale-revision rejection, invalid-topic rejection, cross-site rejection and gateway authentication.
+
+Database readback confirmed five checkpoints for a five-event test response, three separate contact-history versions, preserved original and revised snapshots, the approved group sizes, and weights summing to one within floating-point precision. Synthetic activation responses are removed after verification. This verification is distinct from the earlier local interface and calculation tests; a final participant usability check remains useful.
 
 ## Reporting and Round 3
 
-`supabase/reporting.sql` provides administrator-only queries that can be exported to CSV/Excel. Live community averages, an authenticated administrator dashboard, retention decisions, stronger abuse controls and public launch remain Round 3 work. Never include test data in public community averages.
-
-## Source and testing
-
-Assessment data, the model, UI, server functions and SQL are separate files. Automated tests cover the approved calculation fixtures, all 1,482 insertion moves, all 120 outcome permutations, optional email and consent validation, and isolation of contact data. Live database and deployment checks must be reported separately from local tests.
+Authorized administrators can use `supabase/reporting.sql` and export query results for Excel. Live community averages, an authenticated administrator dashboard, final retention/editing rules, email delivery and public launch remain Round 3 work. Never include test data in public community averages.
