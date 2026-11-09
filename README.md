@@ -12,15 +12,15 @@ Community in Public's community-led evaluation tool, based on the user's consoli
 | Middle | 19 | 37% | 37/19% (approx. 1.9474%) |
 | Lowest | 4 | 3% | 0.75% |
 
-Theme and outcome rankings generate the **suggested ten highest topics**. In Step 2, participants can search all 23 topics outside the provisional highest group and directly add any to their ten highest. These participant-picked topics replace the lowest-ranked unselected suggestions. Participants may demote any top-ten topic to the middle; the next eligible suggestion automatically fills the vacated place. From the resulting middle list, participants select four topics for the lowest group. The final groups remain fixed at 10/19/4. Ties in the suggestions are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
+Theme and outcome rankings generate the **suggested ten highest topics**. In Step 3, participants can search all 23 topics outside the provisional highest group and directly add any to their ten highest. These participant-picked topics replace the lowest-ranked unselected suggestions. Participants may demote any top-ten topic to the middle; the next eligible suggestion automatically fills the vacated place. From the resulting middle list, participants select four topics for the lowest group. The final groups remain fixed at 10/19/4. Ties in the suggestions are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
 
 The source is `LJOVPF_Comparator_Assessment.xlsx`, using `Topics`, `Comparison by Topic` and `LJOVPF by Topic` sheets. Seven comparators are: Chinatown Tomorrow, Picture Mount Dennis, Mount Dennis Community for All, St. Clair Avenue West and Bathurst Street, Bloor Street, Yonge-St. Clair, and Port Lands. Scores are evidence-based documentary ratings from 1 to 5, not verified implementation outcomes.
 
 ## Participant experience
 
 1. Drag and drop the seven planning themes into rank order (arrow buttons are available for keyboard and touch), and optionally share an email/contact preferences.
-2. Rank five outcomes and browse/search the other topics to add overlooked priorities directly to the highest ten.
-3. Review ten automatically suggested highest-priority topics, moving any down to the middle (which promotes the next eligible suggestion).
+2. Rank the five community outcomes to inform suggested topic priorities.
+3. Review ten automatically suggested highest-priority topics, move any down to the middle, and search or browse the other topics to add overlooked priorities directly to the highest ten.
 4. From the middle list, choose exactly four topics to move into the lowest group (the other 19 stay in the middle).
 5. Compare seven linked planning frameworks against the Little Jamaica draft as the zero baseline, with signed relative scores and breakdowns for seven themes and five community outcomes.
 6. Compare the participant's priorities with community averages after at least one completed response.
