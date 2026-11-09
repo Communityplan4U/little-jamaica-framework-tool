@@ -314,6 +314,30 @@ function render(){
   });
   item.addEventListener('dragend',()=>{dragging=null;item.classList.remove('is-dragging');document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});
  });
+ // The search field updates just the topic list, preserving its focus and cursor.
+ const search=document.getElementById('topic-search'),results=document.getElementById('topic-browser-results');
+ if(search&&results){
+  search.addEventListener('input',()=>{state.topicSearch=search.value;results.innerHTML=topicBrowserResults();});
+  results.addEventListener('click',e=>{
+   const button=e.target.closest('[data-add-top]');
+   if(!button||!canEdit())return;
+   const code=button.dataset.addTop;
+   if(state.top.includes(code))return;
+   if(state.promotedTop.length>=10){
+    notice('Remove one of your directly added topics before adding another.','warning');return;
+   }
+   state.promotedTop=[...state.promotedTop,code];
+   state.excludedTop=state.excludedTop.filter(x=>x!==code);
+   state.bottom=state.bottom.filter(x=>x!==code);
+   syncTop();state.community=null;write();render();
+   notice('Added '+byCode[code].title+' to your highest-priority ten. Review your full list in Step 3.');
+  });
+ }
+ document.querySelectorAll('[data-unpin-top]').forEach(el=>el.addEventListener('click',()=>{
+  if(!canEdit())return;
+  state.promotedTop=state.promotedTop.filter(code=>code!==el.dataset.unpinTop);
+  syncTop();state.community=null;write();render();
+ }));
  document.querySelectorAll('[data-demote]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;
   const code=el.dataset.code;
@@ -323,6 +347,7 @@ function render(){
     notice('At least ten topics must stay eligible for the highest group. Restore an earlier topic before moving another.','warning');return;
    }
    state.excludedTop=excluded;
+   state.promotedTop=state.promotedTop.filter(x=>x!==code);
   }else{
    if(state.bottom.length>=4){notice('Four topics are already in the lowest group. Undo one before selecting another.','warning');return;}
    if(state.top.includes(code))return;
@@ -332,8 +357,13 @@ function render(){
  }));
  document.querySelectorAll('[data-restore-top]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;
-  state.excludedTop=state.excludedTop.filter(code=>code!==el.dataset.restoreTop);
-  state.bottom=state.bottom.filter(code=>code!==el.dataset.restoreTop);
+  const code=el.dataset.restoreTop;
+  if(!state.promotedTop.includes(code)&&state.promotedTop.length>=10){
+   notice('Remove a directly added topic before restoring another to the top ten.','warning');return;
+  }
+  state.excludedTop=state.excludedTop.filter(x=>x!==code);
+  state.bottom=state.bottom.filter(x=>x!==code);
+  if(!state.promotedTop.includes(code))state.promotedTop=[...state.promotedTop,code];
   syncTop();state.community=null;write();render();
  }));
  document.querySelectorAll('[data-restore-middle]').forEach(el=>el.addEventListener('click',()=>{
@@ -347,7 +377,7 @@ function render(){
  document.getElementById('save-comment')?.addEventListener('click',async()=>{state.feedback=document.getElementById('comment').value;const ok=await save('comments_shared');if(ok)notice('Your comments and current priorities were saved online.');});
  document.getElementById('private-link')?.addEventListener('click',copyLink);
  document.getElementById('download-my-response')?.addEventListener('click',downloadCsv);
- document.querySelectorAll('[data-rank],[data-demote],[data-restore-top],[data-restore-middle],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
+ document.querySelectorAll('[data-rank],[data-add-top],[data-unpin-top],[data-demote],[data-restore-top],[data-restore-middle],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
  renderSaveBadge();
 }
 async function next(){
