@@ -211,22 +211,81 @@ function selectionPage(kind){
   '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any four topics from the middle below.')+'</div></div>'+
   '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
 }
+function relativeScore(v){
+ if(!Number.isFinite(v)||Math.abs(v)<0.0000001)return '0.00';
+ return (v>0?'+':'')+fmt(v,2);
+}
+function groupDifference(c,codes,planIdx,scope){
+ if(planIdx===-1)return 0;
+ return sum(codes.map(code=>{
+  const t=c.byCode[code],rating=scope==='full'?t.comparatorFull[planIdx]:t.comparatorVision[planIdx];
+  return t.weight*(rating-t.score);
+ }));
+}
+function resultFrameworks(c,scope){
+ return [{name:'Little Jamaica / Oakwood Vaughan (draft)',relative:0,local:true,idx:-1,url:FRAMEWORK_REPORTS.local}]
+  .concat(c.comparators.map((p,i)=>({
+   name:p.name,relative:p[scope]-c.baseline,local:false,idx:i,url:FRAMEWORK_REPORTS.comparators[i]
+  }))).sort((a,b)=>b.relative-a.relative||a.name.localeCompare(b.name));
+}
+function breakdownMatrix(c,scope,title,groups,ordered){
+ const header=ordered.map(p=>'<th scope="col" title="'+esc(p.name)+'">'+
+  reportLink(p.local?'Little Jamaica (0)':'Plan '+(p.idx+1),p.url)+'</th>').join('');
+ const rows=groups.map(group=>{
+  const share=sum(group.codes.map(code=>c.byCode[code].weight))*100;
+  const scores=ordered.map(p=>{
+   const value=groupDifference(c,group.codes,p.idx,scope);
+   return '<td class="matrix-delta '+(value<0?'delta-negative':value>0?'delta-positive':'')+' '+(p.local?'reference-cell':'')+'">'+relativeScore(value)+'</td>';
+  }).join('');
+  return '<tr><th scope="row">'+esc(group.name)+' <small>'+group.codes.length+' topics</small></th>'+
+   '<td class="matrix-weight">'+fmt(share,1)+'%</td>'+scores+'</tr>';
+ }).join('');
+ return '<section class="breakdown-section"><h4>'+esc(title)+'</h4><p class="help">Scroll horizontally to compare each framework. The report titles above are links.</p>'+
+  '<div class="table-scroll breakdown-scroll" role="region" tabindex="0" aria-label="Relative planning scores by '+esc(title)+'">'+
+   '<table class="breakdown-table"><thead><tr><th scope="col">'+esc(title)+'</th><th scope="col">Your weight</th>'+header+
+   '</tr></thead><tbody>'+rows+'</tbody></table></div></section>';
+}
 function resultsPage(){
- const c=calculate(),full=state.scope==='full',key=full?'full':'vision';
- const sorted=[{name:'Little Jamaica / Oakwood Vaughan (draft)',value:c.baseline,local:true}].concat(c.comparators.map(o=>({name:o.name,value:o[key],local:false}))).sort((a,b)=>b.value-a.value);
- const rows=sorted.map((r,i)=>'<div class="score-row '+(r.local?'home-score':'')+'"><span class="score-rank">'+(i+1)+'</span><span class="score-name">'+esc(r.name)+'</span><strong>'+fmt(r.value,2)+'/5</strong><div class="score-track"><i style="width:'+(r.value/5*100)+'%"></i></div></div>').join('');
- const topicRows=c.topics.slice().sort((a,b)=>a.position-b.position).map(t=>'<tr><td>'+esc(t.code)+'</td><td>'+esc(t.title)+'</td><td>'+esc(t.group)+'</td><td>'+fmt(t.weight*100,2)+'%</td><td>'+fmt(t.score,0)+'/5</td></tr>').join('');
- return '<section class="results-intro"><h3>Your priorities applied to the planning documents</h3>'+
- '<p>These ratings assess what the written documents address—not whether governments have delivered their commitments. Higher scores mean the document addresses more of the topics you emphasized.</p>'+
- '<div class="score-feature"><span>Little Jamaica draft, weighted score</span><strong>'+fmt(c.baseline,2)+' <small>/ 5</small></strong></div>'+
- '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div></section>'+
- '<div class="scores">'+rows+'</div>'+
- '<details class="full-breakdown"><summary>See all 33 topic weights and Little Jamaica ratings</summary><div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Group</th><th>Weight</th><th>Draft rating</th></tr></thead><tbody>'+topicRows+'</tbody></table></div></details>'+
- '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
- '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
- '<button class="secondary" id="save-comment" type="button">Save comments and changes</button>'+
- '<div class="return-actions"><button class="secondary" id="private-link" type="button">Copy my private return link</button>'+
- '<button class="secondary" id="download-my-response" type="button">Download my topic priorities (CSV)</button></div></section>';
+ const c=calculate(),full=state.scope==='full',scope=full?'full':'vision';
+ const ordered=resultFrameworks(c,scope);
+ const maxDifference=Math.max(0.01,...ordered.map(p=>Math.abs(p.relative)));
+ const scores=ordered.map((p,i)=>{
+  const width=Math.min(49,Math.abs(p.relative)/maxDifference*49),left=p.relative<0?50-width:50;
+  return '<div class="score-row relative-score-row '+(p.local?'home-score':'')+'"><span class="score-rank">'+(i+1)+'</span>'+
+   '<span class="score-name">'+reportLink(p.name,p.url)+(p.local?'<small>Comparison baseline</small>':'')+'</span>'+
+   '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
+   '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
+   (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div></div>';
+ }).join('');
+ const themeGroups=state.ranking.map(name=>({name,codes:c.topics.filter(t=>t.theme===name).map(t=>t.code)}));
+ const outcomeGroups=state.outcomeRanking.map(id=>{
+  const o=METHOD.outcomes.find(x=>x.id===id);
+  return {name:o.title,codes:outcomeCodes[id]};
+ });
+ const topics=c.topics.slice().sort((a,b)=>a.position-b.position).map(t=>
+  '<tr><td>'+esc(t.code)+'</td><td>'+esc(t.title)+'</td><td>'+esc(t.theme)+'</td>'+
+   '<td>'+esc(t.group)+'</td><td>'+fmt(t.weight*100,2)+'%</td></tr>'
+ ).join('');
+ return '<section class="results-intro"><h3>Your priorities applied to the Planning Frameworks</h3>'+
+  '<p>All scores are <strong>weighted differences from the Little Jamaica draft (0)</strong>, not raw document ratings. Positive values mean another framework addresses your weighted topics more comprehensively; negative values mean less comprehensively. These are assessments of written documents, not verified implementation outcomes.</p>'+
+  '<div class="score-feature"><span>Little Jamaica / Oakwood Vaughan reference score</span><strong>0.00</strong></div>'+
+  '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
+  (full?'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>':'')+
+  '<p class="help">Click any framework name to open the underlying planning report in a new tab. The Port Lands source is a large PDF.</p></section>'+
+  '<div class="scores">'+scores+'</div>'+
+  '<section class="breakdowns"><h3>Compare by planning theme and community outcome</h3>'+
+  '<p>The values below show each theme or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
+  breakdownMatrix(c,scope,'Planning theme',themeGroups,ordered)+
+  breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
+  '<p class="help">Planning themes do not overlap: their differences add up to each framework’s overall difference. A topic may advance several community outcomes, so outcome values overlap and do not add up to the overall score.</p></section>'+
+  '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
+   '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
+   '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Theme</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
+  '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
+   '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
+   '<button class="secondary" id="save-comment" type="button">Save comments and changes</button>'+
+   '<div class="return-actions"><button class="secondary" id="private-link" type="button">Copy my private return link</button>'+
+   '<button class="secondary" id="download-my-response" type="button">Download my topic priorities (CSV)</button></div></section>';
 }
 function communityPage(){
  const c=calculate(),d=state.community,ready=d&&d.available===true;
