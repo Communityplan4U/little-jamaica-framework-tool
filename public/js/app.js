@@ -145,11 +145,9 @@ function connectionForm(){
   '<label class="field-label" for="participant-email">Your email address (optional)</label>'+
   '<input id="participant-email" class="email-input" type="email" autocomplete="email" maxlength="254" value="'+esc(state.email)+'" placeholder="you@example.com">'+
   '<p class="help">Add your email if you would like Community in Public to send you your results and updates on the final results. No email is required to participate.</p>'+
-  '<fieldset class="consent"><legend>Other messages you may choose to receive (optional)</legend>'+
+  '<fieldset class="consent"><legend>Would you like to stay involved? (Select all that apply)</legend>'+
   '<label><input id="newsletter" type="checkbox" '+(state.newsletterOptIn?'checked':'')+'> Community in Public newsletter</label>'+
-  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>'+ 
-  '<p class="help">These permissions are independent and unchecked by default. Messages are not sent automatically by this survey.</p>'+ 
-  '<details class="privacy"><summary>Privacy and community averages</summary><p>Community in Public stores survey answers separately from optional contact details. Completed participants may view aggregate priorities from the first completed response onward. With very few responses, an average may closely reflect an individual’s choices. Keep your private return link confidential; it provides access to your response and allows revisions before the closing date.</p></details></section>';
+  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>'+ ;
 }
 function topicBrowserResults(){
  const highest=new Set(syncTop()),q=(state.topicSearch||'').trim().toLowerCase();
@@ -333,7 +331,7 @@ function render(){
  stepDetail.hidden=!stepDetail.textContent;
  const root=document.getElementById('stage');
  root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from most to least important</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
-  step===1?'<div class="subpanel"><h3>Rank the six community outcomes</h3><p>What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p><p class="help">Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome. The related assessment requirements remain part of the 33 planning topics.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
+  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p><p class="help">Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome. The related assessment requirements remain part of the 33 planning topics.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
    METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
  const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
