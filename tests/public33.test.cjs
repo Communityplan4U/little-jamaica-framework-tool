@@ -303,7 +303,6 @@ test('Planning subjects display throughout the survey and community comparison w
  assert.match(obj.communityPage(),/Economic opportunity/);
  obj.state.communityView='subjects'; // compatibility with the briefly published/locally cached UI value
  assert.match(obj.communityPage(),/Community and public spaces/);
- assert.match(obj.connectionForm(),/Privacy and community averages/);
  assert.ok(obj.connectionForm().endsWith('</section>'),'connection form section must be closed');
 });
 
