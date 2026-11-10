@@ -1,22 +1,23 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
 const S=require('../server/survey.cjs');
-const C=S.WB.topics.map(t=>t.code),T=S.WB.themes.map(t=>t.name),O=S.M.outcomes.map(o=>o.id);
+const C=S.WB.surveyTopics.map(t=>t.code),T=S.WB.themes.map(t=>t.name),O=S.M.outcomes.map(o=>o.id);
 const id='bda6cc17-94ad-4a87-8cc6-374a09b9aa32',event='cda6cc17-94ad-4a87-8cc6-374a09b9aa32';
 function snap(){
- const weights=C.map((code,i)=>({code,position:i+1,group:S.M.groupNames[i<10?0:i<29?1:2],weight:i<10?.06:i<29?.37/19:.0075}));
+ const weights=C.map((code,i)=>({code,position:i+1,group:S.M.groupNames[i<6?0:i<18?1:2],weight:i<6?.10:i<18?.37/12:.015}));
  return {sourceVersion:S.M.id,responseId:id,themeRanking:T,outcomeRanking:O,
- topSelected:C.slice(0,10),bottomSelected:C.slice(29),topicWeights:weights,connections:[],
+ topSelected:C.slice(0,6),bottomSelected:C.slice(18),topicWeights:weights,connections:[],
  email:'',notes:'',communications:{},inputEvidence:{continuedPages:[1,2,3,4]}};
 }
-test('The workbook supplies exactly 33 distinct topics across seven themes',()=>{
- assert.equal(C.length,33);assert.equal(new Set(C).size,33);assert.equal(T.length,7);
+test('The workbook supplies 20 survey topics across six Planning Areas',()=>{
+ assert.equal(C.length,20);assert.equal(new Set(C).size,20);assert.equal(T.length,6);
+ assert.equal(S.WB.topics.length,33);assert.equal(new Set(S.WB.topics.map(t=>t.code)).size,33);
  assert.equal(S.WB.comparators.length,7);assert.equal(O.length,6);
 });
-test('Group weights total 100% and use 10/19/4 and 60/37/3',()=>{
- assert.deepEqual(S.M.groupCounts,[10,19,4]);assert.deepEqual(S.M.groupShares,[60,37,3]);
- assert.equal(S.M.groupCounts.reduce((a,b)=>a+b),33);assert.equal(S.M.groupShares.reduce((a,b)=>a+b),100);
- assert.ok((60/10)>(37/19));assert.ok((37/19)>(3/4));
+test('Group weights total 100% and use 6/12/2 and 60/37/3',()=>{
+ assert.deepEqual(S.M.groupCounts,[6,12,2]);assert.deepEqual(S.M.groupShares,[60,37,3]);
+ assert.equal(S.M.groupCounts.reduce((a,b)=>a+b),20);assert.equal(S.M.groupShares.reduce((a,b)=>a+b),100);
+ assert.ok((60/6)>(37/12));assert.ok((37/12)>(3/2));
 });
 test('All comparator and baseline ratings are within 1–5',()=>{
  for(const t of S.WB.topics){
@@ -27,18 +28,18 @@ test('All comparator and baseline ratings are within 1–5',()=>{
 });
 test('Server recomputes group weights, score and optional consent',()=>{
  const x=S.canonicalSnapshot(snap(),id);
- assert.equal(x.coreCompleted,true);assert.equal(x.snapshot.topicWeights.length,33);
+ assert.equal(x.coreCompleted,true);assert.equal(x.snapshot.topicWeights.length,20);
  assert.ok(Math.abs(x.snapshot.topicWeights.reduce((a,t)=>a+t.weight,0)-1)<1e-12);
- assert.equal(x.snapshot.topicWeights[0].weight,.06);
- assert.ok(Math.abs(x.snapshot.topicWeights[15].weight-37/1900)<1e-12);
- assert.equal(x.snapshot.topicWeights[32].weight,.0075);
+ assert.equal(x.snapshot.topicWeights[0].weight,.10);
+ assert.ok(Math.abs(x.snapshot.topicWeights[15].weight-37/1200)<1e-12);
+ assert.equal(x.snapshot.topicWeights[19].weight,.015);
  assert.equal(x.contact.email,null);assert.equal(x.contact.newsletter,false);
 });
 test('Incomplete selections do not count as a completed response',()=>{
  const x=snap();x.topSelected=[];x.bottomSelected=[];assert.equal(S.canonicalSnapshot(x,id).coreCompleted,false);
 });
 test('Participant must explicitly choose the top ten and the bottom four',()=>{
- const x=snap();x.topSelected=C.slice(0,9);
+ const x=snap();x.topSelected=C.slice(0,5);
  assert.equal(S.canonicalSnapshot(x,id).coreCompleted,false);
 });
 test('A topic cannot be both highest and lowest',()=>{
@@ -56,10 +57,10 @@ test('Survey scores are derived from user choices, not client-supplied weights',
  const x=snap();x.topicWeights.forEach(t=>t.weight=777);x.score=9000;
  const result=S.canonicalSnapshot(x,id).snapshot;
  assert.ok(result.score<=5&&result.score>=1);
- assert.equal(result.topicWeights[0].weight,.06);
+ assert.equal(result.topicWeights[0].weight,.10);
 });
 test('New source version keeps old 39-topic responses separate',()=>{
- assert.ok(S.M.id.includes('33top10-bottom4'));
+ assert.ok(S.M.id.includes('20top6-bottom2'));
  const x=snap();x.sourceVersion='ljov-20261109-seven-comparators-40-35-v4';assert.throws(()=>S.canonicalSnapshot(x,id),/version/);
 });
 test('Production mode requires explicit production environment variables',()=>{
@@ -81,8 +82,8 @@ test('No emailing infrastructure is enabled',()=>{
 
 test('The weighted shares are 60% highest, 37% middle and 3% lowest',()=>{
  const weights=S.canonicalSnapshot(snap(),id).snapshot.topicWeights;
- assert.equal(weights.length,33);
- for(const [start,end,expected] of [[0,10,.60],[10,29,.37],[29,33,.03]]){
+ assert.equal(weights.length,20);
+ for(const [start,end,expected] of [[0,6,.60],[6,18,.37],[18,20,.03]]){
   assert.ok(Math.abs(weights.slice(start,end).reduce((a,t)=>a+t.weight,0)-expected)<1e-10);
  }
  assert.ok(!S.M.id.includes('50-47'));
@@ -104,7 +105,7 @@ test('Server disallows a demoted topic remaining in highest ten',()=>{
  assert.throws(()=>S.canonicalSnapshot(x,id),/moved to middle/);
 });
 test('Participant may move a demoted top suggestion from middle to lowest',()=>{
- const x=snap();const demoted=C[29];x.excludedTop=[demoted];
+ const x=snap();const demoted=C[18];x.excludedTop=[demoted];
  const result=S.canonicalSnapshot(x,id);
  assert.equal(result.coreCompleted,true);
  assert.ok(result.snapshot.bottomSelected.includes(demoted));
@@ -117,22 +118,22 @@ test('Participant-selected top-ten topics are preserved and cannot be forged out
   eventId:event,responseId:id,revision:1,answerRevision:1,eventType:'continue',page:2,snapshot:x,resumeState:{page:2}
  });
  assert.deepEqual(checkpoint.event.resumeState.promotedTop,[C[0],C[1]]);
- x.promotedTop=[C[28]];
+ x.promotedTop=[C[17]];
  assert.throws(()=>S.canonicalSnapshot(x,id),/must remain in the highest group/);
 });
 
-test('Browser model supports additional top-ten selections with fixed 10/19/4 groups',()=>{
+test('Browser model supports additional top-ten selections with fixed 6/12/2 groups',()=>{
  const vm=require('node:vm'),path=require('node:path');
  const load=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
  const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
  const app=load('public/js/app.js').split("window.addEventListener('online'")[0];
  vm.runInContext(load('public/js/state.js')+'\n'+load('public/js/model.js')+'\n'+app,ctx);
  const x=vm.runInContext('({state,suggestions,syncTop,calculate,topicBrowser,resultsPage,FRAMEWORK_REPORTS,FRAMEWORK_RESPONSIBILITIES,FRAMEWORK_WARDS,groupDifference})',ctx);
- const initial=x.suggestions(),added=initial[15];
+ const initial=x.suggestions(),added=initial[12];
  x.state.promotedTop=[added];x.syncTop();
- assert.equal(x.state.top.length,10);
+ assert.equal(x.state.top.length,6);
  assert.ok(x.state.top.includes(added));
- assert.equal(x.calculate().groups.map(g=>g.length).join(','),'10,19,4');
+ assert.equal(x.calculate().groups.map(g=>g.length).join(','),'6,12,2');
  assert.match(x.topicBrowser(),/id="topic-search"/);
  assert.match(x.topicBrowser(),/data-add-top=/);
  const output=x.resultsPage();
@@ -193,7 +194,7 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  const app=get('public/js/app.js').split("window.addEventListener('online'")[0];
  vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js')+'\n'+app,ctx);
  vm.runInContext("collection={checked:true,isOpen:true};record={responseId:'bda6cc17-94ad-4a87-8cc6-374a09b9aa32',outbox:[],confirmedRevision:0};state.step=0;render();",ctx);
- assert.equal((element('stage').innerHTML.match(/data-drag-rank="ranking"/g)||[]).length,7);
+ assert.equal((element('stage').innerHTML.match(/data-drag-rank="ranking"/g)||[]).length,6);
  vm.runInContext('state.step=1;render()',ctx);
  assert.equal((element('stage').innerHTML.match(/data-drag-rank="outcomeRanking"/g)||[]).length,6);
  assert.doesNotMatch(element('stage').innerHTML,/id="topic-search"/);
@@ -209,7 +210,7 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  const handler=element('topic-browser-results').events.click;
  assert.equal(typeof handler,'function');
  handler({target:{closest:()=>({dataset:{addTop:toAdd}})}});
- assert.equal(state.top.length,10);
+ assert.equal(state.top.length,6);
  assert.ok(state.top.includes(toAdd));
  assert.ok(state.promotedTop.includes(toAdd));
  assert.ok(storage.size>=1);
@@ -217,36 +218,28 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  assert.match(element('stage').innerHTML,new RegExp('data-code="'+toAdd+'"'));
 });
 
-test('Six mutually exclusive community outcomes span at least two planning themes',()=>{
- const groups={
-  coord:['A-2','A-8','CP-7','D-2','D-3','D-7','R-3'],
-  wealth:['CP-1','E-1','E-3','R-4'],
-  remain:['A-6','E-2','H-1','R-1'],
-  power:['A-1','A-3','A-5','D-4','R-6','R-7'],
-  belong:['A-4','A-7','CP-6','CU-1','CU-2'],
-  wellbeing:['CP-3','CP-4','CP-5','H-2','H-3','H-4','H-5']
- };
+test('Thirty-three criteria cover six outcomes and all twenty survey choices',()=>{
  assert.deepEqual(O,['coord','wealth','remain','power','belong','wellbeing']);
- assert.equal(S.M.id,'ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-additive-60t-40o-v4');
+ assert.ok(S.M.id.includes('20top6-bottom2'));
  assert.deepEqual(S.M.outcomeRankPoints,[6,5,4,3,2,1]);
  assert.deepEqual(S.M.suggestionBlend,{themes:0.6,outcomes:0.4});
- assert.ok(!('outcomeRankMultipliers' in S.M));
- assert.equal(S.M.outcomes.length,6);
- assert.deepEqual(S.M.groupCounts,[10,19,4]);
+ assert.deepEqual(S.M.groupCounts,[6,12,2]);
  assert.deepEqual(S.M.groupShares,[60,37,3]);
  assert.ok(S.M.humanRightsLens.includes('Indigenous rights'));
  const all=new Set();
  for(const o of S.M.outcomes){
-  const actual=S.WB.topics.filter(t=>t.outcomeFlags[o.id]===1);
-  assert.deepEqual(actual.map(t=>t.code).sort(),groups[o.id].slice().sort());
-  assert.ok(new Set(actual.map(t=>t.theme)).size>=2,'Outcome is not cross-cutting: '+o.id);
-  for(const t of actual){assert.ok(!all.has(t.code),'Topic assigned to multiple outcomes: '+t.code);all.add(t.code);}
+  const underlying=S.WB.topics.filter(t=>t.outcomeFlags[o.id]===1);
+  assert.ok(new Set(underlying.map(t=>t.planningArea)).size>=2,'Outcome is not cross-cutting: '+o.id);
+  for(const t of underlying){assert.ok(!all.has(t.code));all.add(t.code);}
  }
  assert.equal(all.size,33);
- for(const t of S.WB.topics)assert.equal(Object.values(t.outcomeFlags).reduce((s,n)=>s+n,0),1);
- assert.ok(!S.M.outcomes.some(x=>x.id==='systemic'));
+ const assigned=S.WB.surveyTopics.flatMap(t=>t.criterionCodes);
+ assert.equal(assigned.length,33);assert.equal(new Set(assigned).size,33);
+ for(const t of S.WB.surveyTopics){
+  assert.ok(t.criterionCodes.every(code=>all.has(code)));
+  assert.ok(Math.abs(Object.values(t.outcomeFlags).reduce((a,n)=>a+n,0)-1)<1e-10);
+ }
 });
-
 test('Outcome ranking changes proposed top-ten suggestions and validates all six ranks',()=>{
  const vm=require('node:vm'),path=require('node:path');
  const get=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
@@ -256,37 +249,36 @@ test('Outcome ranking changes proposed top-ten suggestions and validates all six
  vm.runInContext('state.outcomeRanking.reverse()',ctx);
  const second=Array.from(vm.runInContext('suggestions()',ctx));
  assert.notDeepEqual(first,second);
- assert.equal(first.length,33);
- assert.equal(new Set(first).size,33);
+ assert.equal(first.length,20);
+ assert.equal(new Set(first).size,20);
  const response=snap();
  assert.equal(S.canonicalSnapshot(response,id).coreCompleted,true);
  response.outcomeRanking=response.outcomeRanking.slice(1);
  assert.throws(()=>S.canonicalSnapshot(response,id),/Invalid outcomes/);
 });
 
-test('60/40 normalized additive suggestions give precise extreme scores',()=>{
+test('60/40 suggestions normalize six Planning Areas and outcome ranking',()=>{
  const vm=require('node:vm');
  const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
  vm.runInContext(fs.readFileSync('public/js/state.js','utf8')+'\n'+fs.readFileSync('public/js/model.js','utf8'),ctx);
- vm.runInContext('state.ranking=THEMES.slice();state.outcomeRanking=OUTCOMES.slice()',ctx);
- const score=()=>vm.runInContext("suggestionScores().find(t=>t.code==='A-2').score",ctx);
- assert.equal(score(),100,'First-ranked theme and outcome');
+ const score=()=>vm.runInContext("suggestionScores().find(t=>t.code==='T19').score",ctx);
+ vm.runInContext("state.ranking=[THEMES[5],...THEMES.slice(0,5)];state.outcomeRanking=OUTCOMES.slice()",ctx);
+ assert.equal(score(),100);
  vm.runInContext("state.outcomeRanking=[...OUTCOMES.slice(1),OUTCOMES[0]]",ctx);
- assert.equal(score(),60,'First-ranked theme, last-ranked outcome');
- vm.runInContext("state.ranking=[...THEMES.slice(1),THEMES[0]];state.outcomeRanking=OUTCOMES.slice()",ctx);
- assert.equal(score(),40,'Last-ranked theme, first-ranked outcome');
+ assert.equal(score(),60);
+ vm.runInContext("state.ranking=THEMES.slice();state.outcomeRanking=OUTCOMES.slice()",ctx);
+ assert.equal(score(),40);
  vm.runInContext("state.outcomeRanking=[...OUTCOMES.slice(1),OUTCOMES[0]]",ctx);
- assert.equal(score(),0,'Last-ranked theme and outcome');
+ assert.equal(score(),0);
  const scores=Array.from(vm.runInContext('suggestionScores()',ctx),x=>x.score);
  assert.ok(scores.every(x=>x>=0&&x<=100));
 });
-
 test('New normalized additive methodology rejects previous multiplier snapshots',()=>{
  const previous=snap();previous.sourceVersion='ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3';
  assert.throws(()=>S.canonicalSnapshot(previous,id),/version mismatch/i);
  const s=snap();assert.equal(S.canonicalSnapshot(s,id).coreCompleted,true);
  const ui=fs.readFileSync('public/js/app.js','utf8');
- assert.ok(ui.includes('six-outcomes.additive60-40.v4.'));
+ assert.ok(ui.includes('six-areas.six-outcomes.v1.'));
 });
 test('Community comparison supports internal subject view keys and valid connection form',()=>{
  const vm=require('node:vm'),path=require('node:path');
@@ -296,9 +288,9 @@ test('Community comparison supports internal subject view keys and valid connect
  vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js')+'\n'+partialApp,context);
  const obj=vm.runInContext('({state,communityPage,connectionForm})',context);
  obj.state.communityView='themes';
- assert.equal((obj.communityPage().match(/class="compare-item"/g)||[]).length,7);
+ assert.equal((obj.communityPage().match(/class="compare-item"/g)||[]).length,6);
  obj.state.communityView='subjects';
- assert.equal((obj.communityPage().match(/class="compare-item"/g)||[]).length,7);
+ assert.equal((obj.communityPage().match(/class="compare-item"/g)||[]).length,6);
  const form=obj.connectionForm();
  assert.ok(form.startsWith('<section')&&form.endsWith('</section>'));
  assert.equal((form.match(/data-connection=/g)||[]).length,7);
@@ -324,7 +316,7 @@ test('Mobile layout retains viewport and scrollable containers',()=>{
 });
 
 
-test('Step 5 lets participants reassign all 33 topics in a valid 10/19/4 draft before updating assessments',()=>{
+test('Step 5 lets participants reassign all 33 topics in a valid 6/12/2 draft before updating assessments',()=>{
  const vm=require('node:vm'),path=require('node:path');
  const load=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
  const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
@@ -336,12 +328,12 @@ test('Step 5 lets participants reassign all 33 topics in a valid 10/19/4 draft b
  const [wasHighest,wasMiddle]=[before.groups[0][0],before.groups[1][0]];
  const html=run('resultsPage()');
  const editor=html.split('<details class="full-breakdown')[1].split('</details>')[0];
- assert.match(editor,/See and adjust 33 topic prioritization/);
- assert.equal((editor.match(/data-priority-code=/g)||[]).length,33);
+ assert.match(editor,/See and adjust 20 survey topic prioritization/);
+ assert.equal((editor.match(/data-priority-code=/g)||[]).length,20);
  assert.doesNotMatch(editor,/<th>Weight<\/th>/);
  assert.match(editor,/<th>Priority group<\/th>/);
  assert.match(editor,/I prefer this ranking\. Update the assessments based on this ranking/);
- assert.deepEqual(Array.from(run('priorityGroupCounts(priorityDraft.groups)')),[10,19,4]);
+ assert.deepEqual(Array.from(run('priorityGroupCounts(priorityDraft.groups)')),[6,12,2]);
  run('priorityDraft.groups['+JSON.stringify(wasHighest)+']=1');
  assert.equal(run('priorityDraftValid()'),false);
  assert.equal(run('applyPriorityDraft()'),false);
@@ -350,11 +342,11 @@ test('Step 5 lets participants reassign all 33 topics in a valid 10/19/4 draft b
  assert.equal(run('priorityDraftValid()'),true);
  assert.equal(run('applyPriorityDraft()'),true);
  const after=run('calculate()');
- assert.deepEqual(Array.from(after.groups.map(g=>g.length)),[10,19,4]);
+ assert.deepEqual(Array.from(after.groups.map(g=>g.length)),[6,12,2]);
  assert.ok(after.groups[0].includes(wasMiddle));
  assert.ok(after.groups[1].includes(wasHighest));
  assert.ok(!after.groups[0].includes(wasHighest));
- assert.ok(after.groups[2].length===4);
+ assert.ok(after.groups[2].length===2);
  assert.ok(run('state.promotedTop.includes('+JSON.stringify(wasMiddle)+')'));
  assert.ok(Math.abs(after.topics.reduce((a,t)=>a+t.weight,0)-1)<1e-10);
  run('resultsPage()');
@@ -406,7 +398,7 @@ test('New defaults apply only to a fresh respondent; local saved rankings are pr
  const first=makeCtx();
  vm.runInContext(code,first);
  vm.runInContext('init()',first);
- assert.equal(vm.runInContext('state.ranking[0]',first),'Housing');
+ assert.equal(vm.runInContext('state.ranking[0]',first),'Housing and remaining rooted');
  assert.equal(vm.runInContext('state.outcomeRanking[0]',first),'wellbeing');
  vm.runInContext('state.ranking.reverse();state.outcomeRanking.reverse();write()',first);
  const prior={
