@@ -331,7 +331,7 @@ function render(){
  stepDetail.hidden=!stepDetail.textContent;
  const root=document.getElementById('stage');
  root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from most to least important</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
-  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p><p class="help">Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome. The related assessment requirements remain part of the 33 planning topics.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
+  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
    METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
  const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
