@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning subjects','Rank community outcomes','Confirm top topics','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning subjects','Rank community outcomes','Confirm top topics','Identify lowest priority topics','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
@@ -273,7 +273,6 @@ function selectionPage(kind){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
   return '<div class="selection-intro"><h3>Review your top 10 priorities</h3>'+
    '<p>These ten topics are suggested from your rankings of planning subjects (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
-   '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue. You can search all other topics to add overlooked priorities.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
    (rejected.length?'<div class="review-demotions"><strong>Moved to middle · select to restore</strong>'+
@@ -282,8 +281,7 @@ function selectionPage(kind){
  }
  const middle=proposed.filter(code=>!highest.includes(code)&&!state.bottom.includes(code));
  return '<div class="selection-intro"><h3>Move four middle topics to lowest priority</h3>'+
-  '<p>These topics are in the middle after Step 3. Choose four to carry the lowest relative weight. This does not mean you oppose them.</p>'+
-  '<p class="weight-note">The lowest four share 3% (0.75% each). The remaining nineteen middle topics share 37% (about 1.95% each).</p>'+
+  '<p>These topics are in the middle. Choose four that you feel are the lowest priority. This does not mean you oppose them.</p>'+
   '<div class="selection-counter"><strong>'+state.bottom.length+' / 4</strong> lowest-priority topics selected</div>'+
   '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any four topics from the middle below.')+'</div></div>'+
   '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
@@ -402,9 +400,9 @@ function render(){
  stepDetail.textContent=[
   '', // Step 1: question is in the planning subjects panel.
   '', // Step 2: question is in the community outcomes panel.
-    '', // Step 4: question is in the topics panel.
-  'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
-  'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
+    '', // Step 3: question is in the topics panel.
+      '', // Step 43 question is in the topics panel.
+   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
  stepDetail.hidden=!stepDetail.textContent;
