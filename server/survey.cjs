@@ -2,7 +2,7 @@
 const crypto=require('node:crypto');
 const WB=require('../data/assessment.json');
 const M=require('../data/methodology.json');
-const THEMES=WB.themes.map(t=>t.name),OUTCOMES=M.outcomes.map(t=>t.id),CODES=WB.topics.map(t=>t.code);
+const THEMES=WB.themes.map(t=>t.name),OUTCOMES=M.outcomes.map(t=>t.id),CODES=WB.surveyTopics.map(t=>t.code);
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 class ApiError extends Error{constructor(status,message){super(message);this.status=status;}}
 function fail(code,msg){throw new ApiError(code,msg);}
@@ -22,17 +22,17 @@ function canonicalSnapshot(input,rid){
  if(input.sourceVersion!==M.id||input.responseId!==rid)fail(409,'Survey version mismatch');
  const ranking=permutation(input.themeRanking,THEMES,'themes');
  const outcomes=permutation(input.outcomeRanking,OUTCOMES,'outcomes');
- const top=selected(input.topSelected||[],10,'top-ten selection');
- const bottom=selected(input.bottomSelected||[],4,'lowest-four selection');
- const excludedTop=selected(input.excludedTop||[],23,'demoted top suggestions');
- const promotedTop=selected(input.promotedTop||[],10,'participant-selected highest suggestions');
+ const top=selected(input.topSelected||[],M.groupCounts[0],'top-six selection');
+ const bottom=selected(input.bottomSelected||[],M.groupCounts[2],'lowest-two selection');
+ const excludedTop=selected(input.excludedTop||[],M.topicCount-M.groupCounts[0],'demoted top suggestions');
+ const promotedTop=selected(input.promotedTop||[],M.groupCounts[0],'participant-selected highest suggestions');
  if(top.some(x=>bottom.includes(x)))fail(400,'A topic cannot be highest and lowest');
  if(top.some(x=>excludedTop.includes(x)))fail(400,'A topic moved to middle cannot remain in the highest group');
  if(promotedTop.some(x=>!top.includes(x)))fail(400,'A participant-added highest topic must remain in the highest group');
  const order=permutation((input.topicWeights||[]).slice().sort((a,b)=>a.position-b.position).map(x=>x.code),CODES,'topic order');
- const completeChoices=top.length===10&&bottom.length===4;
+ const completeChoices=top.length===M.groupCounts[0]&&bottom.length===M.groupCounts[2];
  if(completeChoices){
-  if(order.slice(0,10).some(x=>!top.includes(x))||order.slice(29).some(x=>!bottom.includes(x)))fail(400,'Explicit selections do not match topic weights');
+  if(order.slice(0,M.groupCounts[0]).some(x=>!top.includes(x))||order.slice(-M.groupCounts[2]).some(x=>!bottom.includes(x)))fail(400,'Explicit selections do not match topic weights');
  }
  let pos=0,weighted=[];
  for(let k=0;k<M.groupCounts.length;k++){
@@ -48,12 +48,18 @@ function canonicalSnapshot(input,rid){
  const evidence=input.inputEvidence||{};
  const pages=Array.isArray(evidence.continuedPages)?[...new Set(evidence.continuedPages.filter(x=>Number.isInteger(x)&&x>=1&&x<=6))]:[];
  const coreCompleted=completeChoices&&[1,2,3,4].every(n=>pages.includes(n));
- const score=WB.topics.reduce((sum,t)=>sum+WEIGHTS[weighted.find(w=>w.code===t.code).group]*t.score,0);
- const snap={type:'Little Jamaica community weighting survey',version:text(input.version||'',100,'survey version'),sourceVersion:M.id,responseId:rid,topicCount:33,sourceWorkbook:WB.filename,
+ const criteriaByCode=Object.fromEntries(WB.topics.map(t=>[t.code,t]));
+ const score=WB.surveyTopics.reduce((sum,t)=>{
+  const weight=WEIGHTS[weighted.find(w=>w.code===t.code).group];
+  const criteria=t.criterionCodes.map(code=>criteriaByCode[code]);
+  if(!criteria.length||criteria.some(c=>!c))fail(500,'Assessment crosswalk is incomplete');
+  return sum+weight*criteria.reduce((total,c)=>total+c.score,0)/criteria.length;
+ },0);
+ const snap={type:'Little Jamaica community weighting survey',version:text(input.version||'',100,'survey version'),sourceVersion:M.id,responseId:rid,topicCount:M.topicCount,sourceWorkbook:WB.filename,
   themeRanking:ranking,outcomeRanking:outcomes,topSelected:top,bottomSelected:bottom,excludedTop,promotedTop,connections,notes,score,
   comparisonScope:input.comparisonScope==='full'?'full':'vision',topicWeights:weighted,
   priorityGroups:M.groupNames.map((name,k)=>({group:name,totalShare:M.groupShares[k]/100,topics:weighted.filter(w=>w.group===name).map(w=>w.code)})),
-  inputEvidence:{continuedPages:pages,coreStepsCompleted:coreCompleted,explicitTopTen:top.length===10,explicitLowestFour:bottom.length===4}};
+  inputEvidence:{continuedPages:pages,coreStepsCompleted:coreCompleted,explicitTopSix:top.length===M.groupCounts[0],explicitLowestTwo:bottom.length===M.groupCounts[2]}};
  return{snapshot:snap,contact,coreCompleted};
 }
 function selectedConnections(a){if(!Array.isArray(a)||a.length>8||a.some(x=>!WHO.includes(x)))fail(400,'Invalid neighbourhood connection');return [...new Set(a)];}
