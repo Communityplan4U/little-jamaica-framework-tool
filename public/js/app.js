@@ -25,7 +25,7 @@ const FRAMEWORK_RESPONSIBILITIES={
  "comparators": {
   "Chinatown Tomorrow": {
    "lead": "Development Review — Toronto & East York South, South Section",
-   "support": "Development Review — Downtown Section; City Planning — Urban Design",
+   "support": "Development Review; City Planning",
   },
   "Picture Mount Dennis": {
    "lead": "City Planning — Community Planning, Etobicoke York Central and South Sections",
@@ -33,23 +33,23 @@ const FRAMEWORK_RESPONSIBILITIES={
   },
   "Mount Dennis Community for All Action Plan": {
    "lead": "Housing Secretariat — Renters Strategy Unit; Social Development — Community Development Unit",
-   "support": "4 divisions, including: Development Review — Etobicoke York Central Section; Economic Development & Culture — Policy and Research Unit",
+   "support": "4 divisions, including: Development Review; Economic Development & Culture",
   },
   "St. Clair Avenue West and Bathurst Street Planning Framework": {
    "lead": "Development Review — Toronto & East York North, Midtown Section (D1)",
-   "support": "Transportation Services — Enforcement and Street Management",
+   "support": "Transportation Services",
   },
   "Bloor Street Planning Framework": {
    "lead": "City Planning — Community Planning, Toronto & East York District",
-   "support": "City Planning — Heritage Planning",
+   "support": "None confirmed",
   },
   "Yonge-St. Clair Planning Framework": {
    "lead": "City Planning — Community Planning, Toronto & East York District, Midtown section",
-     "support": "City Planning — Urban Design; City Planning — Transportation Planning"
+     "support": "None confirmed"
   },
   "Port Lands Planning Framework": {
    "lead": "City Planning — Toronto & East York waterfront planning; Waterfront Toronto — Port Lands planning",
-   "support": "Transportation Services — Port Lands/South of Eastern transportation and servicing"
+   "support": "Transportation Services"
   }
  }
 };
@@ -375,7 +375,7 @@ function resultsPage(){
    '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
    (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div>'+ 
    '<small class="score-lead">Lead division/team: '+esc(p.lead)+'</small>'+
-   '<small class="score-support">Supporting divisions/teams: '+esc(p.support)+'</small>'+
+   '<small class="score-support">Supporting divisions: '+esc(p.support)+'</small>'+
    (p.pending?'<small class="score-pending">Other attributions / roles to verify: '+esc(p.pending)+'</small>':'')+'</div>';
  }).join('');
  const subjectGroups=state.ranking.map(name=>({name,codes:c.topics.filter(t=>t.theme===name).map(t=>t.code)}));
