@@ -150,7 +150,15 @@ function init(){
    sourceVersion:METHOD.id,revision:0,answerRevision:0,continuedPages:[],visitedPages:[1],
    firstCompletedAt:null,confirmedRevision:0,outbox:[],createdAt:new Date().toISOString(),lastSnapshot:null};
  }
- syncTop();state.step=Math.min(state.step,highestUnlockedStep());write();
+
+ syncTop();
+ state.step=Math.min(state.step,highestUnlockedStep());
+
+ if(typeof record.confirmedAnswers!=='string' && !(record.outbox||[]).length)
+  record.confirmedAnswers=answerKey(record.lastSnapshot||snapshot());
+
+ write();
+
 }
 function notice(s,kind='info'){const n=document.getElementById('notice');if(!n)return;n.textContent=s;n.dataset.kind=kind;n.hidden=false;}
 function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=true;}
@@ -183,6 +191,57 @@ async function status(){
 function privateLink(){return location.origin+location.pathname+'#resume='+encodeURIComponent(record.responseId+'.'+record.responseToken);}
 function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,promotedTop:state.promotedTop,connections:state.connections,
  feedback:state.feedback,scope:state.scope,topicOrder:preferredTopicOrder(),email:'',newsletterOptIn:false,planningOptIn:false};}
+
+function answerKey(s){
+ const c=s.communications||{};
+ return JSON.stringify([
+  s.themeRanking,s.outcomeRanking,s.topSelected,s.bottomSelected,
+  s.excludedTop,s.promotedTop,s.topicOrder,s.connections,
+  (s.email||'').trim(),c.newsletter===true,c.littleJamaicaUpdates===true,
+  s.comparisonScope,s.notes
+ ]);
+}
+
+function hasPendingAnswers(){
+ return !!record && (
+  (record.outbox||[]).length>0 ||
+  (typeof record.confirmedAnswers==='string' &&
+   answerKey(snapshot())!==record.confirmedAnswers)
+ );
+}
+
+async function savePendingAnswers(){
+ if(!hasPendingAnswers())return true;
+
+ if(!canEdit()){
+  notice('The survey is closed. Your unsubmitted changes cannot be saved online.','warning');
+  return false;
+ }
+
+ const pending=(record.outbox||[]).slice(-1)[0];
+ const current=answerKey(snapshot());
+
+ const ok=pending && answerKey(pending.snapshot)===current
+  ? await flush()
+  : await save('revision');
+
+ if(!ok){
+  notice('Online saving could not be confirmed. Your changes remain on this device. Use Retry save before leaving this page.','warning');
+  return false;
+ }
+
+ if(!hasPendingAnswers())return true;
+
+ const again=await save('revision');
+
+ if(!again||hasPendingAnswers()){
+  notice('Some changes are still unsaved. Try again before leaving this page.','warning');
+  return false;
+ }
+
+ return true;
+}
+
 function checkpoint(kind){
  if(!canEdit())throw Error('The survey is closed. No changes can be submitted.');
  const data=snapshot();record.revision++;record.answerRevision++;
@@ -254,7 +313,12 @@ async function flush(){
    if(!response.ok){const data=await response.json().catch(()=>({}));throw Error(data.error||'Saving failed: '+response.status);}
    const result=await response.json();
    if(result.eventId!==e.eventId||!result.receivedAt)throw Error('The server could not confirm this save.');
-   record.confirmedRevision=e.revision;record.outbox.shift();write();
+   
+   record.confirmedRevision=e.revision;
+   record.confirmedAnswers=answerKey(e.snapshot);
+   record.outbox.shift();
+   write();
+
   }
   clearNotice();
   if(reconciliations)notice('Your latest answers were saved online. This tab was synchronized with your saved response.');
@@ -313,18 +377,55 @@ async function restore(raw){
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
    visitedPages:d.visitedPages||[1],firstCompletedAt:d.firstCompletedAt||null,confirmedRevision:d.revision||0,
    createdAt:d.createdAt,outbox:[],lastSnapshot:null};
-  syncTop();state.step=Math.min(state.step,highestUnlockedStep());write();notice('Your response has been restored. You may revise it until the survey closes.');render();
+ 
+  syncTop();
+  record.confirmedAnswers=answerKey(snapshot());
+  state.step=Math.min(state.step,highestUnlockedStep());
+  write();
+  notice('Your response has been restored. You may revise it until the survey closes.');
+  render();
  }catch(e){notice(e.message+' Your existing browser response was not changed.','warning');}
 }
-function selectPage(i){
- if(i<0||i>=STEPS.length)return;
+
+async function selectPage(i,skipSave=false){
+ if(i<0||i>=STEPS.length)return false;
+
  if(i>highestUnlockedStep()){
-  notice('Complete each step with Continue before opening the next step.','warning');return;
+  notice('Complete each step with Continue before opening the next step.','warning');
+  return false;
  }
- if(i===state.step)return;state.step=i;record.visitedPages=[...new Set([...record.visitedPages,i+1])];state.community=null;write();render();
+
+ if(i===state.step)return true;
+
+ if(!skipSave && hasPendingAnswers()){
+  if(navigating)return false;
+
+  navigating=true;
+
+  try{
+   if(!(await savePendingAnswers()))return false;
+  }catch(e){
+   notice('Unable to save your changes. '+e.message,'warning');
+   return false;
+  }finally{
+   navigating=false;
+  }
+ }
+
+ state.step=i;
+ record.visitedPages=[...new Set([...record.visitedPages,i+1])];
+ state.community=null;
+
+ write();
+ render();
+
  window.scrollTo({top:0,behavior:'smooth'});
+
  if(i===3)loadCommunity();
+
+ return true;
 }
+
 function optionRank(items,listKey){
  return '<div class="rank-items">'+state[listKey].map((id,i)=>{
   const title=listKey==='ranking'?id:METHOD.outcomes.find(o=>o.id===id).title;
