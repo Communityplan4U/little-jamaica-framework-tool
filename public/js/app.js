@@ -378,31 +378,120 @@ function topicBrowser(){
   '<input id="topic-search" class="search" type="search" autocomplete="off" value="'+esc(state.topicSearch||'')+'" placeholder="e.g. tenant, displacement, cultural space, housing">'+
   '<div id="topic-browser-results" class="topic-browser-results">'+topicBrowserResults()+'</div></section>';
 }
-function topicTile(t,kind,index){
- const action=kind==='top'?'Move to middle priorities':'Move to lowest priorities';
- return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
-  '<span class="topic-proposed"> #'+index+' · '+(kind==='top'?(state.promotedTop.includes(t.code)?'Added by you':'Suggested highest priority'):'Middle priority')+'</span>'+
-  '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
-  '<button type="button" class="pick" data-demote="'+kind+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+action+' ↓</button></article>';
+// The visible three groups always contain all twenty survey topics. Unlike
+// calculate(), this list shows only *explicitly* selected lowest topics.
+function selectionGroups(){
+ const top=orderByPreference(syncTop());
+ const bottom=orderByPreference(state.bottom.filter(code=>byCode[code]&&!top.includes(code)));
+ const chosen=new Set([...top,...bottom]);
+ const middle=orderByPreference(CODES.filter(code=>!chosen.has(code)));
+ return [top,middle,bottom];
 }
-function selectionPage(kind){
- const proposed=suggestions(),highest=syncTop();
- if(kind==='top'){
-  const rejected=proposed.filter(code=>state.excludedTop.includes(code));
-  return '<div class="selection-intro"><h3>Review your top 6 priorities</h3>'+
-   '<p>These six topics are suggested from your rankings of Planning Areas (60% of suggestion score) and community outcomes (40%). You can replace these suggestions with other topics.</p>'+
-   '<p>The six highest-priority topics share 60% of the final assessment weight (10% each). Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue. You can search all other topics to add overlooked priorities.</p>'+
-   '<div class="selection-counter"><strong>'+highest.length+' / '+COUNTS[0]+'</strong> highest-priority topics</div>'+
-   (rejected.length?'<div class="review-demotions"><strong>Moved to middle · select to restore</strong>'+
-    rejected.map(code=>'<button type="button" data-restore-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' ↶ Restore</button>').join('')+'</div>':'')+'</div>'+
-   '<div class="topic-grid">'+highest.map((code,i)=>topicTile(byCode[code],'top',i+1)).join('')+'</div>'+topicBrowser();
+// Reassign groups using explicit topic membership; no point changes from order.
+// If a full group receives another topic, its last member returns to middle.
+function moveTopicGroup(code,destination,replacedCode=null){
+ if(!canEdit()||!byCode[code]||!Number.isInteger(destination)||destination<0||destination>2)return false;
+ const groups=selectionGroups();
+ const source=groups.findIndex(group=>group.includes(code));
+ if(source<0)return false;
+ if(source===destination)return true;
+ const targetGroup=groups[destination];
+ const target=replacedCode&&targetGroup.includes(replacedCode)?replacedCode:null;
+ groups[source]=groups[source].filter(c=>c!==code);
+ let displaced=null;
+ if(target){
+  const pos=groups[destination].indexOf(target);
+  groups[destination].splice(pos,1,code);
+  groups[source].push(target);
+  displaced=target;
+ }else{
+  if(destination===0&&groups[0].length>=COUNTS[0]){
+   displaced=groups[0].pop();
+   groups[1].push(displaced);
+  }else if(destination===2&&groups[2].length>=COUNTS[2]){
+   displaced=groups[2].pop();
+   groups[1].push(displaced);
+  }
+  groups[destination].push(code);
  }
- const middle=proposed.filter(code=>!highest.includes(code)&&!state.bottom.includes(code));
- return '<div class="selection-intro"><h3>Move two middle topics to lowest priority</h3>'+
-  '<p>Choose two topics to receive the lowest relative weight (1.5% each). The remaining twelve middle-priority topics each receive about 3.08%. This does not mean you oppose the lowest-priority topics.</p>'+
-  '<div class="selection-counter"><strong>'+state.bottom.length+' / '+COUNTS[2]+'</strong> lowest-priority topics selected</div>'+
-  '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any two topics from the middle below.')+'</div></div>'+
-  '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
+ // When a highest-priority topic is moved out without a direct swap, promote
+ // the next highest-ranked eligible middle topic, never the topic just moved.
+ if(groups[0].length<COUNTS[0]){
+  const replacement=suggestions().find(c=>groups[1].includes(c)&&c!==code);
+  if(!replacement)return false;
+  groups[1]=groups[1].filter(c=>c!==replacement);
+  groups[0].push(replacement);
+  if(!displaced)displaced=replacement;
+ }
+ if(groups[0].length!==COUNTS[0]||groups[2].length>COUNTS[2]||new Set(groups.flat()).size!==CODES.length)
+  throw Error('Topic groups are inconsistent after moving '+code);
+ state.promotedTop=groups[0].slice();
+ state.excludedTop=[];
+ state.bottom=groups[2].slice();
+ state.topicOrder=groups.flat();
+ syncTop();state.community=null;priorityDraft=null;write();render();
+ notice(escTextMove(code,destination,displaced));
+ return true;
+}
+function escTextMove(code,group,other){
+ const name=['highest','middle','lowest'][group];
+ return byCode[code].title+' moved to '+name+' priority.'+
+  (other&&other!==code?' Another topic was repositioned to keep the priority groups balanced.':'');
+}
+// Dragging inside one group changes presentation order, not its weight.
+// A same-group drop on the group background places the topic at the end.
+function reorderTopic(code,targetCode=null){
+ const groups=selectionGroups(),group=groups.find(g=>g.includes(code));
+ if(!group)return false;
+ const to=targetCode?group.indexOf(targetCode):-1;
+ if(targetCode&&to<0)return false;
+ const old=group.indexOf(code);
+ if(targetCode===code)return false;
+ group.splice(old,1);
+ if(targetCode)group.splice(group.indexOf(targetCode),0,code);
+ else group.push(code);
+ state.topicOrder=groups.flat();
+ state.community=null;priorityDraft=null;write();render();
+ notice('Updated the topic display order. Its priority group and weight are unchanged.');
+ return true;
+}
+function topicTile(t,group,index){
+ const names=['highest','middle','lowest'],moves=[0,1,2].filter(g=>g!==group);
+ const buttons=moves.map(g=>'<button type="button" class="pick" data-topic-move="'+g+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+
+   'Move to '+names[g]+' priority</button>').join('');
+ const search=[t.code,t.title,t.theme,t.summary,t.assesses].join(' ').toLowerCase();
+ return '<article class="topic-tile priority-topic" draggable="'+canEdit()+'" data-topic-drag="'+esc(t.code)+'" data-topic-drop="'+esc(t.code)+'" data-topic-group="'+group+'" data-topic-search="'+esc(search)+'" aria-label="'+esc(t.title)+', '+names[group]+' priority. Drag to reorder or change groups.">'+
+  '<div class="topic-title"><span class="drag-handle" aria-hidden="true">⋮⋮</span><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
+  '<span class="topic-proposed">'+(index+1)+' in this group · order does not change points</span>'+
+  '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
+  '<div class="topic-actions">'+buttons+'<div class="topic-move-arrows">'+
+   '<button type="button" data-topic-order="-1" data-code="'+esc(t.code)+'" '+(index===0||!canEdit()?'disabled':'')+' aria-label="Move '+esc(t.title)+' up within this group">↑</button>'+
+   '<button type="button" data-topic-order="1" data-code="'+esc(t.code)+'" '+(index===selectionGroups()[group].length-1||!canEdit()?'disabled':'')+' aria-label="Move '+esc(t.title)+' down within this group">↓</button>'+
+  '</div></div></article>';
+}
+function selectionPage(){
+ const groups=selectionGroups(),labels=['Highest priority','Middle priority','Lowest priority'];
+ const explanation=[
+  'Six topics · 60% total · 10% each',
+  'Twelve topics · 37% total · 3.08% each',
+  'Two topics · 3% total · 1.5% each'
+ ];
+ return '<section class="selection-intro"><h3>Place 20 topics into three priority groups</h3>'+
+  '<p>Your rankings of the six Planning Areas and six community outcomes suggest the six highest priorities. You can change any topic’s group. Select <strong>two lowest-priority topics</strong> here as well. A lower priority does not mean you oppose a topic.</p>'+
+  '<p><strong>Drag cards</strong> to move them between groups, or drag within a group to arrange them in your preferred order. The move buttons and arrow controls work without dragging. <strong>Order within a group does not affect points</strong>—only the group matters.</p>'+
+  '<div class="selection-counter"><strong>'+groups[0].length+' / 6</strong> highest · <strong>'+groups[2].length+' / 2</strong> lowest selected</div>'+
+  (groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lowest-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'<p class="help">Your highest, middle and lowest groups are complete. You can adjust them before continuing.</p>')+
+  '</section>'+
+  '<label class="field-label" for="topic-search">Find a topic (optional)</label>'+
+  '<input id="topic-search" class="search" type="search" autocomplete="off" value="'+esc(state.topicSearch||'')+'" placeholder="Search housing, culture, jobs, displacement…">'+
+  '<p class="help">Search filters the cards shown, not your selections.</p>'+
+  '<div class="topic-priority-board">'+groups.map((codes,i)=>
+   '<section class="priority-lane priority-lane-'+i+'" data-topic-zone="'+i+'" aria-label="'+labels[i]+'">'+
+    '<div class="priority-lane-header"><div><h3>'+labels[i]+' <span class="lane-count">'+codes.length+(i===1&&groups[2].length!==2?' shown':'')+'</span></h3>'+
+     '<p>'+explanation[i]+'</p></div></div>'+
+    '<div class="topic-grid">'+codes.map((code,j)=>topicTile(byCode[code],i,j)).join('')+
+      (!codes.length?'<p class="drop-prompt">Drag a topic here or use a Move to lowest priority button.</p>':'')+
+    '</div></section>').join('')+'</div>';
 }
 function relativeScore(v,places=2){
  const tiny=Math.pow(10,-places)/2;
