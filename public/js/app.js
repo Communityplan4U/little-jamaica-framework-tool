@@ -301,11 +301,12 @@ function groupDifference(c,codes,planIdx,scope){
 function resultFrameworks(c,scope){
  // Dates printed on the source documents (not subsequent Council adoption dates).
  const publicationDates=['June 2026','December 2021','November 2025','February 2026','May 2021','December 2019','September 2017'];
+ const leadTeams=['City Planning – Community Planning, Toronto and East York', 'City Planning (consultant: Perkins&Will)', 'Housing Secretariat (interdivisional team)', 'Development Review – Community Planning, Toronto and East York', 'City Planning – Community Planning, Toronto and East York', 'City Planning – Community Planning, Toronto and East York', 'City Planning and Waterfront Toronto'];
  return [{name:'Little Jamaica / Oakwood Vaughan (draft)',relative:0,local:true,idx:-1,url:FRAMEWORK_REPORTS.local,
-  publication:'Development Review staff project report to be finalized Q1 2027'}]
+  publication:'Development Review staff project report to be finalized Q1 2027',leadTeam:'Development Review – Community Planning'}]
   .concat(c.comparators.map((p,i)=>({
    name:p.name,relative:p[scope]-c.baseline,local:false,idx:i,url:FRAMEWORK_REPORTS.comparators[i],
-   publication:publicationDates[i]
+   publication:publicationDates[i],leadTeam:leadTeams[i]
   }))).sort((a,b)=>b.relative-a.relative||a.name.localeCompare(b.name));
 }
 function breakdownMatrix(c,scope,title,groups,ordered){
@@ -337,7 +338,8 @@ function resultsPage(){
    (p.local?'<small>Comparison baseline</small>':'')+'</span>'+
    '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
    '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
-   (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div></div>';
+   (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div>'+ 
+   '<small class="score-lead">Lead division/team: '+esc(p.leadTeam)+'</small></div>';
  }).join('');
  const subjectGroups=state.ranking.map(name=>({name,codes:c.topics.filter(t=>t.theme===name).map(t=>t.code)}));
  const outcomeGroups=state.outcomeRanking.map(id=>{
