@@ -136,7 +136,7 @@ test('Browser model supports additional top-ten selections with fixed 10/19/4 gr
  assert.match(x.topicBrowser(),/id="topic-search"/);
  assert.match(x.topicBrowser(),/Add to top 10/);
  const output=x.resultsPage();
- assert.match(output,/Compare by planning theme and community outcome/);
+ assert.match(output,/Compare by planning subject and community outcome/);
  assert.match(output,/Community outcome/);
  assert.match(output,/Little Jamaica \(0\)/);
  assert.doesNotMatch(output,/\/5/);
@@ -261,7 +261,7 @@ test('New normalized additive methodology rejects previous multiplier snapshots'
  assert.throws(()=>S.canonicalSnapshot(previous,id),/version mismatch/i);
  const s=snap();assert.equal(S.canonicalSnapshot(s,id).coreCompleted,true);
  const ui=fs.readFileSync('public/js/app.js','utf8');
- assert.match(ui,/planning themes \(60%\) and community outcomes \(40%\)/);
+ assert.match(ui,/planning subjects \(60%\) and community outcomes \(40%\)/);
  assert.ok(ui.includes('>6 outcomes</button>'));
  assert.ok(ui.includes('six-outcomes.additive60-40.v4.'));
 });
@@ -272,6 +272,43 @@ test('Ranking pages contain the requested corrected prompts and rights guidance'
  assert.match(ui,/Rank them in order of importance, with the most important at the top/);
  assert.match(ui,/Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome/);
  assert.ok(!ui.includes('Rank the five community outcomes'));
+});
+test('Planning subjects display throughout the survey and community comparison without changing saved theme keys',()=>{
+ const app=fs.readFileSync('public/js/app.js','utf8');
+ const style=fs.readFileSync('public/css/survey.css','utf8');
+ assert.match(app,/Rank planning subjects/);
+ assert.doesNotMatch(app,/Rank planning themes/);
+ assert.match(app,/data-community-view="themes"/);
+ assert.doesNotMatch(app,/data-community-view="subjects"/);
+ assert.match(app,/7 subjects/);
+ assert.match(style,/\\.topic-subject\\{/);
+ assert.doesNotMatch(style,/\\.topic-theme\\{/);
+ const vm=require('node:vm'),path=require('node:path');
+ const get=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ const context=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
+ const partialApp=get('public/js/app.js').split("window.addEventListener('online'")[0];
+ vm.runInContext(get('public/js/state.js')+'\\n'+get('public/js/model.js')+'\\n'+partialApp,context);
+ const obj=vm.runInContext('({state,communityPage,connectionForm})',context);
+ obj.state.communityView='themes';
+ assert.match(obj.communityPage(),/Community and public spaces/,'Subjects tab must show planning subjects');
+ assert.match(obj.communityPage(),/Economic opportunity/);
+ obj.state.communityView='subjects'; // compatibility with the briefly published/locally cached UI value
+ assert.match(obj.communityPage(),/Community and public spaces/);
+ assert.match(obj.connectionForm(),/Privacy and community averages/);
+ assert.ok(obj.connectionForm().endsWith('</section>'),'connection form section must be closed');
+});
+
+test('New participant connection options validate server-side and retain older saved options',()=>{
+ const x=snap();
+ x.connections=['visit','representation','resident'];
+ assert.deepEqual(S.canonicalSnapshot(x,id).snapshot.connections,x.connections);
+ x.connections=['organization','culture','services'];
+ assert.deepEqual(S.canonicalSnapshot(x,id).snapshot.connections,x.connections);
+ x.connections=['bogus'];
+ assert.throws(()=>S.canonicalSnapshot(x,id),/Invalid neighbourhood connection/);
+ const app=fs.readFileSync('public/js/app.js','utf8');
+ assert.match(app,/\\['visit','I regularly spend time here/);
+ assert.match(app,/\\['representation','My current councillor/);
 });
 test('Mobile layout constrains outer grid and isolates horizontal scrolling',()=>{
  const css=fs.readFileSync('public/css/survey.css','utf8');
