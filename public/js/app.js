@@ -21,6 +21,10 @@ function reportLink(label,href){
 
 let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closesAt:null,mode:'public'},saving=false,navigating=false;
 function freshId(){return crypto.randomUUID();}
+function networkSignal(ms){
+ return typeof AbortSignal!=='undefined'&&typeof AbortSignal.timeout==='function'?
+  AbortSignal.timeout(ms):undefined;
+}
 function write(){try{localStorage.setItem(STORE+record.responseId,JSON.stringify({record,state:{...state,community:null,loading:false,communityError:'',flash:''}}));localStorage.setItem(STORE+'active',record.responseId);}catch(e){notice('Browser storage is unavailable. Keep a copy of your private return link.','warning');}}
 function init(){
  let saved=null;try{const id=localStorage.getItem(STORE+'active');saved=id?JSON.parse(localStorage.getItem(STORE+id)||'null'):null;}catch{}
@@ -44,7 +48,7 @@ function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=t
 function validOrder(v,all){return Array.isArray(v)&&v.length===all.length&&new Set(v).size===all.length&&v.every(x=>all.includes(x));}
 function canEdit(){return collection.checked&&(collection.isOpen||collection.offlineDraft===true);}
 async function status(){
- try{const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('status');const d=await r.json();
+ try{const r=await fetch('/api/status',{cache:'no-store',signal:networkSignal(8000)});if(!r.ok)throw Error('status');const d=await r.json();
   collection={checked:true,isOpen:d.configured===true&&d.isOpen===true,offlineDraft:false,closesAt:d.closesAt,mode:d.mode||'public'};
  }catch{
   // A temporary outage should not prevent people preparing their answers.
@@ -100,7 +104,7 @@ function reconcilePending(saved){
  record.lastSnapshot=latest;write();
 }
 async function authenticatedServerRevision(){
- const r=await fetch('/api/resume',{method:'POST',credentials:'same-origin',
+ const r=await fetch('/api/resume',{method:'POST',credentials:'same-origin',signal:networkSignal(16000),
   headers:{'Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},
   body:JSON.stringify({responseId:record.responseId,sourceVersion:METHOD.id})});
  if(r.status===403&&(record.confirmedRevision||0)===0){
@@ -119,7 +123,7 @@ async function flush(){
  try{
   while(record.outbox.length){
    const e=record.outbox[0];
-   const response=await fetch('/api/checkpoint',{method:'POST',credentials:'same-origin',
+   const response=await fetch('/api/checkpoint',{method:'POST',credentials:'same-origin',signal:networkSignal(16000),
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},body:JSON.stringify(e)});
    if(response.status===423){collection.isOpen=false;collection.offlineDraft=false;throw Error('The survey has closed. Your unsent answers remain on this device.');}
    if(response.status===409){
@@ -132,7 +136,9 @@ async function flush(){
    if(result.eventId!==e.eventId||!result.receivedAt)throw Error('The server could not confirm this save.');
    record.confirmedRevision=e.revision;record.outbox.shift();write();
   }
-  clearNotice();return true;
+  clearNotice();
+  if(reconciliations)notice('Your latest answers were saved online. This tab was synchronized with your saved response.');
+  return true;
  }catch(e){
   notice('Your answers are stored on this device but online saving has not been confirmed. Use Retry save when connected. '+e.message,'warning');
   return false;
@@ -165,7 +171,7 @@ async function copyLink(){
 async function restore(raw){
  const m=/^([a-f0-9-]{36})\.([A-Za-z0-9_-]{64,128})$/.exec(raw||'');if(!m){notice('This private return link is invalid.','warning');return;}
  try{
-  const r=await fetch('/api/resume',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+m[2]},
+  const r=await fetch('/api/resume',{method:'POST',signal:networkSignal(16000),headers:{'Content-Type':'application/json','Authorization':'Bearer '+m[2]},
    body:JSON.stringify({responseId:m[1],sourceVersion:METHOD.id})});
   if(!r.ok)throw Error('The private link was not recognized for this survey version.');
   const d=await r.json(),p=d.resumeState||{};
