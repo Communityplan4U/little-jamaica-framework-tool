@@ -16,6 +16,22 @@ const FRAMEWORK_REPORTS={
   'https://www.waterfrontoronto.ca/sites/default/files/documents/port-lands-planning-framework-aoda---reduced.pdf'
  ]
 };
+// City Council agenda items identify the study wards. Numbers use the current 25-ward system.
+// Source items: 2026.PH29.2, 2026.TE34.17, 2022.EY29.2, 2025.EC25.4,
+// 2026.TE29.15, 2020.TE16.77, 2020.TE12.30 and 2017.PG24.6.
+// Port Lands was Ward 30 before the 2018 ward redistribution; it is now Ward 14.
+const FRAMEWORK_WARDS={
+ "local": "Wards 5 (York South–Weston), 8 (Eglinton–Lawrence), 9 (Davenport), 12 (Toronto–St. Paul's)",
+ "comparators": {
+  "Chinatown Tomorrow": "Wards 10 (Spadina–Fort York), 11 (University–Rosedale)",
+  "Picture Mount Dennis": "Ward 5 (York South–Weston)",
+  "Mount Dennis Community for All Action Plan": "Ward 5 (York South–Weston)",
+  "St. Clair Avenue West and Bathurst Street Planning Framework": "Ward 12 (Toronto–St. Paul's)",
+  "Bloor Street Planning Framework": "Ward 9 (Davenport)",
+  "Yonge-St. Clair Planning Framework": "Ward 12 (Toronto–St. Paul's)",
+  "Port Lands Planning Framework": "Ward 14 (Toronto–Danforth; Ward 30 when adopted in 2017)"
+ }
+};
 // Organizational credits from LJOVPF_Comparator_Assessment_Outcomes_Aligned.xlsx,
 // Plan staffing summary. Keep unverified/consulted units separate from confirmed support.
 const FRAMEWORK_RESPONSIBILITIES={
@@ -395,10 +411,10 @@ function resultFrameworks(c,scope){
  // Dates printed on the source documents (not subsequent Council adoption dates).
  const publicationDates=['June 2026','December 2021','November 2025','February 2026','May 2021','December 2019','September 2017'];
  return [{name:'Little Jamaica / Oakwood Vaughan (draft)',relative:0,local:true,idx:-1,url:FRAMEWORK_REPORTS.local,
-  publication:'Development Review staff project report to be finalized Q1 2027',...FRAMEWORK_RESPONSIBILITIES.local}]
+  publication:'Development Review staff project report to be finalized Q1 2027',wardLabel:FRAMEWORK_WARDS.local,...FRAMEWORK_RESPONSIBILITIES.local}]
   .concat(c.comparators.map((p,i)=>({
    name:p.name,relative:p[scope]-c.baseline,local:false,idx:i,url:FRAMEWORK_REPORTS.comparators[i],
-   publication:publicationDates[i],...FRAMEWORK_RESPONSIBILITIES.comparators[p.name]
+   publication:publicationDates[i],wardLabel:FRAMEWORK_WARDS.comparators[p.name],...FRAMEWORK_RESPONSIBILITIES.comparators[p.name]
   }))).sort((a,b)=>b.relative-a.relative||a.name.localeCompare(b.name));
 }
 function breakdownMatrix(c,scope,title,groups,ordered){
@@ -426,7 +442,7 @@ function resultsPage(){
   const width=Math.min(49,Math.abs(p.relative)/maxDifference*49),left=p.relative<0?50-width:50;
   return '<div class="score-row relative-score-row '+(p.local?'home-score':'')+'"><span class="score-rank">'+(i+1)+'</span>'+
    '<span class="score-name">'+reportLink(p.local?p.name:'Plan '+(p.idx+1)+' · '+p.name,p.url)+
-'<small>'+(p.local?'('+esc(p.publication)+')':'Published: '+esc(p.publication))+'</small>'+
+'<small>'+(p.local?'('+esc(p.publication)+')':'Published: '+esc(p.publication))+' · '+esc(p.wardLabel)+'</small>'+
    (p.local?'<small>Source: Draft Community Visioning Statement · <a class="source-document-link" href="'+esc(FRAMEWORK_REPORTS.localProposals)+'" target="_blank" rel="noopener noreferrer">City Proposals Report ↗</a></small>':'')+'</span>'+   '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
    '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
    (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div>'+ 
