@@ -344,10 +344,9 @@ function resultsPage(){
  ).join('');
  return '<section class="results-intro"><h3>Your priorities applied to the Planning Frameworks</h3>'+
   '<p>All scores are <strong>weighted differences from the Little Jamaica draft (so positive numbers score higher, and negative numbers score lower)</strong>. They are not raw document rating. These are assessments of written documents, not verified implementation of what the City frameworks communicate.</p>'+
-  '<div class="score-feature"><span>Little Jamaica / Oakwood Vaughan reference score</span><strong>0.00</strong></div>'+
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
   (full?'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>':'')+
-  '<p class="help">Click any framework name to open the underlying planning report in a new tab. The Port Lands source is a large PDF.</p></section>'+
+  '<p class="help">Click any framework name to open the Citys planning report in a new tab. Note: The Portland Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
   '<div class="scores">'+scores+'</div>'+
   '<section class="breakdowns"><h3>Compare by planning subject and community outcome</h3>'+
   '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
