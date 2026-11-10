@@ -319,14 +319,18 @@ function render(){
  document.getElementById('steps').innerHTML=STEPS.map((title,i)=>'<button type="button" data-step="'+i+'" class="'+(i===step?'current':'')+'" '+(i>3&&!record.firstCompletedAt?'disabled':'')+'><span>Step '+(i+1)+'</span>'+esc(title)+'</button>').join('');
  document.getElementById('step-label').textContent='Step '+(step+1)+' of 6';
  document.getElementById('step-title').textContent=STEPS[step];
- document.getElementById('step-detail').textContent=[
-   '', // Step 1: no duplicate question
-  'What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.',
+ // Both ranking questions are already displayed inside their respective panels.
+ // Keep all six step positions aligned and hide empty descriptions.
+ const stepDetail=document.getElementById('step-detail');
+ stepDetail.textContent=[
+  '', // Step 1: question is in the planning subjects panel.
+  '', // Step 2: question is in the community outcomes panel.
   'Review your suggested top ten, move any to the middle, and search all other topics to add overlooked priorities.',
   'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
+ stepDetail.hidden=!stepDetail.textContent;
  const root=document.getElementById('stage');
  root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning subjects</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
   step===1?'<div class="subpanel"><h3>Rank the six community outcomes</h3><p>What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p><p class="help">Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome. The related assessment requirements remain part of the 33 planning topics.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
