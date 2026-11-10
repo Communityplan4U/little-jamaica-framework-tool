@@ -559,12 +559,32 @@ function resultsPage(){
   return {name:o.title,codes:outcomeCodes[id],outcomeId:id};
  });
  const draft=ensurePriorityDraft(c);
- const topics=c.topics.slice().sort((a,b)=>a.position-b.position).map(t=>
-  '<tr><td>'+esc(t.code)+'</td><td>'+esc(t.title)+'</td><td>'+esc(t.theme)+'</td>'+
-   '<td><select data-priority-code="'+esc(t.code)+'" aria-label="Choose priority group for '+esc(t.title)+'" '+(!canEdit()?'disabled':'')+'>'+
-    PRIORITY_EDITOR_LABELS.map((label,i)=>'<option value="'+i+'" '+(draft.groups[t.code]===i?'selected':'')+'>'+esc(label)+'</option>').join('')+
-   '</select></td></tr>'
- ).join('');
+
+const topics=PRIORITY_EDITOR_LABELS.map((label,group)=>{
+  const rows=c.topics
+    .filter(t=>draft.groups[t.code]===group)
+    .sort((a,b)=>a.position-b.position)
+    .map(t=>
+      '<tr class="priority-draggable-row" draggable="'+canEdit()+'" data-priority-drag="'+esc(t.code)+'">'+
+      '<td><span class="drag-handle" aria-hidden="true">⋮⋮</span> '+esc(t.code)+'</td>'+
+      '<td>'+esc(t.title)+'</td>'+
+      '<td>'+esc(t.theme)+'</td>'+
+      '<td><select data-priority-code="'+esc(t.code)+'" aria-label="Choose priority group for '+esc(t.title)+'" '+(!canEdit()?'disabled':'')+'>'+
+      PRIORITY_EDITOR_LABELS.map((name,i)=>
+        '<option value="'+i+'" '+(draft.groups[t.code]===i?'selected':'')+'>'+esc(name)+'</option>'
+      ).join('')+
+      '</select></td></tr>'
+    ).join('');
+
+  const count=priorityGroupCounts(draft.groups)[group];
+
+  return '<section class="priority-drop-zone" data-priority-zone="'+group+'" aria-label="'+esc(label)+' drop zone">'+
+    '<h4>'+esc(label)+' <small>'+count+' / '+COUNTS[group]+'</small></h4>'+
+    '<div class="table-scroll"><table class="priority-table">'+
+    '<thead><tr><th>Code</th><th>Topic</th><th>Planning Area</th><th>Priority group</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table></div>'+
+    '</section>';
+}).join('');
  return '<section class="results-intro"><h3>Your priorities applied to the Citys Planning Frameworks</h3>'+
   '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review team</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. </p>  <p> As the City publishes/shares more of the draft framework, it will be added to the tool so the assessment is more comprehensive. Until the full Little Jamaica Planning Framework is shared, this is an early indicator of if materials being published by the City are meeting community expectations and/or are comparable to the level of service delivered to other neighbourhoods.</p>'+'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>'+
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
@@ -577,8 +597,9 @@ function resultsPage(){
    '<details class="full-breakdown priority-editor" id="priority-editor" '+(priorityEditorExpanded?'open':'')+'><summary>See and adjust 20 survey topic prioritization</summary>'+
    '<p class="help">Choose exactly six highest-priority topics (10% each), twelve middle-priority topics (37% shared, about 3.08% each) and two lowest-priority topics (1.5% each). The 33 detailed criteria remain included equally within their assigned topic. Your assessment changes only when you apply these choices.</p>'+
    '<p id="priority-counts" class="priority-counts" role="status" aria-live="polite">'+esc(priorityCountLabel())+'</p>'+
-   '<div class="table-scroll"><table class="priority-table"><thead><tr><th>Code</th><th>Topic</th><th>Planning Area</th><th>Priority group</th></tr></thead><tbody>'+topics+'</tbody></table></div>'+
-   '<p id="priority-guidance" class="help" aria-live="polite">'+(priorityDraftValid()?'Your groups are ready. Apply this ranking to recalculate the assessments.':'Choose exactly 6 highest, 12 middle, and 2 low-priority topics before applying.')+'</p>'+
+  '<p class="help">Drag a topic into your preferred priority group, or use its dropdown menu. Choose exactly 6 highest, 12 middle, and 2 low-priority topics before applying.</p>'+
+'<div class="priority-drop-board">'+topics+'</div>'+
+  '<p id="priority-guidance" class="help" aria-live="polite">'+(priorityDraftValid()?'Your groups are ready. Apply this ranking to recalculate the assessments.':'Choose exactly 6 highest, 12 middle, and 2 low-priority topics before applying.')+'</p>'+
    '<button type="button" class="primary" id="apply-priority-ranking" '+(!canEdit()||!priorityDraftValid()?'disabled':'')+'>I prefer this ranking. Update the assessments based on this ranking</button></details></section>'+
   '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything suggestion consideration or feedback you have re: a community review of the Planning Framework currently being prepared by Development Review for the community of Little Jamaica?</p>'+
    '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
@@ -741,16 +762,87 @@ function render(){
  });
  document.querySelectorAll('[data-scope]').forEach(el=>el.addEventListener('click',()=>{state.scope=el.dataset.scope;write();render();}));
  document.querySelectorAll('[data-community-view]').forEach(el=>el.addEventListener('click',()=>{state.communityView=el.dataset.communityView;render();}));
+ 
+  // Page 3: drag topics between priority groups.
+  let draggingPriority=null;
+
+  const clearPriorityTargets=()=>{
+    document.querySelectorAll('[data-priority-zone]').forEach(zone=>{
+      zone.classList.remove('is-drop-target');
+    });
+  };
+
+  document.querySelectorAll('[data-priority-drag]').forEach(row=>{
+    row.addEventListener('dragstart',event=>{
+      if(!canEdit()||!priorityDraft){
+        event.preventDefault();
+        return;
+      }
+
+      draggingPriority=row.dataset.priorityDrag;
+
+      if(event.dataTransfer){
+        event.dataTransfer.effectAllowed='move';
+        event.dataTransfer.setData('text/plain',draggingPriority);
+      }
+
+      row.classList.add('is-dragging');
+    });
+
+    row.addEventListener('dragend',()=>{
+      draggingPriority=null;
+      row.classList.remove('is-dragging');
+      clearPriorityTargets();
+    });
+  });
+
+  document.querySelectorAll('[data-priority-zone]').forEach(zone=>{
+    zone.addEventListener('dragover',event=>{
+      if(!canEdit()||!draggingPriority)return;
+
+      event.preventDefault();
+      clearPriorityTargets();
+      zone.classList.add('is-drop-target');
+    });
+
+    zone.addEventListener('drop',event=>{
+      event.preventDefault();
+      event.stopPropagation();
+
+      const code=draggingPriority;
+      const group=Number(zone.dataset.priorityZone);
+
+      draggingPriority=null;
+      clearPriorityTargets();
+
+      if(!canEdit()||!priorityDraft||!CODES.includes(code))return;
+      if(!Number.isInteger(group)||group<0||group>=COUNTS.length)return;
+
+      if(priorityDraft.groups[code]!==group){
+        priorityDraft.groups[code]=group;
+        priorityEditorExpanded=true;
+        render();
+      }
+    });
+  });
+
  // Reassigning a topic changes only the draft until Apply is pressed.
  const priorityDetails=document.getElementById('priority-editor');
  if(priorityDetails)priorityDetails.addEventListener('toggle',()=>{priorityEditorExpanded=priorityDetails.open;});
- document.querySelectorAll('[data-priority-code]').forEach(el=>el.addEventListener('change',()=>{
+
+document.querySelectorAll('[data-priority-code]').forEach(el=>el.addEventListener('change',()=>{
   if(!canEdit()||!priorityDraft)return;
-  const group=Number(el.value),code=el.dataset.priorityCode;
+
+  const group=Number(el.value);
+  const code=el.dataset.priorityCode;
+
   if(!CODES.includes(code)||!Number.isInteger(group)||group<0||group>=COUNTS.length)return;
+
   priorityDraft.groups[code]=group;
-  updatePriorityDraftControls();
- }));
+  priorityEditorExpanded=true;
+  render();
+}));
+
  document.getElementById('apply-priority-ranking')?.addEventListener('click',async()=>{
   if(!canEdit()||!priorityDraftValid()){
    notice('Choose exactly 6 highest, 12 middle, and 2 low-priority topics before applying.','warning');return;
