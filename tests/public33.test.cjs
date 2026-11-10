@@ -307,3 +307,41 @@ test('Mobile layout retains viewport and scrollable containers',()=>{
  assert.match(css,/@media\s*\(max-width:/);
  assert.match(css,/overflow-x\s*:\s*auto/);
 });
+
+
+test('Step 5 lets participants reassign all 33 topics in a valid 10/19/4 draft before updating assessments',()=>{
+ const vm=require('node:vm'),path=require('node:path');
+ const load=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
+ const src=load('public/js/app.js').split("window.addEventListener('online'")[0];
+ vm.runInContext(load('public/js/state.js')+'\n'+load('public/js/model.js')+'\n'+src,ctx);
+ const run=code=>vm.runInContext(code,ctx);
+ run('state.bottom=orderedGroups()[2].slice();state.step=4;');
+ const before=run('calculate()');
+ const [wasHighest,wasMiddle]=[before.groups[0][0],before.groups[1][0]];
+ const html=run('resultsPage()');
+ const editor=html.split('<details class="full-breakdown')[1].split('</details>')[0];
+ assert.match(editor,/See and adjust 33 topic prioritization/);
+ assert.equal((editor.match(/data-priority-code=/g)||[]).length,33);
+ assert.doesNotMatch(editor,/<th>Weight<\/th>/);
+ assert.match(editor,/<th>Priority group<\/th>/);
+ assert.match(editor,/I prefer this ranking\. Update the assessments based on this ranking/);
+ assert.deepEqual(Array.from(run('priorityGroupCounts(priorityDraft.groups)')),[10,19,4]);
+ run('priorityDraft.groups['+JSON.stringify(wasHighest)+']=1');
+ assert.equal(run('priorityDraftValid()'),false);
+ assert.equal(run('applyPriorityDraft()'),false);
+ assert.ok(run('state.top.includes('+JSON.stringify(wasHighest)+')'));
+ run('priorityDraft.groups['+JSON.stringify(wasMiddle)+']=0');
+ assert.equal(run('priorityDraftValid()'),true);
+ assert.equal(run('applyPriorityDraft()'),true);
+ const after=run('calculate()');
+ assert.deepEqual(after.groups.map(g=>g.length),[10,19,4]);
+ assert.ok(after.groups[0].includes(wasMiddle));
+ assert.ok(after.groups[1].includes(wasHighest));
+ assert.ok(!after.groups[0].includes(wasHighest));
+ assert.ok(after.groups[2].length===4);
+ assert.ok(run('state.promotedTop.includes('+JSON.stringify(wasMiddle)+')'));
+ assert.ok(Math.abs(after.topics.reduce((a,t)=>a+t.weight,0)-1)<1e-10);
+ run('resultsPage()');
+ assert.equal(run('priorityDraftValid()'),true);
+});
