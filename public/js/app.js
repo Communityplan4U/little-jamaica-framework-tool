@@ -19,7 +19,7 @@ function reportLink(label,href){
  return '<a class="framework-link" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" title="Open the source planning report in a new tab">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
 }
 
-let record=null,collection={isOpen:false,checked:false,closesAt:null,mode:'public'},saving=false;
+let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closesAt:null,mode:'public'},saving=false;
 function freshId(){return crypto.randomUUID();}
 function write(){try{localStorage.setItem(STORE+record.responseId,JSON.stringify({record,state:{...state,community:null,loading:false,communityError:'',flash:''}}));localStorage.setItem(STORE+'active',record.responseId);}catch(e){notice('Browser storage is unavailable. Keep a copy of your private return link.','warning');}}
 function init(){
@@ -42,15 +42,22 @@ function init(){
 function notice(s,kind='info'){const n=document.getElementById('notice');if(!n)return;n.textContent=s;n.dataset.kind=kind;n.hidden=false;}
 function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=true;}
 function validOrder(v,all){return Array.isArray(v)&&v.length===all.length&&new Set(v).size===all.length&&v.every(x=>all.includes(x));}
-function canEdit(){return collection.checked&&collection.isOpen;}
+function canEdit(){return collection.checked&&(collection.isOpen||collection.offlineDraft===true);}
 async function status(){
  try{const r=await fetch('/api/status',{cache:'no-store'});if(!r.ok)throw Error('status');const d=await r.json();
-  collection={checked:true,isOpen:d.configured===true&&d.isOpen===true,closesAt:d.closesAt,mode:d.mode||'public'};
- }catch{collection={checked:true,isOpen:false,closesAt:null,mode:'public'};}
+  collection={checked:true,isOpen:d.configured===true&&d.isOpen===true,offlineDraft:false,closesAt:d.closesAt,mode:d.mode||'public'};
+ }catch{
+  // A temporary outage should not prevent people preparing their answers.
+  // The server still enforces survey closure and the validity of every submission.
+  collection={...collection,checked:true,isOpen:false,offlineDraft:true};
+ }
  const label=document.getElementById('collection-status');
- if(label)label.textContent=!collection.isOpen?'Survey closed or temporarily unavailable. Saved responses can still be reviewed.':
+ if(label)label.textContent=collection.offlineDraft?
+  'Online status is temporarily unavailable. You may continue answering on this device. Your responses will save online when service returns, if the survey is still open.':
+  !collection.isOpen?'Survey closed. Saved responses can still be reviewed.':
   'Voting is open until January 15, 2027 at 11:59 p.m. Toronto time. You may revisit and revise your response.';
  render();
+ if(collection.isOpen&&record?.outbox?.length&&!saving)flush();
 }
 function privateLink(){return location.origin+location.pathname+'#resume='+encodeURIComponent(record.responseId+'.'+record.responseToken);}
 function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,promotedTop:state.promotedTop,connections:state.connections,
@@ -65,27 +72,84 @@ function checkpoint(kind){
   snapshot:data,resumeState:serialize()};
  record.outbox.push(event);record.lastSnapshot=data;write();return event;
 }
+// Stale response revisions are recoverable. Keep local answers until the server
+// acknowledges an authenticated checkpoint; never discard them on a conflict.
+function reconcilePending(saved){
+ const rev=Number(saved.revision),answer=Number(saved.answerRevision);
+ if(!Number.isSafeInteger(rev)||rev<0||!Number.isSafeInteger(answer)||answer<0)
+  throw Error('The saved response could not be synchronized safely.');
+ if(rev<(record.confirmedRevision||0))throw Error('Online revision is inconsistent. Your answers are unchanged.');
+ if(!record.outbox.length)return;
+ const last=record.outbox[record.outbox.length-1];
+ const pages=arr=>Array.isArray(arr)?arr.filter(n=>Number.isInteger(n)&&n>=1&&n<=6):[];
+ record.continuedPages=[...new Set([...pages(saved.continuedPages),...pages(record.continuedPages)])];
+ record.visitedPages=[...new Set([...pages(saved.visitedPages),...pages(record.visitedPages)])];
+ record.firstCompletedAt=record.firstCompletedAt||saved.firstCompletedAt||null;
+ record.confirmedRevision=rev;
+ record.revision=rev+1;
+ record.answerRevision=Math.max(answer,record.answerRevision||0)+1;
+ const latest=snapshot();
+ // A single new checkpoint represents the latest unsent choices; accepted
+ // server checkpoints remain in the database history.
+ record.outbox=[{...last,eventId:freshId(),responseId:record.responseId,
+  revision:record.revision,answerRevision:record.answerRevision,
+  page:state.step+1,clientTimestamp:new Date().toISOString(),
+  afterResultsShown:!!record.firstCompletedAt,
+  continuedPages:record.continuedPages.slice(),visitedPages:record.visitedPages.slice(),
+  snapshot:latest,resumeState:serialize()}];
+ record.lastSnapshot=latest;write();
+}
+async function authenticatedServerRevision(){
+ const r=await fetch('/api/resume',{method:'POST',credentials:'same-origin',
+  headers:{'Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},
+  body:JSON.stringify({responseId:record.responseId,sourceVersion:METHOD.id})});
+ if(r.status===403&&(record.confirmedRevision||0)===0){
+  // A first checkpoint may not have reached the server at all.
+  return {revision:0,answerRevision:0,continuedPages:[],visitedPages:[]};
+ }
+ if(!r.ok)throw Error('Could not verify the saved version. Your local answers are unchanged.');
+ const d=await r.json();
+ if(d.sourceVersion!==METHOD.id)throw Error('The online response uses another survey version.');
+ return d;
+}
 async function flush(){
  if(saving)return false;
  if(!record.outbox.length)return true;
- saving=true;
+ saving=true;let reconciliations=0;
  try{
   while(record.outbox.length){
    const e=record.outbox[0];
    const response=await fetch('/api/checkpoint',{method:'POST',credentials:'same-origin',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},body:JSON.stringify(e)});
-   if(response.status===423){collection.isOpen=false;throw Error('The closing date has passed. Revisions are no longer accepted.');}
+   if(response.status===423){collection.isOpen=false;collection.offlineDraft=false;throw Error('The survey has closed. Your unsent answers remain on this device.');}
+   if(response.status===409){
+    if(++reconciliations>2)throw Error('Could not finish synchronizing this response. Please retry.');
+    reconcilePending(await authenticatedServerRevision());
+    continue;
+   }
    if(!response.ok){const data=await response.json().catch(()=>({}));throw Error(data.error||'Saving failed: '+response.status);}
-   const result=await response.json();if(result.eventId!==e.eventId||!result.receivedAt)throw Error('The server could not confirm this save.');
+   const result=await response.json();
+   if(result.eventId!==e.eventId||!result.receivedAt)throw Error('The server could not confirm this save.');
    record.confirmedRevision=e.revision;record.outbox.shift();write();
   }
   clearNotice();return true;
- }catch(e){notice('Your latest changes are stored on this device but have NOT been received online. '+e.message+' Use Retry save before leaving.','warning');return false;}
- finally{saving=false;renderSaveBadge();}
+ }catch(e){
+  notice('Your answers are stored on this device but online saving has not been confirmed. Use Retry save when connected. '+e.message,'warning');
+  return false;
+ }finally{saving=false;renderSaveBadge();}
 }
 function renderSaveBadge(){
  const el=document.getElementById('save-state');if(!el)return;
- el.textContent=record.outbox.length?record.outbox.length+' changes awaiting online receipt':record.confirmedRevision?'Saved online · response '+record.responseId.slice(0,8):'Not yet submitted';
+ el.textContent=record.outbox.length?
+  record.outbox.length+' local save'+(record.outbox.length===1?'':'s')+' waiting for online confirmation':
+  record.confirmedRevision?'Saved online · response '+record.responseId.slice(0,8):'Not yet submitted';
+ if(record.outbox.length&&typeof document.createElement==='function'){
+  const button=document.createElement('button');
+  button.type='button';button.className='secondary retry-save';
+  button.textContent='Retry save';button.disabled=saving;
+  button.addEventListener('click',()=>flush());
+  el.appendChild(button);
+ }
 }
 async function save(kind){
  try{checkpoint(kind);return await flush();}
