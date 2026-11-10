@@ -94,7 +94,7 @@ test('A network interruption does not prevent progression to the next survey ste
  await h.run('next()');
  assert.equal(h.run('state.step'),1);
  assert.equal(h.run('record.outbox.length'),1);
- assert.match(h.element('notice').textContent,/stored on this device/);
+ assert.match(h.element('notice').textContent,/saved on this device/);
  assert.ok(h.store.size>0);
  assert.equal(h.element('save-state').children.at(-1).textContent,'Retry save');
 });
