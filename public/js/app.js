@@ -457,12 +457,14 @@ function reorderTopic(code,targetCode=null,after=false){
 }
 function topicTile(t,group,index){
  const names=['highest','middle','lowest'],moves=[0,1,2].filter(g=>g!==group);
+ const pending=state.bottom.length<COUNTS[2];
+ const weightText=group===0?'10.00% weight':group===2?'1.50% weight':pending?'3.08% if retained in middle':'3.08% weight';
  const buttons=moves.map(g=>'<button type="button" class="pick" data-topic-move="'+g+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+
    'Move to '+names[g]+' priority</button>').join('');
  const search=[t.code,t.title,t.theme,t.summary,t.assesses].join(' ').toLowerCase();
  return '<article class="topic-tile priority-topic" draggable="'+canEdit()+'" data-topic-drag="'+esc(t.code)+'" data-topic-drop="'+esc(t.code)+'" data-topic-group="'+group+'" data-topic-search="'+esc(search)+'" aria-label="'+esc(t.title)+', '+names[group]+' priority. Drag to reorder or change groups.">'+
   '<div class="topic-title"><span class="drag-handle" aria-hidden="true">⋮⋮</span><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
-  '<span class="topic-proposed">'+(index+1)+' in this group · order does not change points</span>'+
+  '<span class="topic-proposed">'+(index+1)+' in this group · <strong class="topic-weight">'+weightText+'</strong> · order does not change points</span>'+
   '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
   '<div class="topic-actions">'+buttons+'<div class="topic-move-arrows">'+
    '<button type="button" data-topic-order="-1" data-code="'+esc(t.code)+'" '+(index===0||!canEdit()?'disabled':'')+' aria-label="Move '+esc(t.title)+' up within this group">↑</button>'+
@@ -473,7 +475,9 @@ function selectionPage(){
  const groups=selectionGroups(),labels=['Highest priority','Middle priority','Lowest priority'];
  const explanation=[
   'Six topics · 60% total · 10% each',
-  'Twelve topics · 37% total · 3.08% each',
+  groups[2].length<COUNTS[2]?
+   'Currently '+groups[1].length+' topics; choose two lowest to leave 12 middle topics at 3.08% each':
+   'Twelve topics · 37% total · 3.08% each',
   'Two topics · 3% total · 1.5% each'
  ];
  return '<section class="selection-intro"><h3>Place 20 topics into three priority groups</h3>'+
