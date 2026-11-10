@@ -150,14 +150,14 @@ function init(){
    sourceVersion:METHOD.id,revision:0,answerRevision:0,continuedPages:[],visitedPages:[1],
    firstCompletedAt:null,confirmedRevision:0,outbox:[],createdAt:new Date().toISOString(),lastSnapshot:null};
  }
- syncTop();state.step=Math.min(state.step,highUnlockedStep());write();
+ syncTop();state.step=Math.min(state.step,highestUnlockedStep());write();
 }
 function notice(s,kind='info'){const n=document.getElementById('notice');if(!n)return;n.textContent=s;n.dataset.kind=kind;n.hidden=false;}
 function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=true;}
 function validOrder(v,all){return Array.isArray(v)&&v.length===all.length&&new Set(v).size===all.length&&v.every(x=>all.includes(x));}
 function canEdit(){return collection.checked&&(collection.isOpen||collection.offlineDraft===true);}
 // Step 1 completes both rankings; Step 2 completes all topic choices.
-function highUnlockedStep(){
+function highestUnlockedStep(){
  if(!record)return 0;
  const continued=new Set(Array.isArray(record.continuedPages)?record.continuedPages:[]);
  if(!continued.has(1))return 0;
@@ -313,12 +313,12 @@ async function restore(raw){
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
    visitedPages:d.visitedPages||[1],firstCompletedAt:d.firstCompletedAt||null,confirmedRevision:d.revision||0,
    createdAt:d.createdAt,outbox:[],lastSnapshot:null};
-  syncTop();state.step=Math.min(state.step,highUnlockedStep());write();notice('Your response has been restored. You may revise it until the survey closes.');render();
+  syncTop();state.step=Math.min(state.step,highestUnlockedStep());write();notice('Your response has been restored. You may revise it until the survey closes.');render();
  }catch(e){notice(e.message+' Your existing browser response was not changed.','warning');}
 }
 function selectPage(i){
  if(i<0||i>=STEPS.length)return;
- if(i>highUnlockedStep()){
+ if(i>highestUnlockedStep()){
   notice('Complete each step with Continue before opening the next step.','warning');return;
  }
  if(i===state.step)return;state.step=i;record.visitedPages=[...new Set([...record.visitedPages,i+1])];state.community=null;write();render();
@@ -626,7 +626,7 @@ function communityPage(){
 function render(){
  const step=Math.min(STEPS.length-1,Math.max(0,state.step));state.step=step;
  document.getElementById('steps').innerHTML=STEPS.map((title,i)=>
-  '<button type="button" data-step="'+i+'" class="'+(i===step?'current':'')+'" '+(i>highUnlockedStep()?'disabled':'')+'>'+
+  '<button type="button" data-step="'+i+'" class="'+(i===step?'current':'')+'" '+(i>highestUnlockedStep()?'disabled':'')+'>'+
    '<span>Step '+(i+1)+'</span>'+esc(title)+'</button>').join('');
  document.getElementById('step-label').textContent='Step '+(step+1)+' of '+STEPS.length;
  document.getElementById('step-title').textContent=STEPS[step];
@@ -860,7 +860,7 @@ async function next(){
  try{
   // A previously completed participant can still view their community
   // comparison after collection closes.
-  if(state.step===2&&highUnlockedStep()===3){selectPage(3);return;}
+  if(state.step===2&&highestUnlockedStep()===3){selectPage(3);return;}
   if(!canEdit())return;
   if(state.step===0){
   const email=document.getElementById('participant-email')?.value.trim()||'';
@@ -874,7 +874,7 @@ state.email=email;  }
    }
   }
   if(state.step===2){
-   if(highUnlockedStep()<2){notice('Complete your rankings and Impact Group selections first.','warning');return;}
+   if(highestUnlockedStep()<2){notice('Complete your rankings and Impact Group selections first.','warning');return;}
    record.continuedPages=[...new Set([...record.continuedPages,3])];
    const ok=await save('results_viewed');
    if(ok||(record.outbox.length&&canEdit())){
