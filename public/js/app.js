@@ -4,7 +4,6 @@ const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
 const FRAMEWORK_REPORTS={
- local:'https://www.toronto.ca/legdocs/mmis/2026/ph/bgrd/backgroundfile-285675.pdf',
  comparators:[
   'https://www.toronto.ca/legdocs/mmis/2026/te/bgrd/backgroundfile-288691.pdf',
   'https://www.toronto.ca/wp-content/uploads/2021/12/8d32-CityPlanning-Picture-Mount-Dennis-Planning-Framework-Final-Report.pdf',
@@ -36,7 +35,7 @@ const FRAMEWORK_RESPONSIBILITIES={
    "support": "4 divisions, including: Development Review; Economic Development & Culture",
   },
   "St. Clair Avenue West and Bathurst Street Planning Framework": {
-   "lead": "Development Review — Toronto & East York North, Midtown Section (D1)",
+   "lead": "Development Review — Toronto & East York North, Midtown Section",
    "support": "Transportation Services",
   },
   "Bloor Street Planning Framework": {
@@ -444,8 +443,8 @@ function resultsPage(){
     PRIORITY_EDITOR_LABELS.map((label,i)=>'<option value="'+i+'" '+(draft.groups[t.code]===i?'selected':'')+'>'+esc(label)+'</option>').join('')+
    '</select></td></tr>'
  ).join('');
- return '<section class="results-intro"><h3>Your priorities applied to the Planning Frameworks</h3>'+
-  '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review team.</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. </p>  <p> As the City publishes/shares more of the draft framework, it will be added to the tool so the assessment is more comprehensive. Until the full Little Jamaica Planning Framework is shared, this is an early indicator of if materials being published by the City are meeting community expectations and/or are comparable to the level of service delivered to other neighbourhoods.</p>'+'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>'+
+ return '<section class="results-intro"><h3>Your priorities applied to the Citys Planning Frameworks</h3>'+
+  '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review team</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. </p>  <p> As the City publishes/shares more of the draft framework, it will be added to the tool so the assessment is more comprehensive. Until the full Little Jamaica Planning Framework is shared, this is an early indicator of if materials being published by the City are meeting community expectations and/or are comparable to the level of service delivered to other neighbourhoods.</p>'+'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>'+
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
   '<p class="help">Click any framework name to open the Citys planning report in a new tab. Note: The Portland Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
   '<div class="scores">'+scores+'</div>'+
