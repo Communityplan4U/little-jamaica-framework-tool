@@ -174,7 +174,7 @@ test('Browser model supports additional top-ten selections with fixed 6/12/2 gro
  }
 });
 
-test('Step 3 shows all searchable other topics, permits promotion and saves selection; Step 2 does not',()=>{
+test('Merged page 1 contains both rankings and page 2 displays all 20 priority cards',()=>{
  const vm=require('node:vm'),path=require('node:path');
  const get=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
  const elements=new Map(),storage=new Map();
@@ -183,8 +183,7 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
    id,value:'',innerHTML:'',textContent:'',hidden:false,dataset:{},events:{},
    addEventListener(type,handler){this.events[type]=handler;},
    setAttribute(){},getAttribute(){return null;}
-  });
-  return elements.get(id);
+  });return elements.get(id);
  };
  const ctx=vm.createContext({
   window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}},
@@ -193,31 +192,47 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  });
  const app=get('public/js/app.js').split("window.addEventListener('online'")[0];
  vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js')+'\n'+app,ctx);
- vm.runInContext("collection={checked:true,isOpen:true};record={responseId:'bda6cc17-94ad-4a87-8cc6-374a09b9aa32',outbox:[],confirmedRevision:0};state.step=0;render();",ctx);
- assert.equal((element('stage').innerHTML.match(/data-drag-rank="ranking"/g)||[]).length,6);
+ vm.runInContext("collection={checked:true,isOpen:true};record={responseId:'bda6cc17-94ad-4a87-8cc6-374a09b9aa32',outbox:[],continuedPages:[],visitedPages:[1],confirmedRevision:0};state.step=0;render();",ctx);
+ const rank=element('stage').innerHTML;
+ assert.equal((rank.match(/data-drag-rank="ranking"/g)||[]).length,6);
+ assert.equal((rank.match(/data-drag-rank="outcomeRanking"/g)||[]).length,6);
+ assert.ok(rank.indexOf('1. Rank the six Planning Areas')<rank.indexOf('2. Rank the six community outcomes'));
+ assert.doesNotMatch(rank,/id="topic-search"/);
  vm.runInContext('state.step=1;render()',ctx);
- assert.equal((element('stage').innerHTML.match(/data-drag-rank="outcomeRanking"/g)||[]).length,6);
- assert.doesNotMatch(element('stage').innerHTML,/id="topic-search"/);
- vm.runInContext('state.step=2;render()',ctx);
- assert.match(element('stage').innerHTML,/data-demote="top"/);
- const state=vm.runInContext('state',ctx),before=state.top.slice();
- const toAdd=C.find(code=>!before.includes(code));
- assert.match(element('stage').innerHTML,/id="topic-search"/);
- assert.match(element('stage').innerHTML,/data-demote="top"/);
- element('topic-search').value=toAdd;
- element('topic-search').events.input();
- assert.match(element('topic-browser-results').innerHTML,new RegExp('data-add-top="'+toAdd+'"'));
- const handler=element('topic-browser-results').events.click;
- assert.equal(typeof handler,'function');
- handler({target:{closest:()=>({dataset:{addTop:toAdd}})}});
- assert.equal(state.top.length,6);
- assert.ok(state.top.includes(toAdd));
- assert.ok(state.promotedTop.includes(toAdd));
+ const html=element('stage').innerHTML;
+ assert.match(html,/id="topic-search"/);
+ assert.equal((html.match(/data-topic-drag=/g)||[]).length,20);
+ assert.equal((html.match(/data-topic-move=/g)||[]).length,40);
+ assert.equal((html.match(/data-topic-order=/g)||[]).length,40);
+ assert.equal((html.match(/data-topic-zone=/g)||[]).length,3);
+ assert.match(html,/Order within a group does not affect points/);
+ assert.equal(vm.runInContext('selectionGroups()[2].length',ctx),0);
+ const before=vm.runInContext('calculate().baseline',ctx);
+ const mid=vm.runInContext('selectionGroups()[1][0]',ctx);
+ vm.runInContext('moveTopicGroup('+JSON.stringify(mid)+',2)',ctx);
+ assert.equal(vm.runInContext('selectionGroups()[2].length',ctx),1);
+ const other=vm.runInContext('selectionGroups()[1][0]',ctx);
+ vm.runInContext('moveTopicGroup('+JSON.stringify(other)+',2)',ctx);
+ assert.deepEqual(Array.from(vm.runInContext('selectionGroups().map(g=>g.length)',ctx)),[6,12,2]);
+ assert.equal(vm.runInContext('state.bottom.length',ctx),2);
  assert.ok(storage.size>=1);
- vm.runInContext('state.step=2;render()',ctx);
- assert.match(element('stage').innerHTML,new RegExp('data-code="'+toAdd+'"'));
+ const code=vm.runInContext('selectionGroups()[0][0]',ctx);
+ const next=vm.runInContext('selectionGroups()[0][1]',ctx);
+ const weightedBefore=vm.runInContext('calculate()',ctx);
+ vm.runInContext('reorderTopic('+JSON.stringify(code)+','+JSON.stringify(next)+',true)',ctx);
+ assert.equal(vm.runInContext('selectionGroups()[0][1]',ctx),code);
+ const weightedAfter=vm.runInContext('calculate()',ctx);
+ assert.ok(Math.abs(weightedAfter.baseline-weightedBefore.baseline)<1e-12);
+ for(const plan of S.WB.comparators){
+  const j=S.WB.comparators.indexOf(plan);
+  assert.ok(Math.abs(weightedAfter.comparators[j].vision-weightedBefore.comparators[j].vision)<1e-12);
+  assert.ok(Math.abs(weightedAfter.comparators[j].full-weightedBefore.comparators[j].full)<1e-12);
+ }
+ assert.notEqual(before,undefined);
+ const snap=vm.runInContext('snapshot()',ctx);
+ assert.ok(snap.topicWeights.find(t=>t.code===code).weight>.09);
+ assert.equal(snap.topicOrder.length,20);
 });
-
 test('Thirty-three criteria cover six outcomes and all twenty survey choices',()=>{
  assert.deepEqual(O,['coord','wealth','remain','power','belong','wellbeing']);
  assert.ok(S.M.id.includes('20top6-bottom2'));
@@ -278,7 +293,7 @@ test('New normalized additive methodology rejects previous multiplier snapshots'
  assert.throws(()=>S.canonicalSnapshot(previous,id),/version mismatch/i);
  const s=snap();assert.equal(S.canonicalSnapshot(s,id).coreCompleted,true);
  const ui=fs.readFileSync('public/js/app.js','utf8');
- assert.ok(ui.includes('six-areas.six-outcomes.v2.'));
+ assert.ok(ui.includes('combined-ranking.drag-order.v3.'));
 });
 test('Community comparison supports internal subject view keys and valid connection form',()=>{
  const vm=require('node:vm'),path=require('node:path');
