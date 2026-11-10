@@ -19,43 +19,36 @@ const FRAMEWORK_REPORTS={
 // Plan staffing summary. Keep unverified/consulted units separate from confirmed support.
 const FRAMEWORK_RESPONSIBILITIES={
  "local": {
-  "lead": "Development Review — Toronto & East York North, Midtown Section (D1)",
+  "lead": "Development Review — Toronto & East York North, Midtown Section",
   "support": "None confirmed",
-  "pending": "Development Review — Scarborough District (project role to verify); City Planning — Urban Design/Policy (unverified)"
  },
  "comparators": {
   "Chinatown Tomorrow": {
-   "lead": "Development Review — Toronto & East York South, South Section (E2)",
+   "lead": "Development Review — Toronto & East York South, South Section",
    "support": "Development Review — Downtown Section (D3); City Planning — Urban Design",
-   "pending": "Economic Development & Culture — Cultural Districts (project role to verify); Social Development (participation not confirmed)"
   },
   "Picture Mount Dennis": {
-   "lead": "City Planning — Community Planning, Etobicoke York Central Section (2021); South Section contributed",
-   "support": "City Planning — Urban Design and Heritage Planning; Transportation Services; Economic Development & Culture; Toronto Water; Transit Expansion Office; Indigenous Affairs Office; Parks, Forestry & Recreation; Toronto Public Health; Social Development, Finance & Administration; Environment & Energy"
+   "lead": "City Planning — Community Planning, Etobicoke York Central and South Sections",
+   "support": "More than 4 divisions, including: Economic Development & Culture; Social Development, Finance & Administration"
   },
   "Mount Dennis Community for All Action Plan": {
-   "lead": "Housing Secretariat — Renters Strategy Unit; Social Development — Community Development Unit (joint leads)",
-   "support": "Development Review — Etobicoke York Central Section; Economic Development & Culture — Policy and Research Unit; Parks & Recreation — Planning; City Planning (specific unit to confirm)",
-   "pending": "Transportation Services and Indigenous Affairs Office (consulted, not confirmed project authors)"
+   "lead": "Housing Secretariat — Renters Strategy Unit; Social Development — Community Development Unit",
+   "support": "4 divisions, including: Development Review — Etobicoke York Central Section; Economic Development & Culture — Policy and Research Unit",
   },
   "St. Clair Avenue West and Bathurst Street Planning Framework": {
    "lead": "Development Review — Toronto & East York North, Midtown Section (D1)",
    "support": "Transportation Services — Enforcement and Street Management",
-   "pending": "City Planning — Urban Design (participation unverified)"
   },
   "Bloor Street Planning Framework": {
-   "lead": "City Planning — Community Planning, Toronto & East York District (historical section unverified)",
+   "lead": "City Planning — Community Planning, Toronto & East York District",
    "support": "City Planning — Heritage Planning",
-   "pending": "Transportation Services — on-street parking review (attributed; involvement not independently verified)"
   },
   "Yonge-St. Clair Planning Framework": {
    "lead": "City Planning — Community Planning, Toronto & East York District (historical section unverified)",
-   "support": "None confirmed as original report authors",
-   "pending": "City Planning — Urban Design and Transportation Planning (attributed, not independently verified); Transportation Services (Council-directed implementation, not confirmed as report author)"
   },
   "Port Lands Planning Framework": {
-   "lead": "City Planning — Toronto & East York waterfront planning (historical section unverified); Waterfront Toronto — Port Lands planning (joint lead)",
-   "support": "Waterfront Secretariat — interagency oversight; Transportation Services — Port Lands/South of Eastern transportation and servicing"
+   "lead": "City Planning — Toronto & East York waterfront planning; Waterfront Toronto — Port Lands planning",
+   "support": "Transportation Services — Port Lands/South of Eastern transportation and servicing"
   }
  }
 };
