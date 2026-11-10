@@ -399,11 +399,9 @@ function resultsPage(){
    '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
    '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
    '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Planning subject</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
-  '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
+  '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything suggestion consideration or feedback you have re: a community review of the Planning Framework currently being prepared by Development Review for the community of Little Jamaica?</p>'+
    '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
-   '<button class="secondary" id="save-comment" type="button">Save comments and changes</button>'+
-   '<div class="return-actions"><button class="secondary" id="private-link" type="button">Copy my private return link</button>'+
-   '<button class="secondary" id="download-my-response" type="button">Download my topic priorities (CSV)</button></div></section>';
+   '<button class="secondary" id="save-comment" type="button">Submit my comments</button>';
 }
 function communityPage(){
  const c=calculate(),d=state.community,ready=d&&d.available===true;
