@@ -39,15 +39,27 @@ function suggestedTop(){
  return [...promoted,...next].slice(0,COUNTS[0]);
 }
 function syncTop(){state.top=suggestedTop();return state.top;}
+// The saved display order controls positions within a priority group only;
+// it must never change a group's percentage or a topic's documentary score.
+function preferredTopicOrder(){
+ const o=state.topicOrder;
+ return Array.isArray(o)&&o.length===CODES.length&&new Set(o).size===CODES.length&&
+  o.every(code=>byCode[code])?o.slice():suggestions();
+}
+function orderByPreference(codes){
+ const index=new Map(preferredTopicOrder().map((code,i)=>[code,i]));
+ return codes.slice().sort((a,b)=>index.get(a)-index.get(b));
+}
 function orderedGroups(){
  const proposed=suggestions(),top=syncTop().slice(),bottom=state.bottom.slice(),used=new Set([...top,...bottom]);
- // A provisional lowest group makes interim checkpoints computable.
+ // Before the participant names two lowest topics, use provisional weights
+ // for partial checkpoints; the visible selector keeps those topics in middle.
  for(const code of proposed.slice().reverse()){
   if(bottom.length>=COUNTS[2])break;
   if(!used.has(code)){bottom.unshift(code);used.add(code);}
  }
  const middle=proposed.filter(code=>!used.has(code));
- return [top,middle,bottom];
+ return [top,middle,bottom].map(orderByPreference);
 }
 function calculate(){
  const groups=orderedGroups();
@@ -66,14 +78,14 @@ function calculate(){
 }
 function snapshot(){
  const c=calculate(),pages=record?.continuedPages||[];
- return {type:'Little Jamaica community weighting survey',version:'ljov-20-public-v1',sourceVersion:METHOD.id,
+ return {type:'Little Jamaica community weighting survey',version:'ljov-20-public-v2',sourceVersion:METHOD.id,
   responseId:record?.responseId,themeRanking:state.ranking.slice(),outcomeRanking:state.outcomeRanking.slice(),
   topSelected:state.top.slice(),bottomSelected:state.bottom.slice(),excludedTop:state.excludedTop.slice(),
-  promotedTop:state.promotedTop.slice(),
-  selectionMethod:'suggested-top6-middle-review',
+  promotedTop:state.promotedTop.slice(),topicOrder:preferredTopicOrder(),
+  selectionMethod:'combined-ranking-three-groups-manual-order',
   connections:state.connections.slice(),email:state.email.trim(),
   communications:{resultsUpdates:!!state.email.trim(),newsletter:state.newsletterOptIn,littleJamaicaUpdates:state.planningOptIn},
   topicWeights:c.topics.map(t=>({code:t.code,position:t.position,group:t.group,weight:t.weight})),
   comparisonScope:state.scope,notes:state.feedback,
-  inputEvidence:{continuedPages:pages,coreStepsCompleted:state.top.length===COUNTS[0]&&state.bottom.length===COUNTS[2]&&[1,2,3,4].every(n=>pages.includes(n))}};
+  inputEvidence:{continuedPages:pages,coreStepsCompleted:state.top.length===COUNTS[0]&&state.bottom.length===COUNTS[2]&&[1,2].every(n=>pages.includes(n))}};
 }
