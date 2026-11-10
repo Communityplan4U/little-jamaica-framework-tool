@@ -32,7 +32,7 @@ if(DEFAULT_SUBJECT_ORDER.length!==THEMES.length||
    !DEFAULT_OUTCOME_ORDER.every(id=>OUTCOMES.includes(id)))
  throw Error('Survey findings defaults do not match the authoritative Planning Areas and outcomes');
 const state={step:0,ranking:DEFAULT_SUBJECT_ORDER.slice(),outcomeRanking:DEFAULT_OUTCOME_ORDER.slice(),
-  top:[],bottom:[],excludedTop:[],promotedTop:[],topicSearch:'',email:'',newsletterOptIn:false,planningOptIn:false,connections:[],
+  top:[],bottom:[],excludedTop:[],promotedTop:[],topicOrder:[],topicSearch:'',email:'',newsletterOptIn:false,planningOptIn:false,connections:[],
   feedback:'',scope:'vision',communityView:'topics',community:null,communityError:'',loading:false,complete:false,flash:''};
 const fmt=(n,d=1)=>Number(n).toFixed(d);
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
