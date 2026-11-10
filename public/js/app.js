@@ -342,7 +342,7 @@ function connectionForm(){
   '<div class="connections">'+choices.map(([key,label])=>'<label><input type="checkbox" data-connection="'+key+'" '+(state.connections.includes(key)?'checked':'')+'><span>'+esc(label)+'</span></label>').join('')+'</div>'+
   '<label class="field-label" for="participant-email">Your email address (optional)</label>'+
 '<input id="participant-email" class="email-input" type="text" autocomplete="off" maxlength="254" value="'+esc(state.email)+'" placeholder="you@example.com">'+
-  '<p class="help">Add your email if you would like Community in Public to send you your results and updates on the final results. No email is required to participate.</p>'+
+  '<p class="help">Add your email if you would like Community in Public to send you your results and updates on the final results.</p>'+
   '<fieldset class="consent"><legend>Would you like to stay involved? (Select all that apply)</legend>'+
   '<label><input id="newsletter" type="checkbox" '+(state.newsletterOptIn?'checked':'')+'> Community in Public newsletter</label>'+
   '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset></section>';
@@ -478,8 +478,8 @@ function selectionPage(){
   'Two topics · 3% total · 1.5% each'
  ];
  return '<section class="selection-intro"><h3>Place 20 topics into three priority groups</h3>'+
-  '<p>Your rankings of the six Planning Areas and six community outcomes suggest the six highest priorities. You can change any topic’s group. Select <strong>two lowest-priority topics</strong> here as well. A lower priority does not mean you oppose a topic.</p>'+
-  '<p><strong>Drag cards</strong> to move them between groups, or drag within a group to arrange them in your preferred order. The move buttons and arrow controls work without dragging. <strong>Order within a group does not affect points</strong>—only the group matters.</p>'+
+  '<p>Your rankings of the six Planning Areas and six Community Outcomes were used to suggest what may what you recommend to be the six highest priorities for evaluating a City-led Planning Framework. In the below, you can refine the placement into high, medium, or low priority. Select <strong>two lowest-priority topics</strong>. A lower priority does not mean you oppose a topic.</p>'+
+  '<p><strong>Drag cards</strong> to move them between groups, or drag within a group to arrange them in your preferred order. <strong>Order within a group does not affect points</strong>—only the group matters.</p>'+
   '<div class="selection-counter"><strong>'+groups[0].length+' / 6</strong> highest · <strong>'+groups[2].length+' / 2</strong> lowest selected</div>'+
   (groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lowest-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'<p class="help">Your highest, middle and lowest groups are complete. You can adjust them before continuing.</p>')+
   '</section>'+
@@ -643,12 +643,12 @@ function render(){
  stepDetail.hidden=!stepDetail.textContent;
  const root=document.getElementById('stage');
  const planningRanking='<section class="subpanel"><h3>1. Rank the six Planning Areas</h3>'+
-  '<p>Which Planning Areas are most important for the Framework to focus on? Rank from most important at the top. Drag to reorder or use the arrow buttons.</p>'+
-  '<p class="help">The starting order interprets the October 2026 Little Jamaica Survey Findings. That survey asked about five action areas, not these six Planning Areas. Rights obligations still apply regardless of rankings.</p>'+
+  '<p>Which Planning Areas are most important for the Framework to focus on? Rank, putting most important at the top. Drag to reorder or use the arrow buttons.</p>'+
+  '<p class="help">The starting order is based on community responses in our <a href="https://example.com">2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report</a>.</p>'+
   optionRank(THEMES,'ranking')+'</section>';
  const outcomeRanking='<section class="subpanel"><h3>2. Rank the six community outcomes</h3>'+
-  '<p>Below the Planning Area rankings, identify which improvements matter most to you. These outcomes guide suggested priorities, not your final topic weights.</p>'+
-  '<p class="help">The starting order draws on the October 2026 findings. These six outcomes were not ranked directly in that survey.</p>'+
+  '<p>Identify which improvements matter most to you.</p>'+
+  '<p class="help">The starting order is based on community responses in our <a href="https://example.com">2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report</a>.</p>'+
   optionRank(OUTCOMES,'outcomeRanking')+'</section>';
  root.innerHTML=step===0?connectionForm()+planningRanking+outcomeRanking:
   step===1?selectionPage():step===2?resultsPage():communityPage();
