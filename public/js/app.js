@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning subjects','Rank community outcomes','Review your top 10 based on rankings','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning subjects','Rank community outcomes','Confirm top topics','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
@@ -403,7 +403,7 @@ function render(){
  stepDetail.textContent=[
   '', // Step 1: question is in the planning subjects panel.
   '', // Step 2: question is in the community outcomes panel.
-  'Review your suggested top ten, move any to the middle, and search all other topics to add overlooked priorities.',
+    '', // Step 4: question is in the topics panel.
   'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
   'Compare your weighted priorities with the latest completed responses.'
