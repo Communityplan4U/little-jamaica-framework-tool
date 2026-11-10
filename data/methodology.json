@@ -1,8 +1,7 @@
 {
-  "id": "ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-additive-60t-40o-v4",
-  "topicCount": 33,
+  "id": "ljov-20261110-20top6-bottom2-60-37-3-six-areas-six-outcomes-v3",
+  "topicCount": 20,
   "themeRankPoints": [
-    10,
     9,
     8,
     7,
@@ -11,9 +10,9 @@
     4
   ],
   "groupCounts": [
-    10,
-    19,
-    4
+    6,
+    12,
+    2
   ],
   "groupShares": [
     60,
@@ -26,9 +25,9 @@
     "Lowest priority"
   ],
   "groupInternalLabels": [
-    "Highest ten",
-    "Middle nineteen",
-    "Lowest four"
+    "Highest six",
+    "Middle twelve",
+    "Lowest two"
   ],
   "outcomes": [
     {
@@ -62,11 +61,11 @@
       "desc": "Residents have access to affordable and appropriate housing, essential services, safe mobility and healthy, climate-resilient living conditions, including support for multigenerational households, older adults and people experiencing homelessness."
     }
   ],
-  "sourceFile": "LJOVPF_Comparator_Assessment.xlsx",
+  "sourceFile": "LJOVPF_Comparator_Assessment_Planning_Areas_Updated.xlsx",
   "aggregation": "each completed response contributes once; provisional averages available from first completion",
-  "explicitChoice": "Ten highest topics are suggested from ranked themes and outcomes; participants can pin other topics to the highest ten, automatically displacing the lowest-ranked unpinned suggestion, and can move any highest topic to the middle, replacing it with the next eligible suggestion; participants select four lowest from the middle, leaving nineteen in the middle.",
-  "outcomeAssignmentPolicy": "Each topic belongs to exactly one primary outcome. Outcomes each cover at least two planning subjects; suggestions combine the participant's subject rank with the rank of the topic's single primary outcome. Human rights and Indigenous rights are assessed across outcomes as requirements, not as a separately ranked outcome.",
-  "humanRightsLens": "All six outcomes must respect applicable housing and human rights obligations, confront anti-Black and anti-Indigenous racism and other forms of systemic discrimination, address age- and disability-related barriers, and respect distinct Indigenous rights, treaties and governance. Topic-level human rights obligations are explicitly assessed through A-8 and R-3; this cross-cutting lens does not create additional score points or alter the documentary ratings.",
+  "explicitChoice": "Both Planning Area and outcome rankings appear on Step 1. The single Step 2 priority board shows all 20 topics across highest, middle and lowest groups; participants move topics with buttons or drag/drop, then select exactly two lowest choices. Dragging within a group changes display position only. Step 3 compares frameworks; Step 4 compares community responses.",
+  "outcomeAssignmentPolicy": "Twenty public survey topics map without overlap to thirty-three detailed assessment criteria. Each detailed criterion retains exactly one primary community outcome; survey topics may span multiple outcomes. Outcome shares within a survey topic are proportional to its constituent criteria. Rights obligations remain cross-cutting, not optional. The four outcome reassigments adopted November 10, 2026: CB-03 and NE-01 -> belong, NE-05 -> wellbeing, CP-03 -> power.",
+  "humanRightsLens": "All six outcomes must respect applicable housing and human rights obligations, confront anti-Black and anti-Indigenous racism and other systemic discrimination, address accessibility, and respect distinct Indigenous rights, treaties and governance. Detailed rights assessment criteria remain RJ-02 and RJ-03; priorities do not diminish obligations.",
   "outcomeRankPoints": [
     6,
     5,
@@ -79,5 +78,25 @@
     "themes": 0.6,
     "outcomes": 0.4
   },
-  "suggestionFormula": "Score = 100 * (0.6 * (planning subject rank points - 4) / 6 + 0.4 * (outcome rank points - 1) / 5). Planning subject ranks 1–7 have points 10–4; outcome ranks 1–6 have points 6–1. Only the provisional top-ten suggestion ranking is affected; final participant-selected topic weights remain 60% highest ten, 37% middle nineteen, and 3% lowest four."
+  "suggestionFormula": "Score = 100 * (0.6 * (Planning Area rank points - 4) / 5 + 0.4 * sum(outcome criterion share * (outcome rank points - 1) / 5)). Planning Area ranks 1-6 have points 9-4; outcome ranks 1-6 have points 6-1. This orders six provisional highest choices; final weight pools are 60% highest six, 37% middle twelve and 3% lowest two. Underlying 33 documentary criteria share each survey topic's weight equally; no combined topic receives extra weight solely because it contains more criteria.",
+  "scoringPolicy": {
+    "publicTopics": 20,
+    "underlyingCriteria": 33,
+    "groupCounts": [
+      6,
+      12,
+      2
+    ],
+    "groupShares": [
+      60,
+      37,
+      3
+    ],
+    "criterionRule": "Each survey topic receives one priority weight. For each documentary comparator, the topic score is the arithmetic mean of its linked underlying criterion ratings; the framework total is the weighted sum across the 20 topics.",
+    "outcomeRule": "Allocate each survey topic's weighted contribution across outcomes according to constituent criterion counts, preserving exact total contribution.",
+    "crossVersion": "New methodology ID isolates responses and community averages from 33-topic survey versions.",
+    "topicOrdering": "User-defined order within a priority group is preserved in responses and private-link restoration. It has no effect on numeric weights, assessment scores or suggestion ranks.",
+    "pageCount": 4,
+    "weightControl": "Only group membership determines final weight; highest 10% each, middle 37/12% each, lowest 1.5% each."
+  }
 }
