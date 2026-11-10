@@ -44,7 +44,7 @@ const FRAMEWORK_RESPONSIBILITIES={
    "support": "City Planning — Heritage Planning",
   },
   "Yonge-St. Clair Planning Framework": {
-   "lead": "City Planning — Community Planning, Toronto & East York District (historical section unverified)",
+   "lead": "City Planning — Community Planning, Toronto & East York District, Midtown section",
   },
   "Port Lands Planning Framework": {
    "lead": "City Planning — Toronto & East York waterfront planning; Waterfront Toronto — Port Lands planning",
