@@ -42,7 +42,6 @@ function canonicalSnapshot(input,rid){
  const connections=selectedConnections(input.connections||[]);
  const notes=text(input.notes||'',1500,'comments');
  const email=text(input.email||'',254,'email').trim();
- if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))fail(400,'Email must be valid or blank');
  const cm=input.communications||{};
  const contact={email:email||null,results_updates:!!email,newsletter:!!email&&cm.newsletter===true,planning_updates:!!email&&cm.littleJamaicaUpdates===true,notice_version:'ljov-consent-v2-early-averages'};
  const evidence=input.inputEvidence||{};
