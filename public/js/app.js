@@ -268,7 +268,7 @@ function renderSaveBadge(){
  const el=document.getElementById('save-state');if(!el)return;
  el.textContent=record.outbox.length?
   record.outbox.length+' local save'+(record.outbox.length===1?'':'s')+' waiting for online confirmation':
-  record.confirmedRevision?'Saved online · response '+record.responseId.slice(0,8):'Not yet submitted';
+record.confirmedRevision?'Saved online':'Not yet submitted';
  if(record.outbox.length&&typeof document.createElement==='function'){
   const button=document.createElement('button');
   button.type='button';button.className='secondary retry-save';
