@@ -183,3 +183,44 @@ test('Conflict recovery preserves an unsent completion when later edits were que
  assert.equal(accepted.at(-1).snapshot.notes,'These are my current priorities');
  assert.equal(h.run('record.outbox.length'),0);
 });
+
+
+test('Applying Step 5 topic groups recalculates and saves a server-valid revision',async()=>{
+ const accepted=[];
+ const h=harness(async(url,opts)=>{
+  const e=JSON.parse(opts.body);accepted.push(e);return receipt(e);
+ });
+ h.run("record.continuedPages=[1,2,3,4];record.firstCompletedAt='2026-11-10T01:00:00Z';state.bottom=orderedGroups()[2].slice();state.step=4;render()");
+ const [highest,middle]=Array.from(h.run('calculate().groups')).slice(0,2).map(group=>group[0]);
+ assert.match(h.element('stage').innerHTML,/See and adjust 33 topic prioritization/);
+ h.run('priorityDraft.groups['+JSON.stringify(highest)+']=1');
+ h.run('updatePriorityDraftControls()');
+ assert.equal(h.element('apply-priority-ranking').disabled,true);
+ assert.equal(accepted.length,0,'Draft changes must not autosave before Apply');
+ h.run('priorityDraft.groups['+JSON.stringify(middle)+']=0');
+ h.run('updatePriorityDraftControls()');
+ assert.equal(h.element('apply-priority-ranking').disabled,false);
+ await h.element('apply-priority-ranking').listeners.click();
+ assert.equal(accepted.length,1);
+ assert.equal(accepted[0].eventType,'revision');
+ assert.equal(S.validateEvent(accepted[0]).coreCompleted,true);
+ assert.ok(accepted[0].snapshot.topSelected.includes(middle));
+ assert.ok(!accepted[0].snapshot.topSelected.includes(highest));
+ assert.ok(accepted[0].snapshot.topicWeights.find(x=>x.code===middle).group==='Highest priority');
+ assert.ok(accepted[0].snapshot.topicWeights.find(x=>x.code===highest).group==='Middle priority');
+ assert.equal(h.run('record.outbox.length'),0);
+ assert.match(h.element('notice').textContent,/saved online/);
+ assert.match(h.element('stage').innerHTML,/See and adjust 33 topic prioritization/);
+});
+
+test('Applying groups while offline retains the revised ranking and retryable save',async()=>{
+ const h=harness(async()=>{throw Error('Offline');});
+ h.run("record.continuedPages=[1,2,3,4];record.firstCompletedAt='2026-11-10T01:00:00Z';state.bottom=orderedGroups()[2].slice();state.step=4;render()");
+ const [highest,middle]=Array.from(h.run('calculate().groups')).slice(0,2).map(group=>group[0]);
+ h.run('priorityDraft.groups['+JSON.stringify(highest)+']=1;priorityDraft.groups['+JSON.stringify(middle)+']=0;updatePriorityDraftControls()');
+ await h.element('apply-priority-ranking').listeners.click();
+ assert.ok(h.run('state.top.includes('+JSON.stringify(middle)+')'));
+ assert.equal(h.run('record.outbox.length'),1);
+ assert.equal(h.element('save-state').children.at(-1).textContent,'Retry save');
+ assert.match(h.element('notice').textContent,/not been confirmed/);
+});
