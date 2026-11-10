@@ -410,9 +410,9 @@ function render(){
  ][step];
  stepDetail.hidden=!stepDetail.textContent;
  const root=document.getElementById('stage');
- root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from most to least important</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
-  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What outcomes do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
-  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What outcomes do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p>'+optionRank(OUTCOMES,'outcomeRanking')+'</div>': const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
+root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from most to least important</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
+  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What outcomes do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p>'+optionRank(OUTCOMES,'outcomeRanking')+'</div>':
+  step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage(); const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
  actions.innerHTML=(step===0?'':'<button type="button" id="back" class="secondary">← Back</button>')+
   (step===5?'':'<button type="button" id="next" class="primary" '+(!canEdit()&&step<=3?'disabled':'')+'>'+label+' →</button>');
  document.getElementById('next')?.addEventListener('click',next);
