@@ -137,9 +137,9 @@ function optionRank(items,listKey){
  }).join('')+'</div>';
 }
 function connectionForm(){
- const choices=[['resident','I live here'],['former','I used to live here'],['business','I own or operate a local business'],
- ['worker','I work here'],['organization','I participate in a local community organization'],['culture','I visit for cultural or community activities'],
- ['services','I use local services or facilities'],['other','Another connection']];
+ const choices=[['resident','I live in the neighbourhood'],['former','I used to live in the neighbourhood'],['business','I own or operate a local business'],
+ ['worker','I work/volunteer here'],['visit','I regularly spend time here (school, worship, visiting, etc'],
+ ['representation','My current councillor is also a councillor of this neighbourhood (Colle, Matlow, Padovani, Bravo'],['other','Another connection']];
  return '<section class="subpanel"><h3>How are you connected to Little Jamaica / Oakwood Vaughan?</h3><p>Optional. Select any that apply.</p>'+
   '<div class="connections">'+choices.map(([key,label])=>'<label><input type="checkbox" data-connection="'+key+'" '+(state.connections.includes(key)?'checked':'')+'><span>'+esc(label)+'</span></label>').join('')+'</div>'+
   '<label class="field-label" for="participant-email">Your email address (optional)</label>'+
@@ -147,9 +147,7 @@ function connectionForm(){
   '<p class="help">Add your email if you would like Community in Public to send you your results and updates on the final results. No email is required to participate.</p>'+
   '<fieldset class="consent"><legend>Other messages you may choose to receive (optional)</legend>'+
   '<label><input id="newsletter" type="checkbox" '+(state.newsletterOptIn?'checked':'')+'> Community in Public newsletter</label>'+
-  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>'+
-  '<p class="help">These permissions are independent and unchecked by default. Messages are not sent automatically by this survey.</p>'+
-  '<details class="privacy"><summary>Privacy and community averages</summary><p>Community in Public stores survey answers separately from optional contact details. Completed participants may view aggregate priorities from the first completed response onward. When very few people have responded, averages can closely reflect an individual respondent’s choices. Keep your private return link confidential; it provides access to your response and allows revisions before the closing date.</p></details></section>';
+  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>';
 }
 function topicBrowserResults(){
  const highest=new Set(syncTop()),q=(state.topicSearch||'').trim().toLowerCase();
@@ -178,7 +176,7 @@ function topicBrowser(){
   '<p class="weight-note">Your highest group always contains ten topics.</p>'+
   (chosen.length?'<div class="topic-browser-pins"><strong>Topics you added directly</strong>'+
    chosen.map(code=>'<button type="button" data-unpin-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Remove</button>').join('')+'</div>':'')+
-  '<label class="field-label" for="topic-search">Search by keyword, title, code or theme</label>'+
+  '<label class="field-label" for="topic-search">Search by keyword, title, code or subject</label>'+
   '<input id="topic-search" class="search" type="search" autocomplete="off" value="'+esc(state.topicSearch||'')+'" placeholder="e.g. tenant, displacement, cultural space, housing">'+
   '<div id="topic-browser-results" class="topic-browser-results">'+topicBrowserResults()+'</div></section>';
 }
@@ -195,7 +193,7 @@ function selectionPage(kind){
  if(kind==='top'){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
   return '<div class="selection-intro"><h3>Review your top 10 priorities</h3>'+
-   '<p>These ten topics are suggested from your rankings of planning themes (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
+   '<p>These ten topics are suggested from your rankings of planning subject (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
    '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
@@ -274,14 +272,14 @@ function resultsPage(){
   (full?'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>':'')+
   '<p class="help">Click any framework name to open the underlying planning report in a new tab. The Port Lands source is a large PDF.</p></section>'+
   '<div class="scores">'+scores+'</div>'+
-  '<section class="breakdowns"><h3>Compare by planning theme and community outcome</h3>'+
-  '<p>The values below show each theme or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
-  breakdownMatrix(c,scope,'Planning theme',themeGroups,ordered)+
+  '<section class="breakdowns"><h3>Compare by planning subject and community outcome</h3>'+
+  '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
+  breakdownMatrix(c,scope,'Planning Subject',themeGroups,ordered)+
   breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
-  '<p class="help">Each topic has one primary theme and one primary community outcome, so the differences in either breakdown add up to each framework’s overall difference. Human rights and Indigenous rights remain cross-cutting considerations in the topic-level assessment.</p></section>'+
+  '<p class="help">Each topic has one primary subject and one primary community outcome, so the differences in either breakdown add up to each framework’s overall difference. Human rights and Indigenous rights remain cross-cutting considerations in the topic-level assessment.</p></section>'+
   '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
    '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
-   '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Theme</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
+   '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Subject</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
   '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
    '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
    '<button class="secondary" id="save-comment" type="button">Save comments and changes</button>'+
@@ -308,10 +306,10 @@ function communityPage(){
  return '<section class="results-intro"><h3>Your priorities and the community</h3><p>Compare the importance you gave to topics with the average across completed responses. The first response makes an average available.</p>'+
  '<p class="community-status" role="status">'+esc(info)+'</p>'+
  '<p class="help">At low response counts, an average can closely reflect an individual respondent’s priorities. No email addresses or private response records are shown here.</p>'+
- '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">33 topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">7 themes</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
+ '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">33 topics</button><button data-community-view="subjects" aria-pressed="'+(view==='subjects')+'">7 subjects</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
  '<button class="secondary" id="refresh-averages" type="button">Refresh community averages</button></section>'+
  '<div class="compare-list">'+rows+'</div>'+
- '<p class="help">Each topic belongs to one primary outcome and one planning theme. Topic, theme and outcome weights each total 100%. Human rights and Indigenous rights remain cross-cutting considerations.</p>';
+ '<p class="help">Each topic belongs to one primary outcome and one planning subject. Topic, subject, and outcome weights each total 100%. Human rights and Indigenous rights remain cross-cutting considerations.</p>';
 }
 function render(){
  const step=Math.min(5,Math.max(0,state.step));state.step=step;
@@ -327,7 +325,7 @@ function render(){
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
  const root=document.getElementById('stage');
- root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning themes</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
+ root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank the seven planning subjects</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
   step===1?'<div class="subpanel"><h3>Rank the six community outcomes</h3><p>What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p><p class="help">Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome. The related assessment requirements remain part of the 33 planning topics.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
    METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
   step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
@@ -469,7 +467,7 @@ async function loadCommunity(force=false){
  }catch(e){state.communityError=e.message;}finally{state.loading=false;render();}
 }
 function downloadCsv(){
- const rows=[['Topic code','Topic title','Theme','Priority group','Position','Weight (%)','Little Jamaica draft score (1-5)']];
+ const rows=[['Topic code','Topic title','Subject','Priority group','Position','Weight (%)','Little Jamaica draft score (1-5)']];
  for(const t of calculate().topics.slice().sort((a,b)=>a.position-b.position))rows.push([t.code,t.title,t.theme,t.group,t.position,fmt(t.weight*100,4),t.score]);
  const csv='\ufeff'+rows.map(row=>row.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='little-jamaica-my-33-priorities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
