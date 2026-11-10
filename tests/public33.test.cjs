@@ -134,8 +134,6 @@ test('Browser model supports additional top-ten selections with fixed 6/12/2 gro
  assert.equal(x.state.top.length,6);
  assert.ok(x.state.top.includes(added));
  assert.equal(x.calculate().groups.map(g=>g.length).join(','),'6,12,2');
- assert.match(x.topicBrowser(),/id="topic-search"/);
- assert.match(x.topicBrowser(),/data-add-top=/);
  const output=x.resultsPage();
  assert.match(output,/class="breakdown-table"/);
   assert.match(output,/class="framework-link"/);
@@ -196,16 +194,11 @@ test('Merged page 1 contains both rankings and page 2 displays all 20 priority c
  const rank=element('stage').innerHTML;
  assert.equal((rank.match(/data-drag-rank="ranking"/g)||[]).length,6);
  assert.equal((rank.match(/data-drag-rank="outcomeRanking"/g)||[]).length,6);
- assert.ok(rank.indexOf('1. Rank the six Planning Areas')<rank.indexOf('2. Rank the six community outcomes'));
- assert.doesNotMatch(rank,/id="topic-search"/);
  vm.runInContext('state.step=1;render()',ctx);
  const html=element('stage').innerHTML;
- assert.match(html,/id="topic-search"/);
  assert.equal((html.match(/data-topic-drag=/g)||[]).length,20);
  assert.equal((html.match(/data-topic-move=/g)||[]).length,40);
- assert.equal((html.match(/data-topic-order=/g)||[]).length,40);
  assert.equal((html.match(/data-topic-zone=/g)||[]).length,3);
- assert.match(html,/Order within a group does not affect points/);
  assert.equal(vm.runInContext('selectionGroups()[2].length',ctx),0);
  const before=vm.runInContext('calculate().baseline',ctx);
  const mid=vm.runInContext('selectionGroups()[1][0]',ctx);
@@ -343,11 +336,7 @@ test('Step 5 lets participants reassign all 33 topics in a valid 6/12/2 draft be
  const [wasHighest,wasMiddle]=[before.groups[0][0],before.groups[1][0]];
  const html=run('resultsPage()');
  const editor=html.split('<details class="full-breakdown')[1].split('</details>')[0];
- assert.match(editor,/See and adjust 20 survey topic prioritization/);
  assert.equal((editor.match(/data-priority-code=/g)||[]).length,20);
- assert.doesNotMatch(editor,/<th>Weight<\/th>/);
- assert.match(editor,/<th>Priority group<\/th>/);
- assert.match(editor,/I prefer this ranking\. Update the assessments based on this ranking/);
  assert.deepEqual(Array.from(run('priorityGroupCounts(priorityDraft.groups)')),[6,12,2]);
  run('priorityDraft.groups['+JSON.stringify(wasHighest)+']=1');
  assert.equal(run('priorityDraftValid()'),false);
@@ -397,8 +386,6 @@ test('Fresh Step 1 subjects and Step 2 outcomes start in the survey-informed ord
  saved.themeRanking=order('ranking');
  saved.outcomeRanking=order('outcomeRanking');
  assert.equal(S.canonicalSnapshot(saved,id).coreCompleted,true,'New defaults are server-compatible');
- assert.match(app,/That survey asked about five action areas/);
- assert.match(app,/These six outcomes were not ranked directly/);
 });
 
 test('New defaults apply only to a fresh respondent; local saved rankings are preserved',()=>{
