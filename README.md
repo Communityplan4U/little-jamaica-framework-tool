@@ -28,6 +28,19 @@ Each survey topic receives its assigned weight exactly once. When a topic contai
 5. Community power and implementation — 3 topics; 6 criteria.
 6. Rights, recognition and reparative justice — 3 topics; 5 criteria.
 
+### Outcome assignment revision — November 10, 2026
+
+Four underlying criterion-to-outcome assignments were revised against the source workbook, without changing ratings or topic weight pools:
+
+| Criterion ID | Assigned community outcome | Survey topic |
+|---|---|---|
+| CB-03 | Belonging and Cultural Continuity | T11 |
+| NE-01 | Belonging and Cultural Continuity | T12 |
+| NE-05 | Adequate Standard of Living and Wellbeing | T14 |
+| CP-03 | Community Decision-Making and Reparative Justice | T16 |
+
+Each affected survey topic now has 100% of its underlying criteria allocated to its revised primary outcome, rather than a 50/50 or 1/3-2/3 split. The methodology source-version ID was advanced to `ljov-20261110-20top6-bottom2-60-37-3-six-areas-six-outcomes-v2`; v1 preview responses and earlier 33-topic responses must remain separate. The corrected source workbook is `LJOVPF_Comparator_Assessment_Corrected_Outcomes.xlsx`.
+
 ### Participant flow
 
 1. Rank the six Planning Areas, beginning with a qualitative interpretation of the October 21, 2026 Little Jamaica survey's five original action areas.
