@@ -1,100 +1,77 @@
 # Little Jamaica Planning Framework — Community Priorities Survey
 
-**Published:** https://little-jamaica-framework-tool-community-in-public.vercel.app/
+**Published production URL:** https://little-jamaica-framework-tool-community-in-public.vercel.app/
 
-Community in Public's community-led evaluation tool, based on the user's consolidated **33-topic** assessment workbook. Participants rank seven planning subjects and six community outcomes, review their **ten suggested highest** priorities, move any suggested topics into the middle, and choose **four lowest** priorities from the middle, and then compare planning documents and community averages.
+## Updated six-Planning-Area survey (development branch)
 
+The public questionnaire now uses **20 survey topics** organized into **six Planning Areas** rather than the previous seven subjects and 33 survey choices. The original 33 detailed assessment criteria remain intact for evidence-based comparison of seven Toronto planning frameworks. This change does not replace the documentary ratings; it changes how people distribute relative importance.
 
-**Compatibility note:** The participant-facing term is **planning subjects**. The stored schema still uses legacy fields such as `WB.themes`, `topic.theme`, `themeRanking`, `themeRankPoints`, and the API’s `themeWeights` / `initialDisplayOrder.themes`. Do **not** rename these fields as a copy edit: existing saved responses and server checks rely on them. The UI labels and CSS can say “subjects” while those internal keys remain unchanged.
+The 20-to-33 crosswalk is encoded in `data/assessment.json`: each public topic has a stable `T01`–`T20` ID, a plain-language title and summary, one Planning Area, and one or more criterion IDs (`HR-`, `LW-`, `CB-`, `NE-`, `CP-`, `RJ-`). Every detailed criterion maps to exactly one survey topic. The authoritative workbook is `LJOVPF_Comparator_Assessment_Planning_Areas_Updated.xlsx`.
 
-## The approved weighting method
+### Final priority allocation
 
-| Group | Topics | Weight of group | Weight per topic |
+| Group | Survey topics | Combined weight | Weight per topic |
 |---|---:|---:|---:|
-| Highest | 10 | 60% | 6% |
-| Middle | 19 | 37% | 37/19% (approx. 1.9474%) |
-| Lowest | 4 | 3% | 0.75% |
+| Highest priority | 6 | 60% | **10.0000%** |
+| Middle priority | 12 | 37% | **3.0833%** |
+| Lowest priority | 2 | 3% | **1.5000%** |
+| **Total** | **20** | **100%** | |
 
-Subject and outcome rankings generate the **suggested ten highest topics**. All 33 assessment topics have exactly one primary outcome across six cross-cutting outcome groups, with each group drawing from at least two planning subjects. Human rights, anti-racism, accessibility, and distinct Indigenous rights are requirements applied across the six outcomes, not an outcome to rank. In Step 3, participants can search all 23 topics outside the provisional highest group and directly add any to their ten highest. These participant-picked topics replace the lowest-ranked unselected suggestions. Participants may demote any top-ten topic to the middle; the next eligible suggestion automatically fills the vacated place. From the resulting middle list, participants select four topics for the lowest group. The final groups remain fixed at 10/19/4. Ties in the suggestions are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
+Each survey topic receives its assigned weight exactly once. When a topic contains multiple detailed criteria, its weight is split **equally across those criteria** (e.g. two criteria each receive half the topic weight). For each comparator, the topic score is the arithmetic mean of its criteria's unchanged 1–5 documentary ratings. The total is the weighted sum over the 20 public topics, mathematically equivalent to the weighted sum of all 33 criteria using their allocated within-topic shares.
 
-The source is `LJOVPF_Comparator_Assessment.xlsx`, using `Topics`, `Comparison by Topic` and `LJOVPF by Topic` sheets. Seven comparators are: Chinatown Tomorrow, Picture Mount Dennis, Mount Dennis Community for All, St. Clair Avenue West and Bathurst Street, Bloor Street, Yonge-St. Clair, and Port Lands. Scores are evidence-based documentary ratings from 1 to 5, not verified implementation outcomes.
+### Planning Areas
 
-## Participant experience
+1. Housing and remaining rooted — 4 survey topics; 7 detailed criteria.
+2. Local economy and community wealth — 4 topics; 5 criteria.
+3. Culture, history and belonging — 3 topics; 5 criteria.
+4. Everyday needs and environment — 3 topics; 5 criteria.
+5. Community power and implementation — 3 topics; 6 criteria.
+6. Rights, recognition and reparative justice — 3 topics; 5 criteria.
 
-1. Drag and drop the seven planning subjects into rank order (arrow buttons are available for keyboard and touch), and optionally share an email/contact preferences.
-2. Rank the six community outcomes to inform suggested topic priorities.
-3. Review ten automatically suggested highest-priority topics, move any down to the middle, and search or browse the other topics to add overlooked priorities directly to the highest ten.
-4. From the middle list, choose exactly four topics to move into the lowest group (the other 19 stay in the middle).
-5. Compare seven linked planning frameworks against the Little Jamaica draft as the zero baseline, with signed relative scores and breakdowns for seven subjects and six community outcomes.
-6. Compare the participant's priorities with community averages after at least one completed response.
+### Participant flow
 
-Each completed response receives a private return link, which allows revision until the database-enforced deadline **January 15, 2027 at 11:59 p.m. Toronto time**. The server closes new changes at midnight January 16 Toronto time. No account or email is needed to participate. Email updates are **manual only**; they are not sent automatically.
+1. Rank the six Planning Areas, beginning with a qualitative interpretation of the October 21, 2026 Little Jamaica survey's five original action areas.
+2. Rank six community outcomes. These outcomes are distinct from the Planning Areas.
+3. Review six suggested highest-priority survey topics; demote or directly add other topics.
+4. Choose two lowest-priority topics from the remaining fourteen; the other twelve remain middle priority.
+5. Compare the seven City planning documents (vision statements or full documents) with the draft Little Jamaica vision. The six Planning Area and six community outcome breakdowns each sum to the overall difference.
+6. Compare the participant's weights with the mean of responses collected under **the same methodology version**.
 
-Community averages are visible only through the private link of a completed participant, from the first completed response. At very low counts, an average may reveal a person's priorities; the survey informs participants of this limitation.
+**Important distinction:** the 60% Planning Area / 40% community outcome blend is used **only to rank provisional topic suggestions**. The 60% / 37% / 3% pools determine **final document comparison weights**. Public topics spanning multiple outcomes receive a criterion-proportional share of each outcome for suggestion and aggregate comparisons; detailed outcome comparison scores are calculated directly from criterion-level ratings. Human rights and distinct Indigenous rights obligations apply regardless of participant priorities.
 
-## Default starting order from the October 21, 2026 Little Jamaica Survey Findings
+## Data structure and compatibility
 
-The published *Little Jamaica Survey Findings: Actions & Progress Indicators for the Right to Remain Community Development Action Plan* reports 258 engagements. Across 1,912 selections of top-four/top-ten actions, Housing received 25% of votes, Governance 22%, Employment 19%, and Culture and Space 17% each (Table 5). Among 107 number-one votes, Housing led with 41% and Governance followed with 28% (Table 7). Progress indicators emphasize transparent reporting, formal government commitments and meaningful resident power (Tables 11–12).
+For backward compatibility with the survey storage API, the internal fields `WB.themes`, `topic.theme`, `themeRanking`, `themeRankPoints`, `themeWeights`, and `initialDisplayOrder.themes` **retain their existing names**. They now represent the six Planning Areas, not the former seven planning subjects. Do not rename schema keys as a cosmetic change.
 
-That survey asked about five action areas, **not** the Planning Framework tool's seven subjects or six outcomes. The following initial ordering is therefore a transparent, qualitative crosswalk of the priority actions and progress indicators, **not** a directly measured ranking of the seven/six categories:
+- `data/assessment.json`: 33 separately scored `topics` (detailed criteria) with new Planning Area IDs; 20 public `surveyTopics` with stable T IDs; six `themes`/Planning Areas.
+- `data/methodology.json`: `topicCount=20`, `groupCounts=[6,12,2]`, `groupShares=[60,37,3]`, six Planning Area rank points, and the new unique source-version ID.
+- `public/js/model.js`: ranks public topics, distributes weights, computes aggregate comparison and criterion-level breakdowns.
+- `server/survey.cjs`: validates all choices and recalculates canonical 20-topic weights and comparator-independent source score.
+- `api/community.js`: calculates outcome-weighted averages from 20 public topic weights and within-topic outcome proportions.
+- `public/js/app.js`: six-step participant workflow; private return links; Step 5 reassignment and saved revisions.
 
-- Step 1 planning subjects: Housing; Rights and equity; Delivery; Economic opportunity; Community and public spaces; Culture and identity; Acknowledgement.
-- Step 2 community outcomes: Adequate Standard of Living and Wellbeing; Right to Remain and Return; Community Decision-Making and Reparative Justice; Government is Accountable to Deliver; Community Wealth and Inclusive Local Economies; Belonging and Cultural Continuity.
+A new `sourceVersion` and new browser storage prefix protect completed 33-topic responses from being reinterpreted. Existing private links remain tied to their original version and must not be silently converted. **Production collection status is controlled server-side** by a source-version + collection-mode record in the dedicated Supabase project. A new version must have a verified control before accepting submissions.
 
-The defaults live in `public/js/state.js` as `DEFAULT_SUBJECT_ORDER` and `DEFAULT_OUTCOME_ORDER`. **Do not reorder** `WB.themes` or `METHOD.outcomes` because they are canonical IDs for saved responses. New participants can change both orders, and existing saved or private-link responses retain their chosen rankings. Topic suggestion scores still use the existing 60% subject + 40% outcome additive method, and the 10/19/4 group totals remain 60%/37%/3%. The order of subjects does not change the human-rights obligations that apply throughout.
+### Research and framing
 
-## Public website embedding
+The October 21, 2026 *Little Jamaica Survey Findings* recorded 258 engagements and ranked five action areas: Housing 25%, Governance 22%, Employment 19%, and Culture and Space 17% each among top-action selections. Those respondents did **not** directly rank these six Planning Areas or six outcomes. Initial order is a transparent, qualitative mapping only, and every participant may rearrange it.
 
-Use the GoDaddy HTML embed component:
+Seven documentary comparators: Chinatown Tomorrow; Picture Mount Dennis; Mount Dennis Community for All; St. Clair Avenue West and Bathurst Street; Bloor Street; Yonge-St. Clair; Port Lands. Written-document ratings (1–5) are evidence assessments, **not verified implementation outcomes**.
+
+## Survey privacy and operations
+
+Storage uses the dedicated Supabase **Little Jamaica Planning Framework Survey** project in Canada Central. The separate Mapping-project database is not part of this survey. Public and preview collection modes, source versions, and response cohorts remain segregated; the server validates all reported weights and the private return-link token. Email contact and opt-ins remain optional and separate. The survey deadline is January 15, 2027 at 11:59 p.m. Toronto time, enforced by the database, not only by the browser. Email updates are manual only.
+
+A public website embed may use:
 
 ```html
-<iframe
-  src="https://little-jamaica-framework-tool-community-in-public.vercel.app/"
-  title="Little Jamaica community priorities survey"
-  width="100%"
-  height="1100"
-  loading="lazy"
-  style="width:100%;min-height:1100px;border:0;"
-></iframe>
+<iframe src="https://little-jamaica-framework-tool-community-in-public.vercel.app/"
+  title="Little Jamaica community priorities survey" width="100%" height="1100"
+  loading="lazy" style="width:100%;min-height:1100px;border:0;"></iframe>
 ```
 
-Or link directly to the published URL. Vercel Content-Security-Policy permits framing by `communityinpublic.ca`, `www.communityinpublic.ca`, `crcd.to`, and `www.crcd.to`.
+## Validation
 
-## Secure storage and privacy
+Run `npm ci --ignore-scripts && npm run check`. This validates both browser and API JavaScript, model/source consistency, user saving, response recovery and the Vercel build.
 
-Supabase dedicated Little Jamaica project: `eumwsssqjliljbzxhsgc` (Canada Central). The Mapping-project database is untouched.
-
-Public and testing environments use **separate server-only tokens and response cohorts**. A new source-version ID segregates the current 33-topic methodology from all previous 39-topic survey answers. Private response records and optional contact information remain separate in the database. The public site does not have an administrative API to list individual responses.
-
-**Direct access to individual responses:** log into the existing [Supabase dashboard](https://supabase.com/dashboard/project/eumwsssqjliljbzxhsgc) and use private views `survey_private.v_responses`, `survey_private.v_topic_weights`, `survey_private.v_participation` or the SQL Editor. Check your organization's Team Members to ensure only authorized people have access; Supabase owners and sufficiently privileged collaborators may access project data. Enable MFA.
-
-## Maintainers
-
-- `main`: the published site
-- `data/assessment.json`: 33-topic workbook-derived rubric and scores
-- `data/methodology.json`: fixed weighting rules, unique methodology ID, subject/outcome ranking parameters
-- `server/survey.cjs`: authoritative validation and server-recalculated weights
-- `public/js/`: participant experience; no server credentials
-- `api/`: same-origin storage, resume, status and completed-only aggregate endpoints
-- `supabase/functions/survey-storage/index.ts`: tightly allowlisted credential-scoped storage gateway
-
-To validate: `npm ci --ignore-scripts && npm run check`.
-
-### Updated weight distribution (November 9, 2026)
-
-Before the first recorded public submission, the weights were revised from 50% / 47% / 3% to **60% / 37% / 3%**, retaining the 10 / 19 / 4 allocation. The current additive 60/40 source version is `ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-additive-60t-40o-v4`. Earlier six-outcome multiplier responses remain under `ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-v3`, and earlier five-outcome responses remain under `ljov-20261109-33top10-bottom4-60-37-3-v2`. All three groups are kept separate in the database. Existing private links do not automatically transfer between methodologies. The previous source version remains separately recorded and closed to further public submissions.
-
-### Six cross-cutting outcome framework (November 9, 2026)
-
-1. Government is Accountable to Deliver (7 topics)
-2. Community Wealth and Inclusive Local Economies (4 topics)
-3. Right to Remain and Return (4 topics)
-4. Community Decision-Making and Reparative Justice (6 topics)
-5. Belonging and Cultural Continuity (5 topics)
-6. Adequate Standard of Living and Wellbeing (7 topics)
-
-Subjects prompt: **Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top.**
-
-Outcomes prompt: **What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.**
-
-Suggested topics use **normalized additive scoring: 60% planning subjects + 40% community outcomes**. Each dimension is normalized across its full ranked range: themes 1–7 have points 10–4 and normalized scores (points − 4) / 6; outcomes 1–6 have points 6–1 and normalized scores (points − 1) / 5. The suggestion score is `100 × [0.60 × normalized subject + 0.40 × normalized outcome]`. This selects the provisional top ten only; participant revisions remain authoritative. Final group weights remain **60% highest ten / 37% middle nineteen / 3% lowest four**. Document ratings were not changed.
+The earlier survey's methodology was `ljov-20261109-33top10-bottom4-60-37-3-six-outcomes-additive-60t-40o-v4`. **Do not combine averages or survey choices from this old methodology with the new 20-topic instrument**; the two questionnaires ask participants to prioritize different units.
