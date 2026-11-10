@@ -85,6 +85,7 @@ function reconcilePending(saved){
  if(rev<(record.confirmedRevision||0))throw Error('Online revision is inconsistent. Your answers are unchanged.');
  if(!record.outbox.length)return;
  const last=record.outbox[record.outbox.length-1];
+ const pendingCompletion=record.outbox.some(e=>e.eventType==='complete');
  const pages=arr=>Array.isArray(arr)?arr.filter(n=>Number.isInteger(n)&&n>=1&&n<=6):[];
  record.continuedPages=[...new Set([...pages(saved.continuedPages),...pages(record.continuedPages)])];
  record.visitedPages=[...new Set([...pages(saved.visitedPages),...pages(record.visitedPages)])];
@@ -93,9 +94,11 @@ function reconcilePending(saved){
  record.revision=rev+1;
  record.answerRevision=Math.max(answer,record.answerRevision||0)+1;
  const latest=snapshot();
+ const completedNow=latest.inputEvidence?.coreStepsCompleted===true;
+ const eventType=pendingCompletion&&completedNow?'complete':last.eventType;
  // A single new checkpoint represents the latest unsent choices; accepted
  // server checkpoints remain in the database history.
- record.outbox=[{...last,eventId:freshId(),responseId:record.responseId,
+ record.outbox=[{...last,eventId:freshId(),eventType,responseId:record.responseId,
   revision:record.revision,answerRevision:record.answerRevision,
   page:state.step+1,clientTimestamp:new Date().toISOString(),
   afterResultsShown:!!record.firstCompletedAt,
@@ -565,6 +568,9 @@ function downloadCsv(){
  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='little-jamaica-my-33-priorities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
 }
 window.addEventListener('online',()=>{status();flush();});
+window.addEventListener('beforeunload',e=>{
+ if(record?.outbox?.length){e.preventDefault();e.returnValue='';}
+});
 init();
 const secret=location.hash.startsWith('#resume=')?decodeURIComponent(location.hash.substring(8)):null;
 if(secret)history.replaceState(null,'',location.pathname+location.search);
