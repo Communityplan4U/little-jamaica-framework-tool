@@ -150,12 +150,27 @@ function init(){
    sourceVersion:METHOD.id,revision:0,answerRevision:0,continuedPages:[],visitedPages:[1],
    firstCompletedAt:null,confirmedRevision:0,outbox:[],createdAt:new Date().toISOString(),lastSnapshot:null};
  }
- syncTop();write();
+ syncTop();state.step=Math.min(state.step,highestUnlockedStep());write();
 }
 function notice(s,kind='info'){const n=document.getElementById('notice');if(!n)return;n.textContent=s;n.dataset.kind=kind;n.hidden=false;}
 function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=true;}
 function validOrder(v,all){return Array.isArray(v)&&v.length===all.length&&new Set(v).size===all.length&&v.every(x=>all.includes(x));}
 function canEdit(){return collection.checked&&(collection.isOpen||collection.offlineDraft===true);}
+// Each new step unlocks only when the preceding step was completed via Continue.
+// Existing respondents who already visited Step 6 retain access to their results.
+function highestUnlockedStep(){
+ if(!record)return 0;
+ const continued=new Set(Array.isArray(record.continuedPages)?record.continuedPages:[]);
+ let unlocked=0;
+ for(let page=1;page<=4;page++){
+  if(!continued.has(page))break;
+  if(page===4&&(!record.firstCompletedAt||state.bottom.length!==4))break;
+  unlocked=page;
+ }
+ if(unlocked===4&&(continued.has(5)||
+   (record.firstCompletedAt&&Array.isArray(record.visitedPages)&&record.visitedPages.includes(6))))unlocked=5;
+ return unlocked;
+}
 async function status(){
  try{const r=await fetch('/api/status',{cache:'no-store',signal:networkSignal(8000)});if(!r.ok)throw Error('status');const d=await r.json();
   collection={checked:true,isOpen:d.configured===true&&d.isOpen===true,offlineDraft:false,closesAt:d.closesAt,mode:d.mode||'public'};
@@ -305,13 +320,14 @@ async function restore(raw){
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
    visitedPages:d.visitedPages||[1],firstCompletedAt:d.firstCompletedAt||null,confirmedRevision:d.revision||0,
    createdAt:d.createdAt,outbox:[],lastSnapshot:null};
-  syncTop();write();notice('Your response has been restored. You may revise it until the survey closes.');render();
+  syncTop();state.step=Math.min(state.step,highestUnlockedStep());write();notice('Your response has been restored. You may revise it until the survey closes.');render();
  }catch(e){notice(e.message+' Your existing browser response was not changed.','warning');}
 }
 function selectPage(i){
  if(i<0||i>=STEPS.length)return;
- if(i>=4&&(!record.firstCompletedAt||state.bottom.length!==4)){notice('Complete your highest and four lowest priorities before viewing the results.','warning');return;}
- if(!record.firstCompletedAt&&i>state.step+1){notice('Finish the earlier steps first so your survey answers are saved in sequence.','warning');return;}
+ if(i>highestUnlockedStep()){
+  notice('Complete each step with Continue before opening the next step.','warning');return;
+ }
  if(i===state.step)return;state.step=i;record.visitedPages=[...new Set([...record.visitedPages,i+1])];state.community=null;write();render();
  window.scrollTo({top:0,behavior:'smooth'});
  if(i===5)loadCommunity();
@@ -509,7 +525,7 @@ function communityPage(){
 }
 function render(){
  const step=Math.min(5,Math.max(0,state.step));state.step=step;
- document.getElementById('steps').innerHTML=STEPS.map((title,i)=>'<button type="button" data-step="'+i+'" class="'+(i===step?'current':'')+'" '+(i>3&&!record.firstCompletedAt?'disabled':'')+'><span>Step '+(i+1)+'</span>'+esc(title)+'</button>').join('');
+ document.getElementById('steps').innerHTML=STEPS.map((title,i)=>'<button type="button" data-step="'+i+'" class="'+(i===step?'current':'')+'" '+(i>highestUnlockedStep()?'disabled':'')+'><span>Step '+(i+1)+'</span>'+esc(title)+'</button>').join('');
  document.getElementById('step-label').textContent='Step '+(step+1)+' of 6';
  document.getElementById('step-title').textContent=STEPS[step];
  // Both ranking questions are already displayed inside their respective panels.
@@ -661,6 +677,8 @@ async function next(){
  if(navigating)return;
  navigating=true;
  try{
+ // Returning participants may see an already-unlocked Step 6 even after closure.
+ if(state.step===4&&highestUnlockedStep()===5){selectPage(5);return;}
  if(!canEdit())return;
  if(state.step===0){
   const email=document.getElementById('participant-email')?.value.trim()||'';
@@ -669,7 +687,20 @@ async function next(){
  }
  if(state.step===2&&syncTop().length!==10){notice('Ten highest-priority topics are required. Restore an earlier topic.','warning');return;}
  if(state.step===3&&state.bottom.length!==4){notice('Please select exactly four lowest-priority topics before continuing.','warning');return;}
- if(state.step>=4){selectPage(state.step+1);return;}
+ if(state.step===4){
+  if(highestUnlockedStep()<4){
+   notice('Complete Steps 1 through 4 before viewing community results.','warning');return;
+  }
+  // Confirm that Step 5 was reviewed before unlocking Step 6.
+  record.continuedPages=[...new Set([...record.continuedPages,5])];
+  const ok=await save('results_viewed');
+  if(ok||(record.outbox.length&&canEdit())){
+   selectPage(5);
+   if(!ok)notice('Your answers are stored on this device. Use Retry save to confirm them online.','warning');
+  }
+  return;
+ }
+ if(state.step>=5)return;
  const nextStep=state.step+1;
  record.continuedPages=[...new Set([...record.continuedPages,state.step+1])];
  if(state.step===3)record.firstCompletedAt=record.firstCompletedAt||new Date().toISOString();
