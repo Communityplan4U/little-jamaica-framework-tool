@@ -440,7 +440,7 @@ function escTextMove(code,group,other){
 }
 // Dragging inside one group changes presentation order, not its weight.
 // A same-group drop on the group background places the topic at the end.
-function reorderTopic(code,targetCode=null){
+function reorderTopic(code,targetCode=null,after=false){
  const groups=selectionGroups(),group=groups.find(g=>g.includes(code));
  if(!group)return false;
  const to=targetCode?group.indexOf(targetCode):-1;
@@ -448,7 +448,7 @@ function reorderTopic(code,targetCode=null){
  const old=group.indexOf(code);
  if(targetCode===code)return false;
  group.splice(old,1);
- if(targetCode)group.splice(group.indexOf(targetCode),0,code);
+ if(targetCode)group.splice(group.indexOf(targetCode)+(after?1:0),0,code);
  else group.push(code);
  state.topicOrder=groups.flat();
  state.community=null;priorityDraft=null;write();render();
@@ -642,7 +642,7 @@ function render(){
  document.querySelectorAll('[data-step]').forEach(el=>el.addEventListener('click',()=>selectPage(+el.dataset.step)));
  document.querySelectorAll('[data-rank]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;const list=state[el.dataset.rank],i=+el.dataset.index,j=i+(+el.dataset.dir);
-  if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];state.excludedTop=[];state.bottom=[];syncTop();state.community=null;write();render();
+  if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];syncTop();state.community=null;write();render();
  }));
  document.querySelectorAll('[data-connection]').forEach(el=>el.addEventListener('change',()=>{
   state.connections=el.checked?[...new Set([...state.connections,el.dataset.connection])]:state.connections.filter(x=>x!==el.dataset.connection);write();
@@ -671,68 +671,76 @@ function render(){
    const list=state[dragging.key],to=+item.dataset.index;
    if(dragging.index!==to){
     const [moved]=list.splice(dragging.index,1);list.splice(to,0,moved);
-    state.excludedTop=[];state.bottom=[];syncTop();state.community=null;write();render();
+    syncTop();state.community=null;write();render();
    }
    dragging=null;
   });
   item.addEventListener('dragend',()=>{dragging=null;item.classList.remove('is-dragging');document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));});
  });
- // The search field updates just the topic list, preserving its focus and cursor.
- const search=document.getElementById('topic-search'),results=document.getElementById('topic-browser-results');
- if(search&&results){
-  search.addEventListener('input',()=>{state.topicSearch=search.value;results.innerHTML=topicBrowserResults();});
-  results.addEventListener('click',e=>{
-   const button=e.target.closest('[data-add-top]');
-   if(!button||!canEdit())return;
-   const code=button.dataset.addTop;
-   if(state.top.includes(code))return;
-   if(state.promotedTop.length>=COUNTS[0]){
-    notice('Remove one of your directly added topics before adding another.','warning');return;
-   }
-   state.promotedTop=[...state.promotedTop,code];
-   state.excludedTop=state.excludedTop.filter(x=>x!==code);
-   state.bottom=state.bottom.filter(x=>x!==code);
-   syncTop();state.community=null;write();render();
-   notice('Added '+byCode[code].title+' to your highest-priority six. Review your full list in Step 3.');
+ // Search filters rendered cards without changing priority selections.
+ const search=document.getElementById('topic-search');
+ function filterTopicCards(){
+  const query=(state.topicSearch||'').trim().toLowerCase();
+  document.querySelectorAll('[data-topic-drag]').forEach(card=>{
+   card.hidden=!!query&&!String(card.dataset.topicSearch||'').includes(query);
   });
  }
- document.querySelectorAll('[data-unpin-top]').forEach(el=>el.addEventListener('click',()=>{
+ if(search){search.addEventListener('input',()=>{state.topicSearch=search.value;filterTopicCards();});filterTopicCards();}
+ document.querySelectorAll('[data-topic-move]').forEach(button=>button.addEventListener('click',()=>{
+  moveTopicGroup(button.dataset.code,Number(button.dataset.topicMove));
+ }));
+ document.querySelectorAll('[data-topic-order]').forEach(button=>button.addEventListener('click',()=>{
   if(!canEdit())return;
-  state.promotedTop=state.promotedTop.filter(code=>code!==el.dataset.unpinTop);
-  syncTop();state.community=null;write();render();
+  const groups=selectionGroups(),code=button.dataset.code,group=groups.find(g=>g.includes(code));
+  if(!group)return;
+  const dir=Number(button.dataset.topicOrder),idx=group.indexOf(code),other=group[idx+dir];
+  if(other)reorderTopic(code,other,dir>0);
  }));
- document.querySelectorAll('[data-demote]').forEach(el=>el.addEventListener('click',()=>{
-  if(!canEdit())return;
-  const code=el.dataset.code;
-  if(el.dataset.demote==='top'){
-   const excluded=[...new Set([...state.excludedTop,code])];
-   if(suggestions().filter(x=>!excluded.includes(x)&&!state.bottom.includes(x)).length<COUNTS[0]){
-    notice('At least six topics must stay eligible for the highest group. Restore an earlier topic before moving another.','warning');return;
-   }
-   state.excludedTop=excluded;
-   state.promotedTop=state.promotedTop.filter(x=>x!==code);
-  }else{
-   if(state.bottom.length>=COUNTS[2]){notice('Two topics are already in the lowest group. Undo one before selecting another.','warning');return;}
-   if(state.top.includes(code))return;
-   state.bottom=[...state.bottom,code];
-  }
-  syncTop();state.community=null;write();render();
- }));
- document.querySelectorAll('[data-restore-top]').forEach(el=>el.addEventListener('click',()=>{
-  if(!canEdit())return;
-  const code=el.dataset.restoreTop;
-  if(!state.promotedTop.includes(code)&&state.promotedTop.length>=COUNTS[0]){
-   notice('Remove a directly added topic before restoring another to the top six.','warning');return;
-  }
-  state.excludedTop=state.excludedTop.filter(x=>x!==code);
-  state.bottom=state.bottom.filter(x=>x!==code);
-  if(!state.promotedTop.includes(code))state.promotedTop=[...state.promotedTop,code];
-  syncTop();state.community=null;write();render();
- }));
- document.querySelectorAll('[data-restore-middle]').forEach(el=>el.addEventListener('click',()=>{
-  if(!canEdit())return;state.bottom=state.bottom.filter(code=>code!==el.dataset.restoreMiddle);
-  syncTop();state.community=null;write();render();
- }));
+ let draggingTopic=null;
+ const clearTopicTargets=()=>document.querySelectorAll('.topic-drop-target').forEach(el=>el.classList.remove('topic-drop-target'));
+ document.querySelectorAll('[data-topic-drag]').forEach(card=>{
+  card.addEventListener('dragstart',event=>{
+   if(!canEdit()){event.preventDefault();return;}
+   draggingTopic=card.dataset.topicDrag;
+   event.dataTransfer?.setData('text/plain',draggingTopic);
+   if(event.dataTransfer)event.dataTransfer.effectAllowed='move';
+   card.classList.add('is-dragging');
+  });
+  card.addEventListener('dragend',()=>{draggingTopic=null;clearTopicTargets();});
+  card.addEventListener('dragover',event=>{
+   if(!canEdit()||!draggingTopic)return;
+   event.preventDefault();event.stopPropagation();
+   clearTopicTargets();card.classList.add('topic-drop-target');
+  });
+  card.addEventListener('dragleave',()=>card.classList.remove('topic-drop-target'));
+  card.addEventListener('drop',event=>{
+   event.preventDefault();event.stopPropagation();
+   const code=draggingTopic,onto=card.dataset.topicDrop,destination=Number(card.dataset.topicGroup);
+   draggingTopic=null;clearTopicTargets();
+   if(!canEdit()||!byCode[code]||code===onto)return;
+   const origin=selectionGroups().findIndex(g=>g.includes(code));
+   if(origin===destination){
+    const bounds=card.getBoundingClientRect?.();
+    reorderTopic(code,onto,!!bounds&&event.clientY>bounds.top+bounds.height/2);
+   }else moveTopicGroup(code,destination,onto);
+  });
+ });
+ document.querySelectorAll('[data-topic-zone]').forEach(zone=>{
+  zone.addEventListener('dragover',event=>{
+   if(!canEdit()||!draggingTopic)return;
+   event.preventDefault();zone.classList.add('topic-zone-target');
+  });
+  zone.addEventListener('dragleave',()=>zone.classList.remove('topic-zone-target'));
+  zone.addEventListener('drop',event=>{
+   event.preventDefault();
+   zone.classList.remove('topic-zone-target');
+   const code=draggingTopic,destination=Number(zone.dataset.topicZone);
+   draggingTopic=null;clearTopicTargets();
+   if(!canEdit()||!byCode[code])return;
+   if(selectionGroups()[destination].includes(code))reorderTopic(code);
+   else moveTopicGroup(code,destination);
+  });
+ });
  document.querySelectorAll('[data-scope]').forEach(el=>el.addEventListener('click',()=>{state.scope=el.dataset.scope;write();render();}));
  document.querySelectorAll('[data-community-view]').forEach(el=>el.addEventListener('click',()=>{state.communityView=el.dataset.communityView;render();}));
  // Reassigning a topic changes only the draft until Apply is pressed.
@@ -761,7 +769,7 @@ function render(){
  document.getElementById('save-comment')?.addEventListener('click',async()=>{state.feedback=document.getElementById('comment').value;const ok=await save('comments_shared');if(ok)notice('Your comments and current priorities were saved online.');});
  document.getElementById('private-link')?.addEventListener('click',copyLink);
  document.getElementById('download-my-response')?.addEventListener('click',downloadCsv);
- document.querySelectorAll('[data-rank],[data-add-top],[data-unpin-top],[data-demote],[data-restore-top],[data-restore-middle],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
+ document.querySelectorAll('[data-rank],[data-topic-move],[data-topic-order],[data-connection],#participant-email,#newsletter,#planning-updates,#comment,#save-comment').forEach(el=>{if(!canEdit())el.disabled=true;});
  renderSaveBadge();
 }
 async function next(){
