@@ -150,3 +150,20 @@ test('A temporary status outage allows a clearly marked local draft',async()=>{
  assert.equal(h.run('canEdit()'),true);
  assert.match(h.element('collection-status').textContent,/temporarily unavailable/);
 });
+
+test('Rapid double-clicking Continue creates only one checkpoint and one step transition',async()=>{
+ let finish;
+ const h=harness(async(url,opts)=>new Promise(resolve=>{
+  const e=JSON.parse(opts.body);
+  finish=()=>resolve(receipt(e));
+ }));
+ const first=h.run('next()');
+ const second=h.run('next()');
+ assert.equal(h.run('record.outbox.length'),1);
+ assert.equal(h.run('record.revision'),1);
+ finish();
+ await Promise.all([first,second]);
+ assert.equal(h.run('state.step'),1);
+ assert.equal(h.run('record.confirmedRevision'),1);
+ assert.equal(h.run('record.outbox.length'),0);
+});
