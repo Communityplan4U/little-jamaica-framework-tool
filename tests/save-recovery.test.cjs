@@ -224,3 +224,95 @@ test('Applying groups while offline retains the revised ranking and retryable sa
  assert.equal(h.element('save-state').children.at(-1).textContent,'Retry save');
  assert.match(h.element('notice').textContent,/not been confirmed/);
 });
+
+
+test('First-time participants must use Continue through Steps 1–5 before Step 6 unlocks',async()=>{
+ const saved=[];
+ const h=harness(async(url,opts)=>{
+  if(url==='/api/community')return ok(200,{available:false,count:0});
+  const event=JSON.parse(opts.body);saved.push(event);return receipt(event);
+ });
+ h.run('render()');
+ const sidebar=()=>h.element('steps').innerHTML;
+ const locked=n=>new RegExp('data-step="'+(n-1)+'"[^>]*disabled').test(sidebar());
+ assert.equal(h.run('highestUnlockedStep()'),0);
+ assert.equal(locked(1),false);
+ for(let n=2;n<=6;n++)assert.equal(locked(n),true,'Step '+n+' should start locked');
+ for(let n=1;n<=5;n++)h.run('selectPage('+n+')');
+ assert.equal(h.run('state.step'),0,'Sidebar cannot skip Step 1');
+ await h.run('next()');
+ assert.equal(h.run('state.step'),1);
+ assert.equal(h.run('highestUnlockedStep()'),1);
+ assert.equal(locked(2),false);
+ assert.equal(locked(3),true);
+ h.run('selectPage(4)');
+ assert.equal(h.run('state.step'),1);
+ await h.run('next()');
+ assert.equal(h.run('state.step'),2);
+ assert.equal(locked(3),false);
+ assert.equal(locked(4),true);
+ await h.run('next()');
+ assert.equal(h.run('state.step'),3);
+ assert.equal(locked(4),false);
+ assert.equal(locked(5),true);
+ await h.run('next()');
+ assert.equal(h.run('state.step'),3,'Step 4 requires choosing four lowest priority topics');
+ assert.equal(saved.length,3);
+ h.run('state.bottom=orderedGroups()[2].slice()');
+ await h.run('next()');
+ assert.equal(h.run('state.step'),4);
+ assert.equal(h.run('highestUnlockedStep()'),4);
+ assert.equal(locked(5),false);
+ assert.equal(locked(6),true,'Viewing Step 5 must not unlock Step 6 without Continue');
+ h.run('selectPage(5)');
+ assert.equal(h.run('state.step'),4,'Clicking Step 6 sidebar is still blocked');
+ await h.run('next()');
+ assert.equal(h.run('state.step'),5);
+ assert.equal(h.run('highestUnlockedStep()'),5);
+ assert.equal(locked(6),false);
+ assert.equal(saved.length,5);
+ assert.deepEqual(saved.map(event=>event.eventType),['continue','continue','continue','complete','results_viewed']);
+ assert.equal(S.validateEvent(saved.at(-1)).coreCompleted,true);
+ assert.ok(saved.at(-1).continuedPages.includes(5));
+ h.run('selectPage(0)');
+ h.run('selectPage(5)');
+ assert.equal(h.run('state.step'),5,'Previously completed pages can be revisited');
+});
+
+test('Resuming a partial response never unlocks uncompleted steps or trusts visited-page history',async()=>{
+ const d={
+  sourceVersion:S.M.id,revision:2,answerRevision:2,firstCompletedAt:null,
+  continuedPages:[1],visitedPages:[1,2,3,4,5,6],
+  resumeState:{
+   page:3,ranking:S.WB.themes.map(t=>t.name),outcomeRanking:S.M.outcomes.map(t=>t.id),
+   top:[],bottom:[],excludedTop:[],promotedTop:[],connections:[],feedback:'',scope:'vision'
+  }
+ };
+ const h=harness(async(url,opts)=>url==='/api/resume'?ok(200,d):receipt(JSON.parse(opts.body)));
+ await h.run("restore('"+responseId+"."+token+"')");
+ assert.equal(h.run('state.step'),1,'Restored page clamps to actual completion');
+ assert.equal(h.run('highestUnlockedStep()'),1);
+ h.run('selectPage(4)');h.run('selectPage(5)');
+ assert.equal(h.run('state.step'),1,'Fake or legacy visited steps cannot skip first-time progression');
+ assert.match(h.element('steps').innerHTML,/data-step="5"[^>]*disabled/);
+});
+
+test('Previously completed respondents retain Step 6 access after the navigation change',()=>{
+ const h=harness(async()=>{throw Error('No network required');});
+ h.run("record.continuedPages=[1,2,3,4];state.bottom=orderedGroups()[2].slice();record.firstCompletedAt='2026-11-10T01:00:00Z';record.visitedPages=[1,2,3,4,5,6];state.step=4;render()");
+ assert.equal(h.run('highestUnlockedStep()'),5);
+ h.run('selectPage(5)');
+ assert.equal(h.run('state.step'),5);
+});
+
+test('Step 5 Continue retains a retryable local checkpoint when offline',async()=>{
+ const h=harness(async()=>{throw Error('Network offline');});
+ h.run("record.continuedPages=[1,2,3,4];state.bottom=orderedGroups()[2].slice();record.firstCompletedAt='2026-11-10T01:00:00Z';state.step=4;render()");
+ assert.equal(h.run('highestUnlockedStep()'),4);
+ await h.run('next()');
+ assert.equal(h.run('state.step'),5);
+ assert.ok(h.run('record.continuedPages.includes(5)'));
+ assert.equal(h.run('record.outbox.length'),1);
+ assert.equal(h.run('record.outbox[0].eventType'),'results_viewed');
+ assert.equal(h.element('save-state').children.at(-1).textContent,'Retry save');
+});
