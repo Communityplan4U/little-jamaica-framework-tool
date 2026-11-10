@@ -175,8 +175,8 @@ test('Conflict recovery preserves an unsent completion when later edits were que
   const e=JSON.parse(opts.body);accepted.push(e);
   return e.revision===3?receipt(e):ok(409,{error:'stale'});
  });
- h.run("state.bottom=suggestions().slice(-2);record.continuedPages=[1,2,3,4];record.firstCompletedAt=new Date().toISOString();state.step=3;checkpoint('complete')");
- h.run("state.step=4;state.feedback='These are my current priorities';checkpoint('comments_shared')");
+ h.run("state.bottom=suggestions().slice(-2);record.continuedPages=[1,2];record.firstCompletedAt=new Date().toISOString();state.step=1;checkpoint('complete')");
+ h.run("state.step=2;state.feedback='These are my current priorities';checkpoint('comments_shared')");
  assert.equal(await h.run('flush()'),true);
  assert.equal(accepted.at(-1).eventType,'complete');
  assert.equal(accepted.at(-1).snapshot.inputEvidence.coreStepsCompleted,true);
@@ -190,7 +190,7 @@ test('Applying Step 5 topic groups recalculates and saves a server-valid revisio
  const h=harness(async(url,opts)=>{
   const e=JSON.parse(opts.body);accepted.push(e);return receipt(e);
  });
- h.run("record.continuedPages=[1,2,3,4];record.firstCompletedAt='2026-11-10T01:00:00Z';state.bottom=orderedGroups()[2].slice();state.step=4;render()");
+ h.run("record.continuedPages=[1,2];record.firstCompletedAt='2026-11-10T01:00:00Z';state.bottom=orderedGroups()[2].slice();state.step=2;render()");
  const [highest,middle]=Array.from(h.run('calculate().groups')).slice(0,2).map(group=>group[0]);
  assert.match(h.element('stage').innerHTML,/See and adjust 20 survey topic prioritization/);
  h.run('priorityDraft.groups['+JSON.stringify(highest)+']=1');
@@ -215,7 +215,7 @@ test('Applying Step 5 topic groups recalculates and saves a server-valid revisio
 
 test('Applying groups while offline retains the revised ranking and retryable save',async()=>{
  const h=harness(async()=>{throw Error('Offline');});
- h.run("record.continuedPages=[1,2,3,4];record.firstCompletedAt='2026-11-10T01:00:00Z';state.bottom=orderedGroups()[2].slice();state.step=4;render()");
+ h.run("record.continuedPages=[1,2];record.firstCompletedAt='2026-11-10T01:00:00Z';state.bottom=orderedGroups()[2].slice();state.step=2;render()");
  const [highest,middle]=Array.from(h.run('calculate().groups')).slice(0,2).map(group=>group[0]);
  h.run('priorityDraft.groups['+JSON.stringify(highest)+']=1;priorityDraft.groups['+JSON.stringify(middle)+']=0;updatePriorityDraftControls()');
  await h.element('apply-priority-ranking').listeners.click();
@@ -226,7 +226,7 @@ test('Applying groups while offline retains the revised ranking and retryable sa
 });
 
 
-test('First-time participants must use Continue through Steps 1–5 before Step 6 unlocks',async()=>{
+test('Four-step journey requires completed topic priorities before results and community access',async()=>{
  const saved=[];
  const h=harness(async(url,opts)=>{
   if(url==='/api/community')return ok(200,{available:false,count:0});
@@ -237,82 +237,82 @@ test('First-time participants must use Continue through Steps 1–5 before Step 
  const locked=n=>new RegExp('data-step="'+(n-1)+'"[^>]*disabled').test(sidebar());
  assert.equal(h.run('highestUnlockedStep()'),0);
  assert.equal(locked(1),false);
- for(let n=2;n<=6;n++)assert.equal(locked(n),true,'Step '+n+' should start locked');
- for(let n=1;n<=5;n++)h.run('selectPage('+n+')');
- assert.equal(h.run('state.step'),0,'Sidebar cannot skip Step 1');
+ for(let n=2;n<=4;n++)assert.equal(locked(n),true,'Step '+n+' starts locked');
+ for(let n=1;n<=3;n++)h.run('selectPage('+n+')');
+ assert.equal(h.run('state.step'),0);
  await h.run('next()');
  assert.equal(h.run('state.step'),1);
  assert.equal(h.run('highestUnlockedStep()'),1);
- assert.equal(locked(2),false);
- assert.equal(locked(3),true);
- h.run('selectPage(4)');
- assert.equal(h.run('state.step'),1);
+ assert.equal(locked(2),false);assert.equal(locked(3),true);
+ assert.equal(saved.length,1);
  await h.run('next()');
- assert.equal(h.run('state.step'),2);
- assert.equal(locked(3),false);
- assert.equal(locked(4),true);
- await h.run('next()');
- assert.equal(h.run('state.step'),3);
- assert.equal(locked(4),false);
- assert.equal(locked(5),true);
- await h.run('next()');
- assert.equal(h.run('state.step'),3,'Step 4 requires choosing two lowest priority topics');
- assert.equal(saved.length,3);
+ assert.equal(h.run('state.step'),1,'Step 2 needs two explicit lowest priorities');
+ assert.equal(saved.length,1);
  h.run('state.bottom=orderedGroups()[2].slice()');
  await h.run('next()');
- assert.equal(h.run('state.step'),4);
- assert.equal(h.run('highestUnlockedStep()'),4);
- assert.equal(locked(5),false);
- assert.equal(locked(6),true,'Viewing Step 5 must not unlock Step 6 without Continue');
- h.run('selectPage(5)');
- assert.equal(h.run('state.step'),4,'Clicking Step 6 sidebar is still blocked');
+ assert.equal(h.run('state.step'),2);
+ assert.equal(h.run('highestUnlockedStep()'),2);
+ assert.equal(locked(3),false);assert.equal(locked(4),true);
+ h.run('selectPage(3)');
+ assert.equal(h.run('state.step'),2,'Step 4 is locked until comparison results reviewed');
  await h.run('next()');
- assert.equal(h.run('state.step'),5);
- assert.equal(h.run('highestUnlockedStep()'),5);
- assert.equal(locked(6),false);
- assert.equal(saved.length,5);
- assert.deepEqual(saved.map(event=>event.eventType),['continue','continue','continue','complete','results_viewed']);
+ assert.equal(h.run('state.step'),3);
+ assert.equal(h.run('highestUnlockedStep()'),3);
+ assert.equal(locked(4),false);
+ assert.equal(saved.length,3);
+ assert.deepEqual(saved.map(e=>e.eventType),['continue','complete','results_viewed']);
  assert.equal(S.validateEvent(saved.at(-1)).coreCompleted,true);
- assert.ok(saved.at(-1).continuedPages.includes(5));
- h.run('selectPage(0)');
- h.run('selectPage(5)');
- assert.equal(h.run('state.step'),5,'Previously completed pages can be revisited');
+ assert.ok(saved.at(-1).continuedPages.includes(3));
+ h.run('selectPage(0)');h.run('selectPage(3)');
+ assert.equal(h.run('state.step'),3,'Completed pages can be revisited');
 });
-
-test('Resuming a partial response never unlocks uncompleted steps or trusts visited-page history',async()=>{
- const d={
-  sourceVersion:S.M.id,revision:2,answerRevision:2,firstCompletedAt:null,
-  continuedPages:[1],visitedPages:[1,2,3,4,5,6],
+test('Restoring a partially completed response never unlocks uncompleted pages',async()=>{
+ const d={sourceVersion:S.M.id,revision:2,answerRevision:2,firstCompletedAt:null,
+  continuedPages:[1],visitedPages:[1,2,3,4],
   resumeState:{
    page:3,ranking:S.WB.themes.map(t=>t.name),outcomeRanking:S.M.outcomes.map(t=>t.id),
-   top:[],bottom:[],excludedTop:[],promotedTop:[],connections:[],feedback:'',scope:'vision'
-  }
- };
+   top:[],bottom:[],excludedTop:[],promotedTop:[],topicOrder:[],connections:[],feedback:'',scope:'vision'
+  }};
  const h=harness(async(url,opts)=>url==='/api/resume'?ok(200,d):receipt(JSON.parse(opts.body)));
  await h.run("restore('"+responseId+"."+token+"')");
- assert.equal(h.run('state.step'),1,'Restored page clamps to actual completion');
+ assert.equal(h.run('state.step'),1,'Restored page clamps to completed Steps');
  assert.equal(h.run('highestUnlockedStep()'),1);
- h.run('selectPage(4)');h.run('selectPage(5)');
- assert.equal(h.run('state.step'),1,'Fake or legacy visited steps cannot skip first-time progression');
- assert.match(h.element('steps').innerHTML,/data-step="5"[^>]*disabled/);
+ h.run('selectPage(2)');h.run('selectPage(3)');
+ assert.equal(h.run('state.step'),1,'Visited page metadata must not unlock the next step');
+ assert.match(h.element('steps').innerHTML,/data-step="3"[^>]*disabled/);
 });
-
-test('Previously completed respondents retain Step 6 access after the navigation change',()=>{
+test('Previously completed responses can reach Step 4 community comparison',()=>{
  const h=harness(async()=>{throw Error('No network required');});
- h.run("record.continuedPages=[1,2,3,4];state.bottom=orderedGroups()[2].slice();record.firstCompletedAt='2026-11-10T01:00:00Z';record.visitedPages=[1,2,3,4,5,6];state.step=4;render()");
- assert.equal(h.run('highestUnlockedStep()'),5);
- h.run('selectPage(5)');
- assert.equal(h.run('state.step'),5);
+ h.run("record.continuedPages=[1,2,3];state.bottom=orderedGroups()[2].slice();record.firstCompletedAt='2026-11-10T01:00:00Z';record.visitedPages=[1,2,3,4];state.step=2;render()");
+ assert.equal(h.run('highestUnlockedStep()'),3);
+ h.run('selectPage(3)');
+ assert.equal(h.run('state.step'),3);
 });
-
-test('Step 5 Continue retains a retryable local checkpoint when offline',async()=>{
+test('Step 3 comparison Continue queues a retryable checkpoint offline',async()=>{
  const h=harness(async()=>{throw Error('Network offline');});
- h.run("record.continuedPages=[1,2,3,4];state.bottom=orderedGroups()[2].slice();record.firstCompletedAt='2026-11-10T01:00:00Z';state.step=4;render()");
- assert.equal(h.run('highestUnlockedStep()'),4);
+ h.run("record.continuedPages=[1,2];state.bottom=orderedGroups()[2].slice();record.firstCompletedAt='2026-11-10T01:00:00Z';state.step=2;render()");
+ assert.equal(h.run('highestUnlockedStep()'),2);
  await h.run('next()');
- assert.equal(h.run('state.step'),5);
- assert.ok(h.run('record.continuedPages.includes(5)'));
+ assert.equal(h.run('state.step'),3);
+ assert.ok(h.run('record.continuedPages.includes(3)'));
  assert.equal(h.run('record.outbox.length'),1);
  assert.equal(h.run('record.outbox[0].eventType'),'results_viewed');
  assert.equal(h.element('save-state').children.at(-1).textContent,'Retry save');
+});
+test('Server protects saved custom topic ordering and preserves scores',()=>{
+ const snap=()=>S.WB.surveyTopics.map(t=>t.code);
+ const base=S.canonicalSnapshot({
+  sourceVersion:S.M.id,responseId:responseId,
+  themeRanking:S.WB.themes.map(t=>t.name),outcomeRanking:S.M.outcomes.map(t=>t.id),
+  topSelected:snap().slice(0,6),bottomSelected:snap().slice(-2),
+  topicWeights:snap().map((code,i)=>({code,position:i+1,group:S.M.groupNames[i<6?0:i<18?1:2],weight:99})),
+  inputEvidence:{continuedPages:[1,2]},connections:[],email:'',notes:'',communications:{}
+ },responseId).snapshot;
+ const input={...base,topicWeights:base.topicWeights.map(x=>({...x}))};
+ [input.topicWeights[0],input.topicWeights[1]]=[input.topicWeights[1],input.topicWeights[0]];
+ input.topicWeights.forEach((row,i)=>{row.position=i+1;row.weight=999;});
+ const edited=S.canonicalSnapshot(input,responseId).snapshot;
+ assert.equal(base.score,edited.score);
+ assert.deepEqual(edited.topicOrder.slice(0,2),[base.topicOrder[1],base.topicOrder[0]]);
+ assert.equal(edited.topicWeights[0].weight,base.topicWeights[0].weight);
 });
