@@ -466,10 +466,7 @@ function topicTile(t,group,index){
   '<div class="topic-title"><span class="drag-handle" aria-hidden="true">⋮⋮</span><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
   '<span class="topic-proposed">'+(index+1)+' in this group · <strong class="topic-weight">'+weightText+'</strong> · order does not change points</span>'+
   '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
-  '<div class="topic-actions">'+buttons+'<div class="topic-move-arrows">'+
-   '<button type="button" data-topic-order="-1" data-code="'+esc(t.code)+'" '+(index===0||!canEdit()?'disabled':'')+' aria-label="Move '+esc(t.title)+' up within this group">↑</button>'+
-   '<button type="button" data-topic-order="1" data-code="'+esc(t.code)+'" '+(index===selectionGroups()[group].length-1||!canEdit()?'disabled':'')+' aria-label="Move '+esc(t.title)+' down within this group">↓</button>'+
-  '</div></div></article>';
+ '<div class="topic-actions">'+buttons+'</div></article>';
 }
 function selectionPage(){
  const groups=selectionGroups(),labels=['Highest priority','Middle priority','Lowest priority'];
