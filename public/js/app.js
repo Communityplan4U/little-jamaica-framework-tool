@@ -341,7 +341,7 @@ function connectionForm(){
  return '<section class="subpanel"><h3>How are you connected to Little Jamaica / Oakwood Vaughan?</h3><p>Optional. Select any that apply.</p>'+
   '<div class="connections">'+choices.map(([key,label])=>'<label><input type="checkbox" data-connection="'+key+'" '+(state.connections.includes(key)?'checked':'')+'><span>'+esc(label)+'</span></label>').join('')+'</div>'+
   '<label class="field-label" for="participant-email">Your email address (optional)</label>'+
-  '<input id="participant-email" class="email-input" type="email" autocomplete="email" maxlength="254" value="'+esc(state.email)+'" placeholder="you@example.com">'+
+'<input id="participant-email" class="email-input" type="text" autocomplete="off" maxlength="254" value="'+esc(state.email)+'" placeholder="you@example.com">'+
   '<p class="help">Add your email if you would like Community in Public to send you your results and updates on the final results. No email is required to participate.</p>'+
   '<fieldset class="consent"><legend>Would you like to stay involved? (Select all that apply)</legend>'+
   '<label><input id="newsletter" type="checkbox" '+(state.newsletterOptIn?'checked':'')+'> Community in Public newsletter</label>'+
@@ -785,12 +785,8 @@ async function next(){
   if(state.step===2&&highestUnlockedStep()===3){selectPage(3);return;}
   if(!canEdit())return;
   if(state.step===0){
-   const email=document.getElementById('participant-email')?.value.trim()||'';
-   if(email&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
-    notice('Enter a valid email or leave it blank.','warning');return;
-   }
-   state.email=email;
-  }
+  const email=document.getElementById('participant-email')?.value.trim()||'';
+state.email=email;  }
   if(state.step===1){
    if(syncTop().length!==COUNTS[0]){
     notice('Six highest-priority topics are required.','warning');return;
