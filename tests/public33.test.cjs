@@ -268,6 +268,7 @@ test('60/40 normalized additive suggestions give precise extreme scores',()=>{
  const vm=require('node:vm');
  const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
  vm.runInContext(fs.readFileSync('public/js/state.js','utf8')+'\n'+fs.readFileSync('public/js/model.js','utf8'),ctx);
+ vm.runInContext('state.ranking=THEMES.slice();state.outcomeRanking=OUTCOMES.slice()',ctx);
  const score=()=>vm.runInContext("suggestionScores().find(t=>t.code==='A-2').score",ctx);
  assert.equal(score(),100,'First-ranked theme and outcome');
  vm.runInContext("state.outcomeRanking=[...OUTCOMES.slice(1),OUTCOMES[0]]",ctx);
@@ -358,4 +359,64 @@ test('Step 5 lets participants reassign all 33 topics in a valid 10/19/4 draft b
  assert.ok(Math.abs(after.topics.reduce((a,t)=>a+t.weight,0)-1)<1e-10);
  run('resultsPage()');
  assert.equal(run('priorityDraftValid()'),true);
+});
+
+test('Fresh Step 1 subjects and Step 2 outcomes start in the survey-informed order',()=>{
+ const vm=require('node:vm'),path=require('node:path');
+ const load=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
+ const app=load('public/js/app.js').split("window.addEventListener('online'")[0];
+ vm.runInContext(load('public/js/state.js')+'\n'+load('public/js/model.js')+'\n'+app,ctx);
+ const order=key=>Array.from(vm.runInContext('state.'+key,ctx));
+ assert.deepEqual(order('ranking'),[
+  'Housing','Rights and equity','Delivery','Economic opportunity',
+  'Community and public spaces','Culture and identity','Acknowledgement'
+ ]);
+ assert.deepEqual(order('outcomeRanking'),['wellbeing','remain','power','coord','wealth','belong']);
+ assert.deepEqual(Array.from(vm.runInContext('THEMES',ctx)),T,'Keep authoritative subject IDs unchanged');
+ assert.deepEqual(Array.from(vm.runInContext('OUTCOMES',ctx)),O,'Keep authoritative outcome IDs unchanged');
+ const subjects=vm.runInContext("optionRank(THEMES,'ranking')",ctx);
+ const outcomes=vm.runInContext("optionRank(OUTCOMES,'outcomeRanking')",ctx);
+ const labels=order('ranking');
+ for(let i=1;i<labels.length;i++){
+  assert.ok(subjects.indexOf(labels[i-1])<subjects.indexOf(labels[i]),'Rendered subject order '+i);
+ }
+ const outcomeTitles=order('outcomeRanking').map(id=>S.M.outcomes.find(o=>o.id===id).title);
+ for(let i=1;i<outcomeTitles.length;i++){
+  assert.ok(outcomes.indexOf(outcomeTitles[i-1])<outcomes.indexOf(outcomeTitles[i]),'Rendered outcome order '+i);
+ }
+ const saved=snap();
+ saved.themeRanking=order('ranking');
+ saved.outcomeRanking=order('outcomeRanking');
+ assert.equal(S.canonicalSnapshot(saved,id).coreCompleted,true,'New defaults are server-compatible');
+ assert.match(app,/The earlier survey asked about five action areas/);
+ assert.match(app,/These six outcomes were not ranked directly/);
+});
+
+test('New defaults apply only to a fresh respondent; local saved rankings are preserved',()=>{
+ const vm=require('node:vm'),path=require('node:path'),store=new Map();
+ const load=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ const app=load('public/js/app.js').split("window.addEventListener('online'")[0];
+ const code=load('public/js/state.js')+'\n'+load('public/js/model.js')+'\n'+app;
+ const makeCtx=()=>vm.createContext({
+  window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}},
+  crypto:{randomUUID:()=> 'bda6cc17-94ad-4a87-8cc6-374a09b9aa32'},
+  localStorage:{getItem:key=>store.get(key)||null,setItem:(key,value)=>store.set(key,value)}
+ });
+ const first=makeCtx();
+ vm.runInContext(code,first);
+ vm.runInContext('init()',first);
+ assert.equal(vm.runInContext('state.ranking[0]',first),'Housing');
+ assert.equal(vm.runInContext('state.outcomeRanking[0]',first),'wellbeing');
+ vm.runInContext('state.ranking.reverse();state.outcomeRanking.reverse();write()',first);
+ const prior={
+  subjects:Array.from(vm.runInContext('state.ranking',first)),
+  outcomes:Array.from(vm.runInContext('state.outcomeRanking',first))
+ };
+ const second=makeCtx();
+ vm.runInContext(code,second);
+ vm.runInContext('init()',second);
+ assert.deepEqual(Array.from(vm.runInContext('state.ranking',second)),prior.subjects);
+ assert.deepEqual(Array.from(vm.runInContext('state.outcomeRanking',second)),prior.outcomes);
+ assert.equal(vm.runInContext('record.responseId',second),'bda6cc17-94ad-4a87-8cc6-374a09b9aa32');
 });
