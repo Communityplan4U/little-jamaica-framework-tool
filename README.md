@@ -2,7 +2,10 @@
 
 **Published:** https://little-jamaica-framework-tool-community-in-public.vercel.app/
 
-Community in Public's community-led evaluation tool, based on the user's consolidated **33-topic** assessment workbook. Participants rank seven planning themes and six community outcomes, review their **ten suggested highest** priorities, move any suggested topics into the middle, and choose **four lowest** priorities from the middle, and then compare planning documents and community averages.
+Community in Public's community-led evaluation tool, based on the user's consolidated **33-topic** assessment workbook. Participants rank seven planning subjects and six community outcomes, review their **ten suggested highest** priorities, move any suggested topics into the middle, and choose **four lowest** priorities from the middle, and then compare planning documents and community averages.
+
+
+**Compatibility note:** The participant-facing term is **planning subjects**. The stored schema still uses legacy fields such as `WB.themes`, `topic.theme`, `themeRanking`, `themeRankPoints`, and the API’s `themeWeights` / `initialDisplayOrder.themes`. Do **not** rename these fields as a copy edit: existing saved responses and server checks rely on them. The UI labels and CSS can say “subjects” while those internal keys remain unchanged.
 
 ## The approved weighting method
 
@@ -12,17 +15,17 @@ Community in Public's community-led evaluation tool, based on the user's consoli
 | Middle | 19 | 37% | 37/19% (approx. 1.9474%) |
 | Lowest | 4 | 3% | 0.75% |
 
-Theme and outcome rankings generate the **suggested ten highest topics**. All 33 assessment topics have exactly one primary outcome across six cross-cutting outcome groups, with each group drawing from at least two planning themes. Human rights, anti-racism, accessibility, and distinct Indigenous rights are requirements applied across the six outcomes, not an outcome to rank. In Step 3, participants can search all 23 topics outside the provisional highest group and directly add any to their ten highest. These participant-picked topics replace the lowest-ranked unselected suggestions. Participants may demote any top-ten topic to the middle; the next eligible suggestion automatically fills the vacated place. From the resulting middle list, participants select four topics for the lowest group. The final groups remain fixed at 10/19/4. Ties in the suggestions are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
+Subject and outcome rankings generate the **suggested ten highest topics**. All 33 assessment topics have exactly one primary outcome across six cross-cutting outcome groups, with each group drawing from at least two planning subjects. Human rights, anti-racism, accessibility, and distinct Indigenous rights are requirements applied across the six outcomes, not an outcome to rank. In Step 3, participants can search all 23 topics outside the provisional highest group and directly add any to their ten highest. These participant-picked topics replace the lowest-ranked unselected suggestions. Participants may demote any top-ten topic to the middle; the next eligible suggestion automatically fills the vacated place. From the resulting middle list, participants select four topics for the lowest group. The final groups remain fixed at 10/19/4. Ties in the suggestions are alphabetical by topic code, not workbook row position. The nineteen topics outside the highest and lowest groups receive equal middle-group weight.
 
 The source is `LJOVPF_Comparator_Assessment.xlsx`, using `Topics`, `Comparison by Topic` and `LJOVPF by Topic` sheets. Seven comparators are: Chinatown Tomorrow, Picture Mount Dennis, Mount Dennis Community for All, St. Clair Avenue West and Bathurst Street, Bloor Street, Yonge-St. Clair, and Port Lands. Scores are evidence-based documentary ratings from 1 to 5, not verified implementation outcomes.
 
 ## Participant experience
 
-1. Drag and drop the seven planning themes into rank order (arrow buttons are available for keyboard and touch), and optionally share an email/contact preferences.
+1. Drag and drop the seven planning subjects into rank order (arrow buttons are available for keyboard and touch), and optionally share an email/contact preferences.
 2. Rank the six community outcomes to inform suggested topic priorities.
 3. Review ten automatically suggested highest-priority topics, move any down to the middle, and search or browse the other topics to add overlooked priorities directly to the highest ten.
 4. From the middle list, choose exactly four topics to move into the lowest group (the other 19 stay in the middle).
-5. Compare seven linked planning frameworks against the Little Jamaica draft as the zero baseline, with signed relative scores and breakdowns for seven themes and six community outcomes.
+5. Compare seven linked planning frameworks against the Little Jamaica draft as the zero baseline, with signed relative scores and breakdowns for seven subjects and six community outcomes.
 6. Compare the participant's priorities with community averages after at least one completed response.
 
 Each completed response receives a private return link, which allows revision until the database-enforced deadline **January 15, 2027 at 11:59 p.m. Toronto time**. The server closes new changes at midnight January 16 Toronto time. No account or email is needed to participate. Email updates are **manual only**; they are not sent automatically.
@@ -58,7 +61,7 @@ Public and testing environments use **separate server-only tokens and response c
 
 - `main`: the published site
 - `data/assessment.json`: 33-topic workbook-derived rubric and scores
-- `data/methodology.json`: fixed weighting rules, unique methodology ID, theme/outcome ranking parameters
+- `data/methodology.json`: fixed weighting rules, unique methodology ID, subject/outcome ranking parameters
 - `server/survey.cjs`: authoritative validation and server-recalculated weights
 - `public/js/`: participant experience; no server credentials
 - `api/`: same-origin storage, resume, status and completed-only aggregate endpoints
@@ -72,15 +75,15 @@ Before the first recorded public submission, the weights were revised from 50% /
 
 ### Six cross-cutting outcome framework (November 9, 2026)
 
-1. Government Investment and Accountable Delivery (7 topics)
+1. Government is Accountable to Deliver (7 topics)
 2. Community Wealth and Inclusive Local Economies (4 topics)
 3. Right to Remain and Return (4 topics)
 4. Community Decision-Making and Reparative Justice (6 topics)
 5. Belonging and Cultural Continuity (5 topics)
 6. Adequate Standard of Living and Wellbeing (7 topics)
 
-Themes prompt: **Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top.**
+Subjects prompt: **Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top.**
 
 Outcomes prompt: **What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.**
 
-Suggested topics use **normalized additive scoring: 60% planning themes + 40% community outcomes**. Each dimension is normalized across its full ranked range: themes 1–7 have points 10–4 and normalized scores (points − 4) / 6; outcomes 1–6 have points 6–1 and normalized scores (points − 1) / 5. The suggestion score is `100 × [0.60 × normalized theme + 0.40 × normalized outcome]`. This selects the provisional top ten only; participant revisions remain authoritative. Final group weights remain **60% highest ten / 37% middle nineteen / 3% lowest four**. Document ratings were not changed.
+Suggested topics use **normalized additive scoring: 60% planning subjects + 40% community outcomes**. Each dimension is normalized across its full ranked range: themes 1–7 have points 10–4 and normalized scores (points − 4) / 6; outcomes 1–6 have points 6–1 and normalized scores (points − 1) / 5. The suggestion score is `100 × [0.60 × normalized subject + 0.40 × normalized outcome]`. This selects the provisional top ten only; participant revisions remain authoritative. Final group weights remain **60% highest ten / 37% middle nineteen / 3% lowest four**. Document ratings were not changed.

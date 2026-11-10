@@ -65,7 +65,7 @@
   "sourceFile": "LJOVPF_Comparator_Assessment.xlsx",
   "aggregation": "each completed response contributes once; provisional averages available from first completion",
   "explicitChoice": "Ten highest topics are suggested from ranked themes and outcomes; participants can pin other topics to the highest ten, automatically displacing the lowest-ranked unpinned suggestion, and can move any highest topic to the middle, replacing it with the next eligible suggestion; participants select four lowest from the middle, leaving nineteen in the middle.",
-  "outcomeAssignmentPolicy": "Each topic belongs to exactly one primary outcome. Outcomes each cover at least two planning themes; suggestions combine the participant's theme rank with the rank of the topic's single primary outcome. Human rights and Indigenous rights are assessed across outcomes as requirements, not as a separately ranked outcome.",
+  "outcomeAssignmentPolicy": "Each topic belongs to exactly one primary outcome. Outcomes each cover at least two planning subjects; suggestions combine the participant's subject rank with the rank of the topic's single primary outcome. Human rights and Indigenous rights are assessed across outcomes as requirements, not as a separately ranked outcome.",
   "humanRightsLens": "All six outcomes must respect applicable housing and human rights obligations, confront anti-Black and anti-Indigenous racism and other forms of systemic discrimination, address age- and disability-related barriers, and respect distinct Indigenous rights, treaties and governance. Topic-level human rights obligations are explicitly assessed through A-8 and R-3; this cross-cutting lens does not create additional score points or alter the documentary ratings.",
   "outcomeRankPoints": [
     6,
@@ -79,5 +79,5 @@
     "themes": 0.6,
     "outcomes": 0.4
   },
-  "suggestionFormula": "Score = 100 * (0.6 * (theme rank points - 4) / 6 + 0.4 * (outcome rank points - 1) / 5). Theme ranks 1–7 have points 10–4; outcome ranks 1–6 have points 6–1. Only the provisional top-ten suggestion ranking is affected; final participant-selected topic weights remain 60% highest ten, 37% middle nineteen, and 3% lowest four."
+  "suggestionFormula": "Score = 100 * (0.6 * (planning subject rank points - 4) / 6 + 0.4 * (outcome rank points - 1) / 5). Planning subject ranks 1–7 have points 10–4; outcome ranks 1–6 have points 6–1. Only the provisional top-ten suggestion ranking is affected; final participant-selected topic weights remain 60% highest ten, 37% middle nineteen, and 3% lowest four."
 }
