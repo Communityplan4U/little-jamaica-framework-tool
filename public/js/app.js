@@ -381,7 +381,7 @@ function topicBrowser(){
   '<p class="weight-note">Your highest group always contains six topics.</p>'+
   (chosen.length?'<div class="topic-browser-pins"><strong>Topics you added directly</strong>'+
    chosen.map(code=>'<button type="button" data-unpin-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Remove</button>').join('')+'</div>':'')+
-  '<label class="field-label" for="topic-search">Search by keyword, title, code or subject</label>'+
+  '<label class="field-label" for="topic-search">Search by keyword, title, code or Planning Area</label>'+
   '<input id="topic-search" class="search" type="search" autocomplete="off" value="'+esc(state.topicSearch||'')+'" placeholder="e.g. tenant, displacement, cultural space, housing">'+
   '<div id="topic-browser-results" class="topic-browser-results">'+topicBrowserResults()+'</div></section>';
 }
@@ -397,8 +397,8 @@ function selectionPage(kind){
  if(kind==='top'){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
   return '<div class="selection-intro"><h3>Review your top 6 priorities</h3>'+
-   '<p>These six topics are suggested from your rankings of planning areas (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
-   '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue. You can search all other topics to add overlooked priorities.</p>'+
+   '<p>These six topics are suggested from your rankings of Planning Areas (60% of suggestion score) and community outcomes (40%). You can replace these suggestions with other topics.</p>'+
+   '<p>The six highest-priority topics share 60% of the final assessment weight (10% each). Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue. You can search all other topics to add overlooked priorities.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / '+COUNTS[0]+'</strong> highest-priority topics</div>'+
    (rejected.length?'<div class="review-demotions"><strong>Moved to middle · select to restore</strong>'+
     rejected.map(code=>'<button type="button" data-restore-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' ↶ Restore</button>').join('')+'</div>':'')+'</div>'+
@@ -406,7 +406,7 @@ function selectionPage(kind){
  }
  const middle=proposed.filter(code=>!highest.includes(code)&&!state.bottom.includes(code));
  return '<div class="selection-intro"><h3>Move two middle topics to lowest priority</h3>'+
-  '<p>These topics are in the middle. Choose two that you feel are the lowest priority. This does not mean you oppose them.</p>'+
+  '<p>Choose two topics to receive the lowest relative weight (1.5% each). The remaining twelve middle-priority topics each receive about 3.08%. This does not mean you oppose the lowest-priority topics.</p>'+
   '<div class="selection-counter"><strong>'+state.bottom.length+' / '+COUNTS[2]+'</strong> lowest-priority topics selected</div>'+
   '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any two topics from the middle below.')+'</div></div>'+
   '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
@@ -418,9 +418,13 @@ function relativeScore(v,places=2){
 }
 function groupDifference(c,codes,planIdx,scope,outcomeId){
  if(planIdx===-1)return 0;
+ // Outcome breakdowns must use criterion-specific ratings, not topic-average
+ // ratings times fractions: one public topic can cover multiple outcomes.
+ if(outcomeId)return sum(c.criteria.filter(t=>codes.includes(t.surveyTopicId)&&t.outcomeFlags[outcomeId]===1)
+  .map(t=>t.weight*((scope==='full'?t.comparatorFull:t.comparatorVision)[planIdx]-t.score)));
  return sum(codes.map(code=>{
-  const t=c.byCode[code],rating=scope==='full'?t.comparatorFull[planIdx]:t.comparatorVision[planIdx];
-  return t.weight*(outcomeId?(t.outcomeFlags[outcomeId]||0):1)*(rating-t.score);
+  const t=c.byCode[code],rating=(scope==='full'?t.comparatorFull:t.comparatorVision)[planIdx];
+  return t.weight*(rating-t.score);
  }));
 }
 function resultFrameworks(c,scope){
@@ -437,8 +441,9 @@ function breakdownMatrix(c,scope,title,groups,ordered){
  const header=ordered.map(p=>'<th scope="col" title="'+esc(p.name)+'">'+
   reportLink(p.local?'Little Jamaica (0)':'Plan '+(p.idx+1),p.url)+'</th>').join('');
  const rows=groups.map(group=>{
-  const fraction=code=>group.outcomeId?(c.byCode[code].outcomeFlags[group.outcomeId]||0):1;
-  const share=sum(group.codes.map(code=>c.byCode[code].weight*fraction(code)))*100;
+  const share=(group.outcomeId?
+   sum(c.criteria.filter(t=>t.outcomeFlags[group.outcomeId]===1).map(t=>t.weight)):
+   sum(group.codes.map(code=>c.byCode[code].weight)))*100;
   const scores=ordered.map(p=>{
    const value=groupDifference(c,group.codes,p.idx,scope,group.outcomeId);
    return '<td class="matrix-delta '+(value<0?'delta-negative':value>0?'delta-positive':'')+' '+(p.local?'reference-cell':'')+'">'+relativeScore(value,3)+'</td>';
@@ -485,12 +490,12 @@ function resultsPage(){
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
   '<p class="help">Click any framework name to open its linked source document in a new tab. The Little Jamaica link opens the working draft Community Visioning Statement, not a finalized Planning Framework. The Port Lands Planning Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
   '<div class="scores">'+scores+'</div>'+
-  '<section class="breakdowns"><h3>Compare by planning subject and community outcome</h3>'+
-  '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica.</p>'+
+  '<section class="breakdowns"><h3>Compare by Planning Area and community outcome</h3>'+
+  '<p>The values below show each Planning Area or outcome’s contribution to the framework’s difference from Little Jamaica.</p>'+
   breakdownMatrix(c,scope,'Planning Areas',subjectGroups,ordered)+
   breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
    '<details class="full-breakdown priority-editor" id="priority-editor" '+(priorityEditorExpanded?'open':'')+'><summary>See and adjust 20 survey topic prioritization</summary>'+
-   '<p class="help">Move topics between Highest priority, Middle Priority, and Low Priority. To keep assessments comparable, choose exactly 6 highest, 12 middle, and 2 low-priority topics. Your assessments will change only when you apply this ranking.</p>'+
+   '<p class="help">Choose exactly six highest-priority topics (10% each), twelve middle-priority topics (37% shared, about 3.08% each) and two lowest-priority topics (1.5% each). The 33 detailed criteria remain included equally within their assigned topic. Your assessment changes only when you apply these choices.</p>'+
    '<p id="priority-counts" class="priority-counts" role="status" aria-live="polite">'+esc(priorityCountLabel())+'</p>'+
    '<div class="table-scroll"><table class="priority-table"><thead><tr><th>Code</th><th>Topic</th><th>Planning Area</th><th>Priority group</th></tr></thead><tbody>'+topics+'</tbody></table></div>'+
    '<p id="priority-guidance" class="help" aria-live="polite">'+(priorityDraftValid()?'Your groups are ready. Apply this ranking to recalculate the assessments.':'Choose exactly 6 highest, 12 middle, and 2 low-priority topics before applying.')+'</p>'+
@@ -523,7 +528,7 @@ function communityPage(){
  '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">20 survey topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">6 planning areas</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
  '<button class="secondary" id="refresh-averages" type="button">Refresh community averages</button></section>'+
  '<div class="compare-list">'+rows+'</div>'+
- '<p class="help">Each topic belongs to one primary outcome and one planning subject. Topic, Planning Area and community outcome weights each total 100%. Human rights and Indigenous rights obligations apply regardless of how topics are ranked.</p>';
+ '<p class="help">Each survey topic contains one or more detailed criteria, which may contribute to different outcomes. Topic, Planning Area and community outcome weights each total 100%. Human rights and Indigenous rights obligations apply regardless of how topics are ranked.</p>';
 }
 function render(){
  const step=Math.min(5,Math.max(0,state.step));state.step=step;
