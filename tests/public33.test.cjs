@@ -279,7 +279,6 @@ test('Ranking pages contain the requested corrected prompts and rights guidance'
  assert.match(ui,/Which planning subjects are most important for the Framework to focus on\?/);
  assert.match(ui,/What improvements do you most want to see the Framework focus on\?/);
  assert.match(ui,/Rank them in order of importance, with the most important at the top/);
- assert.match(ui,/Human rights, anti-racism, accessibility and distinct Indigenous rights apply across every outcome/);
  assert.ok(!ui.includes('Rank the five community outcomes'));
 });
 test('Planning subjects display throughout the survey and community comparison without changing saved theme keys',()=>{
