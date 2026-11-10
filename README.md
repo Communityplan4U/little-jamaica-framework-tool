@@ -32,6 +32,17 @@ Each completed response receives a private return link, which allows revision un
 
 Community averages are visible only through the private link of a completed participant, from the first completed response. At very low counts, an average may reveal a person's priorities; the survey informs participants of this limitation.
 
+## Default starting order from the October 21, 2026 Little Jamaica Survey Findings
+
+The published *Little Jamaica Survey Findings: Actions & Progress Indicators for the Right to Remain Community Development Action Plan* reports 258 engagements. Across 1,912 selections of top-four/top-ten actions, Housing received 25% of votes, Governance 22%, Employment 19%, and Culture and Space 17% each (Table 5). Among 107 number-one votes, Housing led with 41% and Governance followed with 28% (Table 7). Progress indicators emphasize transparent reporting, formal government commitments and meaningful resident power (Tables 11–12).
+
+That survey asked about five action areas, **not** the Planning Framework tool's seven subjects or six outcomes. The following initial ordering is therefore a transparent, qualitative crosswalk of the priority actions and progress indicators, **not** a directly measured ranking of the seven/six categories:
+
+- Step 1 planning subjects: Housing; Rights and equity; Delivery; Economic opportunity; Community and public spaces; Culture and identity; Acknowledgement.
+- Step 2 community outcomes: Adequate Standard of Living and Wellbeing; Right to Remain and Return; Community Decision-Making and Reparative Justice; Government is Accountable to Deliver; Community Wealth and Inclusive Local Economies; Belonging and Cultural Continuity.
+
+The defaults live in `public/js/state.js` as `DEFAULT_SUBJECT_ORDER` and `DEFAULT_OUTCOME_ORDER`. **Do not reorder** `WB.themes` or `METHOD.outcomes` because they are canonical IDs for saved responses. New participants can change both orders, and existing saved or private-link responses retain their chosen rankings. Topic suggestion scores still use the existing 60% subject + 40% outcome additive method, and the 10/19/4 group totals remain 60%/37%/3%. The order of subjects does not change the human-rights obligations that apply throughout.
+
 ## Public website embedding
 
 Use the GoDaddy HTML embed component:
