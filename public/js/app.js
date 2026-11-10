@@ -25,7 +25,7 @@ const FRAMEWORK_RESPONSIBILITIES={
  "comparators": {
   "Chinatown Tomorrow": {
    "lead": "Development Review — Toronto & East York South, South Section",
-   "support": "Development Review — Downtown Section (D3); City Planning — Urban Design",
+   "support": "Development Review — Downtown Section; City Planning — Urban Design",
   },
   "Picture Mount Dennis": {
    "lead": "City Planning — Community Planning, Etobicoke York Central and South Sections",
