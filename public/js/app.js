@@ -4,6 +4,8 @@ const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
 const FRAMEWORK_REPORTS={
+ local:'https://drive.google.com/file/d/120GGehAkWSTByvfSLy4vcQEEqMcRE5XQ/view?usp=drive_link',
+ localProposals:'https://www.toronto.ca/legdocs/mmis/2026/ph/bgrd/backgroundfile-285675.pdf',
  comparators:[
   'https://www.toronto.ca/legdocs/mmis/2026/te/bgrd/backgroundfile-288691.pdf',
   'https://www.toronto.ca/wp-content/uploads/2021/12/8d32-CityPlanning-Picture-Mount-Dennis-Planning-Framework-Final-Report.pdf',
@@ -53,7 +55,7 @@ const FRAMEWORK_RESPONSIBILITIES={
  }
 };
 function reportLink(label,href){
- return '<a class="framework-link" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" title="Open the source planning report in a new tab">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
+ return '<a class="framework-link" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" title="Open the linked source document in a new tab">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
 }
 
 let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closesAt:null,mode:'public'},saving=false,navigating=false;
@@ -424,7 +426,8 @@ function resultsPage(){
   const width=Math.min(49,Math.abs(p.relative)/maxDifference*49),left=p.relative<0?50-width:50;
   return '<div class="score-row relative-score-row '+(p.local?'home-score':'')+'"><span class="score-rank">'+(i+1)+'</span>'+
    '<span class="score-name">'+reportLink(p.local?p.name:'Plan '+(p.idx+1)+' · '+p.name,p.url)+
-'<small>'+(p.local?'('+esc(p.publication)+')':'Published: '+esc(p.publication))+'</small></span>'+   '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
+'<small>'+(p.local?'('+esc(p.publication)+')':'Published: '+esc(p.publication))+'</small>'+
+   (p.local?'<small>Source: Draft Community Visioning Statement · <a class="source-document-link" href="'+esc(FRAMEWORK_REPORTS.localProposals)+'" target="_blank" rel="noopener noreferrer">City Proposals Report ↗</a></small>':'')+'</span>'+   '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
    '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
    (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div>'+ 
    '<small class="score-lead">Lead division/team: '+esc(p.lead)+'</small>'+
@@ -446,7 +449,7 @@ function resultsPage(){
  return '<section class="results-intro"><h3>Your priorities applied to the Citys Planning Frameworks</h3>'+
   '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review team</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. </p>  <p> As the City publishes/shares more of the draft framework, it will be added to the tool so the assessment is more comprehensive. Until the full Little Jamaica Planning Framework is shared, this is an early indicator of if materials being published by the City are meeting community expectations and/or are comparable to the level of service delivered to other neighbourhoods.</p>'+'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>'+
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
-  '<p class="help">Click any framework name to open the Citys planning report in a new tab. Note: The Portland Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
+  '<p class="help">Click any framework name to open its linked source document in a new tab. The Little Jamaica link opens the working draft Community Visioning Statement, not a finalized Planning Framework. The Port Lands Planning Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
   '<div class="scores">'+scores+'</div>'+
   '<section class="breakdowns"><h3>Compare by planning subject and community outcome</h3>'+
   '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica.</p>'+

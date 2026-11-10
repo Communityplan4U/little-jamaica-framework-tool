@@ -140,6 +140,11 @@ test('Browser model supports additional top-ten selections with fixed 10/19/4 gr
   assert.match(output,/class="framework-link"/);
   assert.equal((output.match(/class="framework-link"/g)||[]).length,24);
  assert.equal(x.FRAMEWORK_REPORTS.comparators.length,7);
+ assert.equal(x.FRAMEWORK_REPORTS.local,'https://drive.google.com/file/d/120GGehAkWSTByvfSLy4vcQEEqMcRE5XQ/view?usp=drive_link');
+ assert.equal(output.split(x.FRAMEWORK_REPORTS.local).length-1,3,'Local document linked from score card and both comparison matrices');
+ assert.ok(output.includes('Little Jamaica / Oakwood Vaughan (draft)'));
+ assert.match(output,/Source: Draft Community Visioning Statement/);
+ assert.match(output,/City Proposals Report/);
  assert.equal(Object.keys(x.FRAMEWORK_RESPONSIBILITIES.comparators).length,S.WB.comparators.length);
  assert.ok(x.FRAMEWORK_RESPONSIBILITIES.local.lead);
  assert.ok(x.FRAMEWORK_RESPONSIBILITIES.local.support);
