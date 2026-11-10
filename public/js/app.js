@@ -299,9 +299,13 @@ function groupDifference(c,codes,planIdx,scope){
  }));
 }
 function resultFrameworks(c,scope){
- return [{name:'Little Jamaica / Oakwood Vaughan (draft)',relative:0,local:true,idx:-1,url:FRAMEWORK_REPORTS.local}]
+ // Dates printed on the source documents (not subsequent Council adoption dates).
+ const publicationDates=['June 2026','December 2021','November 2025','February 2026','May 2021','December 2019','September 2017'];
+ return [{name:'Little Jamaica / Oakwood Vaughan (draft)',relative:0,local:true,idx:-1,url:FRAMEWORK_REPORTS.local,
+  publication:'Development Review staff project report to be finalized Q1 2027'}]
   .concat(c.comparators.map((p,i)=>({
-   name:p.name,relative:p[scope]-c.baseline,local:false,idx:i,url:FRAMEWORK_REPORTS.comparators[i]
+   name:p.name,relative:p[scope]-c.baseline,local:false,idx:i,url:FRAMEWORK_REPORTS.comparators[i],
+   publication:publicationDates[i]
   }))).sort((a,b)=>b.relative-a.relative||a.name.localeCompare(b.name));
 }
 function breakdownMatrix(c,scope,title,groups,ordered){
@@ -328,7 +332,9 @@ function resultsPage(){
  const scores=ordered.map((p,i)=>{
   const width=Math.min(49,Math.abs(p.relative)/maxDifference*49),left=p.relative<0?50-width:50;
   return '<div class="score-row relative-score-row '+(p.local?'home-score':'')+'"><span class="score-rank">'+(i+1)+'</span>'+
-   '<span class="score-name">'+reportLink(p.local?p.name:'Plan '+(p.idx+1)+' · '+p.name,p.url)+(p.local?'<small>Comparison baseline</small>':'')+'</span>'+
+   '<span class="score-name">'+reportLink(p.local?p.name:'Plan '+(p.idx+1)+' · '+p.name,p.url)+
+   '<small>'+(p.local?'('+esc(p.publication)+')':'Published: '+esc(p.publication))+'</small>'+
+   (p.local?'<small>Comparison baseline</small>':'')+'</span>'+
    '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
    '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
    (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div></div>';
