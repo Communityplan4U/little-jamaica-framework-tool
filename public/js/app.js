@@ -393,11 +393,10 @@ function resultsPage(){
   '<p class="help">Click any framework name to open the Citys planning report in a new tab. Note: The Portland Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
   '<div class="scores">'+scores+'</div>'+
   '<section class="breakdowns"><h3>Compare by planning subject and community outcome</h3>'+
-  '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
+  '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica.</p>'+
   breakdownMatrix(c,scope,'Planning subjects',subjectGroups,ordered)+
   breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
-  '<p class="help">Each topic has one primary subject and one primary community outcome, so the differences in either breakdown add up to each framework’s overall difference. Human rights and Indigenous rights remain cross-cutting considerations in the topic-level assessment.</p></section>'+
-  '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
+   '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
    '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
    '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Planning subject</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
   '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
