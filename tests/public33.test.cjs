@@ -281,13 +281,13 @@ test('Planning subjects display throughout the survey and community comparison w
  assert.match(app,/data-community-view="themes"/);
  assert.doesNotMatch(app,/data-community-view="subjects"/);
  assert.match(app,/7 subjects/);
- assert.match(style,/\\.topic-subject\\{/);
- assert.doesNotMatch(style,/\\.topic-theme\\{/);
+ assert.match(style,/\.topic-subject\{/);
+ assert.doesNotMatch(style,/\.topic-theme\{/);
  const vm=require('node:vm'),path=require('node:path');
  const get=file=>fs.readFileSync(path.join(__dirname,'..',file),'utf8');
  const context=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
  const partialApp=get('public/js/app.js').split("window.addEventListener('online'")[0];
- vm.runInContext(get('public/js/state.js')+'\\n'+get('public/js/model.js')+'\\n'+partialApp,context);
+ vm.runInContext(get('public/js/state.js')+'\n'+get('public/js/model.js')+'\n'+partialApp,context);
  const obj=vm.runInContext('({state,communityPage,connectionForm})',context);
  obj.state.communityView='themes';
  assert.match(obj.communityPage(),/Community and public spaces/,'Subjects tab must show planning subjects');
@@ -307,8 +307,8 @@ test('New participant connection options validate server-side and retain older s
  x.connections=['bogus'];
  assert.throws(()=>S.canonicalSnapshot(x,id),/Invalid neighbourhood connection/);
  const app=fs.readFileSync('public/js/app.js','utf8');
- assert.match(app,/\\['visit','I regularly spend time here/);
- assert.match(app,/\\['representation','My current councillor/);
+ assert.ok(app.includes("[\u0027visit\u0027,\u0027I regularly spend time here"));
+ assert.ok(app.includes("[\u0027representation\u0027,\u0027My current councillor"));
 });
 test('Mobile layout constrains outer grid and isolates horizontal scrolling',()=>{
  const css=fs.readFileSync('public/css/survey.css','utf8');
