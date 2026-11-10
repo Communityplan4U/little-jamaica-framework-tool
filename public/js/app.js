@@ -470,13 +470,6 @@ function topicTile(t,group,index){
 }
 function selectionPage(){
  const groups=selectionGroups(),labels=['Highest priority','Middle priority','Lowest priority'];
- const explanation=[
-  'Six topics · 60% total · 10% each',
-  groups[2].length<COUNTS[2]?
-   'Currently '+groups[1].length+' topics; choose two lowest to leave 12 middle topics at 3.08% each':
-   'Twelve topics · 37% total · 3.08% each',
-  'Two topics · 3% total · 1.5% each'
- ];
  return '<section class="selection-intro"><h3>Place 20 topics into three priority groups</h3>'+
   '<p>Your rankings of the six Planning Areas and six Community Outcomes were used to suggest what may what you recommend to be the six highest priorities for evaluating a City-led Planning Framework. In the below, you can refine the placement into high, medium, or low priority. Select <strong>two lowest-priority topics</strong>. A lower priority does not mean you oppose a topic.</p>'+
   '<p><strong>Drag cards</strong> to move them between groups, or drag within a group to arrange them in your preferred order. <strong>Order within a group does not affect points</strong>—only the group matters.</p>'+
@@ -486,7 +479,7 @@ function selectionPage(){
    '<div class="topic-priority-board">'+groups.map((codes,i)=>
    '<section class="priority-lane priority-lane-'+i+'" data-topic-zone="'+i+'" aria-label="'+labels[i]+'">'+
     '<div class="priority-lane-header"><div><h3>'+labels[i]+' <span class="lane-count">'+codes.length+(i===1&&groups[2].length!==2?' shown':'')+'</span></h3>'+
-     '<p>'+explanation[i]+'</p></div></div>'+
+'</div></div>'+
     '<div class="topic-grid">'+codes.map((code,j)=>topicTile(byCode[code],i,j)).join('')+
       (!codes.length?'<p class="drop-prompt">Drag a topic here or use a Move to lowest priority button.</p>':'')+
     '</div></section>').join('')+'</div>';
