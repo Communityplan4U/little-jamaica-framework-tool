@@ -71,8 +71,8 @@
         "coord": 0,
         "wealth": 0,
         "remain": 0,
-        "power": 1,
-        "belong": 0,
+        "power": 0,
+        "belong": 1,
         "wellbeing": 0
       },
       "sourceIndex": 1,
@@ -345,8 +345,8 @@
         "wealth": 0,
         "remain": 0,
         "power": 0,
-        "belong": 0,
-        "wellbeing": 1
+        "belong": 1,
+        "wellbeing": 0
       },
       "sourceIndex": 8,
       "legacyCode": "CP-3",
@@ -419,12 +419,12 @@
         4
       ],
       "outcomeFlags": {
-        "coord": 1,
+        "coord": 0,
         "wealth": 0,
         "remain": 0,
         "power": 0,
         "belong": 0,
-        "wellbeing": 0
+        "wellbeing": 1
       },
       "sourceIndex": 10,
       "legacyCode": "CP-7",
@@ -653,10 +653,10 @@
         2
       ],
       "outcomeFlags": {
-        "coord": 1,
+        "coord": 0,
         "wealth": 0,
         "remain": 0,
-        "power": 0,
+        "power": 1,
         "belong": 0,
         "wellbeing": 0
       },
@@ -1526,8 +1526,8 @@
         "coord": 0,
         "wealth": 0,
         "remain": 0,
-        "power": 0.3333333333333333,
-        "belong": 0.6666666666666666,
+        "power": 0,
+        "belong": 1,
         "wellbeing": 0
       }
     },
@@ -1546,8 +1546,8 @@
         "wealth": 0,
         "remain": 0,
         "power": 0,
-        "belong": 0.5,
-        "wellbeing": 0.5
+        "belong": 1,
+        "wellbeing": 0
       }
     },
     {
@@ -1579,12 +1579,12 @@
         "NE-05"
       ],
       "outcomeFlags": {
-        "coord": 0.5,
+        "coord": 0,
         "wealth": 0,
         "remain": 0,
         "power": 0,
         "belong": 0,
-        "wellbeing": 0.5
+        "wellbeing": 1
       }
     },
     {
@@ -1617,10 +1617,10 @@
         "CP-04"
       ],
       "outcomeFlags": {
-        "coord": 0.5,
+        "coord": 0,
         "wealth": 0,
         "remain": 0,
-        "power": 0.5,
+        "power": 1,
         "belong": 0,
         "wellbeing": 0
       }
