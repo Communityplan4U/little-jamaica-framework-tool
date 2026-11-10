@@ -399,7 +399,7 @@ function selectionPage(kind){
   return '<div class="selection-intro"><h3>Review your top 6 priorities</h3>'+
    '<p>These six topics are suggested from your rankings of planning areas (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue. You can search all other topics to add overlooked priorities.</p>'+
-   '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
+   '<div class="selection-counter"><strong>'+highest.length+' / '+COUNTS[0]+'</strong> highest-priority topics</div>'+
    (rejected.length?'<div class="review-demotions"><strong>Moved to middle · select to restore</strong>'+
     rejected.map(code=>'<button type="button" data-restore-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' ↶ Restore</button>').join('')+'</div>':'')+'</div>'+
    '<div class="topic-grid">'+highest.map((code,i)=>topicTile(byCode[code],'top',i+1)).join('')+'</div>'+topicBrowser();
@@ -407,7 +407,7 @@ function selectionPage(kind){
  const middle=proposed.filter(code=>!highest.includes(code)&&!state.bottom.includes(code));
  return '<div class="selection-intro"><h3>Move two middle topics to lowest priority</h3>'+
   '<p>These topics are in the middle. Choose two that you feel are the lowest priority. This does not mean you oppose them.</p>'+
-  '<div class="selection-counter"><strong>'+state.bottom.length+' / 4</strong> lowest-priority topics selected</div>'+
+  '<div class="selection-counter"><strong>'+state.bottom.length+' / '+COUNTS[2]+'</strong> lowest-priority topics selected</div>'+
   '<div class="selection-current">'+(state.bottom.length?state.bottom.map(code=>'<button data-restore-middle="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' × Undo</button>').join(''):'Choose any two topics from the middle below.')+'</div></div>'+
   '<div class="topic-grid">'+middle.map((code,i)=>topicTile(byCode[code],'middle',i+1)).join('')+'</div>';
 }
@@ -523,7 +523,7 @@ function communityPage(){
  '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">20 survey topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">6 planning areas</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
  '<button class="secondary" id="refresh-averages" type="button">Refresh community averages</button></section>'+
  '<div class="compare-list">'+rows+'</div>'+
- '<p class="help">Each topic belongs to one primary outcome and one planning subject. Topic, subject, and outcome weights each total 100%. Human rights and Indigenous rights remain cross-cutting considerations.</p>';
+ '<p class="help">Each topic belongs to one primary outcome and one planning subject. Topic, Planning Area and community outcome weights each total 100%. Human rights and Indigenous rights obligations apply regardless of how topics are ranked.</p>';
 }
 function render(){
  const step=Math.min(5,Math.max(0,state.step));state.step=step;
@@ -623,7 +623,7 @@ root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from mo
    state.excludedTop=excluded;
    state.promotedTop=state.promotedTop.filter(x=>x!==code);
   }else{
-   if(state.bottom.length>=COUNTS[2]){notice('Four topics are already in the lowest group. Undo one before selecting another.','warning');return;}
+   if(state.bottom.length>=COUNTS[2]){notice('Two topics are already in the lowest group. Undo one before selecting another.','warning');return;}
    if(state.top.includes(code))return;
    state.bottom=[...state.bottom,code];
   }
