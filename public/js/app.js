@@ -573,8 +573,7 @@ const topics=PRIORITY_EDITOR_LABELS.map((label,group)=>{
 
   const count=priorityGroupCounts(draft.groups)[group];
 
-  return '<section class="priority-drop-zone" data-priority-zone="'+group+'" aria-label="'+esc(label)+' drop zone(groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lower-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'<p class="help">Your high, moderate and lower groups are complete. You can adjust them before continuing.</p>')+
-    '<h4>'+esc(label)+' <small>'+count+' / '+COUNTS[group]+'</small></h4>'+
+return '<section class="priority-drop-zone" data-priority-zone="'+group+'" aria-label="'+esc(label)+' drop zone">'+    '<h4>'+esc(label)+' <small>'+count+' / '+COUNTS[group]+'</small></h4>'+
     '<div class="table-scroll"><table class="priority-table">'+
     '<thead><tr><th>Code</th><th>Topic</th><th>Planning Area</th><th>Expected impact group</th></tr></thead>'+
     '<tbody>'+rows+'</tbody></table></div>'+
