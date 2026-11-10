@@ -189,3 +189,33 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
   .panel-actions {gap:10px}
   .panel-actions button {white-space:normal}
 }
+
+/* Four-page survey: sortable priority groups with explicit weight boundaries. */
+.topic-priority-board{display:grid;gap:22px;margin-top:20px}
+.priority-lane{border:1px solid #dfd5e4;border-radius:17px;padding:17px;background:#fcfafc;transition:box-shadow .15s,border-color .15s}
+.priority-lane-0{background:#f6f0f8;border-color:#cbb6d6}
+.priority-lane-1{background:#fcfbfc}
+.priority-lane-2{background:#f7f4f9;border-color:#dacbdc}
+.priority-lane-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:15px}
+.priority-lane-header h3{font-size:1.22rem;margin:0 0 5px;color:#523065}
+.priority-lane-header p{margin:0;font-size:.91rem;color:#675770}
+.lane-count{display:inline-block;padding:2px 10px;background:#ebe2f0;color:#58346a;border-radius:18px;font-size:.76rem;vertical-align:middle}
+.priority-lane .topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.priority-topic{background:#fff;cursor:grab;min-width:0;min-height:190px;transition:box-shadow .14s,border-color .14s,transform .14s}
+.priority-topic:active{cursor:grabbing}
+.priority-topic[hidden]{display:none!important}
+.priority-topic.is-dragging{opacity:.48}
+.priority-topic.topic-drop-target{border-color:#66397a;box-shadow:0 0 0 3px #c4a4d3;background:#faf5fd}
+.priority-lane.topic-zone-target{border-color:#60347c;box-shadow:0 0 0 3px #d4bbde}
+.priority-topic .topic-title{align-items:center}
+.priority-topic .drag-handle{padding-right:4px;cursor:grab}
+.priority-topic .topic-proposed{font-weight:600;color:#806d86}
+.priority-topic .topic-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto;width:100%}
+.priority-topic .topic-actions .pick{font-size:.8rem;flex:1 1 125px;max-width:100%;margin-top:0;padding:9px 10px}
+.topic-move-arrows{display:flex;gap:5px;margin-left:auto}
+.topic-move-arrows button{border:1px solid #bca6c8;border-radius:7px;background:#fff;color:#563467;padding:7px 11px;min-width:35px;font-weight:800}
+.topic-move-arrows button:disabled{opacity:.32}
+.topic-move-arrows button:focus-visible,.priority-topic button:focus-visible{outline:3px solid #7956a6;outline-offset:2px}
+.drop-prompt{border:2px dashed #bfa9c9;border-radius:11px;color:#675471;padding:18px;margin:0;background:#fff}
+@media(max-width:850px){.priority-lane .topic-grid{grid-template-columns:1fr}}
+@media(max-width:530px){.priority-lane{padding:13px}.priority-topic{min-height:0;padding:15px}.priority-topic .topic-actions{flex-direction:column;align-items:stretch}.topic-move-arrows{align-self:flex-end}}
