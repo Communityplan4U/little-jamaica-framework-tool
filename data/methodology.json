@@ -1,5 +1,5 @@
 {
-  "id": "ljov-20261110-20top6-bottom2-60-37-3-six-areas-six-outcomes-v2",
+  "id": "ljov-20261110-20top6-bottom2-60-37-3-six-areas-six-outcomes-v3",
   "topicCount": 20,
   "themeRankPoints": [
     9,
@@ -63,7 +63,7 @@
   ],
   "sourceFile": "LJOVPF_Comparator_Assessment_Planning_Areas_Updated.xlsx",
   "aggregation": "each completed response contributes once; provisional averages available from first completion",
-  "explicitChoice": "Six suggested highest-priority survey topics from six Planning Area rankings and six community outcome rankings; residents can move suggestions to middle or add other topics to their highest six, then select two lowest-priority topics from the remaining fourteen, leaving twelve middle priorities.",
+  "explicitChoice": "Both Planning Area and outcome rankings appear on Step 1. The single Step 2 priority board shows all 20 topics across highest, middle and lowest groups; participants move topics with buttons or drag/drop, then select exactly two lowest choices. Dragging within a group changes display position only. Step 3 compares frameworks; Step 4 compares community responses.",
   "outcomeAssignmentPolicy": "Twenty public survey topics map without overlap to thirty-three detailed assessment criteria. Each detailed criterion retains exactly one primary community outcome; survey topics may span multiple outcomes. Outcome shares within a survey topic are proportional to its constituent criteria. Rights obligations remain cross-cutting, not optional. The four outcome reassigments adopted November 10, 2026: CB-03 and NE-01 -> belong, NE-05 -> wellbeing, CP-03 -> power.",
   "humanRightsLens": "All six outcomes must respect applicable housing and human rights obligations, confront anti-Black and anti-Indigenous racism and other systemic discrimination, address accessibility, and respect distinct Indigenous rights, treaties and governance. Detailed rights assessment criteria remain RJ-02 and RJ-03; priorities do not diminish obligations.",
   "outcomeRankPoints": [
@@ -94,6 +94,9 @@
     ],
     "criterionRule": "Each survey topic receives one priority weight. For each documentary comparator, the topic score is the arithmetic mean of its linked underlying criterion ratings; the framework total is the weighted sum across the 20 topics.",
     "outcomeRule": "Allocate each survey topic's weighted contribution across outcomes according to constituent criterion counts, preserving exact total contribution.",
-    "crossVersion": "New methodology ID isolates responses and community averages from 33-topic survey versions."
+    "crossVersion": "New methodology ID isolates responses and community averages from 33-topic survey versions.",
+    "topicOrdering": "User-defined order within a priority group is preserved in responses and private-link restoration. It has no effect on numeric weights, assessment scores or suggestion ranks.",
+    "pageCount": 4,
+    "weightControl": "Only group membership determines final weight; highest 10% each, middle 37/12% each, lowest 1.5% each."
   }
 }
