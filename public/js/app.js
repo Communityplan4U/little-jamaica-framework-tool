@@ -275,7 +275,7 @@ function selectionPage(kind){
   return '<div class="selection-intro"><h3>Review your top 10 priorities</h3>'+
    '<p>These ten topics are suggested from your rankings of planning subjects (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
    '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
-   '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
+   '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue. You can search all other topics to add overlooked priorities.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
    (rejected.length?'<div class="review-demotions"><strong>Moved to middle · select to restore</strong>'+
     rejected.map(code=>'<button type="button" data-restore-top="'+esc(code)+'" '+(!canEdit()?'disabled':'')+'>'+esc(code)+' · '+esc(byCode[code].title)+' ↶ Restore</button>').join('')+'</div>':'')+'</div>'+
