@@ -147,7 +147,7 @@ function connectionForm(){
   '<p class="help">Add your email if you would like Community in Public to send you your results and updates on the final results. No email is required to participate.</p>'+
   '<fieldset class="consent"><legend>Would you like to stay involved? (Select all that apply)</legend>'+
   '<label><input id="newsletter" type="checkbox" '+(state.newsletterOptIn?'checked':'')+'> Community in Public newsletter</label>'+
-  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>';
+  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>'</section>';
 }
 function topicBrowserResults(){
  const highest=new Set(syncTop()),q=(state.topicSearch||'').trim().toLowerCase();
