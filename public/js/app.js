@@ -58,6 +58,60 @@ function reportLink(label,href){
 }
 
 let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closesAt:null,mode:'public'},saving=false,navigating=false;
+// Step 5 edits are a draft until the participant explicitly applies and saves them.
+let priorityDraft=null,priorityEditorExpanded=false;
+const PRIORITY_EDITOR_LABELS=['Highest priority','Middle Priority','Low Priority'];
+function priorityDraftKey(){
+ return JSON.stringify([state.ranking,state.outcomeRanking,state.excludedTop,state.promotedTop,state.bottom]);
+}
+function ensurePriorityDraft(calculation){
+ const key=priorityDraftKey();
+ if(!priorityDraft||priorityDraft.key!==key){
+  priorityDraft={key,groups:Object.fromEntries(calculation.topics.map(t=>[t.code,t.groupIndex]))};
+ }
+ return priorityDraft;
+}
+function priorityGroupCounts(groups){
+ const result=COUNTS.map(()=>0);
+ for(const code of CODES){
+  const index=groups?.[code];
+  if(Number.isInteger(index)&&index>=0&&index<result.length)result[index]++;
+ }
+ return result;
+}
+function priorityDraftValid(){
+ if(!priorityDraft||Object.keys(priorityDraft.groups).length!==CODES.length)return false;
+ return priorityGroupCounts(priorityDraft.groups).every((count,i)=>count===COUNTS[i]);
+}
+function priorityCountLabel(){
+ const counts=priorityGroupCounts(priorityDraft?.groups);
+ return counts.map((count,i)=>PRIORITY_EDITOR_LABELS[i]+': '+count+' / '+COUNTS[i]).join(' · ');
+}
+function updatePriorityDraftControls(){
+ const counts=document.getElementById('priority-counts');
+ if(counts)counts.textContent=priorityCountLabel();
+ const guidance=document.getElementById('priority-guidance');
+ if(guidance)guidance.textContent=priorityDraftValid()?
+  'Your groups are ready. Apply this ranking to recalculate the assessments.':
+  'Choose exactly 10 highest, 19 middle, and 4 low-priority topics before applying.';
+ const apply=document.getElementById('apply-priority-ranking');
+ if(apply)apply.disabled=!canEdit()||!priorityDraftValid();
+}
+function applyPriorityDraft(){
+ if(!priorityDraftValid())return false;
+ const high=CODES.filter(code=>priorityDraft.groups[code]===0);
+ const low=CODES.filter(code=>priorityDraft.groups[code]===2);
+ // Pinned top selections ensure the requested groups survive the suggestion algorithm,
+ // private-link restoration, and server-side canonical scoring unchanged.
+ state.promotedTop=high;
+ state.excludedTop=[];
+ state.bottom=low;
+ syncTop();
+ state.community=null;
+ priorityDraft=null;
+ return true;
+}
+
 function freshId(){return crypto.randomUUID();}
 function networkSignal(ms){
  return typeof AbortSignal!=='undefined'&&typeof AbortSignal.timeout==='function'?
@@ -383,9 +437,12 @@ function resultsPage(){
   const o=METHOD.outcomes.find(x=>x.id===id);
   return {name:o.title,codes:outcomeCodes[id]};
  });
+ const draft=ensurePriorityDraft(c);
  const topics=c.topics.slice().sort((a,b)=>a.position-b.position).map(t=>
   '<tr><td>'+esc(t.code)+'</td><td>'+esc(t.title)+'</td><td>'+esc(t.theme)+'</td>'+
-   '<td>'+esc(t.group)+'</td><td>'+fmt(t.weight*100,2)+'%</td></tr>'
+   '<td><select data-priority-code="'+esc(t.code)+'" aria-label="Choose priority group for '+esc(t.title)+'" '+(!canEdit()?'disabled':'')+'>'+
+    PRIORITY_EDITOR_LABELS.map((label,i)=>'<option value="'+i+'" '+(draft.groups[t.code]===i?'selected':'')+'>'+esc(label)+'</option>').join('')+
+   '</select></td></tr>'
  ).join('');
  return '<section class="results-intro"><h3>Your priorities applied to the Planning Frameworks</h3>'+
   '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review team.</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. </p>  <p> As the City publishes/shares more of the draft framework, it will be added to the tool so the assessment is more comprehensive. Until the full Little Jamaica Planning Framework is shared, this is an early indicator of if materials being published by the City are meeting community expectations and/or are comparable to the level of service delivered to other neighbourhoods.</p>'+'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>'+
@@ -396,9 +453,12 @@ function resultsPage(){
   '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica.</p>'+
   breakdownMatrix(c,scope,'Planning subjects',subjectGroups,ordered)+
   breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
-   '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
-   '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
-   '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Planning subject</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
+   '<details class="full-breakdown priority-editor" id="priority-editor" '+(priorityEditorExpanded?'open':'')+'><summary>See and adjust 33 topic prioritization</summary>'+
+   '<p class="help">Move topics between Highest priority, Middle Priority, and Low Priority. To keep assessments comparable, choose exactly 10 highest, 19 middle, and 4 low-priority topics. Your assessments will change only when you apply this ranking.</p>'+
+   '<p id="priority-counts" class="priority-counts" role="status" aria-live="polite">'+esc(priorityCountLabel())+'</p>'+
+   '<div class="table-scroll"><table class="priority-table"><thead><tr><th>Code</th><th>Topic</th><th>Planning subject</th><th>Priority group</th></tr></thead><tbody>'+topics+'</tbody></table></div>'+
+   '<p id="priority-guidance" class="help" aria-live="polite">'+(priorityDraftValid()?'Your groups are ready. Apply this ranking to recalculate the assessments.':'Choose exactly 10 highest, 19 middle, and 4 low-priority topics before applying.')+'</p>'+
+   '<button type="button" class="primary" id="apply-priority-ranking" '+(!canEdit()||!priorityDraftValid()?'disabled':'')+'>I prefer this ranking. Update the assessments based on this ranking</button></details></section>'+
   '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything suggestion consideration or feedback you have re: a community review of the Planning Framework currently being prepared by Development Review for the community of Little Jamaica?</p>'+
    '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
    '<button class="secondary" id="save-comment" type="button">Submit my comments</button>';
@@ -550,6 +610,27 @@ root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from mo
  }));
  document.querySelectorAll('[data-scope]').forEach(el=>el.addEventListener('click',()=>{state.scope=el.dataset.scope;write();render();}));
  document.querySelectorAll('[data-community-view]').forEach(el=>el.addEventListener('click',()=>{state.communityView=el.dataset.communityView;render();}));
+ // Reassigning a topic changes only the draft until Apply is pressed.
+ const priorityDetails=document.getElementById('priority-editor');
+ if(priorityDetails)priorityDetails.addEventListener('toggle',()=>{priorityEditorExpanded=priorityDetails.open;});
+ document.querySelectorAll('[data-priority-code]').forEach(el=>el.addEventListener('change',()=>{
+  if(!canEdit()||!priorityDraft)return;
+  const group=Number(el.value),code=el.dataset.priorityCode;
+  if(!CODES.includes(code)||!Number.isInteger(group)||group<0||group>=COUNTS.length)return;
+  priorityDraft.groups[code]=group;
+  updatePriorityDraftControls();
+ }));
+ document.getElementById('apply-priority-ranking')?.addEventListener('click',async()=>{
+  if(!canEdit()||!priorityDraftValid()){
+   notice('Choose exactly 10 highest, 19 middle, and 4 low-priority topics before applying.','warning');return;
+  }
+  applyPriorityDraft();
+  priorityEditorExpanded=true;
+  write();render();
+  const saved=await save('revision');
+  if(saved)notice('Your revised ranking has been applied, the assessment scores recalculated, and your changes saved online.');
+  // If offline, flush() leaves the revision queued locally and shows the Retry save option.
+ });
  document.getElementById('refresh-averages')?.addEventListener('click',()=>loadCommunity(true));
  const comment=document.getElementById('comment');if(comment)comment.addEventListener('input',()=>{state.feedback=comment.value;write();});
  document.getElementById('save-comment')?.addEventListener('click',async()=>{state.feedback=document.getElementById('comment').value;const ok=await save('comments_shared');if(ok)notice('Your comments and current priorities were saved online.');});
