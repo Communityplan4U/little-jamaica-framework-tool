@@ -361,8 +361,9 @@ test('Fresh Step 1 subjects and Step 2 outcomes start in the survey-informed ord
  vm.runInContext(load('public/js/state.js')+'\n'+load('public/js/model.js')+'\n'+app,ctx);
  const order=key=>Array.from(vm.runInContext('state.'+key,ctx));
  assert.deepEqual(order('ranking'),[
-  'Housing','Rights and equity','Delivery','Economic opportunity',
-  'Community and public spaces','Culture and identity','Acknowledgement'
+  'Housing and remaining rooted','Community power and implementation',
+  'Local economy and community wealth','Culture, history and belonging',
+  'Everyday needs and environment','Rights, recognition and reparative justice'
  ]);
  assert.deepEqual(order('outcomeRanking'),['wellbeing','remain','power','coord','wealth','belong']);
  assert.deepEqual(Array.from(vm.runInContext('THEMES',ctx)),T,'Keep authoritative subject IDs unchanged');
