@@ -46,8 +46,8 @@ function canonicalSnapshot(input,rid){
  const cm=input.communications||{};
  const contact={email:email||null,results_updates:!!email,newsletter:!!email&&cm.newsletter===true,planning_updates:!!email&&cm.littleJamaicaUpdates===true,notice_version:'ljov-consent-v2-early-averages'};
  const evidence=input.inputEvidence||{};
- const pages=Array.isArray(evidence.continuedPages)?[...new Set(evidence.continuedPages.filter(x=>Number.isInteger(x)&&x>=1&&x<=6))]:[];
- const coreCompleted=completeChoices&&[1,2,3,4].every(n=>pages.includes(n));
+ const pages=Array.isArray(evidence.continuedPages)?[...new Set(evidence.continuedPages.filter(x=>Number.isInteger(x)&&x>=1&&x<=4))]:[];
+ const coreCompleted=completeChoices&&[1,2].every(n=>pages.includes(n));
  const criteriaByCode=Object.fromEntries(WB.topics.map(t=>[t.code,t]));
  const score=WB.surveyTopics.reduce((sum,t)=>{
   const weight=WEIGHTS[weighted.find(w=>w.code===t.code).group];
@@ -56,7 +56,7 @@ function canonicalSnapshot(input,rid){
   return sum+weight*criteria.reduce((total,c)=>total+c.score,0)/criteria.length;
  },0);
  const snap={type:'Little Jamaica community weighting survey',version:text(input.version||'',100,'survey version'),sourceVersion:M.id,responseId:rid,topicCount:M.topicCount,sourceWorkbook:WB.filename,
-  themeRanking:ranking,outcomeRanking:outcomes,topSelected:top,bottomSelected:bottom,excludedTop,promotedTop,connections,notes,score,
+  themeRanking:ranking,outcomeRanking:outcomes,topSelected:top,bottomSelected:bottom,excludedTop,promotedTop,topicOrder:order,connections,notes,score,
   comparisonScope:input.comparisonScope==='full'?'full':'vision',topicWeights:weighted,
   priorityGroups:M.groupNames.map((name,k)=>({group:name,totalShare:M.groupShares[k]/100,topics:weighted.filter(w=>w.group===name).map(w=>w.code)})),
   inputEvidence:{continuedPages:pages,coreStepsCompleted:coreCompleted,explicitTopSix:top.length===M.groupCounts[0],explicitLowestTwo:bottom.length===M.groupCounts[2]}};
@@ -66,18 +66,18 @@ function selectedConnections(a){if(!Array.isArray(a)||a.length>8||a.some(x=>!WHO
 function validateEvent(raw){
  if(!raw||typeof raw!=='object'||Array.isArray(raw))fail(400,'Invalid checkpoint');
  const rid=uuid(raw.responseId,'response ID'),eid=uuid(raw.eventId,'event ID'),rev=raw.revision,page=raw.page,ar=raw.answerRevision;
- if(!Number.isInteger(rev)||rev<1||rev>1000000||!Number.isInteger(ar)||ar<0||ar>1000000||!Number.isInteger(page)||page<1||page>6)fail(400,'Invalid revision or page');
+ if(!Number.isInteger(rev)||rev<1||rev>1000000||!Number.isInteger(ar)||ar<0||ar>1000000||!Number.isInteger(page)||page<1||page>4)fail(400,'Invalid revision or page');
  const allowed=['continue','complete','navigation','results_viewed','community_viewed','revision','comments_shared','preferences_saved'];
  if(!allowed.includes(raw.eventType))fail(400,'Invalid event type');
  const c=canonicalSnapshot(raw.snapshot,rid);
  if(raw.eventType==='complete'&&!c.coreCompleted)fail(400,'Complete the topic selections first');
- const resumeState={page:Math.min(5,Math.max(0,Number.isInteger(raw.resumeState?.page)?raw.resumeState.page:0)),
-  ranking:c.snapshot.themeRanking,outcomeRanking:c.snapshot.outcomeRanking,top:c.snapshot.topSelected,bottom:c.snapshot.bottomSelected,excludedTop:c.snapshot.excludedTop,promotedTop:c.snapshot.promotedTop,
+ const resumeState={page:Math.min(3,Math.max(0,Number.isInteger(raw.resumeState?.page)?raw.resumeState.page:0)),
+  ranking:c.snapshot.themeRanking,outcomeRanking:c.snapshot.outcomeRanking,top:c.snapshot.topSelected,bottom:c.snapshot.bottomSelected,excludedTop:c.snapshot.excludedTop,promotedTop:c.snapshot.promotedTop,topicOrder:c.snapshot.topicOrder,
   connections:c.snapshot.connections,feedback:c.snapshot.notes,scope:c.snapshot.comparisonScope,
   email:'',newsletterOptIn:false,planningOptIn:false,completed:c.coreCompleted};
  const event={eventId:eid,responseId:rid,revision:rev,answerRevision:ar,eventType:raw.eventType,
   surveyVersion:c.snapshot.version,sourceVersion:M.id,clientTimestamp:typeof raw.clientTimestamp==='string'?raw.clientTimestamp:null,
-  page,visitedPages:Array.isArray(raw.visitedPages)?raw.visitedPages.filter(x=>Number.isInteger(x)&&x>=1&&x<=6):[],
+  page,visitedPages:Array.isArray(raw.visitedPages)?raw.visitedPages.filter(x=>Number.isInteger(x)&&x>=1&&x<=4):[],
   continuedPages:c.snapshot.inputEvidence.continuedPages,afterResultsShown:raw.afterResultsShown===true,
   snapshot:c.snapshot,resumeState,initialDisplayOrder:{themes:THEMES,outcomes:OUTCOMES}};
  return {...c,event};
