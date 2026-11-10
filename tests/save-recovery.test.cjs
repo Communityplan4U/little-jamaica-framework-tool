@@ -175,7 +175,7 @@ test('Conflict recovery preserves an unsent completion when later edits were que
   const e=JSON.parse(opts.body);accepted.push(e);
   return e.revision===3?receipt(e):ok(409,{error:'stale'});
  });
- h.run("state.bottom=suggestions().slice(-4);record.continuedPages=[1,2,3,4];record.firstCompletedAt=new Date().toISOString();state.step=3;checkpoint('complete')");
+ h.run("state.bottom=suggestions().slice(-2);record.continuedPages=[1,2,3,4];record.firstCompletedAt=new Date().toISOString();state.step=3;checkpoint('complete')");
  h.run("state.step=4;state.feedback='These are my current priorities';checkpoint('comments_shared')");
  assert.equal(await h.run('flush()'),true);
  assert.equal(accepted.at(-1).eventType,'complete');
@@ -192,7 +192,7 @@ test('Applying Step 5 topic groups recalculates and saves a server-valid revisio
  });
  h.run("record.continuedPages=[1,2,3,4];record.firstCompletedAt='2026-11-10T01:00:00Z';state.bottom=orderedGroups()[2].slice();state.step=4;render()");
  const [highest,middle]=Array.from(h.run('calculate().groups')).slice(0,2).map(group=>group[0]);
- assert.match(h.element('stage').innerHTML,/See and adjust 33 topic prioritization/);
+ assert.match(h.element('stage').innerHTML,/See and adjust 20 survey topic prioritization/);
  h.run('priorityDraft.groups['+JSON.stringify(highest)+']=1');
  h.run('updatePriorityDraftControls()');
  assert.equal(h.element('apply-priority-ranking').disabled,true);
@@ -210,7 +210,7 @@ test('Applying Step 5 topic groups recalculates and saves a server-valid revisio
  assert.ok(accepted[0].snapshot.topicWeights.find(x=>x.code===highest).group==='Middle priority');
  assert.equal(h.run('record.outbox.length'),0);
  assert.match(h.element('notice').textContent,/saved online/);
- assert.match(h.element('stage').innerHTML,/See and adjust 33 topic prioritization/);
+ assert.match(h.element('stage').innerHTML,/See and adjust 20 survey topic prioritization/);
 });
 
 test('Applying groups while offline retains the revised ranking and retryable save',async()=>{
@@ -256,7 +256,7 @@ test('First-time participants must use Continue through Steps 1–5 before Step 
  assert.equal(locked(4),false);
  assert.equal(locked(5),true);
  await h.run('next()');
- assert.equal(h.run('state.step'),3,'Step 4 requires choosing four lowest priority topics');
+ assert.equal(h.run('state.step'),3,'Step 4 requires choosing two lowest priority topics');
  assert.equal(saved.length,3);
  h.run('state.bottom=orderedGroups()[2].slice()');
  await h.run('next()');
