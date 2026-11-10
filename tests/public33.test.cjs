@@ -127,7 +127,7 @@ test('Browser model supports additional top-ten selections with fixed 10/19/4 gr
  const ctx=vm.createContext({window:{LJOV_ASSESSMENT:S.WB,LJOV_METHODOLOGY:S.M,LJOV_CONFIG:{}}});
  const app=load('public/js/app.js').split("window.addEventListener('online'")[0];
  vm.runInContext(load('public/js/state.js')+'\n'+load('public/js/model.js')+'\n'+app,ctx);
- const x=vm.runInContext('({state,suggestions,syncTop,calculate,topicBrowser,resultsPage,FRAMEWORK_REPORTS,groupDifference})',ctx);
+ const x=vm.runInContext('({state,suggestions,syncTop,calculate,topicBrowser,resultsPage,FRAMEWORK_REPORTS,FRAMEWORK_RESPONSIBILITIES,groupDifference})',ctx);
  const initial=x.suggestions(),added=initial[15];
  x.state.promotedTop=[added];x.syncTop();
  assert.equal(x.state.top.length,10);
@@ -140,6 +140,15 @@ test('Browser model supports additional top-ten selections with fixed 10/19/4 gr
   assert.match(output,/class="framework-link"/);
   assert.equal((output.match(/class="framework-link"/g)||[]).length,24);
  assert.equal(x.FRAMEWORK_REPORTS.comparators.length,7);
+ assert.equal(Object.keys(x.FRAMEWORK_RESPONSIBILITIES.comparators).length,S.WB.comparators.length);
+ assert.ok(x.FRAMEWORK_RESPONSIBILITIES.local.lead);
+ assert.ok(x.FRAMEWORK_RESPONSIBILITIES.local.support);
+ for(const name of S.WB.comparators){
+  const credit=x.FRAMEWORK_RESPONSIBILITIES.comparators[name];
+  assert.ok(credit?.lead && credit?.support,'Missing lead/support metadata for '+name);
+ }
+ assert.equal((output.match(/class="score-lead"/g)||[]).length,8);
+ assert.equal((output.match(/class="score-support"/g)||[]).length,8);
  for(const scope of ['vision','full']){
   const calc=x.calculate();
   for(let j=0;j<S.WB.comparators.length;j++){
