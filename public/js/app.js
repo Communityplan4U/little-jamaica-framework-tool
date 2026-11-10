@@ -462,7 +462,7 @@ function topicBrowserResults(){
   (visible.map(code=>{
    const t=byCode[code];
    return '<article class="topic-browser-row"><div class="topic-browser-body"><span class="topic-id">'+esc(code)+'</span> <small>'+esc(t.theme)+'</small>'+
-    '<strong>'+esc(t.title)+'</strong><p>'+esc(t.summary||t.assesses)+'</p>'+
+'<strong>'+esc(t.title)+'</strong>'+
     '</div>'+
     '<button type="button" class="topic-add" data-add-top="'+esc(code)+'" '+(!canEdit()||limitReached?'disabled':'')+
     '>Add to top 6 ↑</button></article>';
@@ -566,7 +566,7 @@ function topicTile(t,group,index){
  return '<article class="topic-tile priority-topic" draggable="'+canEdit()+'" data-topic-drag="'+esc(t.code)+'" data-topic-drop="'+esc(t.code)+'" data-topic-group="'+group+'" data-topic-search="'+esc(search)+'" aria-label="'+esc(t.title)+', '+names[group]+' priority. Drag to reorder or change groups.">'+
   '<div class="topic-title"><span class="drag-handle" aria-hidden="true">⋮⋮</span><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
 '<span class="topic-proposed">Order within an impact group does not change assessment weight</span>'+
-  '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
+'<h3>'+esc(t.title)+'</h3>'+
  '<div class="topic-actions">'+buttons+'</div></article>';
 }
 function selectionPage(){
