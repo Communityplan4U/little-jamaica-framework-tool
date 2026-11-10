@@ -613,30 +613,32 @@ function communityPage(){
  '<p class="help">Each survey topic contains one or more detailed criteria, which may contribute to different outcomes. Topic, Planning Area and community outcome weights each total 100%. Human rights and Indigenous rights obligations apply regardless of how topics are ranked.</p>';
 }
 function render(){
- const step=Math.min(5,Math.max(0,state.step));state.step=step;
- document.getElementById('steps').innerHTML=STEPS.map((title,i)=>'<button type="button" data-step="'+i+'" class="'+(i===step?'current':'')+'" '+(i>highestUnlockedStep()?'disabled':'')+'><span>Step '+(i+1)+'</span>'+esc(title)+'</button>').join('');
- document.getElementById('step-label').textContent='Step '+(step+1)+' of 6';
+ const step=Math.min(STEPS.length-1,Math.max(0,state.step));state.step=step;
+ document.getElementById('steps').innerHTML=STEPS.map((title,i)=>
+  '<button type="button" data-step="'+i+'" class="'+(i===step?'current':'')+'" '+(i>highestUnlockedStep()?'disabled':'')+'>'+
+   '<span>Step '+(i+1)+'</span>'+esc(title)+'</button>').join('');
+ document.getElementById('step-label').textContent='Step '+(step+1)+' of '+STEPS.length;
  document.getElementById('step-title').textContent=STEPS[step];
- // Both ranking questions are already displayed inside their respective panels.
- // Keep all six step positions aligned and hide empty descriptions.
  const stepDetail=document.getElementById('step-detail');
- stepDetail.textContent=[
-  '', // Step 1: question is in the planning areas panel.
-  '', // Step 2: question is in the community outcomes panel.
-    '', // Step 3: question is in the topics panel.
-      '', // Step 4 question is in the topics panel.
-        '', // Step 5 intro in the  panel.
-  'Compare your weighted priorities with the latest completed responses.'
- ][step];
+ stepDetail.textContent=step===3?'Compare your weighted priorities with the latest completed responses.':'';
  stepDetail.hidden=!stepDetail.textContent;
  const root=document.getElementById('stage');
-root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from most to least important</h3><p>Which Planning Areas are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p><p class="help">The starting order interprets the October 2026 Little Jamaica Survey Findings across these six Planning Areas. The earlier survey asked about five action areas, not this exact list. Reorder to reflect your priorities; rights obligations still apply.</p>'+optionRank(THEMES,'ranking')+'</div>':
-  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What outcomes do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p><p class="help">The starting order draws on the October 2026 findings about priority actions and progress indicators. These six outcomes were not ranked directly in that survey. Reorder them to reflect your priorities.</p>'+optionRank(OUTCOMES,'outcomeRanking')+'</div>':
-  step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage(); const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
+ const planningRanking='<section class="subpanel"><h3>1. Rank the six Planning Areas</h3>'+
+  '<p>Which Planning Areas are most important for the Framework to focus on? Rank from most important at the top. Drag to reorder or use the arrow buttons.</p>'+
+  '<p class="help">The starting order interprets the October 2026 Little Jamaica Survey Findings. That survey asked about five action areas, not these six Planning Areas. Rights obligations still apply regardless of rankings.</p>'+
+  optionRank(THEMES,'ranking')+'</section>';
+ const outcomeRanking='<section class="subpanel"><h3>2. Rank the six community outcomes</h3>'+
+  '<p>Below the Planning Area rankings, identify which improvements matter most to you. These outcomes guide suggested priorities, not your final topic weights.</p>'+
+  '<p class="help">The starting order draws on the October 2026 findings. These six outcomes were not ranked directly in that survey.</p>'+
+  optionRank(OUTCOMES,'outcomeRanking')+'</section>';
+ root.innerHTML=step===0?connectionForm()+planningRanking+outcomeRanking:
+  step===1?selectionPage():step===2?resultsPage():communityPage();
+ const actions=document.getElementById('actions');
+ const label=step===1?'Save my priorities and see results':step===2?'Compare with community':'Continue';
  actions.innerHTML=(step===0?'':'<button type="button" id="back" class="secondary">← Back</button>')+
-  (step===5?'':'<button type="button" id="next" class="primary" '+(!canEdit()&&step<=3?'disabled':'')+'>'+label+' →</button>');
+  (step===3?'':'<button type="button" id="next" class="primary" '+(!canEdit()&&step<=1?'disabled':'')+'>'+label+' →</button>');
  document.getElementById('next')?.addEventListener('click',next);
- document.getElementById('back')?.addEventListener('click',()=>selectPage(step===5?4:step-1));
+ document.getElementById('back')?.addEventListener('click',()=>selectPage(step===3?2:step-1));
  document.querySelectorAll('[data-step]').forEach(el=>el.addEventListener('click',()=>selectPage(+el.dataset.step)));
  document.querySelectorAll('[data-rank]').forEach(el=>el.addEventListener('click',()=>{
   if(!canEdit())return;const list=state[el.dataset.rank],i=+el.dataset.index,j=i+(+el.dataset.dir);
@@ -766,40 +768,44 @@ async function next(){
  if(navigating)return;
  navigating=true;
  try{
- // Returning participants may see an already-unlocked Step 6 even after closure.
- if(state.step===4&&highestUnlockedStep()===5){selectPage(5);return;}
- if(!canEdit())return;
- if(state.step===0){
-  const email=document.getElementById('participant-email')?.value.trim()||'';
-  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){notice('Enter a valid email or leave it blank.','warning');return;}
-  state.email=email;
- }
- if(state.step===2&&syncTop().length!==COUNTS[0]){notice('Six highest-priority topics are required. Restore an earlier topic.','warning');return;}
- if(state.step===3&&state.bottom.length!==COUNTS[2]){notice('Please select exactly two lowest-priority topics before continuing.','warning');return;}
- if(state.step===4){
-  if(highestUnlockedStep()<4){
-   notice('Complete Steps 1 through 4 before viewing community results.','warning');return;
+  // A previously completed participant can still view their community
+  // comparison after collection closes.
+  if(state.step===2&&highestUnlockedStep()===3){selectPage(3);return;}
+  if(!canEdit())return;
+  if(state.step===0){
+   const email=document.getElementById('participant-email')?.value.trim()||'';
+   if(email&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
+    notice('Enter a valid email or leave it blank.','warning');return;
+   }
+   state.email=email;
   }
-  // Confirm that Step 5 was reviewed before unlocking Step 6.
-  record.continuedPages=[...new Set([...record.continuedPages,5])];
-  const ok=await save('results_viewed');
+  if(state.step===1){
+   if(syncTop().length!==COUNTS[0]){
+    notice('Six highest-priority topics are required.','warning');return;
+   }
+   if(state.bottom.length!==COUNTS[2]){
+    notice('Please select exactly two lowest-priority topics before continuing.','warning');return;
+   }
+  }
+  if(state.step===2){
+   if(highestUnlockedStep()<2){notice('Complete your rankings and priorities first.','warning');return;}
+   record.continuedPages=[...new Set([...record.continuedPages,3])];
+   const ok=await save('results_viewed');
+   if(ok||(record.outbox.length&&canEdit())){
+    selectPage(3);
+    if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
+   }
+   return;
+  }
+  if(state.step>=3)return;
+  record.continuedPages=[...new Set([...record.continuedPages,state.step+1])];
+  if(state.step===1)record.firstCompletedAt=record.firstCompletedAt||new Date().toISOString();
+  const ok=await save(state.step===1?'complete':'continue');
   if(ok||(record.outbox.length&&canEdit())){
-   selectPage(5);
-   if(!ok)notice('Your answers are stored on this device. Use Retry save to confirm them online.','warning');
+   state.complete=!!record.firstCompletedAt;
+   selectPage(state.step+1);
+   if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
   }
-  return;
- }
- if(state.step>=5)return;
- const nextStep=state.step+1;
- record.continuedPages=[...new Set([...record.continuedPages,state.step+1])];
- if(state.step===3)record.firstCompletedAt=record.firstCompletedAt||new Date().toISOString();
- const ok=await save(state.step===3?'complete':'continue');
- // Online receipt is essential for submission, but temporary outages should
- // never prevent participants from continuing their locally saved survey.
- if(ok||(record.outbox.length&&canEdit())){
-  state.complete=!!record.firstCompletedAt;selectPage(nextStep);
-  if(!ok)notice('Your answers are stored on this device. You may continue; use Retry save to confirm them online.','warning');
- }
  }finally{navigating=false;}
 }
 async function loadCommunity(force=false){
