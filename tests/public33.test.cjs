@@ -335,7 +335,7 @@ test('Step 5 lets participants reassign all 33 topics in a valid 10/19/4 draft b
  assert.equal(run('priorityDraftValid()'),true);
  assert.equal(run('applyPriorityDraft()'),true);
  const after=run('calculate()');
- assert.deepEqual(after.groups.map(g=>g.length),[10,19,4]);
+ assert.deepEqual(Array.from(after.groups.map(g=>g.length)),[10,19,4]);
  assert.ok(after.groups[0].includes(wasMiddle));
  assert.ok(after.groups[1].includes(wasHighest));
  assert.ok(!after.groups[0].includes(wasHighest));
