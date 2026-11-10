@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning subjects','Rank community outcomes','Confirm top topics','Identify lowest priority topics','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning subjects','Rank community outcomes','Confirm top topics','Identify lowest priority topics','Compare the Citys planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
@@ -343,7 +343,7 @@ function resultsPage(){
    '<td>'+esc(t.group)+'</td><td>'+fmt(t.weight*100,2)+'%</td></tr>'
  ).join('');
  return '<section class="results-intro"><h3>Your priorities applied to the Planning Frameworks</h3>'+
-  '<p>All scores are <strong>weighted differences from the Little Jamaica draft (0)</strong>, not raw document ratings. Positive values mean another framework addresses your weighted topics more comprehensively; negative values mean less comprehensively. These are assessments of written documents, not verified implementation outcomes.</p>'+
+  '<p>All scores are <strong>weighted differences from the Little Jamaica draft (so positive numbers score higher, and negative numbers score lower)</strong>. They are not raw document rating. These are assessments of written documents, not verified implementation of what the City frameworks communicate.</p>'+
   '<div class="score-feature"><span>Little Jamaica / Oakwood Vaughan reference score</span><strong>0.00</strong></div>'+
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
   (full?'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>':'')+
