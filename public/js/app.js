@@ -244,7 +244,7 @@ function topicBrowserResults(){
    const t=byCode[code];
    return '<article class="topic-browser-row"><div class="topic-browser-body"><span class="topic-id">'+esc(code)+'</span> <small>'+esc(t.theme)+'</small>'+
     '<strong>'+esc(t.title)+'</strong><p>'+esc(t.summary||t.assesses)+'</p>'+
-    '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details></div>'+
+    '</div>'+
     '<button type="button" class="topic-add" data-add-top="'+esc(code)+'" '+(!canEdit()||limitReached?'disabled':'')+
     '>Add to top 10 ↑</button></article>';
   }).join('')||'<p class="help">No other topics match this search.</p>');
