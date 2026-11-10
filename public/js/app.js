@@ -19,7 +19,7 @@ function reportLink(label,href){
  return '<a class="framework-link" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" title="Open the source planning report in a new tab">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
 }
 
-let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closesAt:null,mode:'public'},saving=false;
+let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closesAt:null,mode:'public'},saving=false,navigating=false;
 function freshId(){return crypto.randomUUID();}
 function write(){try{localStorage.setItem(STORE+record.responseId,JSON.stringify({record,state:{...state,community:null,loading:false,communityError:'',flash:''}}));localStorage.setItem(STORE+'active',record.responseId);}catch(e){notice('Browser storage is unavailable. Keep a copy of your private return link.','warning');}}
 function init(){
@@ -516,6 +516,9 @@ function render(){
  renderSaveBadge();
 }
 async function next(){
+ if(navigating)return;
+ navigating=true;
+ try{
  if(!canEdit())return;
  if(state.step===0){
   const email=document.getElementById('participant-email')?.value.trim()||'';
@@ -535,6 +538,7 @@ async function next(){
   state.complete=!!record.firstCompletedAt;selectPage(nextStep);
   if(!ok)notice('Your answers are stored on this device. You may continue; use Retry save to confirm them online.','warning');
  }
+ }finally{navigating=false;}
 }
 async function loadCommunity(force=false){
  if(state.loading||!record.firstCompletedAt)return;
