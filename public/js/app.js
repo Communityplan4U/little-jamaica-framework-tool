@@ -464,7 +464,7 @@ function topicTile(t,group,index){
  const search=[t.code,t.title,t.theme,t.summary,t.assesses].join(' ').toLowerCase();
  return '<article class="topic-tile priority-topic" draggable="'+canEdit()+'" data-topic-drag="'+esc(t.code)+'" data-topic-drop="'+esc(t.code)+'" data-topic-group="'+group+'" data-topic-search="'+esc(search)+'" aria-label="'+esc(t.title)+', '+names[group]+' priority. Drag to reorder or change groups.">'+
   '<div class="topic-title"><span class="drag-handle" aria-hidden="true">⋮⋮</span><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
-  '<span class="topic-proposed">'+(index+1)+' in this group · <strong class="topic-weight">'+weightText+'</strong> · order does not change points</span>'+
+'<span class="topic-proposed">Order in priority group does not change points/weight</span>'+
   '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
  '<div class="topic-actions">'+buttons+'</div></article>';
 }
