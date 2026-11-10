@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning subjects','Rank community outcomes','Review your top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning subjects','Rank community outcomes','Review your top 10 based on rankings','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
@@ -210,10 +210,9 @@ function selectPage(i){
 function optionRank(items,listKey){
  return '<div class="rank-items">'+state[listKey].map((id,i)=>{
   const title=listKey==='ranking'?id:METHOD.outcomes.find(o=>o.id===id).title;
-  const help=listKey==='ranking'?WB.themes.find(t=>t.name===id).count+' assessment topics':METHOD.outcomes.find(o=>o.id===id).desc;
+ const help=listKey==='ranking'?'':METHOD.outcomes.find(o=>o.id===id).desc;
   return '<div class="rank-item" draggable="'+canEdit()+'" data-drag-rank="'+listKey+'" data-index="'+i+'"><span class="drag-handle" aria-hidden="true">⋮⋮</span>'+
-   '<div class="rank-number">'+(i+1)+'</div><div><strong>'+esc(title)+'</strong><p>'+esc(help)+'</p></div><div class="rank-buttons">'+
-   '<button type="button" data-rank="'+listKey+'" data-index="'+i+'" data-dir="-1" '+(i===0?'disabled':'')+' aria-label="Move '+esc(title)+' up">↑</button>'+
+  '<div class="rank-number">'+(i+1)+'</div><div><strong>'+esc(title)+'</strong>'+(help?'<p>'+esc(help)+'</p>':'')+'</div><div class="rank-buttons">'+   '<button type="button" data-rank="'+listKey+'" data-index="'+i+'" data-dir="-1" '+(i===0?'disabled':'')+' aria-label="Move '+esc(title)+' up">↑</button>'+
    '<button type="button" data-rank="'+listKey+'" data-index="'+i+'" data-dir="1" '+(i===state[listKey].length-1?'disabled':'')+' aria-label="Move '+esc(title)+' down">↓</button></div></div>';
  }).join('')+'</div>';
 }
@@ -413,9 +412,7 @@ function render(){
  const root=document.getElementById('stage');
  root.innerHTML=step===0?connectionForm()+'<div class="subpanel"><h3>Rank from most to least important</h3><p>Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top. Drag to reorder or use the arrow buttons.</p>'+optionRank(THEMES,'ranking')+'</div>':
   step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What outcomes do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p>'+optionRank(OUTCOMES,'outcomeRanking')+
-   METHOD.outcomes.map(o=>'<details class="outcome-expand"><summary>See '+outcomeCodes[o.id].length+' topics covered by '+esc(o.title)+'</summary><p>'+outcomeCodes[o.id].map(code=>esc(code+' · '+byCode[code].title)).join('; ')+'</p></details>').join('')+'</div>':
-  step===2?selectionPage('top'):step===3?selectionPage('bottom'):step===4?resultsPage():communityPage();
- const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
+  step===1?'<div class="subpanel"><h3>Rank from most to least impactful</h3><p>What outcomes do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.</p>'+optionRank(OUTCOMES,'outcomeRanking')+'</div>': const actions=document.getElementById('actions');let label=step===3?'Save my priorities and see results':step===4?'Compare with community':step===5?'Back to my results':'Continue';
  actions.innerHTML=(step===0?'':'<button type="button" id="back" class="secondary">← Back</button>')+
   (step===5?'':'<button type="button" id="next" class="primary" '+(!canEdit()&&step<=3?'disabled':'')+'>'+label+' →</button>');
  document.getElementById('next')?.addEventListener('click',next);
