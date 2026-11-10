@@ -1,11 +1,11 @@
 {
-  "filename": "LJOVPF_Comparator_Assessment.xlsx",
-  "sourceSheet": "Topics; Comparison by Topic; LJOVPF by Topic",
+  "filename": "LJOVPF_Comparator_Assessment_Planning_Areas_Updated.xlsx",
+  "sourceSheet": "Topics; Planning Areas & Survey; Comparison by Topic; LJOVPF by Topic",
   "topics": [
     {
-      "code": "A-8",
+      "code": "RJ-02",
       "title": "City Human Rights Commitments and Obligations",
-      "theme": "Acknowledgement",
+      "theme": "Rights, recognition and reparative justice",
       "summary": "Naming the City's rights and equity commitments (Housing Charter, HousingTO, Action Plan to Confront Anti-Black Racism, ReconciliationTO)",
       "assesses": "Tests whether the framework accurately names relevant City housing-rights, equity, anti-Black racism and reconciliation commitments, including the Housing Charter, HousingTO and related City action plans, and shows how they guide proposed decisions.",
       "surveyIds": "S12; S13",
@@ -36,12 +36,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 0
+      "sourceIndex": 0,
+      "legacyCode": "A-8",
+      "surveyTopicId": "T19",
+      "planningArea": "Rights, recognition and reparative justice"
     },
     {
-      "code": "A-1",
+      "code": "CB-03",
       "title": "Acknowledge city-led Discriminatory Housing and Planning Harms",
-      "theme": "Acknowledgement",
+      "theme": "Culture, history and belonging",
       "summary": "Acknowledgment of municipal decisions contributing to harm and displacement",
       "assesses": "Tests whether documented past discriminatory housing, zoning, redevelopment, infrastructure and other municipal decisions are identified, with the mechanism of exclusion, affected groups and consequences for housing or economic security or displacement explained. Separate acknowledgement from proposed remedies.",
       "surveyIds": "",
@@ -72,12 +75,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 1
+      "sourceIndex": 1,
+      "legacyCode": "A-1",
+      "surveyTopicId": "T11",
+      "planningArea": "Culture, history and belonging"
     },
     {
-      "code": "A-2",
+      "code": "RJ-01",
       "title": "Acknowledge Prior City Studies and Designations",
-      "theme": "Acknowledgement",
+      "theme": "Rights, recognition and reparative justice",
       "summary": "Formal recognition of prior City-led studies and designations for the neighbourhood/area",
       "assesses": "Tests whether relevant prior City studies, adopted plans, designations and Council directions are identified accurately and whether the framework connects neighbourhood-level priorities to applicable municipal and higher-level policy, legal powers and implementation tools. Distinguish adopted direction from a proposal or study finding.",
       "surveyIds": "",
@@ -108,12 +114,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 2
+      "sourceIndex": 2,
+      "legacyCode": "A-2",
+      "surveyTopicId": "T19",
+      "planningArea": "Rights, recognition and reparative justice"
     },
     {
-      "code": "A-3",
+      "code": "CP-01",
       "title": "Acknowledge Community Organizing and Prior Plans",
-      "theme": "Acknowledgement",
+      "theme": "Community power and implementation",
       "summary": "Formal recognition of prior community-led organizing, plans, and communication of priorities",
       "assesses": "Tests whether prior community organizing, resident-led plans, stated priorities and lived knowledge are credited accurately and demonstrably reflected in the framework. Separate from decision-making authority over this plan.",
       "surveyIds": "S11",
@@ -144,12 +153,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 3
+      "sourceIndex": 3,
+      "legacyCode": "A-3",
+      "surveyTopicId": "T15",
+      "planningArea": "Community power and implementation"
     },
     {
-      "code": "A-4",
+      "code": "CB-04",
       "title": "Acknowledge Community Origins and Migration Histories",
-      "theme": "Acknowledgement",
+      "theme": "Culture, history and belonging",
       "summary": "How the community formed, including early settlement, migration waves, early presence of marginalized communities",
       "assesses": "Tests whether settlement and migration histories, including Indigenous, Black and other historically marginalized communities, are described accurately and without erasure. Where supported by records, explain how discriminatory housing access, land-use decisions or exclusion shaped settlement and tenure patterns.",
       "surveyIds": "",
@@ -180,12 +192,15 @@
         "belong": 1,
         "wellbeing": 0
       },
-      "sourceIndex": 4
+      "sourceIndex": 4,
+      "legacyCode": "A-4",
+      "surveyTopicId": "T11",
+      "planningArea": "Culture, history and belonging"
     },
     {
-      "code": "A-5",
+      "code": "RJ-04",
       "title": "Acknowledge Indigenous Lands, Treaties and Presence",
-      "theme": "Acknowledgement",
+      "theme": "Rights, recognition and reparative justice",
       "summary": "Indigenous territory, treaties and continuing presence",
       "assesses": "Tests whether Indigenous territories, treaties, continuing presence, relationships to land and governance are recognized accurately and connected to relevant planning/stewardship decisions. Where documented, acknowledge land dispossession and discriminatory planning impacts, without conflating Indigenous rights or sovereignty with other equity categories.",
       "surveyIds": "",
@@ -216,12 +231,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 5
+      "sourceIndex": 5,
+      "legacyCode": "A-5",
+      "surveyTopicId": "T18",
+      "planningArea": "Rights, recognition and reparative justice"
     },
     {
-      "code": "A-6",
+      "code": "HR-01",
       "title": "Acknowledge Displacement Risks and Investment Pressures",
-      "theme": "Acknowledgement",
+      "theme": "Housing and remaining rooted",
       "summary": "Acknowledging displacement pressure, including who is at risk, and what investment patterns are driving it",
       "assesses": "Tests whether current and foreseeable residential, commercial and cultural displacement risks are assessed at neighbourhood/plan scale, including the people and institutions most at risk and the role of public investment, redevelopment and housing/space costs in creating these risks. Identify documented disproportionate impacts, evidence gaps and the limits of available data; distinguish diagnosis from remedies.",
       "surveyIds": "S11",
@@ -252,12 +270,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 6
+      "sourceIndex": 6,
+      "legacyCode": "A-6",
+      "surveyTopicId": "T03",
+      "planningArea": "Housing and remaining rooted"
     },
     {
-      "code": "A-7",
+      "code": "CB-05",
       "title": "Acknowledge Low-Income Residents and Community Belonging",
-      "theme": "Acknowledgement",
+      "theme": "Culture, history and belonging",
       "summary": "Recognition of low income people as part of community fabric",
       "assesses": "Tests whether low-income residents, including renters and people facing exclusion, are recognized as contributors to the neighbourhood's identity, relationships and future, rather than only described as recipients of assistance.",
       "surveyIds": "",
@@ -288,12 +309,15 @@
         "belong": 1,
         "wellbeing": 0
       },
-      "sourceIndex": 7
+      "sourceIndex": 7,
+      "legacyCode": "A-7",
+      "surveyTopicId": "T11",
+      "planningArea": "Culture, history and belonging"
     },
     {
-      "code": "CP-3",
+      "code": "NE-01",
       "title": "Complete communities - services",
-      "theme": "Community and public spaces",
+      "theme": "Everyday needs and environment",
       "summary": "Accessible, affordable neighbourhood services and community facilities",
       "assesses": "Tests whether documented local needs for childcare, schools, health and social services, libraries, recreation and other community facilities are addressed through identifiable provision, delivery locations, affordability, capacity and accessible programming. Examine delivery responsibilities and community-serving access. Do not duplicate culturally specific premises and corridors (CU-2) or the distribution of overall growth benefits (R-4).",
       "surveyIds": "S11; S22",
@@ -324,12 +348,15 @@
         "belong": 0,
         "wellbeing": 1
       },
-      "sourceIndex": 8
+      "sourceIndex": 8,
+      "legacyCode": "CP-3",
+      "surveyTopicId": "T12",
+      "planningArea": "Everyday needs and environment"
     },
     {
-      "code": "CP-5",
+      "code": "NE-03",
       "title": "Safe and Affordable Everyday Mobility",
-      "theme": "Community and public spaces",
+      "theme": "Everyday needs and environment",
       "summary": "Safe, accessible and affordable everyday mobility, prioritizing walking, wheeling, and taking transit",
       "assesses": "Tests whether walking, wheeling and public transit are prioritized through accessible connected routes, safe crossings, reliable connections, manageable travel costs and practical access to work, schools, parks and community facilities; cycling connections where relevant.",
       "surveyIds": "S08; S21",
@@ -360,12 +387,15 @@
         "belong": 0,
         "wellbeing": 1
       },
-      "sourceIndex": 9
+      "sourceIndex": 9,
+      "legacyCode": "CP-5",
+      "surveyTopicId": "T13",
+      "planningArea": "Everyday needs and environment"
     },
     {
-      "code": "CP-7",
+      "code": "NE-05",
       "title": "Complete communities - infrastructure",
-      "theme": "Community and public spaces",
+      "theme": "Everyday needs and environment",
       "summary": "Physical infrastructure capacity, reliability and investment",
       "assesses": "Tests whether capacity and reliability of water, wastewater, stormwater, electricity and other essential infrastructure are considered against current needs and projected growth, with required upgrades, responsible agencies, financing and timing identified.",
       "surveyIds": "",
@@ -396,12 +426,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 10
+      "sourceIndex": 10,
+      "legacyCode": "CP-7",
+      "surveyTopicId": "T14",
+      "planningArea": "Everyday needs and environment"
     },
     {
-      "code": "CP-1",
+      "code": "LW-01",
       "title": "Community Ownership and Land Stewardship",
-      "theme": "Community and public spaces",
+      "theme": "Local economy and community wealth",
       "summary": "Community ownership, acquisition and long-term stewardship of land and space",
       "assesses": "Tests whether community, non-profit or public-interest actors have identified local opportunities and funded mechanisms to acquire, own and steward land/buildings. Look for community representation in governance, municipal and higher-level support, financing or program conditions, and durable affordability/anti-displacement protections.",
       "surveyIds": "S17",
@@ -432,12 +465,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 11
+      "sourceIndex": 11,
+      "legacyCode": "CP-1",
+      "surveyTopicId": "T08",
+      "planningArea": "Local economy and community wealth"
     },
     {
-      "code": "CP-4",
+      "code": "NE-04",
       "title": "Climate Resilience and Environmental Equity",
-      "theme": "Community and public spaces",
+      "theme": "Everyday needs and environment",
       "summary": "Climate resilience, environmental justice and tree equity",
       "assesses": "Tests whether heat, flood exposure, tree canopy and shade, green space, air or environmental burdens are addressed through climate resilience and equity measures benefiting current residents, with geographically specific actions where warranted.",
       "surveyIds": "S21",
@@ -468,12 +504,15 @@
         "belong": 0,
         "wellbeing": 1
       },
-      "sourceIndex": 12
+      "sourceIndex": 12,
+      "legacyCode": "CP-4",
+      "surveyTopicId": "T14",
+      "planningArea": "Everyday needs and environment"
     },
     {
-      "code": "CP-6",
+      "code": "NE-02",
       "title": "Food Security and Community Food Systems",
-      "theme": "Community and public spaces",
+      "theme": "Everyday needs and environment",
       "summary": "Food security and community control of food systems",
       "assesses": "Tests whether residents can access affordable, nutritious and culturally appropriate food, supported where appropriate by local food retail, community kitchens, gardens, markets, food programs and community-led food systems or food sovereignty initiatives.",
       "surveyIds": "",
@@ -504,12 +543,15 @@
         "belong": 1,
         "wellbeing": 0
       },
-      "sourceIndex": 13
+      "sourceIndex": 13,
+      "legacyCode": "CP-6",
+      "surveyTopicId": "T12",
+      "planningArea": "Everyday needs and environment"
     },
     {
-      "code": "CU-1",
+      "code": "CB-02",
       "title": "Music, Cultural Expression and Funding",
-      "theme": "Culture and identity",
+      "theme": "Culture, history and belonging",
       "summary": "Music, cultural expression, including honouring knowledge holders and providing sustained cultural programming",
       "assesses": "Tests whether music, artistic expression and cultural histories are sustained beyond symbolic recognition through community-led programming, knowledge-holder and youth roles, intergenerational exchange, accessible cultural facilities and dependable operating/program funding with identifiable delivery partners.",
       "surveyIds": "S11; S18; S23",
@@ -540,12 +582,15 @@
         "belong": 1,
         "wellbeing": 0
       },
-      "sourceIndex": 14
+      "sourceIndex": 14,
+      "legacyCode": "CU-1",
+      "surveyTopicId": "T10",
+      "planningArea": "Culture, history and belonging"
     },
     {
-      "code": "CU-2",
+      "code": "CB-01",
       "title": "Cultural and Community Spaces, Heritage and Corridors",
-      "theme": "Culture and identity",
+      "theme": "Culture, history and belonging",
       "summary": "Identify, protect and sustain cultural/community spaces, heritage places and corridors",
       "assesses": "Tests whether culturally significant corridors, local institutions, community gathering spaces, heritage assets and cultural focus areas are specifically identified and, where relevant, mapped; and whether the framework provides credible protection, retention, affordable replacement, secure tenure, acquisition or stewardship, accessible use and operating support. Credit both place-based cultural geography and measures securing physical spaces, without duplicating general social-service provision (CP-3) or land-acquisition mechanisms (CP-1).",
       "surveyIds": "S11; S23",
@@ -576,12 +621,15 @@
         "belong": 1,
         "wellbeing": 0
       },
-      "sourceIndex": 15
+      "sourceIndex": 15,
+      "legacyCode": "CU-2",
+      "surveyTopicId": "T09",
+      "planningArea": "Culture, history and belonging"
     },
     {
-      "code": "D-2",
+      "code": "CP-03",
       "title": "Community-Led Planning and Implementation Funding",
-      "theme": "Delivery",
+      "theme": "Community power and implementation",
       "summary": "Dedicated funding for community-led planning and community-directed implementation",
       "assesses": "Tests whether identifiable funding sources, amounts, duration and governance arrangements finance sustained community-led neighbourhood planning and community-directed implementation, with meaningful resident control over funding decisions. Distinguish secured appropriations from proposals, and avoid giving duplicate credit for routine City infrastructure budgets already counted under relevant physical-delivery topics.",
       "surveyIds": "S06; S12; S13",
@@ -612,12 +660,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 16
+      "sourceIndex": 16,
+      "legacyCode": "D-2",
+      "surveyTopicId": "T16",
+      "planningArea": "Community power and implementation"
     },
     {
-      "code": "D-3",
+      "code": "CP-05",
       "title": "Implementation Targets and City Accountability",
-      "theme": "Delivery",
+      "theme": "Community power and implementation",
       "summary": "Measurable implementation commitments, shared City leadership and accountable delivery",
       "assesses": "Tests whether implementation directions identify measurable neighbourhood outcomes, milestones, sequencing, funding dependencies and responsible City divisions, agencies and accountable leaders. Assess cross-divisional coordination, decision-making authority, escalation/corrective pathways and specific commitments, rather than treating a project list or generic City partnership as proof of accountable delivery. Public progress reporting is separately assessed under D-7.",
       "surveyIds": "S11; S12; S13",
@@ -648,12 +699,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 17
+      "sourceIndex": 17,
+      "legacyCode": "D-3",
+      "surveyTopicId": "T17",
+      "planningArea": "Community power and implementation"
     },
     {
-      "code": "D-4",
+      "code": "CP-04",
       "title": "Resourced Indigenous, Black or other Person of Colour Community Delivery Partnerships",
-      "theme": "Delivery",
+      "theme": "Community power and implementation",
       "summary": "Resourced Indigenous-, Black- and other racialized-led community delivery partnerships",
       "assesses": "Tests whether Indigenous, Black, or POC-led community organizations have specifically identified and resourced roles in delivery, with partnership arrangements, participation in decisions, practical support and accountability.",
       "surveyIds": "S11; S19",
@@ -684,12 +738,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 18
+      "sourceIndex": 18,
+      "legacyCode": "D-4",
+      "surveyTopicId": "T16",
+      "planningArea": "Community power and implementation"
     },
     {
-      "code": "D-7",
+      "code": "CP-06",
       "title": "Public Progress and Community Impact Reporting",
-      "theme": "Delivery",
+      "theme": "Community power and implementation",
       "summary": "Commitment to accessible public communication, progress tracking and corrective follow-through",
       "assesses": "Tests whether progress is reported at predictable intervals through accessible local communications and a public action tracker, showing commitments, achievements, delays, accountable leads, responses to community input and corrective follow-through. ",
       "surveyIds": "S12; S13",
@@ -720,12 +777,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 19
+      "sourceIndex": 19,
+      "legacyCode": "D-7",
+      "surveyTopicId": "T17",
+      "planningArea": "Community power and implementation"
     },
     {
-      "code": "E-2",
+      "code": "LW-04",
       "title": "Local Business Retention and Tenant Protection",
-      "theme": "Economic opportunity",
+      "theme": "Local economy and community wealth",
       "summary": "Retain culturally significant businesses and protect commercial tenancy continuity",
       "assesses": "Tests whether long-standing, independent and culturally significant businesses receive targeted support to remain and thrive, alongside feasible protections against commercial rent or tenure instability, construction and redevelopment disruption. Assess business impact review, technical supports, affordable lease options where lawful, relocation/transition assistance, replacement premises and re-entry opportunities; distinguish these from the quantity of affordable commercial space assessed under E-1.",
       "surveyIds": "S20; S10",
@@ -756,12 +816,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 20
+      "sourceIndex": 20,
+      "legacyCode": "E-2",
+      "surveyTopicId": "T06",
+      "planningArea": "Local economy and community wealth"
     },
     {
-      "code": "E-3",
+      "code": "LW-05",
       "title": "Decent Local Jobs and Training",
-      "theme": "Economic opportunity",
+      "theme": "Local economy and community wealth",
       "summary": "Local decent jobs, hiring targets, training and community benefits",
       "assesses": "Tests whether local residents gain access to decent employment through clear local hiring/apprenticeship, training and community-benefit goals, defined employer, union, nonprofit and public-sector roles, appropriate agreement or procurement conditions, fair wages/benefits and publicly reported outcomes for affected communities.",
       "surveyIds": "S15",
@@ -792,12 +855,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 21
+      "sourceIndex": 21,
+      "legacyCode": "E-3",
+      "surveyTopicId": "T07",
+      "planningArea": "Local economy and community wealth"
     },
     {
-      "code": "E-1",
+      "code": "LW-03",
       "title": "Affordable Commercial Space Supply",
-      "theme": "Economic opportunity",
+      "theme": "Local economy and community wealth",
       "summary": "Quantified provision and retention of affordable commercial spaces",
       "assesses": "Tests whether the supply of affordable commercial premises is quantified in units/area, location, suitable sizes, rent definitions and duration, including retention or replacement of space at risk. Identify practical planning and financing tools.",
       "surveyIds": "S10; S17",
@@ -828,12 +894,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 22
+      "sourceIndex": 22,
+      "legacyCode": "E-1",
+      "surveyTopicId": "T05",
+      "planningArea": "Local economy and community wealth"
     },
     {
-      "code": "H-1",
+      "code": "HR-05",
       "title": "Residential Tenant Stability and Eviction Protection",
-      "theme": "Housing",
+      "theme": "Housing and remaining rooted",
       "summary": "Residential tenant security, repair without displacement and anti-eviction supports including supporting tenant associations",
       "assesses": "Tests whether existing renters have measures addressing eviction or renoviction risk, rent instability, unsafe repair-related displacement and barriers to organizing or obtaining tenant support. Distinct from the quality of new supply and replacement after displacement.",
       "surveyIds": "S09; S11; S24",
@@ -864,12 +933,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 23
+      "sourceIndex": 23,
+      "legacyCode": "H-1",
+      "surveyTopicId": "T02",
+      "planningArea": "Housing and remaining rooted"
     },
     {
-      "code": "H-4",
+      "code": "HR-04",
       "title": "Affordable Housing Scale and Depth",
-      "theme": "Housing",
+      "theme": "Housing and remaining rooted",
       "summary": "Affordable and deeply affordable housing at a scale and depth matched to need",
       "assesses": "Tests whether neighbourhood-scale affordable and deeply affordable housing targets respond to documented need by income, rent, tenure, size, accessibility and long-term affordability period. Specify credible public/nonprofit/private delivery pathways and funding or regulatory instruments, distinguishing proposed targets from approved units, secured agreements and occupied homes.",
       "surveyIds": "S03; S04",
@@ -900,12 +972,15 @@
         "belong": 0,
         "wellbeing": 1
       },
-      "sourceIndex": 24
+      "sourceIndex": 24,
+      "legacyCode": "H-4",
+      "surveyTopicId": "T01",
+      "planningArea": "Housing and remaining rooted"
     },
     {
-      "code": "H-2",
+      "code": "HR-06",
       "title": "Intergenerational and Multigenerational Housing Options",
-      "theme": "Housing",
+      "theme": "Housing and remaining rooted",
       "summary": "Housing for intergenerational households",
       "assesses": "Tests whether the housing mix includes suitable and affordable options for intergenerational and multigenerational households, including appropriate unit sizes, adaptable layouts and arrangements supporting extended family living. Distinct from senior-specific supportive housing.",
       "surveyIds": "S14",
@@ -936,12 +1011,15 @@
         "belong": 0,
         "wellbeing": 1
       },
-      "sourceIndex": 25
+      "sourceIndex": 25,
+      "legacyCode": "H-2",
+      "surveyTopicId": "T04",
+      "planningArea": "Housing and remaining rooted"
     },
     {
-      "code": "H-3",
+      "code": "HR-03",
       "title": "Supportive Housing and Homelessness",
-      "theme": "Housing",
+      "theme": "Housing and remaining rooted",
       "summary": "Supportive housing, including emergency shelter for those experiencing homelessness",
       "assesses": "Tests whether the housing and service needs of people experiencing homelessness or requiring intensive support are identified locally, and linked to accessible emergency, supportive and deeply affordable options. Identifies implementation partners, housing/health service coordination and plausible municipal/provincial funding responsibilities.",
       "surveyIds": "",
@@ -972,12 +1050,15 @@
         "belong": 0,
         "wellbeing": 1
       },
-      "sourceIndex": 26
+      "sourceIndex": 26,
+      "legacyCode": "H-3",
+      "surveyTopicId": "T01",
+      "planningArea": "Housing and remaining rooted"
     },
     {
-      "code": "H-5",
+      "code": "HR-07",
       "title": "Supportive Housing for Aging in Place",
-      "theme": "Housing",
+      "theme": "Housing and remaining rooted",
       "summary": "Seniors supportive housing, to support aging in place",
       "assesses": "Tests whether older residents can age in place through accessible, affordable seniors housing, supportive services, appropriate adaptations to existing homes and suitable new housing options. Distinct from intergenerational housing mix (H-2) and general supportive housing (H-3).",
       "surveyIds": "S14",
@@ -1008,12 +1089,15 @@
         "belong": 0,
         "wellbeing": 1
       },
-      "sourceIndex": 27
+      "sourceIndex": 27,
+      "legacyCode": "H-5",
+      "surveyTopicId": "T04",
+      "planningArea": "Housing and remaining rooted"
     },
     {
-      "code": "R-6",
+      "code": "RJ-05",
       "title": "Redress and Remedies for Past Municipal Harms",
-      "theme": "Rights and equity",
+      "theme": "Rights, recognition and reparative justice",
       "summary": "Repair and remedy for demonstrated harms caused by past public decisions",
       "assesses": "Tests whether documented harms arising from past municipal/public land-use, housing, infrastructure or redevelopment decisions are matched to specific proposed remedies, responsible institutions, participation of harmed communities, dedicated resources, timelines and follow-through. Distinguish reparation, restitution, restorative measures or compensation proposals from routine prospective relocation and return protections (R-1); do not assert a legal compensation duty without legal authority.",
       "surveyIds": "S13",
@@ -1044,12 +1128,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 28
+      "sourceIndex": 28,
+      "legacyCode": "R-6",
+      "surveyTopicId": "T20",
+      "planningArea": "Rights, recognition and reparative justice"
     },
     {
-      "code": "R-7",
+      "code": "CP-02",
       "title": "Community Decision-Making and Oversight",
-      "theme": "Rights and equity",
+      "theme": "Community power and implementation",
       "summary": "Resourced resident authority over plan development, decisions and implementation oversight",
       "assesses": "Tests whether affected residents and community organizations have defined, representative and resourced authority in both stages: developing the framework (setting priorities, co-designing options, reviewing proposals and influencing decisions) and overseeing implementation (reviewing outcomes, accessing information and seeking corrective action). Identify formal roles, membership and selection, paid participation, decision rules, funding, public accountability and a credible response to disagreement. Consultation alone or an advisory title without meaningful authority is insufficient.",
       "surveyIds": "S05; S12; S19; S11; S16",
@@ -1080,12 +1167,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 29
+      "sourceIndex": 29,
+      "legacyCode": "R-7",
+      "surveyTopicId": "T15",
+      "planningArea": "Community power and implementation"
     },
     {
-      "code": "R-1",
+      "code": "HR-02",
       "title": "The Right to Remain and Return",
-      "theme": "Rights and equity",
+      "theme": "Housing and remaining rooted",
       "summary": "Right to remain; replacement, relocation assistance and return for affected residents and businesses",
       "assesses": "Tests whether the right of existing residential and commercial tenants and businesses to remain is explicitly recognized AND supported by feasible anti-displacement, replacement, relocation, transition and return arrangements if people or businesses are displaced. Identify applicable legal protections versus proposed additional programs; test who qualifies, comparability and affordability of replacement space, return/priority opportunities, institutional responsibilities and the strength of implementation commitments.",
       "surveyIds": "S07; S11; S16",
@@ -1116,12 +1206,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 30
+      "sourceIndex": 30,
+      "legacyCode": "R-1",
+      "surveyTopicId": "T03",
+      "planningArea": "Housing and remaining rooted"
     },
     {
-      "code": "R-3",
+      "code": "RJ-03",
       "title": "Human Rights and Anti-Racism Assessment",
-      "theme": "Rights and equity",
+      "theme": "Rights, recognition and reparative justice",
       "summary": "Applied human-rights and anti-racism tests for planning and investment, including confronting anti-Black racism and anti-Indigenous racism",
       "assesses": "Tests whether land-use choices and investments are examined for discriminatory effects, particularly anti-Black and anti-Indigenous racism, with affected groups, barriers, mitigation and responsible actors identified, beyond a generic human-rights lens.",
       "surveyIds": "S11",
@@ -1152,12 +1245,15 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 31
+      "sourceIndex": 31,
+      "legacyCode": "R-3",
+      "surveyTopicId": "T19",
+      "planningArea": "Rights, recognition and reparative justice"
     },
     {
-      "code": "R-4",
+      "code": "LW-02",
       "title": "Equitable Access, Inclusion and Growth Benefits",
-      "theme": "Rights and equity",
+      "theme": "Local economy and community wealth",
       "summary": "Equitable growth benefits and inclusive access for marginalized, low-income and existing residents",
       "assesses": "Tests whether growth and public investment deliver demonstrable benefits for marginalized, low-income and existing residents, while removing age-, disability-, language- and culture-related barriers to housing, jobs, services, public spaces and civic life. Requires both meaningful accessibility and culturally appropriate measures AND identifiable priority beneficiaries, measurable equity outcomes, accountable delivery and safeguards against displacement. General inclusion rhetoric alone is insufficient.",
       "surveyIds": "S08; S11; S22; S23",
@@ -1188,7 +1284,10 @@
         "belong": 0,
         "wellbeing": 0
       },
-      "sourceIndex": 32
+      "sourceIndex": 32,
+      "legacyCode": "R-4",
+      "surveyTopicId": "T08",
+      "planningArea": "Local economy and community wealth"
     }
   ],
   "comparators": [
@@ -1202,33 +1301,442 @@
   ],
   "themes": [
     {
-      "name": "Acknowledgement",
-      "count": 8
-    },
-    {
-      "name": "Community and public spaces",
-      "count": 6
-    },
-    {
-      "name": "Culture and identity",
-      "count": 2
-    },
-    {
-      "name": "Delivery",
+      "name": "Housing and remaining rooted",
       "count": 4
     },
     {
-      "name": "Economic opportunity",
+      "name": "Local economy and community wealth",
+      "count": 4
+    },
+    {
+      "name": "Culture, history and belonging",
       "count": 3
     },
     {
-      "name": "Housing",
-      "count": 5
+      "name": "Everyday needs and environment",
+      "count": 3
     },
     {
-      "name": "Rights and equity",
-      "count": 5
+      "name": "Community power and implementation",
+      "count": 3
+    },
+    {
+      "name": "Rights, recognition and reparative justice",
+      "count": 3
     }
   ],
-  "assessmentScale": "1 Not addressed | 2 Acknowledged | 3 Partially developed | 4 Substantively developed | 5 Comprehensive"
+  "assessmentScale": "1 Not addressed | 2 Acknowledged | 3 Partially developed | 4 Substantively developed | 5 Comprehensive",
+  "surveyTopics": [
+    {
+      "code": "T01",
+      "title": "Affordable housing at the depth and scale needed",
+      "theme": "Housing and remaining rooted",
+      "summary": "Create enough affordable and deeply affordable homes, with rents and prices matched to local households' ability to pay, including supportive housing and homelessness services.",
+      "assesses": "Affordable Housing Scale and Depth; Supportive Housing and Homelessness",
+      "criterionCodes": [
+        "HR-03",
+        "HR-04"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 1
+      }
+    },
+    {
+      "code": "T02",
+      "title": "Residential tenant protections",
+      "theme": "Housing and remaining rooted",
+      "summary": "Protect renters from eviction, renoviction, unsafe conditions and displacement linked to repairs or redevelopment.",
+      "assesses": "Residential Tenant Stability and Eviction Protection",
+      "criterionCodes": [
+        "HR-05"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 1,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T03",
+      "title": "Preventing residential displacement and enabling return",
+      "theme": "Housing and remaining rooted",
+      "summary": "Identify residents at risk, prevent avoidable displacement, and support those affected to remain or return.",
+      "assesses": "Acknowledge Displacement Risks and Investment Pressures; The Right to Remain and Return",
+      "criterionCodes": [
+        "HR-01",
+        "HR-02"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 1,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T04",
+      "title": "Housing for families, multiple generations and seniors",
+      "theme": "Housing and remaining rooted",
+      "summary": "Provide accessible and affordable homes for larger or multigenerational households, seniors and people who want to age in place.",
+      "assesses": "Intergenerational and Multigenerational Housing Options; Supportive Housing for Aging in Place",
+      "criterionCodes": [
+        "HR-06",
+        "HR-07"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 1
+      }
+    },
+    {
+      "code": "T05",
+      "title": "Affordable commercial space supply",
+      "theme": "Local economy and community wealth",
+      "summary": "Keep local and culturally significant businesses and non-profits in the neighbourhood through affordable commercial space.",
+      "assesses": "Affordable Commercial Space Supply",
+      "criterionCodes": [
+        "LW-03"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 1,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T06",
+      "title": "Preventing commercial displacement and enabling return",
+      "theme": "Local economy and community wealth",
+      "summary": "Identify businesses and other commercial tenants at risk, prevent avoidable displacement, and support them to remain or return.",
+      "assesses": "Local Business Retention and Tenant Protection",
+      "criterionCodes": [
+        "LW-04"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 1,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T07",
+      "title": "Good local jobs and training",
+      "theme": "Local economy and community wealth",
+      "summary": "Create access to decent jobs, local hiring, apprenticeships and skills training connected to growth and investment.",
+      "assesses": "Decent Local Jobs and Training",
+      "criterionCodes": [
+        "LW-05"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 1,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T08",
+      "title": "Community land ownership and equitable benefits from growth",
+      "theme": "Local economy and community wealth",
+      "summary": "Support community or non-profit ownership and stewardship of land, and ensure marginalized residents benefit from development.",
+      "assesses": "Community Ownership and Land Stewardship; Equitable Access, Inclusion and Growth Benefits",
+      "criterionCodes": [
+        "LW-01",
+        "LW-02"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 1,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T09",
+      "title": "Protecting cultural spaces, heritage and corridors",
+      "theme": "Culture, history and belonging",
+      "summary": "Protect and expand places important to community life, including cultural hubs, gathering spaces, heritage sites and commercial corridors.",
+      "assesses": "Cultural and Community Spaces, Heritage and Corridors",
+      "criterionCodes": [
+        "CB-01"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 1,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T10",
+      "title": "Supporting music, arts and cultural expression",
+      "theme": "Culture, history and belonging",
+      "summary": "Provide spaces, funding and opportunities for music, art, performance, mentorship and intergenerational cultural knowledge.",
+      "assesses": "Music, Cultural Expression and Funding",
+      "criterionCodes": [
+        "CB-02"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 1,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T11",
+      "title": "Recognizing community histories, discrimination and belonging",
+      "theme": "Culture, history and belonging",
+      "summary": "Tell the neighbourhood's history accurately, including migration, discrimination and the contributions of low-income residents.",
+      "assesses": "Acknowledge city-led Discriminatory Housing and Planning Harms; Acknowledge Community Origins and Migration Histories; Acknowledge Low-Income Residents and Community Belonging",
+      "criterionCodes": [
+        "CB-03",
+        "CB-04",
+        "CB-05"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0.3333333333333333,
+        "belong": 0.6666666666666666,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T12",
+      "title": "Accessible community services and local food systems",
+      "theme": "Everyday needs and environment",
+      "summary": "Improve access to childcare, health and recreation services, community facilities and affordable, culturally appropriate food.",
+      "assesses": "Complete communities - services; Food Security and Community Food Systems",
+      "criterionCodes": [
+        "NE-01",
+        "NE-02"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 0.5,
+        "wellbeing": 0.5
+      }
+    },
+    {
+      "code": "T13",
+      "title": "Safe, accessible and affordable transportation",
+      "theme": "Everyday needs and environment",
+      "summary": "Make it safer and easier to walk, wheel and use affordable public transit throughout the neighbourhood.",
+      "assesses": "Safe and Affordable Everyday Mobility",
+      "criterionCodes": [
+        "NE-03"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 1
+      }
+    },
+    {
+      "code": "T14",
+      "title": "Climate resilience and essential infrastructure",
+      "theme": "Everyday needs and environment",
+      "summary": "Prepare for heat, flooding and other climate impacts while ensuring reliable water, energy and essential infrastructure.",
+      "assesses": "Complete communities - infrastructure; Climate Resilience and Environmental Equity",
+      "criterionCodes": [
+        "NE-04",
+        "NE-05"
+      ],
+      "outcomeFlags": {
+        "coord": 0.5,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0.5
+      }
+    },
+    {
+      "code": "T15",
+      "title": "Community plans and resident decision-making authority",
+      "theme": "Community power and implementation",
+      "summary": "Respect community-led plans and give residents meaningful, resourced influence over municipal planning and implementation decisions.",
+      "assesses": "Acknowledge Community Organizing and Prior Plans; Community Decision-Making and Oversight",
+      "criterionCodes": [
+        "CP-01",
+        "CP-02"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 1,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T16",
+      "title": "Funding community-led planning and delivery partnerships",
+      "theme": "Community power and implementation",
+      "summary": "Fund community-led planning and resource Indigenous-, Black- and other racialized-led organizations to deliver agreed priorities.",
+      "assesses": "Community-Led Planning and Implementation Funding; Resourced Indigenous, Black or other Person of Colour Community Delivery Partnerships",
+      "criterionCodes": [
+        "CP-03",
+        "CP-04"
+      ],
+      "outcomeFlags": {
+        "coord": 0.5,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0.5,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T17",
+      "title": "Implementation commitments and public accountability",
+      "theme": "Community power and implementation",
+      "summary": "Set measurable targets, responsibilities and timelines; report progress publicly and correct course when commitments are not met.",
+      "assesses": "Implementation Targets and City Accountability; Public Progress and Community Impact Reporting",
+      "criterionCodes": [
+        "CP-05",
+        "CP-06"
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T18",
+      "title": "Indigenous lands, treaties and continuing presence",
+      "theme": "Rights, recognition and reparative justice",
+      "summary": "Recognize Indigenous territories, treaties, continuing presence and relationships to land and planning decisions.",
+      "assesses": "Acknowledge Indigenous Lands, Treaties and Presence",
+      "criterionCodes": [
+        "RJ-04"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 1,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T19",
+      "title": "City commitments, human rights and anti-racism",
+      "theme": "Rights, recognition and reparative justice",
+      "summary": "Apply existing City plans, human rights commitments and anti-racism tests to neighbourhood decisions and investment.",
+      "assesses": "City Human Rights Commitments and Obligations; Acknowledge Prior City Studies and Designations; Human Rights and Anti-Racism Assessment",
+      "criterionCodes": [
+        "RJ-01",
+        "RJ-02",
+        "RJ-03"
+      ],
+      "outcomeFlags": {
+        "coord": 1,
+        "wealth": 0,
+        "remain": 0,
+        "power": 0,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    },
+    {
+      "code": "T20",
+      "title": "Remedies for past municipal harms",
+      "theme": "Rights, recognition and reparative justice",
+      "summary": "Take concrete action to repair documented harms caused by discriminatory or exclusionary public planning and investment decisions.",
+      "assesses": "Redress and Remedies for Past Municipal Harms",
+      "criterionCodes": [
+        "RJ-05"
+      ],
+      "outcomeFlags": {
+        "coord": 0,
+        "wealth": 0,
+        "remain": 0,
+        "power": 1,
+        "belong": 0,
+        "wellbeing": 0
+      }
+    }
+  ],
+  "planningAreas": [
+    {
+      "prefix": "HR",
+      "name": "Housing and remaining rooted",
+      "surveyTopicCount": 4,
+      "criterionCount": 7
+    },
+    {
+      "prefix": "LW",
+      "name": "Local economy and community wealth",
+      "surveyTopicCount": 4,
+      "criterionCount": 5
+    },
+    {
+      "prefix": "CB",
+      "name": "Culture, history and belonging",
+      "surveyTopicCount": 3,
+      "criterionCount": 5
+    },
+    {
+      "prefix": "NE",
+      "name": "Everyday needs and environment",
+      "surveyTopicCount": 3,
+      "criterionCount": 5
+    },
+    {
+      "prefix": "CP",
+      "name": "Community power and implementation",
+      "surveyTopicCount": 3,
+      "criterionCount": 6
+    },
+    {
+      "prefix": "RJ",
+      "name": "Rights, recognition and reparative justice",
+      "surveyTopicCount": 3,
+      "criterionCount": 5
+    }
+  ]
 }
