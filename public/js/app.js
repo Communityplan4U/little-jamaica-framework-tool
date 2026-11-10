@@ -1,6 +1,6 @@
 'use strict';
-const STEPS=['Rank planning areas','Rank community outcomes','Confirm top topics','Identify lowest priority topics','Compare the Citys planning frameworks','Your priorities and the community'];
-const STORE='cip.ljov.20.top6.bottom2.six-areas.six-outcomes.v2.';
+const STEPS=['Rank planning areas and community outcomes','Choose your topic priorities','Compare planning frameworks','Your priorities and the community'];
+const STORE='cip.ljov.20.top6.bottom2.combined-ranking.drag-order.v3.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
 const FRAMEWORK_REPORTS={
@@ -79,7 +79,7 @@ let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closes
 let priorityDraft=null,priorityEditorExpanded=false;
 const PRIORITY_EDITOR_LABELS=['Highest priority','Middle Priority','Low Priority'];
 function priorityDraftKey(){
- return JSON.stringify([state.ranking,state.outcomeRanking,state.excludedTop,state.promotedTop,state.bottom]);
+ return JSON.stringify([state.ranking,state.outcomeRanking,state.excludedTop,state.promotedTop,state.bottom,state.topicOrder]);
 }
 function ensurePriorityDraft(calculation){
  const key=priorityDraftKey();
@@ -139,7 +139,7 @@ function init(){
  let saved=null;try{const id=localStorage.getItem(STORE+'active');saved=id?JSON.parse(localStorage.getItem(STORE+id)||'null'):null;}catch{}
  if(saved&&saved.record?.sourceVersion===METHOD.id){
   record=saved.record;const d=saved.state||{};
-  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','promotedTop','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
+  for(const key of ['step','ranking','outcomeRanking','top','bottom','excludedTop','promotedTop','topicOrder','email','newsletterOptIn','planningOptIn','connections','feedback','scope','communityView','complete']){
    if(Object.prototype.hasOwnProperty.call(d,key))state[key]=d[key];
   }
   if(!Array.isArray(d.excludedTop)&&Array.isArray(d.top)&&d.top.length===COUNTS[0])
@@ -156,20 +156,13 @@ function notice(s,kind='info'){const n=document.getElementById('notice');if(!n)r
 function clearNotice(){const n=document.getElementById('notice');if(n)n.hidden=true;}
 function validOrder(v,all){return Array.isArray(v)&&v.length===all.length&&new Set(v).size===all.length&&v.every(x=>all.includes(x));}
 function canEdit(){return collection.checked&&(collection.isOpen||collection.offlineDraft===true);}
-// Each new step unlocks only when the preceding step was completed via Continue.
-// Existing respondents who already visited Step 6 retain access to their results.
+// Step 1 completes both rankings; Step 2 completes all topic choices.
 function highestUnlockedStep(){
  if(!record)return 0;
  const continued=new Set(Array.isArray(record.continuedPages)?record.continuedPages:[]);
- let unlocked=0;
- for(let page=1;page<=4;page++){
-  if(!continued.has(page))break;
-  if(page===4&&(!record.firstCompletedAt||state.bottom.length!==COUNTS[2]))break;
-  unlocked=page;
- }
- if(unlocked===4&&(continued.has(5)||
-   (record.firstCompletedAt&&Array.isArray(record.visitedPages)&&record.visitedPages.includes(6))))unlocked=5;
- return unlocked;
+ if(!continued.has(1))return 0;
+ if(!continued.has(2)||!record.firstCompletedAt||state.bottom.length!==COUNTS[2])return 1;
+ return continued.has(3)?3:2;
 }
 async function status(){
  try{const r=await fetch('/api/status',{cache:'no-store',signal:networkSignal(8000)});if(!r.ok)throw Error('status');const d=await r.json();
@@ -189,7 +182,7 @@ async function status(){
 }
 function privateLink(){return location.origin+location.pathname+'#resume='+encodeURIComponent(record.responseId+'.'+record.responseToken);}
 function serialize(){return {page:state.step,ranking:state.ranking,outcomeRanking:state.outcomeRanking,top:state.top,bottom:state.bottom,excludedTop:state.excludedTop,promotedTop:state.promotedTop,connections:state.connections,
- feedback:state.feedback,scope:state.scope,email:'',newsletterOptIn:false,planningOptIn:false};}
+ feedback:state.feedback,scope:state.scope,topicOrder:preferredTopicOrder(),email:'',newsletterOptIn:false,planningOptIn:false};}
 function checkpoint(kind){
  if(!canEdit())throw Error('The survey is closed. No changes can be submitted.');
  const data=snapshot();record.revision++;record.answerRevision++;
@@ -313,8 +306,8 @@ async function restore(raw){
   if(!validOrder(p.ranking,THEMES)||!validOrder(p.outcomeRanking,OUTCOMES))throw Error('Saved rankings are incompatible.');
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
-  Object.assign(state,{step:d.firstCompletedAt?4:Math.max(0,Math.min(3,p.page||0)),
-   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===COUNTS[0]?CODES.filter(code=>!top.includes(code)):[]),promotedTop:Array.isArray(p.promotedTop)?p.promotedTop:[],connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
+  Object.assign(state,{step:Math.max(0,Math.min(3,Number.isInteger(p.page)?p.page:(d.firstCompletedAt?2:0))),
+   ranking:p.ranking,outcomeRanking:p.outcomeRanking,top,bottom,excludedTop:Array.isArray(p.excludedTop)?p.excludedTop:(top.length===COUNTS[0]?CODES.filter(code=>!top.includes(code)):[]),promotedTop:Array.isArray(p.promotedTop)?p.promotedTop:[],topicOrder:validOrder(p.topicOrder,CODES)?p.topicOrder:[],connections:p.connections||[],feedback:p.feedback||'',scope:p.scope||'vision',
    email:p.email||'',newsletterOptIn:!!p.newsletterOptIn,planningOptIn:!!p.planningOptIn,complete:!!d.firstCompletedAt,community:null});
   record={responseId:m[1],responseToken:m[2],sourceVersion:METHOD.id,
    revision:d.revision||0,answerRevision:d.answerRevision||0,continuedPages:d.continuedPages||[],
@@ -330,7 +323,7 @@ function selectPage(i){
  }
  if(i===state.step)return;state.step=i;record.visitedPages=[...new Set([...record.visitedPages,i+1])];state.community=null;write();render();
  window.scrollTo({top:0,behavior:'smooth'});
- if(i===5)loadCommunity();
+ if(i===3)loadCommunity();
 }
 function optionRank(items,listKey){
  return '<div class="rank-items">'+state[listKey].map((id,i)=>{
