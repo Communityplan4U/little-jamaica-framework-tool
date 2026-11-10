@@ -15,7 +15,8 @@ function selected(a,max,label){
 }
 function text(x,max,label){if(typeof x!=='string'||x.length>max)fail(400,'Invalid '+label);return x;}
 const WEIGHTS=Object.fromEntries(M.groupNames.map((n,i)=>[n,M.groupShares[i]/100/M.groupCounts[i]]));
-const WHO=['resident','former','business','worker','organization','culture','services','other'];
+// Preserve legacy connection options for saved responses; accept the new public form choices.
+const WHO=['resident','former','business','worker','organization','culture','services','visit','representation','other'];
 function canonicalSnapshot(input,rid){
  if(!input||typeof input!=='object'||Array.isArray(input))fail(400,'Missing survey response');
  if(input.sourceVersion!==M.id||input.responseId!==rid)fail(409,'Survey version mismatch');
