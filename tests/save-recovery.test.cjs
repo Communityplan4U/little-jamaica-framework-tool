@@ -167,3 +167,19 @@ test('Rapid double-clicking Continue creates only one checkpoint and one step tr
  assert.equal(h.run('record.confirmedRevision'),1);
  assert.equal(h.run('record.outbox.length'),0);
 });
+
+test('Conflict recovery preserves an unsent completion when later edits were queued',async()=>{
+ const accepted=[];
+ const h=harness(async(url,opts)=>{
+  if(url==='/api/resume')return ok(200,serverState(2,2));
+  const e=JSON.parse(opts.body);accepted.push(e);
+  return e.revision===3?receipt(e):ok(409,{error:'stale'});
+ });
+ h.run("state.bottom=suggestions().slice(-4);record.continuedPages=[1,2,3,4];record.firstCompletedAt=new Date().toISOString();state.step=3;checkpoint('complete')");
+ h.run("state.step=4;state.feedback='These are my current priorities';checkpoint('comments_shared')");
+ assert.equal(await h.run('flush()'),true);
+ assert.equal(accepted.at(-1).eventType,'complete');
+ assert.equal(accepted.at(-1).snapshot.inputEvidence.coreStepsCompleted,true);
+ assert.equal(accepted.at(-1).snapshot.notes,'These are my current priorities');
+ assert.equal(h.run('record.outbox.length'),0);
+});
