@@ -397,7 +397,7 @@ test('Fresh Step 1 subjects and Step 2 outcomes start in the survey-informed ord
  saved.themeRanking=order('ranking');
  saved.outcomeRanking=order('outcomeRanking');
  assert.equal(S.canonicalSnapshot(saved,id).coreCompleted,true,'New defaults are server-compatible');
- assert.match(app,/The earlier survey asked about five action areas/);
+ assert.match(app,/That survey asked about five action areas/);
  assert.match(app,/These six outcomes were not ranked directly/);
 });
 
