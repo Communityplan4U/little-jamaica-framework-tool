@@ -181,7 +181,7 @@ test('Step 3 shows all searchable other topics, permits promotion and saves sele
  assert.equal(count(element('step-detail').textContent+element('stage').innerHTML,outcomeQuestion),1,'Step 2 question must appear once');
  assert.equal(element('step-detail').hidden,true,'Step 2 should hide duplicate header text');
  assert.doesNotMatch(element('stage').innerHTML,/id="topic-search"/);
- assert.match(element('stage').innerHTML,/Rank the six community outcomes/);
+assert.match(element('stage').innerHTML,/Rank from most to least impactful/);
  vm.runInContext('state.step=2;render()',ctx);
  assert.equal(element('step-detail').hidden,false,'Step 3 must retain its helpful header description');
  const state=vm.runInContext('state',ctx),before=state.top.slice();
