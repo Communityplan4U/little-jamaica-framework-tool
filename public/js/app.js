@@ -169,6 +169,14 @@ async function restore(raw){
    body:JSON.stringify({responseId:m[1],sourceVersion:METHOD.id})});
   if(!r.ok)throw Error('The private link was not recognized for this survey version.');
   const d=await r.json(),p=d.resumeState||{};
+  // Reopening this same private link must not discard any unsent local answers.
+  if(record?.responseId===m[1]&&record?.responseToken===m[2]&&record.outbox?.length){
+   reconcilePending(d);
+   const synced=await flush();
+   render();
+   if(synced)notice('Your latest answers were synchronized and saved online.');
+   return;
+  }
   if(!validOrder(p.ranking,THEMES)||!validOrder(p.outcomeRanking,OUTCOMES))throw Error('Saved rankings are incompatible.');
   const top=p.top||[],bottom=p.bottom||[];
   if(!Array.isArray(top)||!Array.isArray(bottom)||top.some(x=>!CODES.includes(x))||bottom.some(x=>!CODES.includes(x)))throw Error('Invalid saved topic selections.');
@@ -521,7 +529,12 @@ async function next(){
  record.continuedPages=[...new Set([...record.continuedPages,state.step+1])];
  if(state.step===3)record.firstCompletedAt=record.firstCompletedAt||new Date().toISOString();
  const ok=await save(state.step===3?'complete':'continue');
- if(ok){state.complete=!!record.firstCompletedAt;selectPage(nextStep);}
+ // Online receipt is essential for submission, but temporary outages should
+ // never prevent participants from continuing their locally saved survey.
+ if(ok||(record.outbox.length&&canEdit())){
+  state.complete=!!record.firstCompletedAt;selectPage(nextStep);
+  if(!ok)notice('Your answers are stored on this device. You may continue; use Retry save to confirm them online.','warning');
+ }
 }
 async function loadCommunity(force=false){
  if(state.loading||!record.firstCompletedAt)return;
@@ -541,7 +554,7 @@ function downloadCsv(){
  const csv='\ufeff'+rows.map(row=>row.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='little-jamaica-my-33-priorities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
 }
-window.addEventListener('online',()=>flush());
+window.addEventListener('online',()=>{status();flush();});
 init();
 const secret=location.hash.startsWith('#resume=')?decodeURIComponent(location.hash.substring(8)):null;
 if(secret)history.replaceState(null,'',location.pathname+location.search);
