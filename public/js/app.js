@@ -1,5 +1,5 @@
 'use strict';
-const STEPS=['Rank planning themes','Rank community outcomes','Review your top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
+const STEPS=['Rank planning subjects','Rank community outcomes','Review your top 10','Move middle topics to lowest','Compare planning frameworks','Your priorities and the community'];
 const STORE='cip.ljov.33.top10.bottom4.six-outcomes.additive60-40.v4.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
@@ -138,8 +138,8 @@ function optionRank(items,listKey){
 }
 function connectionForm(){
  const choices=[['resident','I live in the neighbourhood'],['former','I used to live in the neighbourhood'],['business','I own or operate a local business'],
- ['worker','I work/volunteer here'],['visit','I regularly spend time here (school, worship, visiting, etc'],
- ['representation','My current councillor is also a councillor of this neighbourhood (Colle, Matlow, Padovani, Bravo'],['other','Another connection']];
+ ['worker','I work/volunteer here'],['visit','I regularly spend time here (school, worship, visiting, etc.)'],
+ ['representation','My current councillor is also a councillor of this neighbourhood (Colle, Matlow, Padovani, Bravo)'],['other','Another connection']];
  return '<section class="subpanel"><h3>How are you connected to Little Jamaica / Oakwood Vaughan?</h3><p>Optional. Select any that apply.</p>'+
   '<div class="connections">'+choices.map(([key,label])=>'<label><input type="checkbox" data-connection="'+key+'" '+(state.connections.includes(key)?'checked':'')+'><span>'+esc(label)+'</span></label>').join('')+'</div>'+
   '<label class="field-label" for="participant-email">Your email address (optional)</label>'+
@@ -147,7 +147,9 @@ function connectionForm(){
   '<p class="help">Add your email if you would like Community in Public to send you your results and updates on the final results. No email is required to participate.</p>'+
   '<fieldset class="consent"><legend>Other messages you may choose to receive (optional)</legend>'+
   '<label><input id="newsletter" type="checkbox" '+(state.newsletterOptIn?'checked':'')+'> Community in Public newsletter</label>'+
-  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>';
+  '<label><input id="planning-updates" type="checkbox" '+(state.planningOptIn?'checked':'')+'> Other updates about the Little Jamaica planning process</label></fieldset>'+ 
+  '<p class="help">These permissions are independent and unchecked by default. Messages are not sent automatically by this survey.</p>'+ 
+  '<details class="privacy"><summary>Privacy and community averages</summary><p>Community in Public stores survey answers separately from optional contact details. Completed participants may view aggregate priorities from the first completed response onward. With very few responses, an average may closely reflect an individual’s choices. Keep your private return link confidential; it provides access to your response and allows revisions before the closing date.</p></details></section>';
 }
 function topicBrowserResults(){
  const highest=new Set(syncTop()),q=(state.topicSearch||'').trim().toLowerCase();
@@ -182,7 +184,7 @@ function topicBrowser(){
 }
 function topicTile(t,kind,index){
  const action=kind==='top'?'Move to middle priorities':'Move to lowest priorities';
- return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-theme">'+esc(t.theme)+'</span></div>'+
+ return '<article class="topic-tile"><div class="topic-title"><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
   '<span class="topic-proposed"> #'+index+' · '+(kind==='top'?(state.promotedTop.includes(t.code)?'Added by you':'Suggested highest priority'):'Middle priority')+'</span>'+
   '<h3>'+esc(t.title)+'</h3><p>'+esc(t.summary||t.assesses)+'</p>'+
   '<details><summary>What the assessment tests</summary><p>'+esc(t.assesses)+'</p></details>'+
@@ -193,7 +195,7 @@ function selectionPage(kind){
  if(kind==='top'){
   const rejected=proposed.filter(code=>state.excludedTop.includes(code));
   return '<div class="selection-intro"><h3>Review your top 10 priorities</h3>'+
-   '<p>These ten topics are suggested from your rankings of planning subject (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
+   '<p>These ten topics are suggested from your rankings of planning subjects (60%) and community outcomes (40%), with any additional topics you choose from the searchable list below. You can change these suggestions.</p>'+
    '<p class="weight-note">The highest ten share 60% of the evaluation weight (6% each).</p>'+
    '<p>Does a suggested topic belong in the middle instead? Choose <strong>Move to middle priorities</strong>. The next eligible suggested topic will take its place. Otherwise continue.</p>'+
    '<div class="selection-counter"><strong>'+highest.length+' / 10</strong> highest-priority topics</div>'+
@@ -256,7 +258,7 @@ function resultsPage(){
    '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
    (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div></div>';
  }).join('');
- const themeGroups=state.ranking.map(name=>({name,codes:c.topics.filter(t=>t.theme===name).map(t=>t.code)}));
+ const subjectGroups=state.ranking.map(name=>({name,codes:c.topics.filter(t=>t.theme===name).map(t=>t.code)}));
  const outcomeGroups=state.outcomeRanking.map(id=>{
   const o=METHOD.outcomes.find(x=>x.id===id);
   return {name:o.title,codes:outcomeCodes[id]};
@@ -274,12 +276,12 @@ function resultsPage(){
   '<div class="scores">'+scores+'</div>'+
   '<section class="breakdowns"><h3>Compare by planning subject and community outcome</h3>'+
   '<p>The values below show each subject or outcome’s contribution to the framework’s difference from Little Jamaica. Every Little Jamaica value is zero.</p>'+
-  breakdownMatrix(c,scope,'Planning Subject',themeGroups,ordered)+
+  breakdownMatrix(c,scope,'Planning subjects',subjectGroups,ordered)+
   breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
   '<p class="help">Each topic has one primary subject and one primary community outcome, so the differences in either breakdown add up to each framework’s overall difference. Human rights and Indigenous rights remain cross-cutting considerations in the topic-level assessment.</p></section>'+
   '<details class="full-breakdown"><summary>See all 33 topic weights</summary>'+
    '<p class="help">Each topic’s weight reflects your highest, middle and lowest priority choices. This table shows weights, not absolute ratings.</p>'+
-   '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Subject</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
+   '<div class="table-scroll"><table><thead><tr><th>Code</th><th>Topic</th><th>Planning subject</th><th>Group</th><th>Weight</th></tr></thead><tbody>'+topics+'</tbody></table></div></details>'+
   '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything else we should know about how the Planning Framework should be evaluated?</p>'+
    '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
    '<button class="secondary" id="save-comment" type="button">Save comments and changes</button>'+
@@ -289,11 +291,12 @@ function resultsPage(){
 function communityPage(){
  const c=calculate(),d=state.community,ready=d&&d.available===true;
  const ownTopics=Object.fromEntries(c.topics.map(t=>[t.code,t.weight]));
- const ownThemes=Object.fromEntries(WB.themes.map(t=>[t.name,sum(c.topics.filter(x=>x.theme===t.name).map(x=>x.weight))]));
+ const ownSubjects=Object.fromEntries(WB.themes.map(t=>[t.name,sum(c.topics.filter(x=>x.theme===t.name).map(x=>x.weight))]));
  const ownOutcomes=Object.fromEntries(OUTCOMES.map(id=>[id,sum(outcomeCodes[id].map(code=>ownTopics[code]||0))]));
- const view=state.communityView;
+ // Older browser drafts may use 'subjects' here; database/API values remain 'themes'.
+  const view=state.communityView==='subjects'?'themes':state.communityView;
  let list=view==='topics'?c.topics.map(t=>({name:t.code+' · '+t.title,id:t.code,you:t.weight,mean:d?.topicWeights?.[t.code]})):
-  view==='themes'?WB.themes.map(t=>({name:t.name,id:t.name,you:ownThemes[t.name],mean:d?.themeWeights?.[t.name]})):
+  view==='themes'?WB.themes.map(t=>({name:t.name,id:t.name,you:ownSubjects[t.name],mean:d?.themeWeights?.[t.name]})):
   METHOD.outcomes.map(o=>({name:o.title,id:o.id,you:ownOutcomes[o.id],mean:d?.outcomeWeights?.[o.id]}));
  list.sort((a,b)=>b.you-a.you||a.name.localeCompare(b.name));
  const rows=list.map(x=>'<div class="compare-item"><strong>'+esc(x.name)+'</strong><div class="compare-bars"><div>Your priorities <span>'+fmt(x.you*100,1)+'%</span><i style="width:'+Math.min(x.you*100*12,100)+'%"></i></div>'+
@@ -306,7 +309,7 @@ function communityPage(){
  return '<section class="results-intro"><h3>Your priorities and the community</h3><p>Compare the importance you gave to topics with the average across completed responses. The first response makes an average available.</p>'+
  '<p class="community-status" role="status">'+esc(info)+'</p>'+
  '<p class="help">At low response counts, an average can closely reflect an individual respondent’s priorities. No email addresses or private response records are shown here.</p>'+
- '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">33 topics</button><button data-community-view="subjects" aria-pressed="'+(view==='subjects')+'">7 subjects</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
+ '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">33 topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">7 subjects</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
  '<button class="secondary" id="refresh-averages" type="button">Refresh community averages</button></section>'+
  '<div class="compare-list">'+rows+'</div>'+
  '<p class="help">Each topic belongs to one primary outcome and one planning subject. Topic, subject, and outcome weights each total 100%. Human rights and Indigenous rights remain cross-cutting considerations.</p>';
@@ -467,7 +470,7 @@ async function loadCommunity(force=false){
  }catch(e){state.communityError=e.message;}finally{state.loading=false;render();}
 }
 function downloadCsv(){
- const rows=[['Topic code','Topic title','Subject','Priority group','Position','Weight (%)','Little Jamaica draft score (1-5)']];
+ const rows=[['Topic code','Topic title','Planning subject','Priority group','Position','Weight (%)','Little Jamaica draft score (1-5)']];
  for(const t of calculate().topics.slice().sort((a,b)=>a.position-b.position))rows.push([t.code,t.title,t.theme,t.group,t.position,fmt(t.weight*100,4),t.score]);
  const csv='\ufeff'+rows.map(row=>row.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n');
  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='little-jamaica-my-33-priorities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
