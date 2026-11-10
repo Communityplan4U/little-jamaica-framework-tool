@@ -219,3 +219,69 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
 .drop-prompt{border:2px dashed #bfa9c9;border-radius:11px;color:#675471;padding:18px;margin:0;background:#fff}
 @media(max-width:850px){.priority-lane .topic-grid{grid-template-columns:1fr}}
 @media(max-width:530px){.priority-lane{padding:13px}.priority-topic{min-height:0;padding:15px}.priority-topic .topic-actions{flex-direction:column;align-items:stretch}.topic-move-arrows{align-self:flex-end}}
+
+/* Page 3: draggable topic priority groups */
+
+.priority-drop-board{
+  display:grid;
+  gap:18px;
+  margin-top:16px;
+}
+
+.priority-drop-zone{
+  border:1px solid #dfd5e4;
+  border-radius:13px;
+  padding:14px;
+  background:#fcfafc;
+  transition:background .15s,border-color .15s;
+}
+
+.priority-drop-zone[data-priority-zone="0"]{
+  background:#f7f1fa;
+}
+
+.priority-drop-zone[data-priority-zone="1"]{
+  background:#fff;
+}
+
+.priority-drop-zone[data-priority-zone="2"]{
+  background:#f8f5fa;
+}
+
+.priority-drop-zone h4{
+  color:#56316d;
+  font-size:1rem;
+  margin:0 0 12px;
+}
+
+.priority-drop-zone h4 small{
+  font-size:.8rem;
+  font-weight:600;
+  margin-left:8px;
+}
+
+.priority-drop-zone.is-drop-target{
+  background:#eee1f5;
+  border:2px dashed #63387a;
+}
+
+.priority-drop-zone .table-scroll{
+  margin-top:0;
+}
+
+.priority-draggable-row{
+  cursor:grab;
+}
+
+.priority-draggable-row:active{
+  cursor:grabbing;
+}
+
+.priority-draggable-row.is-dragging{
+  opacity:.45;
+}
+
+.priority-draggable-row .drag-handle{
+  margin-right:7px;
+}
+
