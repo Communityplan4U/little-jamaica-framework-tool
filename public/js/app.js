@@ -15,6 +15,50 @@ const FRAMEWORK_REPORTS={
   'https://www.waterfrontoronto.ca/sites/default/files/documents/port-lands-planning-framework-aoda---reduced.pdf'
  ]
 };
+// Organizational credits from LJOVPF_Comparator_Assessment_Outcomes_Aligned.xlsx,
+// Plan staffing summary. Keep unverified/consulted units separate from confirmed support.
+const FRAMEWORK_RESPONSIBILITIES={
+ "local": {
+  "lead": "Development Review — Toronto & East York North, Midtown Section (D1)",
+  "support": "None confirmed",
+  "pending": "Development Review — Scarborough District (project role to verify); City Planning — Urban Design/Policy (unverified)"
+ },
+ "comparators": {
+  "Chinatown Tomorrow": {
+   "lead": "Development Review — Toronto & East York South, South Section (E2)",
+   "support": "Development Review — Downtown Section (D3); City Planning — Urban Design",
+   "pending": "Economic Development & Culture — Cultural Districts (project role to verify); Social Development (participation not confirmed)"
+  },
+  "Picture Mount Dennis": {
+   "lead": "City Planning — Community Planning, Etobicoke York Central Section (2021); South Section contributed",
+   "support": "City Planning — Urban Design and Heritage Planning; Transportation Services; Economic Development & Culture; Toronto Water; Transit Expansion Office; Indigenous Affairs Office; Parks, Forestry & Recreation; Toronto Public Health; Social Development, Finance & Administration; Environment & Energy"
+  },
+  "Mount Dennis Community for All Action Plan": {
+   "lead": "Housing Secretariat — Renters Strategy Unit; Social Development — Community Development Unit (joint leads)",
+   "support": "Development Review — Etobicoke York Central Section; Economic Development & Culture — Policy and Research Unit; Parks & Recreation — Planning; City Planning (specific unit to confirm)",
+   "pending": "Transportation Services and Indigenous Affairs Office (consulted, not confirmed project authors)"
+  },
+  "St. Clair Avenue West and Bathurst Street Planning Framework": {
+   "lead": "Development Review — Toronto & East York North, Midtown Section (D1)",
+   "support": "Transportation Services — Enforcement and Street Management",
+   "pending": "City Planning — Urban Design (participation unverified)"
+  },
+  "Bloor Street Planning Framework": {
+   "lead": "City Planning — Community Planning, Toronto & East York District (historical section unverified)",
+   "support": "City Planning — Heritage Planning",
+   "pending": "Transportation Services — on-street parking review (attributed; involvement not independently verified)"
+  },
+  "Yonge-St. Clair Planning Framework": {
+   "lead": "City Planning — Community Planning, Toronto & East York District (historical section unverified)",
+   "support": "None confirmed as original report authors",
+   "pending": "City Planning — Urban Design and Transportation Planning (attributed, not independently verified); Transportation Services (Council-directed implementation, not confirmed as report author)"
+  },
+  "Port Lands Planning Framework": {
+   "lead": "City Planning — Toronto & East York waterfront planning (historical section unverified); Waterfront Toronto — Port Lands planning (joint lead)",
+   "support": "Waterfront Secretariat — interagency oversight; Transportation Services — Port Lands/South of Eastern transportation and servicing"
+  }
+ }
+};
 function reportLink(label,href){
  return '<a class="framework-link" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" title="Open the source planning report in a new tab">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
 }
@@ -301,12 +345,11 @@ function groupDifference(c,codes,planIdx,scope){
 function resultFrameworks(c,scope){
  // Dates printed on the source documents (not subsequent Council adoption dates).
  const publicationDates=['June 2026','December 2021','November 2025','February 2026','May 2021','December 2019','September 2017'];
- const leadTeams=['City Planning – Community Planning, Toronto and East York', 'City Planning (consultant: Perkins&Will)', 'Housing Secretariat (interdivisional team)', 'Development Review – Community Planning, Toronto and East York', 'City Planning – Community Planning, Toronto and East York', 'City Planning – Community Planning, Toronto and East York', 'City Planning and Waterfront Toronto'];
  return [{name:'Little Jamaica / Oakwood Vaughan (draft)',relative:0,local:true,idx:-1,url:FRAMEWORK_REPORTS.local,
-  publication:'Development Review staff project report to be finalized Q1 2027',leadTeam:'Development Review – Community Planning'}]
+  publication:'Development Review staff project report to be finalized Q1 2027',...FRAMEWORK_RESPONSIBILITIES.local}]
   .concat(c.comparators.map((p,i)=>({
    name:p.name,relative:p[scope]-c.baseline,local:false,idx:i,url:FRAMEWORK_REPORTS.comparators[i],
-   publication:publicationDates[i],leadTeam:leadTeams[i]
+   publication:publicationDates[i],...FRAMEWORK_RESPONSIBILITIES.comparators[p.name]
   }))).sort((a,b)=>b.relative-a.relative||a.name.localeCompare(b.name));
 }
 function breakdownMatrix(c,scope,title,groups,ordered){
@@ -339,7 +382,9 @@ function resultsPage(){
    '<strong class="'+(p.relative<0?'delta-negative':p.relative>0?'delta-positive':'')+'">'+relativeScore(p.relative)+'</strong>'+
    '<div class="relative-track" aria-hidden="true"><span class="zero-axis"></span>'+
    (p.local?'':'<i class="'+(p.relative<0?'negative-bar':'positive-bar')+'" style="left:'+left+'%;width:'+width+'%"></i>')+'</div>'+ 
-   '<small class="score-lead">Lead division/team: '+esc(p.leadTeam)+'</small></div>';
+   '<small class="score-lead">Lead division/team: '+esc(p.lead)+'</small>'+
+   '<small class="score-support">Supporting divisions/teams: '+esc(p.support)+'</small>'+
+   (p.pending?'<small class="score-pending">Other attributions / roles to verify: '+esc(p.pending)+'</small>':'')+'</div>';
  }).join('');
  const subjectGroups=state.ranking.map(name=>({name,codes:c.topics.filter(t=>t.theme===name).map(t=>t.code)}));
  const outcomeGroups=state.outcomeRanking.map(id=>{
