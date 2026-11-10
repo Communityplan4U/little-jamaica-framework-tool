@@ -984,8 +984,8 @@ state.email=email;  }
    record.continuedPages=[...new Set([...record.continuedPages,3])];
    const ok=await save('results_viewed');
    if(ok||(record.outbox.length&&canEdit())){
-await selectPa
- ge(3,true);    if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
+    await selectPage(3,true);
+    if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
    }
    return;
   }
