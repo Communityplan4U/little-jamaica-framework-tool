@@ -218,7 +218,42 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
 .topic-move-arrows button:focus-visible,.priority-topic button:focus-visible{outline:3px solid #7956a6;outline-offset:2px}
 .drop-prompt{border:2px dashed #bfa9c9;border-radius:11px;color:#675471;padding:18px;margin:0;background:#fff}
 @media(max-width:850px){.priority-lane .topic-grid{grid-template-columns:1fr}}
-@media(max-width:530px){.priority-lane{padding:13px}.priority-topic{min-height:0;padding:15px}.priority-topic .topic-actions{flex-direction:column;align-items:stretch}.topic-move-arrows{align-self:flex-end}}
+
+@media (max-width:530px) {
+  .priority-lane {
+    padding: 13px;
+  }
+
+  .priority-topic {
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .priority-topic .topic-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .priority-topic .topic-actions .pick {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    min-height: 44px;
+    margin: 0;
+    padding: 7px 5px;
+    font-size: 0.76rem;
+    line-height: 1.2;
+    white-space: normal;
+  }
+
+  .topic-move-arrows {
+    align-self: flex-end;
+  }
+}
 
 /* Page 3: draggable topic priority groups */
 
