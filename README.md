@@ -39,16 +39,16 @@ Four underlying criterion-to-outcome assignments were revised against the source
 | NE-05 | Adequate Standard of Living and Wellbeing | T14 |
 | CP-03 | Community Decision-Making and Reparative Justice | T16 |
 
-Each affected survey topic now has 100% of its underlying criteria allocated to its revised primary outcome, rather than a 50/50 or 1/3-2/3 split. The methodology source-version ID was advanced to `ljov-20261110-20top6-bottom2-60-37-3-six-areas-six-outcomes-v2`; v1 preview responses and earlier 33-topic responses must remain separate. The corrected source workbook is `LJOVPF_Comparator_Assessment_Corrected_Outcomes.xlsx`.
+Each affected survey topic now has 100% of its underlying criteria allocated to its revised primary outcome, rather than a 50/50 or 1/3-2/3 split. The outcome corrections were introduced in the v2 preview; the later four-page UX revision uses v3. All earlier versions remain separately stored. The corrected source workbook is `LJOVPF_Comparator_Assessment_Corrected_Outcomes.xlsx`.
 
-### Participant flow
+### Four-page participant flow (November 10 revision)
 
-1. Rank the six Planning Areas, beginning with a qualitative interpretation of the October 21, 2026 Little Jamaica survey's five original action areas.
-2. Rank six community outcomes. These outcomes are distinct from the Planning Areas.
-3. Review six suggested highest-priority survey topics; demote or directly add other topics.
-4. Choose two lowest-priority topics from the remaining fourteen; the other twelve remain middle priority.
-5. Compare the seven City planning documents (vision statements or full documents) with the draft Little Jamaica vision. The six Planning Area and six community outcome breakdowns each sum to the overall difference.
-6. Compare the participant's weights with the mean of responses collected under **the same methodology version**.
+1. **Rank Planning Areas and outcomes on the same first page.** The six community outcomes appear directly beneath the six Planning Area ranking controls; both use drag/drop and arrow controls.
+2. **Organize all 20 survey topics on one priority page.** Six topics receive highest priority, twelve receive middle priority, and two receive lowest priority. Participants can drag topics within or between the three groups or use clearly labeled "Move to ... priority" buttons. Arrow buttons also move topics up/down **within** each group for keyboard/touch accessibility. Before two lowest choices are explicitly selected, the middle lane temporarily shows fourteen items; submission requires two lowest choices.
+3. **Compare planning documents.** All 33 detailed criterion ratings remain intact, and the participant's 20-topic group weights determine documentary comparisons. The results page retains the option to adjust group assignments.
+4. **Compare with the community.** Averages include only completed responses from the same source-version and collection mode.
+
+Topic order is a **presentation preference**, not a weighting mechanism. Dragging to reorder within the same group cannot change the numerical scores; only moving a topic into a different priority group changes its weight. The canonical server preserves the participant's order in `topicWeights.position` and `topicOrder`, and restores it through the private response link. The new source version `ljov-20261110-20top6-bottom2-60-37-3-six-areas-six-outcomes-v3` protects prior six-page survey drafts from being silently reinterpreted.
 
 **Important distinction:** the 60% Planning Area / 40% community outcome blend is used **only to rank provisional topic suggestions**. The 60% / 37% / 3% pools determine **final document comparison weights**. Public topics spanning multiple outcomes receive a criterion-proportional share of each outcome for suggestion and aggregate comparisons; detailed outcome comparison scores are calculated directly from criterion-level ratings. Human rights and distinct Indigenous rights obligations apply regardless of participant priorities.
 
@@ -61,7 +61,7 @@ For backward compatibility with the survey storage API, the internal fields `WB.
 - `public/js/model.js`: ranks public topics, distributes weights, computes aggregate comparison and criterion-level breakdowns.
 - `server/survey.cjs`: validates all choices and recalculates canonical 20-topic weights and comparator-independent source score.
 - `api/community.js`: calculates outcome-weighted averages from 20 public topic weights and within-topic outcome proportions.
-- `public/js/app.js`: six-step participant workflow; private return links; Step 5 reassignment and saved revisions.
+- `public/js/app.js`: four-page participant workflow, group-aware drag-and-drop ordering, private return links, Step 3 result-page reassignment and saved revisions.
 
 A new `sourceVersion` and new browser storage prefix protect completed 33-topic responses from being reinterpreted. Existing private links remain tied to their original version and must not be silently converted. **Production collection status is controlled server-side** by a source-version + collection-mode record in the dedicated Supabase project. A new version must have a verified control before accepting submissions.
 
