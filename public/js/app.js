@@ -474,7 +474,9 @@ function selectionPage(){
   '<p>Your rankings of the six Planning Areas and six Community Outcomes were used to suggest what may what you recommend to be the six highest priorities for evaluating a City-led Planning Framework. In the below, you can refine the placement into high, medium, or low priority. Select <strong>two lowest-priority topics</strong>. A lower priority does not mean you oppose a topic.</p>'+
   '<p><strong>Drag cards</strong> to move them between groups, or drag within a group to arrange them in your preferred order. <strong>Order within a group does not affect points</strong>—only the group matters.</p>'+
   '<div class="selection-counter"><strong>'+groups[0].length+' / 6</strong> highest · <strong>'+groups[2].length+' / 2</strong> lowest selected</div>'+
-  (groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lowest-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'<p class="help">Your highest, middle and lowest groups are complete. You can adjust them before continuing.</p>')+
+ 
+(groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lowest-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'')+
+'<p class="help">In the evaluation, highest priority topics are weighed at 10%, medium topics at 3.1%, and low priority at 1.5%</p>'+
   '</section>'+
    '<div class="topic-priority-board">'+groups.map((codes,i)=>
    '<section class="priority-lane priority-lane-'+i+'" data-topic-zone="'+i+'" aria-label="'+labels[i]+'">'+
@@ -571,7 +573,7 @@ const topics=PRIORITY_EDITOR_LABELS.map((label,group)=>{
 
   const count=priorityGroupCounts(draft.groups)[group];
 
-  return '<section class="priority-drop-zone" data-priority-zone="'+group+'" aria-label="'+esc(label)+' drop zone">'+
+  return '<section class="priority-drop-zone" data-priority-zone="'+group+'" aria-label="'+esc(label)+' drop zone(groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lowest-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'<p class="help">Your highest, middle and lowest groups are complete. You can adjust them before continuing.</p>')+
     '<h4>'+esc(label)+' <small>'+count+' / '+COUNTS[group]+'</small></h4>'+
     '<div class="table-scroll"><table class="priority-table">'+
     '<thead><tr><th>Code</th><th>Topic</th><th>Planning Area</th><th>Priority group</th></tr></thead>'+
@@ -579,7 +581,7 @@ const topics=PRIORITY_EDITOR_LABELS.map((label,group)=>{
     '</section>';
 }).join('');
  return '<section class="results-intro"><h3>Your priorities applied to the Citys Planning Frameworks</h3>'+
-  '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review team</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. </p>  <p> As the City publishes/shares more of the draft framework, it will be added to the tool so the assessment is more comprehensive. Until the full Little Jamaica Planning Framework is shared, this is an early indicator of if materials being published by the City are meeting community expectations and/or are comparable to the level of service delivered to other neighbourhoods.</p>'+'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>'+
+  '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review, midtown section, team</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. </p>  <p> As the City publishes/shares more of the draft framework, it will be added to the tool so the assessment is more comprehensive. Until the Citys full and proposed final Little Jamaica Planning Framework is shared, this is an early indicator of if materials being published by the City are meeting community expectations and/or are comparable to the level of service delivered to other neighbourhoods.</p>'+
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
   '<p class="help">Click any framework name to open its linked source document in a new tab. The Little Jamaica link opens the working draft Community Visioning Statement, not a finalized Planning Framework. The Port Lands Planning Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
   '<div class="scores">'+scores+'</div>'+
