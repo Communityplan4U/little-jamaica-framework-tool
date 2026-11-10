@@ -45,6 +45,7 @@ const FRAMEWORK_RESPONSIBILITIES={
   },
   "Yonge-St. Clair Planning Framework": {
    "lead": "City Planning — Community Planning, Toronto & East York District, Midtown section",
+     "support": "City Planning — Urban Design; City Planning — Transportation Planning"
   },
   "Port Lands Planning Framework": {
    "lead": "City Planning — Toronto & East York waterfront planning; Waterfront Toronto — Port Lands planning",
