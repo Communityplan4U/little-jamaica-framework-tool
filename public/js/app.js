@@ -560,8 +560,14 @@ function topicTile(t,group,index){
  const names=['high','moderate','lower'],moves=[0,1,2].filter(g=>g!==group);
  const pending=state.bottom.length<COUNTS[2];
  const weightText=group===0?'10.00% weight':group===2?'1.50% weight':pending?'3.08% if retained in moderate':'3.08% weight';
- const buttons=moves.map(g=>'<button type="button" class="pick" data-topic-move="'+g+'" data-code="'+esc(t.code)+'" '+(!canEdit()?'disabled':'')+'>'+
-   'Move to '+names[g]+' priority</button>').join('');
+ 
+  const buttons=moves.map(g=>
+    '<button type="button" class="pick" data-topic-move="'+g+'" data-code="'+esc(t.code)+'" '+
+    'aria-label="Move '+esc(t.title)+' to '+names[g]+' expected impact" '+
+    (!canEdit()?'disabled':'')+'>'+
+    'Move to '+names[g]+'</button>'
+  ).join('');
+
  const search=[t.code,t.title,t.theme,t.summary,t.assesses].join(' ').toLowerCase();
  return '<article class="topic-tile priority-topic" draggable="'+canEdit()+'" data-topic-drag="'+esc(t.code)+'" data-topic-drop="'+esc(t.code)+'" data-topic-group="'+group+'" data-topic-search="'+esc(search)+'" aria-label="'+esc(t.title)+', '+names[group]+' priority. Drag to reorder or change groups.">'+
   '<div class="topic-title"><span class="drag-handle" aria-hidden="true">⋮⋮</span><span class="topic-id">'+esc(t.code)+'</span><span class="topic-subject">'+esc(t.theme)+'</span></div>'+
