@@ -635,10 +635,11 @@ function render(){
  stepDetail.textContent=step===3?'Compare your weighted priorities with the latest completed responses.':'';
  stepDetail.hidden=!stepDetail.textContent;
  const root=document.getElementById('stage');
- const planningRanking='<section class="subpanel"><h3>1. Rank the six Planning Areas</h3>'+
-  '<p>Which Planning Areas are most important for the Framework to focus on? Rank, putting most important at the top. Drag to reorder or use the arrow buttons.</p>'+
-  '<p class="help">The starting order is based on community responses in our <a href="https://example.com">2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report</a>.</p>'+
-  optionRank(THEMES,'ranking')+'</section>';
+ const planningRanking='<section class="subpanel">'+
+   '<p class="help">The starting order is based on community responses in our <a href="https://communityinpublic.ca/ljcdap#9f47bb79-1716-4a7c-a255-79033acc62b3" target="_blank" rel="noopener noreferrer">2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report</a>.</p>'+
+   '<h3>1. Rank the six Planning Areas</h3>'+
+   '<p>Which Planning Areas are most important for the Framework to focus on? Rank, putting most important at the top. Drag to reorder or use the arrow buttons.</p>'+
+   optionRank(THEMES,'ranking')+'</section>';
  const outcomeRanking='<section class="subpanel"><h3>2. Rank the six community outcomes</h3>'+
   '<p>Identify which improvements matter most to you.</p>'+
   '<p class="help">The starting order is based on community responses in our <a href="https://example.com">2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report</a>.</p>'+
