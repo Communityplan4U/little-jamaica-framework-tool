@@ -961,7 +961,12 @@ async function next(){
  try{
   // A previously completed participant can still view their community
   // comparison after collection closes.
-  if(state.step===2&&highestUnlockedStep()===3){selectPage(3);return;}
+
+if(state.step===2&&highestUnlockedStep()===3){
+   if(await savePendingAnswers())await selectPage(3,true);
+   return;
+  }
+
   if(!canEdit())return;
   if(state.step===0){
   const email=document.getElementById('participant-email')?.value.trim()||'';
@@ -979,8 +984,8 @@ state.email=email;  }
    record.continuedPages=[...new Set([...record.continuedPages,3])];
    const ok=await save('results_viewed');
    if(ok||(record.outbox.length&&canEdit())){
-    selectPage(3);
-    if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
+await selectPa
+ ge(3,true);    if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
    }
    return;
   }
@@ -990,7 +995,7 @@ state.email=email;  }
   const ok=await save(state.step===1?'complete':'continue');
   if(ok||(record.outbox.length&&canEdit())){
    state.complete=!!record.firstCompletedAt;
-   selectPage(state.step+1);
+await selectPage(state.step+1,true);
    if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
   }
  }finally{navigating=false;}
