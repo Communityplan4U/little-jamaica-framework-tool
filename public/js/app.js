@@ -401,8 +401,8 @@ function render(){
   '', // Step 1: question is in the planning subjects panel.
   '', // Step 2: question is in the community outcomes panel.
     '', // Step 3: question is in the topics panel.
-      '', // Step 43 question is in the topics panel.
-   'Compare the Little Jamaica draft against seven Toronto planning frameworks using your selections.',
+      '', // Step 4 question is in the topics panel.
+        '', // Step 5 intro in the  panel.
   'Compare your weighted priorities with the latest completed responses.'
  ][step];
  stepDetail.hidden=!stepDetail.textContent;
