@@ -1,9 +1,10 @@
 import {readFile,writeFile,cp,rm,mkdir} from 'node:fs/promises';
 const wb=JSON.parse(await readFile('data/assessment.json','utf8'));
 const m=JSON.parse(await readFile('data/methodology.json','utf8'));
-if(wb.topics.length!==m.topicCount || m.groupCounts.reduce((a,b)=>a+b,0)!==wb.topics.length)throw Error('Topic count mismatch');
+if(wb.surveyTopics.length!==m.topicCount || m.groupCounts.reduce((a,b)=>a+b,0)!==wb.surveyTopics.length)throw Error('Survey topic count mismatch');
+if(wb.topics.length!==33 || new Set(wb.surveyTopics.flatMap(t=>t.criterionCodes)).size!==33)throw Error('Detailed criterion crosswalk mismatch');
 if(Math.abs(m.groupShares.reduce((a,b)=>a+b,0)-100)>1e-9)throw Error('Weight total mismatch');
 const safe=x=>JSON.stringify(x).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
 await rm('dist',{recursive:true,force:true});await mkdir('dist',{recursive:true});await cp('public','dist',{recursive:true});
 await writeFile('dist/js/data.js',`'use strict';\nwindow.LJOV_ASSESSMENT=${safe(wb)};\nwindow.LJOV_METHODOLOGY=${safe(m)};\n`);
-console.log(`Built preview: ${wb.topics.length} topics and ${wb.comparators.length} comparators; methodology ${m.id}`);
+console.log(`Built preview: ${wb.surveyTopics.length} survey topics / ${wb.topics.length} assessment criteria and ${wb.comparators.length} comparators; methodology ${m.id}`);
