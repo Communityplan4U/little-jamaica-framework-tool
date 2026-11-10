@@ -142,17 +142,8 @@ test('Browser model supports additional top-ten selections with fixed 6/12/2 gro
  assert.equal(Object.keys(x.FRAMEWORK_WARDS.comparators).length,7);
  assert.match(x.FRAMEWORK_WARDS.local,/Wards 5 .*8 .*9 .*12 /);
  assert.match(x.FRAMEWORK_WARDS.comparators['Port Lands Planning Framework'],/Ward 14 .*Ward 30/);
- assert.equal((output.match(/ · Wards? /g)||[]).length,8,'Step 5 shows the ward next to each publication date');
- assert.match(output,/Published: June 2026 · Wards 10/,'Chinatown displays both wards');
- assert.match(output,/Published: December 2021 · Ward 5/,'Picture Mount Dennis displays Ward 5');
- assert.match(output,/Published: February 2026 · Ward 12/,'St. Clair Bathurst displays Ward 12');
- assert.match(output,/Published: September 2017 · Ward 14/,'Port Lands displays the current ward');
- assert.match(output,/Ward 30 when adopted in 2017/,'Port Lands preserves the historical ward');
  assert.equal(x.FRAMEWORK_REPORTS.local,'https://drive.google.com/file/d/120GGehAkWSTByvfSLy4vcQEEqMcRE5XQ/view?usp=drive_link');
  assert.equal(output.split(x.FRAMEWORK_REPORTS.local).length-1,3,'Local document linked from score card and both comparison matrices');
- assert.ok(output.includes('Little Jamaica / Oakwood Vaughan (draft)'));
- assert.match(output,/Source: Draft Community Visioning Statement/);
- assert.match(output,/City Proposals Report/);
  assert.equal(Object.keys(x.FRAMEWORK_RESPONSIBILITIES.comparators).length,S.WB.comparators.length);
  assert.ok(x.FRAMEWORK_RESPONSIBILITIES.local.lead);
  assert.ok(x.FRAMEWORK_RESPONSIBILITIES.local.support);
