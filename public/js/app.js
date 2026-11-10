@@ -343,7 +343,7 @@ function resultsPage(){
    '<td>'+esc(t.group)+'</td><td>'+fmt(t.weight*100,2)+'%</td></tr>'
  ).join('');
  return '<section class="results-intro"><h3>Your priorities applied to the Planning Frameworks</h3>'+
-  '<p>All scores are <strong>weighted differences from the Little Jamaica draft (so positive numbers score higher, and negative numbers score lower)</strong>. They are not raw document rating. These are assessments of written documents, not verified implementation of what the City frameworks communicate.</p>'+
+  '<p>All scores are <strong>weighted differences from the draft Vision statement prepared by the City of Toronto Development Review team.</strong>. A positive number means the plan scores higher when compared to the draft vision summary, while a negative score means the plan scores lower than the draft vision summary. They are not raw document rating. These are assessments of written documents, not verified implementation of what the City frameworks communicate.<strong> As the City publishes/shares more of the draft framework, it will be added to the tool.</strong></p>'+
   '<div class="scope" role="group" aria-label="Scope of the comparator evaluation"><button data-scope="vision" aria-pressed="'+(!full)+'">Vision statements</button><button data-scope="full" aria-pressed="'+full+'">Full planning documents</button></div>'+
   (full?'<p class="help">Full comparator reports are being compared against the available Little Jamaica draft vision, so document scope differs.</p>':'')+
   '<p class="help">Click any framework name to open the Citys planning report in a new tab. Note: The Portland Framework is jointly published by the City and Waterfront Toronto.</p></section>'+
