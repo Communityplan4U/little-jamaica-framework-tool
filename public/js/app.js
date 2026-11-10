@@ -641,7 +641,6 @@ function render(){
    optionRank(THEMES,'ranking')+'</section>';
  const outcomeRanking='<section class="subpanel"><h3>2. Rank community outcomes by expected impact</h3>'+
   '<p>Rank the improvements you believe would contribute most to overall community wellbeing.</p>'+
-  '<p class="help">The starting order is based on community responses in our <a href="https://example.com">2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report</a>.</p>'+
   optionRank(OUTCOMES,'outcomeRanking')+'</section>';
  root.innerHTML=step===0?connectionForm()+planningRanking+outcomeRanking:
   step===1?selectionPage():step===2?resultsPage():communityPage();
