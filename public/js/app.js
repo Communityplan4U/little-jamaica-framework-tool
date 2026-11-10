@@ -483,10 +483,7 @@ function selectionPage(){
   '<div class="selection-counter"><strong>'+groups[0].length+' / 6</strong> highest · <strong>'+groups[2].length+' / 2</strong> lowest selected</div>'+
   (groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lowest-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'<p class="help">Your highest, middle and lowest groups are complete. You can adjust them before continuing.</p>')+
   '</section>'+
-  '<label class="field-label" for="topic-search">Find a topic (optional)</label>'+
-  '<input id="topic-search" class="search" type="search" autocomplete="off" value="'+esc(state.topicSearch||'')+'" placeholder="Search housing, culture, jobs, displacement…">'+
-  '<p class="help">Search filters the cards shown, not your selections.</p>'+
-  '<div class="topic-priority-board">'+groups.map((codes,i)=>
+   '<div class="topic-priority-board">'+groups.map((codes,i)=>
    '<section class="priority-lane priority-lane-'+i+'" data-topic-zone="'+i+'" aria-label="'+labels[i]+'">'+
     '<div class="priority-lane-header"><div><h3>'+labels[i]+' <span class="lane-count">'+codes.length+(i===1&&groups[2].length!==2?' shown':'')+'</span></h3>'+
      '<p>'+explanation[i]+'</p></div></div>'+
