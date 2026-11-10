@@ -278,7 +278,7 @@ test('New normalized additive methodology rejects previous multiplier snapshots'
  assert.throws(()=>S.canonicalSnapshot(previous,id),/version mismatch/i);
  const s=snap();assert.equal(S.canonicalSnapshot(s,id).coreCompleted,true);
  const ui=fs.readFileSync('public/js/app.js','utf8');
- assert.ok(ui.includes('six-areas.six-outcomes.v1.'));
+ assert.ok(ui.includes('six-areas.six-outcomes.v2.'));
 });
 test('Community comparison supports internal subject view keys and valid connection form',()=>{
  const vm=require('node:vm'),path=require('node:path');
@@ -412,4 +412,21 @@ test('New defaults apply only to a fresh respondent; local saved rankings are pr
  assert.deepEqual(Array.from(vm.runInContext('state.ranking',second)),prior.subjects);
  assert.deepEqual(Array.from(vm.runInContext('state.outcomeRanking',second)),prior.outcomes);
  assert.equal(vm.runInContext('record.responseId',second),'bda6cc17-94ad-4a87-8cc6-374a09b9aa32');
+});
+
+test('Four November 10 outcome corrections agree between criteria and survey topics',()=>{
+ const desired={'CB-03':['belong','T11'],'NE-01':['belong','T12'],
+  'NE-05':['wellbeing','T14'],'CP-03':['power','T16']};
+ for(const [code,[id,topicId]] of Object.entries(desired)){
+  const c=S.WB.topics.find(t=>t.code===code);
+  assert.ok(c,'Missing criterion '+code);
+  assert.equal(c.surveyTopicId,topicId);
+  assert.equal(c.outcomeFlags[id],1);
+  assert.equal(Object.values(c.outcomeFlags).reduce((n,v)=>n+v,0),1);
+  const survey=S.WB.surveyTopics.find(t=>t.code===topicId);
+  assert.equal(survey.outcomeFlags[id],1);
+  assert.equal(Object.values(survey.outcomeFlags).reduce((n,v)=>n+v,0),1);
+ }
+ assert.equal(S.M.topicCount,20);
+ assert.equal(S.WB.topics.length,33);
 });
