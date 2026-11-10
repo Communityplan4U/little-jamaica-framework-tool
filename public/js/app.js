@@ -1,6 +1,6 @@
 'use strict';
 const STEPS=['Rank planning areas','Rank community outcomes','Confirm top topics','Identify lowest priority topics','Compare the Citys planning frameworks','Your priorities and the community'];
-const STORE='cip.ljov.20.top6.bottom2.six-areas.six-outcomes.v1.';
+const STORE='cip.ljov.20.top6.bottom2.six-areas.six-outcomes.v2.';
 
 // Direct source documents; framework columns follow WB.comparators in the assessment workbook.
 const FRAMEWORK_REPORTS={
