@@ -320,7 +320,6 @@ function render(){
  document.getElementById('step-label').textContent='Step '+(step+1)+' of 6';
  document.getElementById('step-title').textContent=STEPS[step];
  document.getElementById('step-detail').textContent=[
-  'Which planning subjects are most important for the Framework to focus on? Rank them in order of importance, with the most important at the top.',
   'What improvements do you most want to see the Framework focus on? Rank them in order of importance, with the most important at the top.',
   'Review your suggested top ten, move any to the middle, and search all other topics to add overlooked priorities.',
   'Choose four topics from the middle to receive the lowest weighting. The other nineteen stay in the middle.',
