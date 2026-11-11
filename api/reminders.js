@@ -191,3 +191,8 @@ module.exports = async function handler(req, res) {
     });
   }
 };
+
+// Shared content for the one-time, authorized delivery test.
+module.exports.EMAIL_SUBJECT = SUBJECT;
+module.exports.composeMessage = composeMessage;
+module.exports.composeHtmlMessage = composeHtmlMessage;
