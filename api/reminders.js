@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
 
   // This endpoint is deliberately read-only. It never sends emails.
   // Refuse to run if someone changes the sending switch prematurely.
-  if (process.env.REMINDER_SENDING_ENABLED !== 'NO') {
+  if (String(process.env.REMINDER_SENDING_ENABLED || '').trim().toUpperCase() !== 'NO') {
     return res.status(503).json({
       error: 'Reminder sending is not implemented. Keep REMINDER_SENDING_ENABLED=NO.'
     });
