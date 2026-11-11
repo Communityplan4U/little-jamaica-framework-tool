@@ -77,7 +77,7 @@ function reportLink(label,href){
 let record=null,collection={isOpen:false,checked:false,offlineDraft:false,closesAt:null,mode:'public'},saving=false,navigating=false;
 // Step 5 edits are a draft until the participant explicitly applies and saves them.
 let priorityDraft=null,priorityEditorExpanded=false;
-const PRIORITY_EDITOR_LABELS=['High expected impact','Moderate expected impact','Low Priority'];
+const PRIORITY_EDITOR_LABELS=['High expected impact','Moderate expected impact','Lower expected impact'];
 function priorityDraftKey(){
  return JSON.stringify([state.ranking,state.outcomeRanking,state.excludedTop,state.promotedTop,state.bottom,state.topicOrder]);
 }
