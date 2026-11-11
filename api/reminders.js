@@ -5,33 +5,43 @@ const gateway = require('../server/gateway.cjs');
 
 const MODE = 'public';
 const MAX_SENDS_PER_RUN = 10;
-const SUBJECT = 'A reminder about your Little Jamaica and Oakwood Vaughan survey';
+const SUBJECT = 'Your voice matters! Complete the Little Jamaica and Oakwood Vaughan survey';
 
 const SURVEY_LINK = 'https://communityinpublic.ca/ljovpf';
 
 function composeMessage() {
   return [
-    'Hello,',
+    'Hi there,',
     '',
-    'You recently started the Little Jamaica and Oakwood Vaughan Planning Framework survey, but it looks like your response has not been completed.',
+    "Thanks for starting the Little Jamaica and Oakwood Vaughan Planning Framework survey! It looks like you haven't had a chance to finish it yet, and we'd love to hear the rest of your thoughts.",
     '',
-    "Don't forget to complete the survey > " + SURVEY_LINK,
+    'Your voice matters! Decisions about the future of Little Jamaica and Oakwood Vaughan will affect housing affordability, local businesses, cultural spaces, and whether community members can continue to live and thrive in their neighbourhoods.',
     '',
-    'Thank you,',
+    "By completing the survey, you'll help us identify what matters most to the community and where the City's Planning Framework needs stronger commitments to meet community needs and prevent displacement.",
+    '',
+    "Don't forget to complete the survey!",
+    SURVEY_LINK,
+    '',
+    'Thank you for helping ensure the future of Little Jamaica and Oakwood Vaughan reflects the people who live, work, and build community here.',
+    '',
+    'Warmly,',
     '',
     'Community in Public',
     'Connect@CPplanning.ca'
-  ].join('\n');
+  ].join('\\n');
 }
 
 function composeHtmlMessage() {
   return [
-    '<p>Hello,</p>',
-    '<p>You recently started the Little Jamaica and Oakwood Vaughan Planning Framework survey, but it looks like your response has not been completed.</p>',
-    '<p>Don&#39;t forget to complete the survey &gt; <a href="' + SURVEY_LINK + '">' + SURVEY_LINK + '</a></p>',
-    '<p>Thank you,</p>',
+    '<p>Hi there,</p>',
+    '<p>Thanks for starting the Little Jamaica and Oakwood Vaughan Planning Framework survey! It looks like you haven&#39;t had a chance to finish it yet, and we&#39;d love to hear the rest of your thoughts.</p>',
+    '<p><strong>Your voice matters!</strong> Decisions about the future of Little Jamaica and Oakwood Vaughan will affect housing affordability, local businesses, cultural spaces, and whether community members can continue to live and thrive in their neighbourhoods.</p>',
+    '<p>By completing the survey, you&#39;ll help us identify what matters most to the community and where the City&#39;s Planning Framework needs stronger commitments to meet community needs and prevent displacement.</p>',
+    '<p><strong>Don&#39;t forget to complete the survey!</strong><br><a href="' + SURVEY_LINK + '">' + SURVEY_LINK + '</a></p>',
+    '<p>Thank you for helping ensure the future of Little Jamaica and Oakwood Vaughan reflects the people who live, work, and build community here.</p>',
+    '<p>Warmly,</p>',
     '<p>Community in Public<br><a href="mailto:Connect@CPplanning.ca">Connect@CPplanning.ca</a></p>'
-  ].join('\n');
+  ].join('\\n');
 }
 
 function authorised(req) {
