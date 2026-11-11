@@ -190,6 +190,11 @@ test('Merged page 1 contains both rankings and page 2 displays all 20 priority c
  assert.equal((html.match(/data-topic-drag=/g)||[]).length,20);
  assert.equal((html.match(/data-topic-move=/g)||[]).length,40);
  assert.equal((html.match(/data-topic-zone=/g)||[]).length,3);
+ // New respondents begin with T11 and T10 as the two default low-impact topics.
+ assert.equal(vm.runInContext('selectionGroups()[2].length',ctx),2);
+ assert.equal(vm.runInContext("state.bottom.includes('T11') && state.bottom.includes('T10')",ctx),true);
+ // They may clear or replace those suggested choices.
+ vm.runInContext('state.bottom=[];render()',ctx);
  assert.equal(vm.runInContext('selectionGroups()[2].length',ctx),0);
  const before=vm.runInContext('calculate().baseline',ctx);
  const mid=vm.runInContext('selectionGroups()[1][0]',ctx);
