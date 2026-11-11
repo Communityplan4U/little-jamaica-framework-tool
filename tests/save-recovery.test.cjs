@@ -236,10 +236,12 @@ test('Four-step journey requires completed topic priorities before results and c
  assert.equal(h.run('highestUnlockedStep()'),1);
  assert.equal(locked(2),false);assert.equal(locked(3),true);
  assert.equal(saved.length,1);
+ assert.equal(h.run("state.bottom.includes('T11') && state.bottom.includes('T10')"),true,'New participants start with the configured lower-priority defaults');
+ h.run('state.bottom=[]');
  await h.run('next()');
- assert.equal(h.run('state.step'),1,'Step 2 needs two explicit lowest priorities');
+ assert.equal(h.run('state.step'),1,'Step 2 still requires exactly two low priorities when defaults are cleared');
  assert.equal(saved.length,1);
- h.run('state.bottom=orderedGroups()[2].slice()');
+ h.run("state.bottom=['T11','T10']");
  await h.run('next()');
  assert.equal(h.run('state.step'),2);
  assert.equal(h.run('highestUnlockedStep()'),2);
