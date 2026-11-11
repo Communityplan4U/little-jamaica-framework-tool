@@ -1,7 +1,16 @@
 'use strict';
 // Preserve the reviewed validation and weighting code. Database keys stay in Supabase.
 const S=require('./survey.cjs'),crypto=require('node:crypto');
-const ALLOWED=new Set(['ljov_check_rate','ljov_save_checkpoint','ljov_resume_response_for_mode','ljov_collection_status','ljov_community_average']);
+
+const ALLOWED=new Set([
+  'ljov_check_rate',
+  'ljov_save_checkpoint',
+  'ljov_resume_response_for_mode',
+  'ljov_collection_status',
+  'ljov_community_average',
+  'ljov_reminder_candidates'
+]);
+
 function configured(){return /^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(process.env.SUPABASE_URL||'')&&/^[A-Za-z0-9_-]{64,128}$/.test(process.env.SURVEY_GATEWAY_TOKEN||'');}
 async function rpc(name,args){
  if(!configured())throw new S.ApiError(503,'Online response storage is awaiting setup.');
