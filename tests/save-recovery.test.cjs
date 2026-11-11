@@ -89,19 +89,8 @@ test('Queued checkpoints retain every saved answer and original step',async()=>{
  assert.equal(submitted[2].page,2);
  assert.deepEqual(
   submitted[2].snapshot.outcomeRanking,
-  Array.from(h.run('state.outcomeRanking'))
- );
+  Array.from(h.run('state.outcomeRanking')));
 
- assert.equal(h.run('record.outbox.length'),0);
-});
- h.run("record.continuedPages=[1];checkpoint('continue')");
- h.run("state.step=1;record.visitedPages=[1,2];record.continuedPages=[1,2];state.outcomeRanking.reverse();checkpoint('continue')");
- assert.equal(h.run('record.outbox.length'),2);
- assert.equal(await h.run('flush()'),true);
- assert.deepEqual(submitted.map(e=>e.revision),[1,6]);
- assert.deepEqual(submitted[1].continuedPages,[1,2]);
- assert.deepEqual(submitted[1].visitedPages,[1,2]);
- assert.deepEqual(submitted[1].snapshot.outcomeRanking,Array.from(h.run('state.outcomeRanking')));
  assert.equal(h.run('record.outbox.length'),0);
 });
 
