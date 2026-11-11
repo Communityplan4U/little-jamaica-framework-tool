@@ -57,13 +57,43 @@ test('A stale revision automatically authenticates, rebases and saves latest cho
  assert.deepEqual(Array.from(h.run('state.ranking')),original);
 });
 
-test('Multiple queued checkpoints collapse to the current draft without losing visited steps',async()=>{
+test('Queued checkpoints retain every saved answer and original step',async()=>{
  const submitted=[];
+ let expectedRevision=6;
+
  const h=harness(async(url,opts)=>{
   if(url==='/api/resume')return ok(200,serverState(5,5));
-  const e=JSON.parse(opts.body);submitted.push(e);
-  return e.revision===6?receipt(e):ok(409,{error:'stale'});
+
+  const e=JSON.parse(opts.body);
+  submitted.push(e);
+
+  if(e.revision!==expectedRevision)return ok(409,{error:'stale'});
+
+  expectedRevision++;
+  return receipt(e);
  });
+
+ h.run("record.continuedPages=[1];checkpoint('continue')");
+ const firstOrder=Array.from(h.run('state.outcomeRanking'));
+
+ h.run("state.step=1;record.visitedPages=[1,2];state.outcomeRanking.reverse();checkpoint('revision')");
+
+ assert.equal(await h.run('flush()'),true);
+ assert.deepEqual(submitted.map(e=>e.revision),[1,6,7]);
+
+ assert.equal(submitted[1].eventType,'continue');
+ assert.equal(submitted[1].page,1);
+ assert.deepEqual(submitted[1].snapshot.outcomeRanking,firstOrder);
+
+ assert.equal(submitted[2].eventType,'revision');
+ assert.equal(submitted[2].page,2);
+ assert.deepEqual(
+  submitted[2].snapshot.outcomeRanking,
+  Array.from(h.run('state.outcomeRanking'))
+ );
+
+ assert.equal(h.run('record.outbox.length'),0);
+});
  h.run("record.continuedPages=[1];checkpoint('continue')");
  h.run("state.step=1;record.visitedPages=[1,2];record.continuedPages=[1,2];state.outcomeRanking.reverse();checkpoint('continue')");
  assert.equal(h.run('record.outbox.length'),2);
@@ -164,21 +194,40 @@ test('Rapid double-clicking Continue creates only one checkpoint and one step tr
 });
 
 test('Conflict recovery preserves an unsent completion when later edits were queued',async()=>{
- const accepted=[];
+ const submitted=[];
+ let expectedRevision=3;
+
  const h=harness(async(url,opts)=>{
   if(url==='/api/resume')return ok(200,serverState(2,2));
-  const e=JSON.parse(opts.body);accepted.push(e);
-  return e.revision===3?receipt(e):ok(409,{error:'stale'});
+
+  const e=JSON.parse(opts.body);
+  submitted.push(e);
+
+  if(e.revision!==expectedRevision)return ok(409,{error:'stale'});
+
+  expectedRevision++;
+  return receipt(e);
  });
+
  h.run("state.bottom=suggestions().slice(-2);record.continuedPages=[1,2];record.firstCompletedAt=new Date().toISOString();state.step=1;checkpoint('complete')");
  h.run("state.step=2;state.feedback='These are my current priorities';checkpoint('comments_shared')");
+
  assert.equal(await h.run('flush()'),true);
- assert.equal(accepted.at(-1).eventType,'complete');
- assert.equal(accepted.at(-1).snapshot.inputEvidence.coreStepsCompleted,true);
- assert.equal(accepted.at(-1).snapshot.notes,'These are my current priorities');
+ assert.deepEqual(submitted.map(e=>e.revision),[1,3,4]);
+
+ assert.equal(submitted[1].eventType,'complete');
+ assert.equal(submitted[1].page,2);
+ assert.equal(submitted[1].snapshot.inputEvidence.coreStepsCompleted,true);
+ assert.equal(submitted[1].snapshot.notes,'');
+
+ assert.equal(submitted[2].eventType,'comments_shared');
+ assert.equal(
+  submitted[2].snapshot.notes,
+  'These are my current priorities'
+ );
+
  assert.equal(h.run('record.outbox.length'),0);
 });
-
 
 test('Applying Step 5 topic groups recalculates and saves a server-valid revision',async()=>{
  const accepted=[];
@@ -196,7 +245,7 @@ test('Applying Step 5 topic groups recalculates and saves a server-valid revisio
  assert.equal(h.element('apply-priority-ranking').disabled,false);
  await h.element('apply-priority-ranking').listeners.click();
  assert.equal(accepted.length,1);
- assert.equal(accepted[0].eventType,'revision');
+assert.equal(accepted[0].eventType,'priorities_applied');
  assert.equal(S.validateEvent(accepted[0]).coreCompleted,true);
  assert.ok(accepted[0].snapshot.topSelected.includes(middle));
  assert.ok(!accepted[0].snapshot.topSelected.includes(highest));
