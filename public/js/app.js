@@ -396,7 +396,6 @@ async function restore(raw){
   const d=await r.json(),p=d.resumeState||{};
   // Reopening this same private link must not discard any unsent local answers.
   if(record?.responseId===m[1]&&record?.responseToken===m[2]&&record.outbox?.length){
-   reconcilePending(d);
    const synced=await flush();
    render();
    if(synced)notice('Your latest answers were synchronized and saved online.');
@@ -787,8 +786,7 @@ function render(){
  root.innerHTML=step===0?connectionForm()+planningRanking+outcomeRanking:
   step===1?selectionPage():step===2?resultsPage():communityPage();
  const actions=document.getElementById('actions');
- const label=step===1?'See my impact-weighted comparison':step===2?'Compare with community':'Continue';
- actions.innerHTML=(step===0?'':'<button type="button" id="back" class="secondary">← Back</button>')+
+const label=step===1?'Submit survey and see my comparison':step===2?'Compare with community':'Continue'; actions.innerHTML=(step===0?'':'<button type="button" id="back" class="secondary">← Back</button>')+
   (step===3?'':'<button type="button" id="next" class="primary" '+(!canEdit()&&step<=1?'disabled':'')+'>'+label+' →</button>');
  document.getElementById('next')?.addEventListener('click',next);
  document.getElementById('back')?.addEventListener('click',()=>selectPage(step===3?2:step-1));
@@ -984,7 +982,7 @@ document.querySelectorAll('[data-priority-code]').forEach(el=>el.addEventListene
   applyPriorityDraft();
   priorityEditorExpanded=true;
   write();render();
-  const saved=await save('revision');
+const saved=await save('priorities_applied');
   if(saved)notice('Your Impact Group selections have been applied and your comparison scores recalculated.');
   // If offline, flush() leaves the revision queued locally and shows the Retry save option.
  });
@@ -1036,8 +1034,16 @@ state.email=email;  }
   const ok=await save(state.step===1?'complete':'continue');
   if(ok||(record.outbox.length&&canEdit())){
    state.complete=!!record.firstCompletedAt;
+const completedStep=state.step+1;
 await selectPage(state.step+1,true);
-   if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
+
+if(ok){
+ notice(completedStep===1
+  ?'Step 1 saved. Your planning-area and outcome rankings are confirmed. You can return and revise them.'
+  :'Your survey has been submitted. You can still return and revise your answers.');
+}else{
+ notice('Your answers are saved on this device. Retry online saving when connected.','warning');
+}
   }
  }finally{navigating=false;}
 }
