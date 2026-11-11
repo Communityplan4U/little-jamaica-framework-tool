@@ -8,7 +8,9 @@ const OPS=new Set([
   'ljov_resume_response_for_mode',
   'ljov_collection_status',
   'ljov_community_average',
-  'ljov_reminder_candidates'
+  'ljov_reminder_candidates',
+  'ljov_reminder_reserve',
+  'ljov_reminder_finish'
 ]);
 const encoder=new TextEncoder();
 function reply(status:number,value:unknown){return new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});}
