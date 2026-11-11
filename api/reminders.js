@@ -1,23 +1,35 @@
 
 'use strict';
 
-// Little Jamaica survey reminder endpoint.
-// Safe initial version: no emails can be sent.
+const crypto = require('node:crypto');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
 
-  // Do not expose reminder controls through public requests.
   if (req.method !== 'GET') {
     return res.status(405).json({
       error: 'Method not allowed'
     });
   }
 
+  const secret = process.env.CRON_SECRET;
+  const supplied = req.headers.authorization || '';
+  const expected = secret ? `Bearer ${secret}` : '';
+
+  if (!secret || supplied.length !== expected.length ||
+      !crypto.timingSafeEqual(
+        Buffer.from(supplied),
+        Buffer.from(expected)
+      )) {
+    return res.status(401).json({
+      error: 'Unauthorized'
+    });
+  }
+
   return res.status(200).json({
     service: 'Little Jamaica Survey Reminders',
-    configured: true,
+    authenticated: true,
     sendingEnabled: false,
-    message: 'Reminder endpoint created. Email sending is not yet connected.'
+    message: 'Security verified. Email sending is not yet connected.'
   });
 };
