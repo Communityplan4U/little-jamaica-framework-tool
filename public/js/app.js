@@ -256,32 +256,67 @@ function checkpoint(kind){
 // acknowledges an authenticated checkpoint; never discard them on a conflict.
 function reconcilePending(saved){
  const rev=Number(saved.revision),answer=Number(saved.answerRevision);
+
  if(!Number.isSafeInteger(rev)||rev<0||!Number.isSafeInteger(answer)||answer<0)
   throw Error('The saved response could not be synchronized safely.');
- if(rev<(record.confirmedRevision||0))throw Error('Online revision is inconsistent. Your answers are unchanged.');
+
+ if(rev<(record.confirmedRevision||0))
+  throw Error('Online revision is inconsistent. Your answers are unchanged.');
+
  if(!record.outbox.length)return;
- const last=record.outbox[record.outbox.length-1];
- const pendingCompletion=record.outbox.some(e=>e.eventType==='complete');
- const pages=arr=>Array.isArray(arr)?arr.filter(n=>Number.isInteger(n)&&n>=1&&n<=6):[];
- record.continuedPages=[...new Set([...pages(saved.continuedPages),...pages(record.continuedPages)])];
- record.visitedPages=[...new Set([...pages(saved.visitedPages),...pages(record.visitedPages)])];
- record.firstCompletedAt=record.firstCompletedAt||saved.firstCompletedAt||null;
+
+ const pages=arr=>Array.isArray(arr)
+  ?arr.filter(n=>Number.isInteger(n)&&n>=1&&n<=4)
+  :[];
+
+ const continued=new Set(pages(saved.continuedPages));
+ const visited=new Set(pages(saved.visitedPages));
+
+ let revision=rev;
+ let answerRevision=Math.max(answer,record.answerRevision||0);
+
+ // Preserve every queued submission, including its original answers,
+ // action, page and client timestamp. Do not substitute the current draft.
+ const queue=record.outbox.map(e=>{
+  pages(e.continuedPages).forEach(n=>continued.add(n));
+  pages(e.visitedPages).forEach(n=>visited.add(n));
+
+  const confirmedPages=[...continued];
+
+  return {
+   ...e,
+   eventId:freshId(),
+   revision:++revision,
+   answerRevision:++answerRevision,
+   continuedPages:confirmedPages,
+   visitedPages:[...visited],
+   snapshot:{
+    ...e.snapshot,
+    inputEvidence:{
+     ...e.snapshot.inputEvidence,
+     continuedPages:confirmedPages
+    }
+   }
+  };
+ });
+
+ record.continuedPages=[
+  ...new Set([...continued,...pages(record.continuedPages)])
+ ];
+ record.visitedPages=[
+  ...new Set([...visited,...pages(record.visitedPages)])
+ ];
+ record.firstCompletedAt=
+  record.firstCompletedAt||saved.firstCompletedAt||null;
  record.confirmedRevision=rev;
- record.revision=rev+1;
- record.answerRevision=Math.max(answer,record.answerRevision||0)+1;
- const latest=snapshot();
- const completedNow=latest.inputEvidence?.coreStepsCompleted===true;
- const eventType=pendingCompletion&&completedNow?'complete':last.eventType;
- // A single new checkpoint represents the latest unsent choices; accepted
- // server checkpoints remain in the database history.
- record.outbox=[{...last,eventId:freshId(),eventType,responseId:record.responseId,
-  revision:record.revision,answerRevision:record.answerRevision,
-  page:state.step+1,clientTimestamp:new Date().toISOString(),
-  afterResultsShown:!!record.firstCompletedAt,
-  continuedPages:record.continuedPages.slice(),visitedPages:record.visitedPages.slice(),
-  snapshot:latest,resumeState:serialize()}];
- record.lastSnapshot=latest;write();
+ record.revision=revision;
+ record.answerRevision=answerRevision;
+ record.outbox=queue;
+ record.lastSnapshot=queue[queue.length-1].snapshot;
+
+ write();
 }
+
 async function authenticatedServerRevision(){
  const r=await fetch('/api/resume',{method:'POST',credentials:'same-origin',signal:networkSignal(16000),
   headers:{'Content-Type':'application/json','Authorization':'Bearer '+record.responseToken},
