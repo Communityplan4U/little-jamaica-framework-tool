@@ -7,10 +7,6 @@
     {
       "path": "/api/reminders",
       "schedule": "0 14 * * *"
-    },
-    {
-      "path": "/api/reminder-test",
-      "schedule": "0 0 1 1 *"
     }
   ],
   "headers": [
