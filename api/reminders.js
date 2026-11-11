@@ -31,6 +31,8 @@ module.exports = async function handler(req, res) {
     const candidates = await gateway.rpc('ljov_reminder_candidates', { p_mode: 'public' });
     if (!Array.isArray(candidates)) throw new Error('Invalid eligibility response');
 
+    console.info('Little Jamaica reminder dry-run: eligible count =', candidates.length);
+
     // Do not return contact information, response IDs, or survey answers.
     return res.status(200).json({
       service: 'Little Jamaica Survey Reminders',
