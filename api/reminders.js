@@ -28,7 +28,7 @@ function composeMessage() {
     '',
     'Community in Public',
     'Connect@CPplanning.ca'
-  ].join('\\n');
+  ].join('\n');
 }
 
 function composeHtmlMessage() {
@@ -41,7 +41,7 @@ function composeHtmlMessage() {
     '<p>Thank you for helping ensure the future of Little Jamaica and Oakwood Vaughan reflects the people who live, work, and build community here.</p>',
     '<p>Warmly,</p>',
     '<p>Community in Public<br><a href="mailto:Connect@CPplanning.ca">Connect@CPplanning.ca</a></p>'
-  ].join('\\n');
+  ].join('\n');
 }
 
 function authorised(req) {
