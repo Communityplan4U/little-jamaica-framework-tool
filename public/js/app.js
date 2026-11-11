@@ -583,7 +583,7 @@ function selectionPage(){
   '<div class="selection-counter"><strong>'+groups[0].length+' / 6</strong> high impact · <strong>'+groups[2].length+' / 2</strong> lower impact selected</div>'+
  
 (groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lower-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'')+
-'<p class="help">Each topic in the high expected impact group receives 10% of the evaluation weight, moderate-impact topics receive approximately 3.1%, and lower-impact topics receive 1.5%. These percentages determine how much each topic contributes to the scores.</p>'+
+'<p class="help">Each topic in the high expected impact group receives 10% of the evaluation weight, moderate-impact topics receive approximately 3.1%, and lower-impact topics receive 1.5%. These percentages determine how much each topic contributes to the scores. The starting order is based on community responses in our 2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report.</p>'+
   '</section>'+
    '<div class="topic-priority-board">'+groups.map((codes,i)=>
    '<section class="priority-lane priority-lane-'+i+'" data-topic-zone="'+i+'" aria-label="'+labels[i]+'">'+
