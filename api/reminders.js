@@ -7,22 +7,30 @@ const MODE = 'public';
 const MAX_SENDS_PER_RUN = 10;
 const SUBJECT = 'A reminder about your Little Jamaica and Oakwood Vaughan survey';
 
-function composeMessage(url) {
+const SURVEY_LINK = 'https://communityinpublic.ca/ljovpf';
+
+function composeMessage() {
   return [
     'Hello,',
     '',
     'You recently started the Little Jamaica and Oakwood Vaughan Planning Framework survey, but it looks like your response has not been completed.',
     '',
-    'If you would still like to share your priorities for housing, community spaces, and neighbourhood change, you can return to the survey here:',
-    url,
-    '',
-    'If you use the same browser and device, your saved progress may still be available.',
-    '',
-    'If you prefer not to continue, you can simply ignore this message. We will not send another survey completion reminder.',
+    "Don't forget to complete the survey > " + SURVEY_LINK,
     '',
     'Thank you,',
+    '',
     'Community in Public',
     'Connect@CPplanning.ca'
+  ].join('\n');
+}
+
+function composeHtmlMessage() {
+  return [
+    '<p>Hello,</p>',
+    '<p>You recently started the Little Jamaica and Oakwood Vaughan Planning Framework survey, but it looks like your response has not been completed.</p>',
+    '<p>Don&#39;t forget to complete the survey &gt; <a href="' + SURVEY_LINK + '">' + SURVEY_LINK + '</a></p>',
+    '<p>Thank you,</p>',
+    '<p>Community in Public<br><a href="mailto:Connect@CPplanning.ca">Connect@CPplanning.ca</a></p>'
   ].join('\n');
 }
 
@@ -37,14 +45,9 @@ function authorised(req) {
 }
 
 function readyToSend() {
-  const required = ['RESEND_API_KEY', 'REMINDER_FROM', 'REMINDER_REPLY_TO', 'SURVEY_URL'];
+  const required = ['RESEND_API_KEY', 'REMINDER_FROM', 'REMINDER_REPLY_TO'];
   if (required.some((name) => !process.env[name])) return false;
-  if (!/^re_[A-Za-z0-9_-]+$/.test(process.env.RESEND_API_KEY)) return false;
-  try {
-    return new URL(process.env.SURVEY_URL).protocol === 'https:';
-  } catch {
-    return false;
-  }
+  return /^re_[A-Za-z0-9_-]+$/.test(process.env.RESEND_API_KEY);
 }
 
 async function mark(responseId, status, providerId, reason) {
@@ -146,7 +149,8 @@ module.exports = async function handler(req, res) {
             to: [claim.email],
             reply_to: [process.env.REMINDER_REPLY_TO],
             subject: SUBJECT,
-            text: composeMessage(process.env.SURVEY_URL)
+            text: composeMessage(),
+            html: composeHtmlMessage()
           }),
           signal: AbortSignal.timeout(12000)
         });
