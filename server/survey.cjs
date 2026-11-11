@@ -66,10 +66,13 @@ function validateEvent(raw){
  if(!raw||typeof raw!=='object'||Array.isArray(raw))fail(400,'Invalid checkpoint');
  const rid=uuid(raw.responseId,'response ID'),eid=uuid(raw.eventId,'event ID'),rev=raw.revision,page=raw.page,ar=raw.answerRevision;
  if(!Number.isInteger(rev)||rev<1||rev>1000000||!Number.isInteger(ar)||ar<0||ar>1000000||!Number.isInteger(page)||page<1||page>4)fail(400,'Invalid revision or page');
- const allowed=['continue','complete','navigation','results_viewed','community_viewed','revision','comments_shared','preferences_saved'];
+ const allowed=['continue','complete','navigation','results_viewed','community_viewed','revision','priorities_applied','comments_shared','preferences_saved'];
  if(!allowed.includes(raw.eventType))fail(400,'Invalid event type');
  const c=canonicalSnapshot(raw.snapshot,rid);
  if(raw.eventType==='complete'&&!c.coreCompleted)fail(400,'Complete the topic selections first');
+ if(raw.eventType==='priorities_applied'&&(page!==3||!c.coreCompleted)){
+ fail(400,'Complete Steps 1 and 2 before applying revised Impact Groups.');
+}
  const resumeState={page:Math.min(3,Math.max(0,Number.isInteger(raw.resumeState?.page)?raw.resumeState.page:0)),
   ranking:c.snapshot.themeRanking,outcomeRanking:c.snapshot.outcomeRanking,top:c.snapshot.topSelected,bottom:c.snapshot.bottomSelected,excludedTop:c.snapshot.excludedTop,promotedTop:c.snapshot.promotedTop,topicOrder:c.snapshot.topicOrder,
   connections:c.snapshot.connections,feedback:c.snapshot.notes,scope:c.snapshot.comparisonScope,
