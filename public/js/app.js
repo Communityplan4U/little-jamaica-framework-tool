@@ -110,7 +110,7 @@ function updatePriorityDraftControls(){
  const guidance=document.getElementById('priority-guidance');
  if(guidance)guidance.textContent=priorityDraftValid()?
   'Your groups are ready. Apply this ranking to recalculate the assessments.':
-  'Choose exactly 6 high, 12 moderate, and 2 low-priority topics before applying.';
+  'Choose exactly 6 high, 12 moderate, and 2 lower impact topics before applying.';
  const apply=document.getElementById('apply-priority-ranking');
  if(apply)apply.disabled=!canEdit()||!priorityDraftValid();
 }
@@ -617,7 +617,7 @@ function selectionPage(){
   '<div class="selection-counter"><strong>'+groups[0].length+' / 6</strong> high impact · <strong>'+groups[2].length+' / 2</strong> lower impact selected</div>'+
  
 (groups[2].length!==COUNTS[2]?'<p class="help">Choose '+(COUNTS[2]-groups[2].length)+' more lower-priority topic'+(COUNTS[2]-groups[2].length===1?'':'s')+' before continuing.</p>':'')+
-'<p class="help">Each topic in the high expected impact group receives 10% of the evaluation weight, moderate-impact topics receive approximately 3.1%, and lower-impact topics receive 1.5%. These percentages determine how much each topic contributes to the scores. The starting order is based on community responses in our 2026 Little Jamaica ACTIONS & PROGRESS INDICATORS survey findings report.</p>'+
+'<p class="help">Each topic in the high expected impact group receives 10% of the evaluation weight, moderate-impact topics receive approximately 3.1%, and lower-impact topics receive 1.5%. These percentages determine how much each topic contributes to the scores.</p>'+
   '</section>'+
    '<div class="topic-priority-board">'+groups.map((codes,i)=>
    '<section class="priority-lane priority-lane-'+i+'" data-topic-zone="'+i+'" aria-label="'+labels[i]+'">'+
@@ -731,9 +731,9 @@ return '<section class="priority-drop-zone" data-priority-zone="'+group+'" aria-
   breakdownMatrix(c,scope,'Community outcome',outcomeGroups,ordered)+
    '<details class="full-breakdown priority-editor" id="priority-editor" '+(priorityEditorExpanded?'open':'')+'><summary>Review and adjust your Impact Groups</summary>'+
 '<p class="help">Place six topics in the High Expected Impact group, twelve in Moderate Expected Impact, and two in Lower Expected Impact. The assessment weights are 10%, approximately 3.1%, and 1.5% per topic, respectively. All 33 detailed evaluation criteria remain included. Your comparison scores will update when you apply your selections.</p>'+   '<p id="priority-counts" class="priority-counts" role="status" aria-live="polite">'+esc(priorityCountLabel())+'</p>'+
-  '<p class="help">Drag (or use the arrows to place) each topic into the group that reflects the impact you believe it could have on community wellbeing. Choose exactly 6 high, 12 moderate, and 2 low-priority topics before applying.</p>'+
+  '<p class="help">Drag (or use the arrows to place) each topic into the group that reflects the impact you believe it could have on community wellbeing. Choose exactly 6 high, 12 moderate, and 2 lower impact topics before applying.</p>'+
 '<div class="priority-drop-board">'+topics+'</div>'+
-  '<p id="priority-guidance" class="help" aria-live="polite">'+(priorityDraftValid()?'Your Impact Groups are complete. Apply your selections to update the evaluation.':'Choose exactly 6 high, 12 moderate, and 2 low-priority topics before applying.')+'</p>'+
+  '<p id="priority-guidance" class="help" aria-live="polite">'+(priorityDraftValid()?'Your Impact Groups are complete. Apply your selections to update the evaluation.':'Choose exactly 6 high, 12 moderate, and 2 lower impact topics before applying.')+'</p>'+
    '<button type="button" class="primary" id="apply-priority-ranking" '+(!canEdit()||!priorityDraftValid()?'disabled':'')+'>I prefer this ranking. Update the assessments based on this ranking</button></details></section>'+
   '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything suggestion consideration or feedback you have re: a community review of the Planning Framework currently being prepared by Development Review for the community of Little Jamaica?</p>'+
    '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
@@ -977,7 +977,7 @@ document.querySelectorAll('[data-priority-code]').forEach(el=>el.addEventListene
 
  document.getElementById('apply-priority-ranking')?.addEventListener('click',async()=>{
   if(!canEdit()||!priorityDraftValid()){
-   notice('Choose exactly 6 high, 12 moderate, and 2 low-priority topics before applying.','warning');return;
+   notice('Choose exactly 6 high, 12 moderate, and 2 lower impact topics before applying.','warning');return;
   }
   applyPriorityDraft();
   priorityEditorExpanded=true;
@@ -1024,8 +1024,7 @@ state.email=email;  }
    const ok=await save('results_viewed');
    if(ok||(record.outbox.length&&canEdit())){
     await selectPage(3,true);
-    if(!ok)notice('Your answers are saved on this device. Retry online saving when connected.','warning');
-   }
+     }
    return;
   }
   if(state.step>=3)return;
@@ -1041,8 +1040,6 @@ if(ok){
  notice(completedStep===1
   ?'Step 1 saved. Your planning-area and outcome rankings are confirmed. You can return and revise them.'
   :'Your survey has been submitted. You can still return and revise your answers.');
-}else{
- notice('Your answers are saved on this device. Retry online saving when connected.','warning');
 }
   }
  }finally{navigating=false;}
