@@ -762,7 +762,7 @@ function communityPage(){
  '<div class="scope"><button data-community-view="topics" aria-pressed="'+(view==='topics')+'">20 survey topics</button><button data-community-view="themes" aria-pressed="'+(view==='themes')+'">6 planning areas</button><button data-community-view="outcomes" aria-pressed="'+(view==='outcomes')+'">6 outcomes</button></div>'+
  '<button class="secondary" id="refresh-averages" type="button">Refresh community averages</button></section>'+
  '<div class="compare-list">'+rows+'</div>'+
- '<p class="help">Each survey topic contains one or more detailed criteria, which may contribute to different outcomes. Topic, Planning Area and community outcome weights each total 100%. Human rights and Indigenous rights obligations apply regardless of how topics are ranked.</p>';
+ '<p class="help">Each survey topic contains one or more detailed criteria, which may contribute to different outcomes. Topic, Planning Area and community outcome weights each total 100%.</p>';
 }
 function render(){
  const step=Math.min(STEPS.length-1,Math.max(0,state.step));state.step=step;
