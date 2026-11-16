@@ -7,7 +7,7 @@ const MODE = 'public';
 const MAX_SENDS_PER_RUN = 10;
 const SUBJECT = 'Your voice matters! Complete the Little Jamaica and Oakwood Vaughan survey';
 
-const SURVEY_LINK = 'https://communityinpublic.ca/ljovpf';
+const SURVEY_LINK = 'https://communityinpublic.ca/ljcdap#1392d856-5014-4df9-bee3-48063ba666ea';
 
 function composeMessage() {
   return [
