@@ -184,7 +184,7 @@ async function status(){
  if(label)label.textContent=collection.offlineDraft?
   'Online status is temporarily unavailable. You may continue answering on this device. Your responses will save online when service returns, if the survey is still open.':
   !collection.isOpen?'Survey closed. Saved responses can still be reviewed.':
-  'Voting is open until January 15, 2027 at 11:59 p.m. Toronto time. You may revisit and revise your response.';
+  'Survey responses are open until January 15, 2027 at 11:59 p.m. Toronto time. You may revisit and revise your response.';
  render();
  if(collection.isOpen&&record?.outbox?.length&&!saving)flush();
 }
