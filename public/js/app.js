@@ -735,7 +735,7 @@ return '<section class="priority-drop-zone" data-priority-zone="'+group+'" aria-
 '<div class="priority-drop-board">'+topics+'</div>'+
   '<p id="priority-guidance" class="help" aria-live="polite">'+(priorityDraftValid()?'Your Impact Groups are complete. Apply your selections to update the evaluation.':'Choose exactly 6 high, 12 moderate, and 2 lower impact topics before applying.')+'</p>'+
    '<button type="button" class="primary" id="apply-priority-ranking" '+(!canEdit()||!priorityDraftValid()?'disabled':'')+'>I prefer this ranking. Update the assessments based on this ranking</button></details></section>'+
-  '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything suggestion consideration or feedback you have to support the Planning Framework currently being prepared by Development Review for the community of Little Jamaica?</p>'+
+  '<section class="subpanel" id="comment-box"><h3>Additional comments (optional)</h3><p>Is there anything suggestion consideration or feedback you have to support the Planning Framework currently being prepared by Development Review for the community of Little Jamaica? City staff and community members are welcome to identify additional planning documents, clarify factual information or suggest corrections. Community in Public welcomes this input to support an accurate, constructive and transparent comparison.</p>'+
    '<label class="sr-only" for="comment">Comments</label><textarea id="comment" maxlength="1500" rows="4">'+esc(state.feedback)+'</textarea>'+
    '<button class="secondary" id="save-comment" type="button">Submit my comments</button>';
 }
