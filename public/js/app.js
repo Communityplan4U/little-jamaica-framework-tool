@@ -1038,7 +1038,7 @@ await selectPage(state.step+1,true);
 
 if(ok){
  notice(completedStep===1
-  ?'Step 1 saved. Your planning-area and outcome rankings are confirmed. You can return and revise them.'
+  ?' '
   :'Your survey has been submitted. You can still return and revise your answers.');
 }
   }
