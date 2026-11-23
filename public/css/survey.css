@@ -319,4 +319,7 @@ button.secondary,.rank-buttons button,.scope button{background:#fff;color:#4e305
 .priority-draggable-row .drag-handle{
   margin-right:7px;
 }
-
+.survey-disclaimer {
+  font-size: 0.79rem !important;
+  line-height: 1.5;
+}
