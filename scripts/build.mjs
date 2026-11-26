@@ -1,4 +1,5 @@
 import {readFile,writeFile,cp,rm,mkdir} from 'node:fs/promises';
+import {createBenchmarkData} from './benchmark-data.mjs';
 const wb=JSON.parse(await readFile('data/assessment.json','utf8'));
 const m=JSON.parse(await readFile('data/methodology.json','utf8'));
 if(wb.surveyTopics.length!==m.topicCount || m.groupCounts.reduce((a,b)=>a+b,0)!==wb.surveyTopics.length)throw Error('Survey topic count mismatch');
@@ -7,4 +8,7 @@ if(Math.abs(m.groupShares.reduce((a,b)=>a+b,0)-100)>1e-9)throw Error('Weight tot
 const safe=x=>JSON.stringify(x).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
 await rm('dist',{recursive:true,force:true});await mkdir('dist',{recursive:true});await cp('public','dist',{recursive:true});
 await writeFile('dist/js/data.js',`'use strict';\nwindow.LJOV_ASSESSMENT=${safe(wb)};\nwindow.LJOV_METHODOLOGY=${safe(m)};\n`);
+await writeFile('dist/benchmark/dashboard-data.js',`'use strict';\nwindow.BENCHMARK_DATA=${safe(createBenchmarkData())};\n`);
+const councillors=JSON.parse(await readFile('data/benchmark/councillors.json','utf8'));
+await writeFile('dist/benchmark/councillors.js',`'use strict';\nwindow.BENCHMARK_COUNCILLORS=${safe(councillors)};\n`);
 console.log(`Built preview: ${wb.surveyTopics.length} survey topics / ${wb.topics.length} assessment criteria and ${wb.comparators.length} comparators; methodology ${m.id}`);
