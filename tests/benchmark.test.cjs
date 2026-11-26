@@ -118,3 +118,62 @@ test('malformed ratings are rejected and a zero reference is required for TOR', 
   damagedTor.studies.find(study => study.isReference).ratings[tor.criteria[0].id] = 1;
   assert.throws(() => calculate(damagedTor), /zero relative ratings/);
 });
+
+const {rank,RECENCY_SHARE}=require('../public/benchmark/portfolio.js');
+const directory=require('../data/benchmark/councillors.json');
+test('shared representation adjustment reproduces TOR portfolios and leaves source scores intact',async()=>{
+  const {tor}=await dataPromise;
+  const result=calculate(tor),before=JSON.stringify(result);
+  const rows=rank(result.studies,directory,'tor');
+  assert.equal(RECENCY_SHARE,.66);
+  assert.equal(rows.length,12);
+  const frances=rows.find(r=>r.id==='frances-nunziata');
+  close(frances.unadjusted,1.751);
+  close(frances.projects[0].weight,.165/.505);
+  close(frances.projects[1].weight,.17/.505);
+  close(frances.projects[2].weight,.17/.505);
+  close(frances.score,1.751/.505);
+  close(rows.find(r=>r.id==='josh-matlow').score,4.9*(.34/3)/(.66/4+.34/3));
+  close(rows.find(r=>r.id==='mike-colle').score,rows.find(r=>r.id==='josh-matlow').score);
+  assert.equal(rows.find(r=>r.id==='anthony-perruzza').rank,1);
+  assert.equal(rows.find(r=>r.id==='mary-fragedakis').rank,2);
+  assert.equal(rows.find(r=>r.id==='paul-ainslie').rank,2);
+  assert.equal(rows.find(r=>r.id==='alejandra-bravo').score,0);
+  assert.ok(!rows.some(r=>r.id==='chiara-padovani'));
+  assert.ok(!rows.some(r=>r.projects.some(p=>p.study.id==='comp10')));
+  assert.equal(JSON.stringify(result),before);
+});
+test('all portfolio weights normalize; one-study portfolios retain the study score; categories and both scopes remain supported',async()=>{
+  const data=await dataPromise;
+  for(const view of ['framework','tor']){
+    for(const scope of ['full','vision']){
+      for(const category of ['all',...data[view].categories.map(c=>c.id)]){
+        const rows=rank(calculate(data[view],{scope,category}).studies,directory,view);
+        for(const r of rows){
+          close(total(r.projects.map(p=>p.baseWeight)),1);
+          close(total(r.projects.map(p=>p.weight)),1);
+          close(total(r.projects.map(p=>p.contribution)),r.score);
+          if(r.projects.length===1)close(r.score,r.projects[0].study.value);
+          else close(total(r.projects.filter(p=>p.isLatest).map(p=>p.baseWeight)),.66);
+          for(const p of r.projects)close(p.adjustedWeight,p.baseWeight/p.sharedCount);
+        }
+        for(let i=1;i<rows.length;i++)assert.ok(rows[i-1].score>=rows[i].score-1e-9);
+      }
+    }
+  }
+});
+test('tie-date and shared-only portfolios normalize without arbitrary recency preference',()=>{
+  const d={people:[{id:'a',name:'A'},{id:'b',name:'B'}],mapping:{tor:{comp6:{historical:['a','b']},comp9:{historical:['a']}}}};
+  const result=rank([{id:'comp6',name:'Study A',value:12},{id:'comp9',name:'Study B',value:0}],d,'tor');
+  const a=result.find(r=>r.id==='a'),b=result.find(r=>r.id==='b');
+  close(a.projects[0].baseWeight,.5);close(a.projects[1].baseWeight,.5);
+  close(a.score,4);close(b.score,12);
+});
+test('portfolio ranking rejects missing historical mapping, unknown people, duplicate studies, and invalid scores',()=>{
+  const d={people:[{id:'a',name:'A'}],mapping:{tor:{comp6:{historical:['a']}}}};
+  const s={id:'comp6',name:'Study',value:1};
+  assert.throws(()=>rank([s,s],d,'tor'),/Duplicate/);
+  assert.throws(()=>rank([{...s,value:NaN}],d,'tor'),/Invalid/);
+  assert.throws(()=>rank([{...s,id:'comp9'}],d,'tor'),/Missing/);
+  assert.throws(()=>rank([s],{...d,people:[]},'tor'),/Unknown/);
+});

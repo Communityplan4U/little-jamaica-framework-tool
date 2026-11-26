@@ -1,92 +1,32 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Explore Community in Public’s independent comparison of Little Jamaica’s planning documents and advisory committee terms with other Toronto studies.">
-  <meta name="theme-color" content="#ec6428">
-  <title>How does Little Jamaica compare? · Community in Public</title>
-  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./dashboard.css">
-  <script src="./dashboard-data.js" defer></script>
-  <script src="./councillors.js" defer></script>
-  <script src="./scoring.js" defer></script>
-  <script src="./dashboard.js" defer></script>
-</head>
-<body>
-  <a class="skip-link" href="#comparison">Skip to comparison</a>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="https://communityinpublic.ca" target="_blank" rel="noopener noreferrer" aria-label="Community in Public website">
-        <img src="./assets/cip-logo.png" width="154" height="67" alt="Community in Public">
-      </a>
-      <div class="header-divider"></div><span class="header-label">RESEARCH &amp; ACCOUNTABILITY</span>
-      <nav aria-label="Main navigation">
-        <a class="nav-active" href="#comparison">Compare studies</a>
-        <button type="button" data-action="methodology">Methodology</button>
-        <a href="https://little-jamaica-framework-tool.vercel.app/" target="_blank" rel="noopener noreferrer">Community survey</a>
-      </nav>
-    </div>
-  </header>
-  <main class="page-shell">
-    <section class="intro" aria-labelledby="page-title">
-      <div class="intro-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> INDEPENDENT COMMUNITY RESEARCH</p>
-        <h1 id="page-title">How does <span>Little Jamaica</span><br class="desktop-break"> compare?</h1>
-        <p class="intro-description">Explore the commitments written into Toronto’s planning documents.<br class="wide-break"> See what they mean for community voice, housing and belonging.</p>
-      </div>
-      <div class="intro-note">
-        <span class="note-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 25V15h5v10M14 25V6h5v19M21 25V11h5v14M4 26h24"/></svg></span>
-        <strong>Evidence for a stronger framework.</strong>
-        <p>Compare the written commitments. Explore the sources. Help shape what comes next.</p>
-      </div>
-    </section>
-
-    <section id="comparison" aria-labelledby="comparison-title">
-      <div class="assessment-navigation">
-        <div class="assessment-tabs" role="tablist" aria-label="Assessment">
-          <button id="framework-tab" class="assessment-tab is-active" role="tab" aria-selected="true" aria-controls="comparison-content" data-view="framework" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17V8h4v9M8 17V3h4v14M13 17V6h4v11"/></svg>Planning frameworks<span id="framework-count" class="tab-count"></span></button>
-          <button id="tor-tab" class="assessment-tab" role="tab" aria-selected="false" aria-controls="comparison-content" data-view="tor" type="button" tabindex="-1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2h7l4 4v12H5zM12 2v5h4M8 10h5M8 13h5"/></svg>Advisory committee TOR<span id="tor-count" class="tab-count"></span></button>
-        </div>
-        <button class="text-button share-button" type="button" data-action="share"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 6.5l5 0M7 12.5l6 0M8 5H5a4 4 0 000 8h3M12 5h3a4 4 0 010 8h-3"/></svg>Copy view link</button>
-      </div>
-      <div id="comparison-content" role="tabpanel" aria-labelledby="framework-tab">
-        <div class="filter-toolbar">
-          <label class="search-field"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg><input id="study-search" type="search" placeholder="Find a study or councillor" aria-label="Find a study or councillor"></label>
-          <label class="select-field"><span>Assessment area</span><select id="category-filter" aria-label="Assessment area"><option value="all">All assessment areas</option></select></label>
-          <label class="select-field"><span>Comparator scope</span><select id="scope-filter" aria-label="Document scope"><option value="vision">Vision statements</option><option value="full">Full documents</option></select></label>
-          <label class="select-field"><span>Document status</span><select id="stage-filter" aria-label="Document status"><option value="all">All stages</option><option value="draft">Working draft</option><option value="adopted">Adopted / endorsed</option><option value="final-study">Final study framework</option><option value="framework-version">Earlier framework version</option></select></label>
-          <label class="select-field sort-field"><span>Sort studies</span><select id="sort-filter" aria-label="Sort studies"><option value="score">Highest score first</option><option value="name">Study name</option><option value="year">Newest document first</option></select></label>
-        </div>
-        <div class="chart-card">
-          <div class="chart-heading">
-            <div><p class="section-kicker" id="chart-kicker">PLANNING FRAMEWORK COMPARISON</p><h2 id="comparison-title">What’s written into the plans?</h2><p class="chart-description" id="chart-description"></p></div>
-            <div class="chart-actions"><button class="button button-subtle" data-action="weights" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3v14M10 3v14M16 3v14M1 7h6M7 13h6M13 6h6"/></svg><span id="weight-label">Survey defaults</span></button><button class="button button-subtle" data-action="export" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10M6 8l4 4 4-4M3 13v4h14v-4"/></svg>Export</button></div>
-          </div>
-          <div class="chart-meta">
-            <div class="legend"><span><i class="legend-home"></i>Little Jamaica</span><span><i class="legend-other"></i>Other Toronto studies</span></div>
-            <label class="representative-select">Councillors <select id="representative-mode" aria-label="Which councillors to show"><option value="historical">during the study</option><option value="current">currently representing the area</option></select></label>
-          </div>
-          <div class="chart-scroll" id="chart-scroll" tabindex="0" role="region" aria-label="Study comparison chart. Scroll horizontally to see all studies."><div id="chart" class="chart" aria-label="Interactive study comparison"></div></div>
-          <div id="no-results" class="empty-state" hidden><strong>No studies match your search.</strong><p>Try a study, neighbourhood or councillor’s name.</p><button type="button" class="button" data-action="reset-search">Clear search</button></div>
-          <div class="chart-footer"><p id="chart-meaning"><strong>0 is the reference point.</strong> Scores show differences from Little Jamaica’s written provisions.</p><span class="chart-hint">Select a bar to explore its assessment</span></div>
-          <p id="scope-notice" class="scope-notice"></p>
-        </div>
-        <section id="study-detail" class="study-detail" aria-labelledby="study-title"></section>
-        <section class="evidence-section" aria-labelledby="evidence-title">
-          <div class="evidence-heading"><div><p class="section-kicker">LOOK CLOSER</p><h2 id="evidence-title">The assessment behind the score</h2></div><button class="button button-subtle" data-action="toggle-evidence" aria-expanded="false" aria-controls="evidence-content" id="evidence-toggle" type="button">Show assessment criteria <span class="chevron" aria-hidden="true"></span></button></div>
-          <div id="evidence-content" hidden></div>
-        </section>
-      </div>
-    </section>
-    <section class="next-steps" aria-label="Explore further">
-      <div class="next-step"><div class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4zM8 8h8M8 12h5"/></svg></div><div><h3>What matters most to you?</h3><p>Share the priorities that should shape planning in Little Jamaica.</p><a href="https://little-jamaica-framework-tool.vercel.app/" target="_blank" rel="noopener noreferrer">Take the community survey</a></div></div>
-      <div class="next-step"><div class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6"/></svg></div><div><h3>Follow the evidence.</h3><p>Understand the criteria, weights and limits of this comparison.</p><button class="inline-button" type="button" data-action="methodology">Read the methodology</button></div></div>
-    </section>
-  </main>
-  <footer class="site-footer"><div><strong>Community in Public</strong><p>Independent research for community-led planning.</p></div><p>This assessment compares selected written provisions. It does not assess overall planning quality or individual councillor or staff performance. It is not an official City of Toronto or Stakeholder Advisory Committee assessment.</p><span id="data-version"></span></footer>
-  <div class="toast" id="toast" role="status" hidden></div>
-  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-top"><div><p class="section-kicker" id="modal-kicker"></p><h2 id="modal-title"></h2></div><button class="close-button" data-action="close-modal" aria-label="Close dialog" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button></div><div id="modal-body"></div></dialog>
-  <noscript><p class="noscript">This interactive assessment needs JavaScript. The original assessments and sources are available through <a href="https://little-jamaica-framework-tool.vercel.app/">Community in Public’s planning tool</a>.</p></noscript>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore Toronto councillors' assessed planning study portfolios, celebrating stronger commitments to community participation and wellbeing.">
+<meta name="theme-color" content="#ec6428"><title>Toronto Councillor Leaderboard · Community in Public</title>
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./leaderboard.css">
+<script src="./dashboard-data.js" defer></script><script src="./councillors.js" defer></script><script src="./scoring.js" defer></script><script src="./portfolio.js" defer></script><script src="./leaderboard.js" defer></script>
+</head><body>
+<a class="skip" href="#rankings">Skip to rankings</a>
+<header><div class="head"><a href="https://communityinpublic.ca"><img src="./assets/cip-logo.png" width="154" height="67" alt="Community in Public"></a><span class="headlabel">RESEARCH &amp; ACCOUNTABILITY</span><nav><a href="./studies.html" id="study-nav">Study assessments</a><a href="#methodology">Methodology</a><a href="https://little-jamaica-framework-tool.vercel.app/">Community survey</a></nav></div></header>
+<main>
+<section class="hero"><div><p class="eyebrow">INDEPENDENT COMMUNITY RESEARCH</p><h1>Toronto Councillor<br class="desktop"> <em>Leaderboard</em></h1><p class="lede">Celebrating leadership. Raising the standard for every neighbourhood.</p></div><aside><span class="trophy" aria-hidden="true">🏆</span><strong>Every neighbourhood deserves excellent planning.</strong><p>Explore the written planning commitments associated with Toronto’s councillors and the studies that set important precedents.</p></aside></section>
+<div class="tabs" role="group" aria-label="Assessment"><button type="button" data-view="framework" aria-pressed="true">Planning frameworks</button><button type="button" data-view="tor" aria-pressed="false">Advisory committee TOR</button></div>
+<section class="panel" aria-labelledby="leaders-title">
+<div class="heading"><div><p class="eyebrow">CELEBRATING EXCELLENCE</p><h2 id="leaders-title">Leading the way</h2><p class="muted">Highest recency- and shared-representation-adjusted portfolio scores.</p></div><span class="trophy small" aria-hidden="true">🏆</span></div>
+<div class="filters"><label>Assessment area<select id="area"><option value="all">All assessment areas</option></select></label><label id="scope-label">Comparator scope<select id="scope"><option value="full">Full documents</option><option value="vision">Vision statements</option></select></label><label>Assessment weights<select id="weights"><option value="default">Source defaults</option><option value="equal">Equal weights</option><option value="custom">Custom weights</option></select></label><button id="edit-weights" type="button" hidden>Edit custom weights</button></div>
+<p class="notice" id="scope-note"></p><p class="notice" id="weight-notice" hidden role="status"></p>
+<div id="podium" class="podium"></div><div id="stats" class="stats"></div>
+</section>
+<section class="panel" id="rankings" aria-labelledby="ranking-title"><div class="heading"><div><p class="eyebrow">THE LEADERBOARD</p><h2 id="ranking-title">Councillor rankings</h2><p class="muted">One councillor, one weighted average. Study-period representation only.</p></div><div class="actions"><button type="button" id="share">Copy view link</button><button type="button" id="csv">Export CSV</button><button type="button" id="png">Export PNG</button></div></div>
+<label class="search">Search councillor or study<input type="search" id="search" placeholder="Find a councillor or planning study"></label>
+<div class="chart-scroll" tabindex="0" role="region" aria-label="Councillor leaderboard chart; scroll horizontally to see all councillors"><div id="chart" class="chart"></div></div>
+<p class="muted fine">Select a portrait or bar to open its portfolio. Scores are relative to Little Jamaica (zero is a reference point, not a quality rating).</p>
+<div id="ranking-list"></div><p class="muted fine" id="count"></p></section>
+<section class="panel" aria-labelledby="awards-title"><div class="heading"><div><p class="eyebrow">LEADERSHIP RECOGNITION</p><h2 id="awards-title">Setting the standard</h2><p class="muted">Highest weighted portfolio scores by assessment area. All joint leaders are recognized.</p></div></div><div id="awards" class="awards"></div></section>
+<section class="panel methodology" id="methodology"><p class="eyebrow">OUR METHODOLOGY</p><h2>How the leaderboard works</h2><ol><li>Each assessed local study contributes its existing relative score to each councillor who represented the area during the documented study period.</li><li>For multiple studies, start with 66% for the most recent and divide the remaining 34% evenly among older studies. A single study starts at 100%. If the latest dates are tied, split the 66% equally; if all dates tie, start with equal weights.</li><li>Divide each study’s starting weight by the number of study-period councillors associated with it.</li><li>Normalize the adjusted weights to total 100%, then multiply each original study score by its final weight and sum the contributions. Ranking uses unrounded results; ties share the same rank.</li></ol><p class="formula">Final study weight = (starting weight ÷ associated councillor count) ÷ sum of those adjusted weights within the portfolio.</p><p><strong>Interpretation.</strong> Shared representation is a proxy, not proof of individual responsibility or participation. Councillors with one assessed study retain its full score after normalization. Citywide bodies without local councillor assignments are excluded from councillor rankings. Search hides rows, never changes their scores or ranks. The Framework and TOR scales differ; they are not combined.</p><p><strong>Recency.</strong> Based on assessed document dates where established, otherwise documented study or committee periods. The Little Jamaica and Weston TOR issue dates have not been confirmed; the current ordering provisionally treats the 2026 Little Jamaica TOR as later than Weston’s October 2025 LAC start. The Little Jamaica framework vision is ordered after the February 2026 framework. No exact issue date is implied by these ordering choices.</p><p><strong>Scope.</strong> These scores assess written provisions, not individual councillor or staff performance, document implementation, or overall planning quality. Earlier study-period councillors are not presented as current officeholders. The rankings are not a complete record of any councillor’s work.</p><p><a id="method-study-link" href="./studies.html">Explore the study-level scores, sources, assessment criteria and full methodology</a>.</p><details><summary>Portrait credits</summary><div id="credits"></div></details></section>
+<section class="closing"><h2>Every neighbourhood deserves excellent planning.</h2><p>When one neighbourhood secures stronger written commitments to community participation, housing affordability and wellbeing, it establishes a precedent that can benefit communities across Toronto.</p><button type="button" id="share-bottom">Share the leaderboard</button></section>
+</main><footer><strong>Community in Public</strong><p>Independent research. Not an official City of Toronto or Stakeholder Advisory Committee assessment. The councillor portfolios summarize assessed documents associated with study-period representation, not personal performance.</p><p id="version"></p></footer>
+<dialog id="custom-dialog"><form id="custom-form"><div class="heading"><h2>Customize assessment weights</h2><button type="button" id="cancel-custom" aria-label="Close">✕</button></div><p class="muted">Enter non-negative relative weights; they will be normalized to 100%. Portfolio weighting is unchanged.</p><div id="custom-fields"></div><p id="custom-error" role="alert"></p><button type="submit" class="primary">Apply weights</button></form></dialog>
+<div id="status" role="status" aria-live="polite"></div><noscript>This leaderboard requires JavaScript. <a href="./studies.html">Study assessment</a></noscript>
+</body></html>
