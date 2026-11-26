@@ -1,0 +1,1312 @@
+{
+  "schema_version": "tor12-v1",
+  "assessment_status": "approved",
+  "published": true,
+  "assessment_scope": "Explicit provisions of each written Terms of Reference only",
+  "reference_id": "ljovpf",
+  "areas": [
+    {
+      "id": "G1",
+      "name": "Community decision-making and influence",
+      "rank": 1,
+      "weight": 30
+    },
+    {
+      "id": "G2",
+      "name": "Timing and meaningful participation",
+      "rank": 2,
+      "weight": 25
+    },
+    {
+      "id": "G3",
+      "name": "Representation, equity and support",
+      "rank": 3,
+      "weight": 20
+    },
+    {
+      "id": "G5",
+      "name": "Transparency",
+      "rank": 4,
+      "weight": 15
+    },
+    {
+      "id": "G4",
+      "name": "Committee governance and responsibilities",
+      "rank": 5,
+      "weight": 10
+    }
+  ],
+  "components": [
+    {
+      "id": "G1-01",
+      "area": "G1",
+      "name": "Members' ability to shape the agenda and planning work",
+      "description": "Assess whether the TOR expressly enables members to propose agenda items, identify planning priorities, advise on study scope or engagement methods, and shape directions or options. Distinguish a defined right to initiate or jointly set these matters from an invitation to comment on staff-selected topics or prepared drafts. Judge only the roles and processes stated in the TOR, not whether members exercised those powers."
+    },
+    {
+      "id": "G1-02",
+      "area": "G1",
+      "name": "Collective recommendations and the stated use of advice",
+      "description": "Assess whether the TOR permits members to deliberate, seek consensus, issue collective recommendations, and preserve differing views. Examine what the TOR explicitly requires staff to do with those recommendations when developing the plan or its final advice. Distinguish a stated commitment to incorporate advice where feasible from a promise merely to receive or consider feedback. Does not judge whether advice was subsequently accepted or acted upon."
+    },
+    {
+      "id": "G2-01",
+      "area": "G2",
+      "name": "Participation stages, committee term and meetings",
+      "description": "Assess which planning phases the TOR assigns to the committee, the specified meeting frequency and duration, its term, and provisions for additional meetings or working groups. Distinguish involvement in vision, options and implementation stages from review of a nearly complete draft."
+    },
+    {
+      "id": "G2-02",
+      "area": "G2",
+      "name": "Advance information and community communication",
+      "description": "Assess whether the TOR specifies advance notice and access to agendas, draft materials and discussion questions. Examine any formal role for members in gathering views from their communities, sharing information back, or using City-provided outreach resources."
+    },
+    {
+      "id": "G3-01",
+      "area": "G3",
+      "name": "Representative membership, selection and continuity",
+      "description": "Assess whether the TOR specifies a membership size or range, groups and interests to be represented, recruitment and selection procedures, alternate arrangements, and how vacancies or representation gaps are addressed. Consider whether those provisions identify people most affected by the planning subject, including equity-deserving communities where relevant."
+    },
+    {
+      "id": "G3-02",
+      "area": "G3",
+      "name": "Compensation, accessibility and access to expertise",
+      "description": "Assess the TOR's explicit provisions for honoraria or expense coverage, accessible meeting arrangements, interpretation or alternative formats, written or remote participation, orientation, and access to technical or interdivisional expertise. Check any specified eligibility, request process or responsible staff role. Distinguish concrete supports from general commitments to inclusion. Do not infer whether compensation, accommodations or expert assistance were actually delivered."
+    },
+    {
+      "id": "G5-01",
+      "area": "G5",
+      "name": "Meeting records and member review",
+      "description": "Assess what records the TOR commits to or permits (for example, minutes, summaries, recommendations, dissent or action lists) and whether members may review, correct or approve them. Examine specified circulation deadlines and procedures for resolving disagreements over the record. Distinguish member-validated documentation from staff-only summaries."
+    },
+    {
+      "id": "G5-02",
+      "area": "G5",
+      "name": "Public information, meeting openness and stated origins",
+      "description": "Assess whether the TOR identifies the committee's stated origins and mandate, including references to community advocacy or Council direction, and sets out public access to agendas, records, recommendations or meeting observation."
+    },
+    {
+      "id": "G5-03",
+      "area": "G5",
+      "name": "Written responses to committee recommendations",
+      "description": "Assess whether the TOR requires staff to provide a written account of how committee recommendations were incorporated, which were not adopted, and the reasons for non-adoption. Check whether the TOR specifies the recipients and timing of that explanation. Distinguish a required response with reasons from general commitments to consider input or summarize engagement."
+    },
+    {
+      "id": "G4-01",
+      "area": "G4",
+      "name": "Member authority over TOR rules and shared leadership",
+      "description": "Assess who the TOR says may draft, approve and amend committee rules, and whether members share leadership through endorsement, joint approval, co-chairing or defined consultation. Distinguish member authority or agreed procedures from changes or leadership decisions assigned to City staff. Rate only the powers and procedures expressly described in the TOR; do not infer how leadership or amendments operated in practice."
+    },
+    {
+      "id": "G4-02",
+      "area": "G4",
+      "name": "Clear roles, responsibilities and follow-through",
+      "description": "Assess whether the TOR identifies who manages the committee, the responsible City division or partner, an accessible contact, and specific duties for staff or facilitators. Consider written commitments concerning meeting preparation, understandable information, relevant expertise, record keeping and follow-up. Distinguish named roles and clear obligations from general statements of responsibility."
+    },
+    {
+      "id": "G4-03",
+      "area": "G4",
+      "name": "Alignment with members' democratic rights",
+      "description": "Assess the TOR's provisions for members to express views, dissent, advocate independently, speak publicly and participate in other democratic processes. Examine written media, confidentiality, conduct, conflict-of-interest and membership-removal rules for restrictions, procedural safeguards and staff discretion. Distinguish explicit protection of members' rights from rules that limit independent civic activity. Judge only what the TOR permits or restricts, not whether members were actually censored, removed or discouraged."
+    }
+  ],
+  "comparators": [
+    {
+      "id": "ljovpf",
+      "name": "Little Jamaica & Oakwood Vaughan",
+      "body": "Stakeholder Advisory Committee (SAC)",
+      "url": "https://drive.google.com/file/d/1homiMC4M7SOaVbcaCZZ_8mqA7LWzIzYO/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp1",
+      "name": "Chinatown Tomorrow Planning Initiative",
+      "body": "Community Working Group",
+      "url": "https://drive.google.com/file/d/1eLXHb5BxYx4jggq264HpJQQHu_6QAfFp/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp2",
+      "name": "Weston in Gear Planning Study",
+      "body": "Local Advisory Committee (LAC)",
+      "url": "https://drive.google.com/file/d/1hjohyJFQRrRkCy-jf7Suy-ogmJ3Cw22C/view",
+      "source_state": "document-linked",
+      "study_url": "https://www.toronto.ca/city-government/planning-development/planning-studies-initiatives/weston-in-gear-planning-study/",
+      "source_document": "City of Toronto, Weston in Gear Planning Study, Local Advisory Committee Terms of Reference (4 pages; user-supplied 2026-11-22)",
+      "source_sha256": "adbe8453c7b45993f8add14cd9be1676710caaa54085992880660b8e421186ea"
+    },
+    {
+      "id": "comp3",
+      "name": "North York at the Centre",
+      "body": "Local Advisory Committee (LAC)",
+      "url": "https://drive.google.com/file/d/1VFAbjKZqKohxgde-RlWhvT_X3KdP4Hfs/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp4",
+      "name": "Picture Mount Dennis Study",
+      "body": "Local Advisory Committee (LAC)",
+      "url": "https://drive.google.com/file/d/16YH8vJY1XEfrhB4QJEkp_I3VRz1s09sO/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp5",
+      "name": "High Park Apartment Neighbourhood Character Study",
+      "body": "Working Group",
+      "url": "https://drive.google.com/file/d/1tEhNwlRgumbaNt6yZBPft9gkLWMKVME2/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp6",
+      "name": "Jane Finch Initiative",
+      "body": "Community Advisory Committee (CAC)",
+      "url": "https://drive.google.com/file/d/1WNDpHAa0bMB8dITYyD4F7MQUD0HjpzUy/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp7",
+      "name": "Canada Square Special Study Area (Midtown)",
+      "body": "Working Group",
+      "url": "https://drive.google.com/file/d/15lBHKW8AB9pXRLKVz128-n3Uvt8pndg4/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp8",
+      "name": "Broadview Avenue Planning Study",
+      "body": "Stakeholder Advisory Committee (SAC)",
+      "url": "https://drive.google.com/file/d/1IBlrLOiIN66p8NN71Jhs8CNFDR_uk-cn/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp9",
+      "name": "Kingston Road Guildwood Planning Study",
+      "body": "Local Advisory Committee (LAC)",
+      "url": "https://drive.google.com/file/d/1HUp3Q58gs11Ovx0BF2fOjLjhH3M0-Vrt/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    },
+    {
+      "id": "comp10",
+      "name": "Toronto Seniors Strategy",
+      "body": "Accountability Table",
+      "url": "https://drive.google.com/file/d/1BNdr0O2-f5APq2_JYg3INvXXlRI2Z2ul/view?usp=sharing",
+      "source_state": "document-linked",
+      "study_url": null
+    }
+  ],
+  "judgments": {
+    "comp1": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "The Working Group is tasked with identifying modifications to the study and advising on approaches, concepts and potential actions; City staff organize and chair meetings (p. 1–2).",
+        "rationale": "Chinatown provides a wider, proactive study-modification remit, although it does not expressly grant member control of agendas.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A6:L6",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The TOR describes collaborative problem-solving and an inclusive forum but does not set a consensus procedure, require a collective recommendation or obligate staff to incorporate advice (p. 1–2).",
+        "rationale": "LJOVPF expressly requires staff to document differing views and consider all advice; neither body guarantees adoption.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A7:L7",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "Three to four working-group meetings and a walking tour are anticipated during the study, with additional meetings possible (p. 2). The group advises on study modifications, not exclusively a completed draft (p. 1).",
+        "rationale": "A broader study remit and more scheduled opportunities are written than LJOVPF's two short final-phase sessions.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: p. 2; p. 1",
+        "approval_reference": "Assessment Approval!A8:L8",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "The City must notify members of meetings and their focus seven days beforehand; members are asked to act as community ambassadors and communicate with neighbours (p. 2).",
+        "rationale": "A definite notice period and outward community-communication role exceed LJOVPF's unspecified advance period and no stated outreach obligation.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A9:L9",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "The Working Group has 15 members, including residents, business owners, stakeholder groups and activists, selected from community-meeting signups or email invitations (p. 2). No vacancy or alternate policy is specified.",
+        "rationale": "An identifiable signup route and specified size provide firmer selection rules, although LJOVPF enumerates more equity-specific interests.",
+        "source_section": "LJOVPF: p. 3\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A10:L10",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "The group can ask City staff to invite technical or other divisional advisors; staff consider requests subject to timing and availability (p. 3). No honoraria, interpretation or accommodation arrangements appear in the TOR (p. 1–3).",
+        "rationale": "Chinatown expressly offers an expert-request route, while LJOVPF states written, virtual and accommodation options; neither provides pay.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: p. 3; p. 1–3",
+        "approval_reference": "Assessment Approval!A11:L11",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": -1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "The TOR says nothing about formal minutes, member review, corrections or circulation deadlines (p. 1–3); it only provides that non-personal information becomes part of the public record (p. 3).",
+        "rationale": "LJOVPF expressly requires staff to synthesize meeting advice and dissent, though it also excludes member approval.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: p. 1–3; p. 3",
+        "approval_reference": "Assessment Approval!A12:L12",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "The TOR names the December 2019 Council study direction and the December 2024 public consultation and signup invitation (p. 1). No public observation or proactive publication of meeting records is stated (p. 1–3).",
+        "rationale": "Chinatown identifies a more traceable public origin and recruitment event; neither TOR commits to open meetings or posting minutes.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: p. 1; p. 1–3",
+        "approval_reference": "Assessment Approval!A13:L13",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": -1,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "The group advises on study modifications, but the TOR does not require written explanations of accepted or rejected recommendations, nor an advice-tracking report (p. 1–3).",
+        "rationale": "LJOVPF promises to explain how engagement informed refinements in later project materials, albeit conditionally.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: p. 1–3",
+        "approval_reference": "Assessment Approval!A14:L14",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "City staff organize and chair meetings and the TOR identifies no member approval, collective amendment power or shared chairing arrangement (p. 1–3).",
+        "rationale": "Both leave ultimate leadership with staff and confer no formal power on members to amend the TOR.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: p. 1–3",
+        "approval_reference": "Assessment Approval!A15:L15",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 0,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "Three named City planners lead the working group and provide direct telephone/email contacts (p. 2–3); the TOR specifies meeting notice, chairing and consideration of expert requests (p. 2–3).",
+        "rationale": "Chinatown is stronger on named responsibility; LJOVPF is more detailed about staff duties for records, equitable facilitation and feedback analysis.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: p. 2–3",
+        "approval_reference": "Assessment Approval!A16:L16",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "Members are encouraged to express opinions freely, must disclose conflicts and explicitly retain the right to participate in democratic processes outside the working group (p. 2–3). No staff-controlled removal provision is included (p. 1–3).",
+        "rationale": "Both protect independent civic participation; LJOVPF also expressly allows public speech but includes discretionary removal safeguards.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: p. 2–3; p. 1–3",
+        "approval_reference": "Assessment Approval!A17:L17",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp2": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "Weston members may advise on both study content and process, including work brought forward by the Project Team, LAC members or others. They may suggest alternatives, raise concerns and propose ways of resolving them (s. 6, p. 2). The TOR does not give members an express right to set meeting agendas or control study scope.",
+        "rationale": "Weston expressly accepts member-originated input on study content and process, while LJOVPF staff select SAC discussion topics and agendas. Neither TOR transfers final agenda-setting authority to members.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: s. 6, p. 2\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 4-5; Weston, ss. 2, 6, p. 1-2.",
+        "approval_reference": "Assessment Approval!A18:L18",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The LAC uses a consensus-based approach: members discuss ideas, seek common ground and narrow disagreements; differing views are documented in meeting notes (s. 5, p. 2). The LAC gives advice and recommendations, and staff are asked to incorporate advice into the project where feasible (s. 6, p. 2-3).",
+        "rationale": "Weston provides a collective consensus process and a feasibility-based incorporation commitment. LJOVPF expressly disclaims a single SAC position and does not obligate staff to adopt recommendations.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: s. 5, p. 2; s. 6, p. 2-3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 1, 7-8; Weston, ss. 5-6, p. 2-3.",
+        "approval_reference": "Assessment Approval!A19:L19",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "Weston plans four LAC meetings over about six months: two in Phase 1 (Background Review), one in Phase 2 (Preferred Option) and one in Phase 3 (Implementation Strategy). City Community Planning staff may convene one further meeting to review draft area policies after the study (s. 3, p. 1).",
+        "rationale": "The verified TOR resolves the legacy meeting-count conflict: four scheduled meetings plus one possible additional meeting, spanning earlier and later planning phases. LJOVPF begins only during final framework refinement and anticipates two shorter sessions.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: s. 3, p. 1\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 1, 4-5; Weston, s. 3, p. 1.",
+        "approval_reference": "Assessment Approval!A20:L20",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": -1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "Members are asked to review study materials and give feedback, and the Project Team must strive to provide accurate, understandable information (s. 6, p. 2-3). The TOR sets no number of days for advance circulation and does not require members to collect neighbourhood views or report LAC discussions back to their communities.",
+        "rationale": "LJOVPF expressly promises advance agendas, background information and discussion questions, with written-feedback options. Weston establishes information quality and review duties but not advance circulation, written-submission routes or a defined neighbourhood communication process.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: s. 6, p. 2-3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 5, 7; Weston, s. 6, p. 2-3.",
+        "approval_reference": "Assessment Approval!A21:L21",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "Weston provides for up to 15 members of the public representing a range of interests and organizations; groups ordinarily have one participant and one or two alternates. City staff select members in consultation with Councillor Frances Nunziata (s. 4, p. 1). No open application process, vacancy replacement rule or equity-specific representation standard is stated.",
+        "rationale": "Weston sets a size limit and allows up to two alternates; LJOVPF enumerates more groups, including Black, Caribbean and accessibility interests. Both TORs place selection with City staff and omit open selection and continuity safeguards.",
+        "source_section": "LJOVPF: p. 3\nComparator: s. 4, p. 1\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 3; Weston, s. 4, p. 1.",
+        "approval_reference": "Assessment Approval!A22:L22",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": -1,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "Weston asks staff to provide understandable information and ensure appropriate resource people are available for particular discussions (s. 6, p. 3). It states no honorarium, expense reimbursement, accessibility accommodation procedure, interpretation service or alternative written/virtual participation entitlement.",
+        "rationale": "Neither TOR offers remuneration. LJOVPF specifies accessible virtual participation, written alternatives and accommodation requests; Weston identifies informational supports but omits explicit accessibility and alternative-participation provisions.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: s. 6, p. 3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 3, 7, 9; Weston, s. 6, p. 3.",
+        "approval_reference": "Assessment Approval!A23:L23",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "Weston records differing viewpoints in LAC meeting notes (s. 5, p. 2). Members are to review discussion results for accuracy in meeting records or additional reports (s. 6, p. 2). Staff are to post meeting summaries and presented materials online (s. 6, p. 3). No specific minutes-circulation deadline is stated.",
+        "rationale": "Weston assigns members an accuracy-review role and requires recording dissent; LJOVPF expressly says staff summaries need no member approval and gives no specified member correction procedure.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: s. 5, p. 2; s. 6, p. 2; s. 6, p. 3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 7-8; Weston, ss. 5-6, p. 2-3.",
+        "approval_reference": "Assessment Approval!A24:L24",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "Weston identifies the study, the LAC mandate and the official City project page but does not describe the committee as a response to specific community advocacy or provide for public observation of meetings (ss. 1-2, p. 1, 3). Staff must post meeting summaries and materials on the City website; non-personal LAC information is part of the public record (ss. 6, 10, p. 3-4).",
+        "rationale": "Although LJOVPF more expressly acknowledges prior community advocacy in its background, Weston requires proactive online publication of records and materials. Neither TOR promises open meetings.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: ss. 1-2, p. 1, 3; ss. 6, 10, p. 3-4\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 1, 8-9; Weston, ss. 1, 6, 10, p. 1, 3-4.",
+        "approval_reference": "Assessment Approval!A25:L25",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "Weston says staff should listen to member advice and incorporate it into the project where feasible, and publish meeting summaries (s. 6, p. 3). The TOR does not require staff to track each individual LAC recommendation, explain a rejection or publish a recommendation-by-recommend response.",
+        "rationale": "Weston has a feasibility-based response obligation; LJOVPF conditionally promises to explain how engagement shaped refinement. Neither requires written reasons for each unadopted recommendation, so the safeguards differ but remain incomplete.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: s. 6, p. 3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 7-8; Weston, s. 6, p. 3.",
+        "approval_reference": "Assessment Approval!A26:L26",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "Weston allows TOR changes as the project progresses, but expressly requires amendments to be made in consultation with both the Project Team and LAC members (s. 1, p. 1). It does not give members final approval, a veto or a co-chairing role; staff select membership and retain project leadership (ss. 4, 6, p. 1-3).",
+        "rationale": "Consulting members before amending governance rules grants greater procedural influence than the LJOVPF power for staff to revise the TOR and only advise members of substantive changes.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: s. 1, p. 1; ss. 4, 6, p. 1-3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 2, 9; Weston, ss. 1, 4, 6, p. 1-3.",
+        "approval_reference": "Assessment Approval!A27:L27",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "Weston identifies Community Planning as the City project team and Nicholas Deibler as the named City planner for TOR correspondence and media enquiries (ss. 8, final acknowledgement, p. 3-4). The TOR assigns staff duties to provide information and resource people, incorporate advice where feasible, and publish meeting summaries and presented materials (s. 6, p. 3).",
+        "rationale": "Weston specifies a named responsible contact and an express publication duty, in addition to staff information and response duties. LJOVPF lists many staff functions but provides only a general project contact.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: ss. 8, final acknowledgement, p. 3-4; s. 6, p. 3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 4, 9; Weston, ss. 6, 8 and acknowledgement, p. 3-4.",
+        "approval_reference": "Assessment Approval!A28:L28",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "Weston explicitly says LAC membership does not waive the right to take part in other democratic processes (s. 7, p. 3). Media inquiries about group opinions should be referred to the named City planner, without an explicit ban on independent advocacy (s. 8, p. 3). Members must disclose conflicts; non-disclosure can lead to City-initiated termination of membership (s. 9, p. 3).",
+        "rationale": "Both TORs expressly preserve participation in other democratic channels. LJOVPF is more specific about independent public speech and fair conduct processes, while Weston also preserves democratic participation but refers media inquiries to staff and allows conflict-related removal.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: s. 7, p. 3; s. 8, p. 3; s. 9, p. 3\nSource: Local Advisory Committee Terms of Reference.pdf (Weston in Gear LAC, 4 pages, user-supplied November 22, 2026). LJOVPF, p. 6, 8-9; Weston, ss. 7-9, p. 3.",
+        "approval_reference": "Assessment Approval!A29:L29",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp3": {
+      "G1-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "The LAC reviews ideas and project materials before public release and offers refinements during vision, options and implementation phases; City/WSP staff organize agendas (p. 1–3, 5). No member agenda-setting right is stated.",
+        "rationale": "Members advise on successive planning products rather than only the final draft, notwithstanding staff control of agendas.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: p. 1–3, 5",
+        "approval_reference": "Assessment Approval!A30:L30",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 0,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "Members are to seek common ground while differing views are recorded; the Project Team seeks guidance on materials before public release but retains discretion over refinements (p. 2–3).",
+        "rationale": "Both preserve disagreement and provide staff-led advisory input without an enforceable commitment to adopt recommendations.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: p. 2–3",
+        "approval_reference": "Assessment Approval!A31:L31",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "Four roughly two-hour meetings span 2023–2024, with one meeting in Phase 1, two in Phase 2 and one on the implementation strategy in Phase 3 (p. 2–5).",
+        "rationale": "A defined multi-phase term, including vision/options and implementation, is materially broader than two short LJOVPF final-phase sessions.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: p. 2–5",
+        "approval_reference": "Assessment Approval!A32:L32",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "The Project Team provides an agenda, materials and update one week before each meeting (p. 3). Members are expected to obtain and share feedback with equity-deserving groups, supported by a DIY Workshop Kit (p. 2–3).",
+        "rationale": "The one-week deadline and structured outreach duty exceed LJOVPF's general advance notice and absence of a neighbourhood feedback role.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: p. 3; p. 2–3",
+        "approval_reference": "Assessment Approval!A33:L33",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "Membership deliberately includes organizations championing varied interests and individuals representing equity-deserving or vulnerable residents (p. 1). Staff may replace members, address expertise gaps and consult the LAC; organizational alternates are allowed (p. 3–4).",
+        "rationale": "North York gives express vacancy/gap-filling and alternate rules, plus an equity-specific recruitment purpose that is not procedurally defined in LJOVPF.",
+        "source_section": "LJOVPF: p. 3\nComparator: p. 1; p. 3–4",
+        "approval_reference": "Assessment Approval!A34:L34",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "Private-capacity LAC members receive $50 per meeting (p. 4). The team promises accessible inclusive facilitation, technical advice when feasible, one-week materials and consultant resources; an in-person meeting format is anticipated (p. 3–4).",
+        "rationale": "An express honorarium and technical support add concrete resources not promised by LJOVPF, although LJOVPF offers additional written participation alternatives.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: p. 4; p. 3–4",
+        "approval_reference": "Assessment Approval!A35:L35",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "Staff provide minutes within one week and incorporate post-meeting notes/edits as appropriate (p. 3); differing opinions are to be recorded (p. 2). The TOR does not grant a formal vote to approve minutes.",
+        "rationale": "Timely, amendable minutes provide a clearer record-and-correction pathway than LJOVPF's staff-only summaries.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: p. 3; p. 2",
+        "approval_reference": "Assessment Approval!A36:L36",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 0,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "The TOR describes the three study phases and states community engagement continues throughout (p. 1); members review information before it is public (p. 1–2). It does not promise public access to LAC meetings, agendas or minutes.",
+        "rationale": "Both describe context and broader engagement but do not guarantee committee transparency through open meetings or proactively published records.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: p. 1; p. 1–2",
+        "approval_reference": "Assessment Approval!A37:L37",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "The LAC's feedback is intended to refine study materials before they go public; the TOR requires staff minutes but no written account identifying rejected recommendations or reasons (p. 1–3).",
+        "rationale": "Neither document creates a specific written response-and-reasons obligation, despite LJOVPF's conditional final engagement summary.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: p. 1–3",
+        "approval_reference": "Assessment Approval!A38:L38",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "LAC members review, endorse and sign their TOR at the first meeting; proposed schedule changes are discussed with members (p. 4–5). Staff still control committee management and agenda preparation.",
+        "rationale": "Member endorsement and collaboration on meeting schedules provide a shared governance step absent from LJOVPF.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: p. 4–5",
+        "approval_reference": "Assessment Approval!A39:L39",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "The City and WSP roles are described, with named City co-leads and a consultant coordinator; staff provide agendas a week ahead, answer technical questions, facilitate inclusively and issue minutes within a week (p. 3, 6).",
+        "rationale": "Named responsible leads, consultant management and timed duties are more specific than LJOVPF's unnamed staff/project inbox.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: p. 3, 6",
+        "approval_reference": "Assessment Approval!A40:L40",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "The TOR encourages honest debate but instructs members not to circulate 'false or defamatory information' online; the Project Team may remove members for conduct violations after mitigation efforts (p. 3–4). It also asks members to respect confidentiality (p. 2).",
+        "rationale": "LJOVPF explicitly protects public speaking and participation elsewhere; North York adds confidentiality and communications restrictions and discretionary removal.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: p. 3–4; p. 2",
+        "approval_reference": "Assessment Approval!A41:L41",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp4": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "Members may advise on content and process presented by staff, fellow members or others, and offer alternatives to study problems (p. 1–2). The TOR does not expressly reserve study priorities or member-proposed issues exclusively to staff.",
+        "rationale": "The mandate authorizes process and member-originated content advice, broader than LJOVPF's staff-selected final-draft questions.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A42:L42",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The LAC uses a consensus-building approach, records dissent in meeting notes, and submits advice and recommendations; the Project Team undertakes to incorporate advice where feasible (p. 1–2).",
+        "rationale": "Collective advice, documented disagreement and a feasibility-based incorporation commitment exceed LJOVPF's staff consideration without adoption duty.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A43:L43",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "Three meetings over about five months are assigned to Phase 2 preliminary plans and Phase 3 final framework, with a possible extra post-study meeting on draft policies (p. 1).",
+        "rationale": "Defined input before the final framework and possible later policy review exceed a final-phase-only SAC.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: p. 1",
+        "approval_reference": "Assessment Approval!A44:L44",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "Members review study materials and may recommend process changes or matters from members/others (p. 1–2). No fixed agenda notice period or explicit requirement to gather or relay neighbourhood views is written.",
+        "rationale": "Both offer review opportunities but lack a binding advance-days rule and a detailed community report-back mechanism.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A45:L45",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "The LAC has up to 15 public members, selected by City staff in consultation with the ward councillor; each organization is limited to one member and one alternate (p. 1).",
+        "rationale": "A membership cap and alternate policy are specified, while LJOVPF specifies broader Black/Caribbean and equity interest categories.",
+        "source_section": "LJOVPF: p. 3\nComparator: p. 1",
+        "approval_reference": "Assessment Approval!A46:L46",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 0,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "The TOR states no honoraria, interpreters, accessibility accommodations or written-feedback alternative. It expects staff to provide understandable information and appropriate resource people when relevant (p. 1–2).",
+        "rationale": "LJOVPF sets out more explicit virtual, written and accommodation options; Mount Dennis offers technical support without comparable accessibility detail.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A47:L47",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "Members review the results of LAC discussion to ensure accurate meeting records, including member-requested additional reports; differing views are to appear in notes (p. 1–2). No circulation deadline is stated.",
+        "rationale": "A member accuracy-review role is expressly available at Mount Dennis but expressly not required in LJOVPF.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A48:L48",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "The TOR identifies the study and its later policy-review phase, and staff must post meeting summaries and presentation materials on the City website (p. 1–2). It does not authorize public meeting observation.",
+        "rationale": "Proactive public posting is promised at Mount Dennis; LJOVPF gives no publication obligation for SAC summaries.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: p. 1–2",
+        "approval_reference": "Assessment Approval!A49:L49",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "The Project Team must listen and, where feasible, incorporate advice into the study; it must post summaries but need not state which advice was rejected or why (p. 2).",
+        "rationale": "LJOVPF promises an account of how engagement informed refinements, while Mount Dennis promises incorporation where feasible; neither requires reasons for each non-adoption.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A50:L50",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "Amendments to the TOR will be undertaken in consultation with the Project Team and LAC members (p. 1). The TOR does not provide co-chairing or an explicit member veto.",
+        "rationale": "A required member consultation step for rule changes exceeds LJOVPF's staff-only amendment power with notification afterward.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: p. 1",
+        "approval_reference": "Assessment Approval!A51:L51",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "The TOR names the senior planner and email/telephone contact; staff duties include accessible information, relevant resource people, incorporation of advice where feasible and publishing summaries (p. 2–3).",
+        "rationale": "Named responsibility and explicit public-summary duties exceed LJOVPF, though LJOVPF lists more facilitation and documentation tasks.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: p. 2–3",
+        "approval_reference": "Assessment Approval!A52:L52",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "Members expressly retain democratic participation rights; media inquiries about group views are referred to a named senior planner. Conflict rules let the City deny or terminate membership at its discretion (p. 2–3).",
+        "rationale": "Both protect participation outside the group but impose rules on representing group positions and retain City discretion over membership.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: p. 2–3",
+        "approval_reference": "Assessment Approval!A53:L53",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp5": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "Members may advise on study content and process put forward by staff, fellow members or others and suggest alternatives for emerging problems (p. 2). The TOR does not detail an agenda proposal or co-setting procedure.",
+        "rationale": "The content-and-process mandate is broader than LJOVPF's staff-selected advice on an already-drafted framework.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A54:L54",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "A consensus-based approach seeks common ground and documents differing views; the group makes recommendations and staff aim to incorporate advice into guidelines where feasible (p. 2).",
+        "rationale": "The recognized collective recommendation process and feasibility-based adoption language are more substantial than LJOVPF's individual feedback mandate.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A55:L55",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "Four working-group meetings cover four study phases: neighbourhood walk/orientation, preliminary findings, policy development and final recommendations, over roughly six months (p. 1).",
+        "rationale": "The stated phased involvement starts before policy directions are settled, unlike LJOVPF's two final-phase sessions.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: p. 1",
+        "approval_reference": "Assessment Approval!A56:L56",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "Members review relevant study materials and communicate discussions back to organizations and constituencies (p. 2). The TOR sets no advance-materials lead time and no specific neighbourhood outreach resources.",
+        "rationale": "High Park provides a clearer community reporting-back duty, whereas LJOVPF expressly promises advance materials and written follow-up.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A57:L57",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "The group comprises residents, neighbourhood associations and property owners selected by City staff, without a stated number, open recruitment, vacancy procedure or regular alternates (p. 1; members may send an approved designate, p. 2).",
+        "rationale": "LJOVPF specifies a wider range of interests, including Black and Caribbean and accessibility-related perspectives, plus an alternate for each organization.",
+        "source_section": "LJOVPF: p. 3\nComparator: p. 1; members may send an approved designate, p. 2",
+        "approval_reference": "Assessment Approval!A58:L58",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "The first meeting is an Urban Design 101 session and character-elements walk (p. 1); staff provide understandable information and resource people, with no honoraria or accommodation provision stated (p. 1–2).",
+        "rationale": "High Park specifies orientation/expertise; LJOVPF specifies virtual, written and accommodation pathways. Neither guarantees payment.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: p. 1; p. 1–2",
+        "approval_reference": "Assessment Approval!A59:L59",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "Differing views appear in working-group meeting notes; members review whether the records accurately capture discussions, and can identify additional reports as needed (p. 2).",
+        "rationale": "Member review of the record is expressly provided, whereas LJOVPF says staff summaries need not be approved or adopted by members.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A60:L60",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "Staff must post summary reports and presentation materials on the City study website (p. 2). The TOR identifies the study but gives no Council or community-advocacy origin, and no public observer rule.",
+        "rationale": "A concrete commitment to public reports outweighs LJOVPF's general reference to a public record without publication.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A61:L61",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "The City team promises to incorporate advice where feasible and publish meeting summaries, but not to provide written reasons for rejecting individual recommendations (p. 2).",
+        "rationale": "The two TORs use different limited transparency approaches; neither contains an explicit response-and-reasons requirement.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: p. 2",
+        "approval_reference": "Assessment Approval!A62:L62",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "The TOR says any amendments will be made in consultation with the City staff team and working-group members (p. 1). It does not establish member co-chairing or final approval authority.",
+        "rationale": "Rule-change consultation is a stronger member role than LJOVPF's staff amendment and subsequent notification.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: p. 1",
+        "approval_reference": "Assessment Approval!A63:L63",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "Named City contacts and team roles appear; staff undertake to provide clear information, involve resource people, consider feasible advice and post summaries to the City website (p. 1–3).",
+        "rationale": "Named manager/planner contacts and proactive publication make responsibilities clearer, even though LJOVPF itemizes more operational tasks.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: p. 1–3",
+        "approval_reference": "Assessment Approval!A64:L64",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "The TOR expressly preserves democratic participation outside the group; media inquiries about group views go to a named City manager. It provides conflict-disclosure and discretionary exclusion/termination rules (p. 3).",
+        "rationale": "Both preserve independent civic participation while distinguishing personal and collective positions and allowing City action over conflicts or conduct.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: p. 3",
+        "approval_reference": "Assessment Approval!A65:L65",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp6": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "Members may add items to meeting agendas through the facilitator or City staff and may advise on community engagement processes, policy directions and the two plans under development (ss. 8.2, 12.1, 13.1; p. 4–6).",
+        "rationale": "Express agenda access and influence over engagement strategy and planning options go beyond LJOVPF's late-stage, staff-selected agenda.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: ss. 8.2, 12.1, 13.1; p. 4–6",
+        "approval_reference": "Assessment Approval!A66:L66",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The CAC may make recommendations for the Secondary Plan and Community Development Plan and seeks consensus while recording differences (ss. 8.2, 17.1–17.3). City staff must record how input was incorporated and explain non-adoption (s. 9.1).",
+        "rationale": "Written collective-advice and staff response obligations exceed LJOVPF's general duty to consider input.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: ss. 8.2, 17.1–17.3; s. 9.1",
+        "approval_reference": "Assessment Approval!A67:L67",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "The CAC serves for the whole initiative, with roughly monthly meetings and additional thematic groups or surveys if necessary; a possible implementation-phase body is contemplated (ss. 5, 18).",
+        "rationale": "Ongoing engagement across planning and development, with regular meetings, is much broader than LJOVPF's final-phase two-session remit.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: ss. 5, 18",
+        "approval_reference": "Assessment Approval!A68:L68",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "Staff circulate materials with adequate preparation time; CAC members convey information to and from the community and advise on engagement processes; mailing rather than email is available on request (ss. 8.2, 9.1, 14, 21).",
+        "rationale": "Members have an explicit two-way outreach role, additional communication formats and advance-material commitments absent or less specific in LJOVPF.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: ss. 8.2, 9.1, 14, 21",
+        "approval_reference": "Assessment Approval!A69:L69",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "Membership is 20–25 community representatives recruited by application; the TOR provides a waiting list, diversity-conscious replacement and procedures to support inactive members before replacement (ss. 4–7).",
+        "rationale": "Open application, membership size, representation maintenance and continuity safeguards are substantially more defined than LJOVPF.",
+        "source_section": "LJOVPF: p. 3\nComparator: ss. 4–7",
+        "approval_reference": "Assessment Approval!A70:L70",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "The TOR guarantees $50 per meeting, including for advance input by someone absent; Zoom/phone access, accessible transit locations, ASL/translation on request, mailed materials and expert presentations are specified (ss. 15–16, 18, 21).",
+        "rationale": "Paid participation plus detailed access and interpretation supports are stronger than LJOVPF's voluntary participation and general accommodations.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: ss. 15–16, 18, 21",
+        "approval_reference": "Assessment Approval!A71:L71",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "Draft summaries go to members within two weeks; members have a week to comment and the facilitator incorporates changes. Summaries preserve disagreement and are posted publicly after revision (ss. 10.1, 17.2, 19.1).",
+        "rationale": "A documented member correction window and publication requirement exceed LJOVPF's unapproved staff-only syntheses.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: ss. 10.1, 17.2, 19.1",
+        "approval_reference": "Assessment Approval!A72:L72",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "The TOR cites the June 2020 Council order establishing the CAC and its oversight mandate (s. 2.1). After member review, final summaries must be posted to the City website and circulated publicly (s. 19.1); meeting observation is not promised.",
+        "rationale": "Jane Finch provides a traceable Council origin, a public release obligation and an explicit community oversight role.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: s. 2.1; s. 19.1",
+        "approval_reference": "Assessment Approval!A73:L73",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "City staff must record how CAC advice was incorporated in Council recommendations and give a rationale if input was not included (s. 9.1), with public summaries adding a traceable record (s. 19.1).",
+        "rationale": "An express reasons-for-non-adoption duty is absent from LJOVPF and directly meets this criterion.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: s. 9.1; s. 19.1",
+        "approval_reference": "Assessment Approval!A74:L74",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "CAC members may collectively revise the TOR in consultation with the City as the initiative evolves; City staff draft agendas with the community partner and members may request items (ss. 3.1, 13.1).",
+        "rationale": "Members possess explicit authority to amend their own governance rules rather than only receiving notice of staff changes.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: ss. 3.1, 13.1",
+        "approval_reference": "Assessment Approval!A75:L75",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "Staff duties and those of the Jane Finch Community and Family Centre are separately enumerated; the partner facilitates, prepares and revises summaries and the named City contact is identified (ss. 9–10, 22).",
+        "rationale": "Named staff, a distinct community facilitator and written feedback-tracking duties provide clearer shared responsibility than LJOVPF's anonymous staff-led structure.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: ss. 9–10, 22",
+        "approval_reference": "Assessment Approval!A76:L76",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "The TOR requires respect for dissent, consensus-seeking and non-discriminatory conduct, with an inactive-member support procedure (ss. 7, 12, 17). It does not expressly affirm rights to speak publicly or make independent submissions (p. 1–9).",
+        "rationale": "LJOVPF explicitly protects public statements and other democratic channels; Jane Finch's written rights are less explicit despite its strong participatory model.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: ss. 7, 12, 17; p. 1–9",
+        "approval_reference": "Assessment Approval!A77:L77",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp7": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "Council motion MM31.27 sets the group a substantive remit to advise the Chief Planner on Canada Square and future corridor development, including housing, schools, culture and public space; the facilitator prepares agendas (Appendix A, p. 27–28).",
+        "rationale": "The group advises on a broad, live planning evaluation rather than commenting only on staff's near-final draft, although agendas remain facilitator-set.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: Appendix A, p. 27–28",
+        "approval_reference": "Assessment Approval!A78:L78",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The facilitator must present a penultimate working-group report for member amendment or ratification and append dissenting reports if required (Appendix A, p. 29). The Chief Planner will receive the advice for a Council report (p. 27).",
+        "rationale": "Member control over the collective report and formal preservation of dissent exceed LJOVPF's staff-authored summary without member approval.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: Appendix A, p. 29; p. 27",
+        "approval_reference": "Assessment Approval!A79:L79",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "The TOR assigns the group advice before the June 2021 Special Study Area report, but specifies no minimum number, duration or schedule of meetings (Appendix A, p. 27–29).",
+        "rationale": "The comparator has a stronger pre-report remit, but lacks LJOVPF's express minimum two meetings and defined session length; the TOR alone does not resolve the trade-off.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: Appendix A, p. 27–29",
+        "approval_reference": "Assessment Approval!A80:L80",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": -1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "The facilitator prepares agendas and summaries, with no minimum notice or advance-material delivery period; no formal neighbourhood outreach role is assigned (Appendix A, p. 28–29).",
+        "rationale": "LJOVPF expressly commits to advance agendas and materials plus written submissions; Canada Square leaves the timing and feedback channels unspecified in its TOR.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: Appendix A, p. 28–29",
+        "approval_reference": "Assessment Approval!A81:L81",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "Membership is to include resident, tenant and business associations, community groups, councillors and other stakeholders, established in consultation with Councillor Matlow; alternates are expected when members cannot attend (Appendix A, p. 27–28).",
+        "rationale": "Both specify stakeholder interests and alternates without a clear open-call, target size or enduring vacancy procedure; LJOVPF names Black/Caribbean interests more explicitly.",
+        "source_section": "LJOVPF: p. 3\nComparator: Appendix A, p. 27–28",
+        "approval_reference": "Assessment Approval!A82:L82",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "Members serve voluntarily without remuneration. A Council-directed interdivisional City team, including housing, parks, children, transportation and other expertise, is expressly a resource to the group (Appendix A, p. 27–28).",
+        "rationale": "Canada Square offers specified cross-divisional expertise but no compensation or explicit accommodation; LJOVPF offers more participation-format and accommodation commitments.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: Appendix A, p. 27–28",
+        "approval_reference": "Assessment Approval!A83:L83",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "The facilitator prepares meeting summaries; recordings are solely for notes. A penultimate report goes to the group for amendment or ratification, with dissenting reports appended where needed (Appendix A, p. 29).",
+        "rationale": "A formal member validation process for the principal report and protected dissent exceed LJOVPF's staff-only summaries.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: Appendix A, p. 29",
+        "approval_reference": "Assessment Approval!A84:L84",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "Appendix A traces the mandate to Council motion MM31.27 and explicitly opens working-group meetings to public observers, although they cannot participate (p. 27–28). It provides a collective report process (p. 29).",
+        "rationale": "Both the Council origin and open-meeting commitment are expressly documented; LJOVPF promises neither public observation nor identified SAC-establishing direction.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: p. 27–28; p. 29",
+        "approval_reference": "Assessment Approval!A85:L85",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "A penultimate facilitator report is subject to member amendment or ratification, with dissents attached, and the Chief Planner is to report to Council (Appendix A, p. 27, 29). No reason-by-recommendation non-adoption response is prescribed.",
+        "rationale": "Canada Square grants member review of the report; LJOVPF promises conditional written synthesis of influence. Neither obliges staff to justify each rejected proposal.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: Appendix A, p. 27, 29",
+        "approval_reference": "Assessment Approval!A86:L86",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "The TOR was prepared by a named external facilitator and reviewed by the working group on May 5, 2021. The facilitator chairs discussions and members ratify or amend the collective report (Appendix A, p. 28–29).",
+        "rationale": "Member review of governing rules, independent facilitation and authority over the collective report provide more shared procedural influence than LJOVPF's staff-only governance.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: Appendix A, p. 28–29",
+        "approval_reference": "Assessment Approval!A87:L87",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "Council names the Chief Planner as recipient, establishes an interdivisional resource team and appoints an identified facilitator responsible for agendas, summaries and a ratified report (Appendix A, p. 27–29).",
+        "rationale": "Named leadership, facilitation and guaranteed cross-divisional support.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: Appendix A, p. 27–29",
+        "approval_reference": "Assessment Approval!A88:L88",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "The TOR respects different views and opens meetings to observers, but bars members from acting as spokesperson for the group; the facilitator may rescind membership for failure to abide by the TOR without an articulated appeal procedure (Appendix A, p. 28–29).",
+        "rationale": "LJOVPF expressly protects independent public speech and requires attempts to resolve persistent conduct issues before removal.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: Appendix A, p. 28–29",
+        "approval_reference": "Assessment Approval!A89:L89",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp8": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "An independent facilitator develops agendas in consultation with the SAC and City team; members are asked about future items after each meeting. Members can advise on proposals tabled by staff, members or others (ss. 4, 6; p. 2–4).",
+        "rationale": "Formal consultation on agendas and member-originated material extend beyond LJOVPF's staff-set agendas and discretionary consideration of suggested topics.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: ss. 4, 6; p. 2–4",
+        "approval_reference": "Assessment Approval!A90:L90",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The SAC provides advice and recommendations with independent facilitation; consensus is preferred, dissent must be recorded, and staff aim to incorporate advice where feasible (ss. 4–5; p. 2–3).",
+        "rationale": "The TOR recognizes collective advice, dissent and a feasibility-based incorporation duty beyond LJOVPF's individual comments.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: ss. 4–5; p. 2–3",
+        "approval_reference": "Assessment Approval!A91:L91",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "Three scheduled SAC meetings, each about 2.5–3 evening hours, are planned at key study points while the vision and priorities are being developed (ss. 2, 6; p. 1, 3).",
+        "rationale": "More substantive meeting time and engagement during development of study directions exceed LJOVPF's two brief final-draft sessions.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: ss. 2, 6; p. 1, 3",
+        "approval_reference": "Assessment Approval!A92:L92",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "Agendas and materials must be issued one week in advance; members communicate with neighbourhood constituencies and comment on materials intended for public release (ss. 4, 6; p. 2, 4).",
+        "rationale": "A firm notice period and two-way community communication obligations are stronger than LJOVPF's untimed materials and no formal outreach duty.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: ss. 4, 6; p. 2, 4",
+        "approval_reference": "Assessment Approval!A93:L93",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "The SAC consists of 12–15 area representatives, specifically rental and other residents, neighbourhoods, organizations, businesses and local professionals; organizational alternates are allowed (ss. 3–4; p. 2).",
+        "rationale": "A defined size, neighbourhood balancing and alternate rights provide stronger membership specificity, despite LJOVPF's more explicit Black/Caribbean interests.",
+        "source_section": "LJOVPF: p. 3\nComparator: ss. 3–4; p. 2",
+        "approval_reference": "Assessment Approval!A94:L94",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 0,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "The TOR guarantees an independent facilitator and access to project-team representatives, but does not mention honoraria, translation or accessibility accommodation. Meetings are scheduled in person near the study area (ss. 4, 6; p. 2–4).",
+        "rationale": "Broadview provides independent facilitation and expertise; LJOVPF commits to virtual, written and accommodation alternatives. Neither provides payment.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: ss. 4, 6; p. 2–4",
+        "approval_reference": "Assessment Approval!A95:L95",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "Facilitators must prepare draft and final minutes within ten business days, list action items and submit minutes for SAC review and finalization (s. 6; p. 4).",
+        "rationale": "Member-validated formal minutes and deadlines are materially stronger than LJOVPF's non-approved staff summaries.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: s. 6; p. 4",
+        "approval_reference": "Assessment Approval!A96:L96",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "The TOR identifies the November 2013 Council request for the study and its local issues (s. 1; p. 1). Members comment on public-facing materials and attend public forums, but public observation of SAC meetings or posting SAC minutes is not required (s. 6; p. 4).",
+        "rationale": "The stated Council origin and direct public-information role exceed LJOVPF's broad historical credit and no public access duty.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: s. 1; p. 1; s. 6; p. 4",
+        "approval_reference": "Assessment Approval!A97:L97",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "The City team is to listen and incorporate advice where feasible; minutes list actions and members can review the record. No written non-adoption reasons or recommendation-by-recommendation response is required (ss. 4, 6).",
+        "rationale": "Both stop short of a written response with reasons, although Broadview promises feasible incorporation and LJOVPF conditional explanation of engagement influence.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: ss. 4, 6",
+        "approval_reference": "Assessment Approval!A98:L98",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "An independent facilitator develops agendas in consultation with the SAC, but the TOR states no member amendment or endorsement power over the document itself (ss. 4, 6; p. 2–4).",
+        "rationale": "Shared agenda setting through the facilitator creates a defined member role missing from LJOVPF's staff-directed operations.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: ss. 4, 6; p. 2–4",
+        "approval_reference": "Assessment Approval!A99:L99",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "The TOR names independent facilitator Amanda Crompton as contact; facilitator duties cover agendas, meeting summaries and issues, and the Project Team must provide understandable information and appropriate experts (ss. 4, 6).",
+        "rationale": "Named neutral facilitation, timed records and substantive information commitments are more operationally clear than LJOVPF's anonymous project mailbox.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: ss. 4, 6",
+        "approval_reference": "Assessment Approval!A100:L100",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "Members serve at City discretion in a non-political SAC, must communicate community views and can use alternates; the TOR does not expressly protect independent public expression or other democratic participation (ss. 2–6).",
+        "rationale": "LJOVPF explicitly protects outside democratic participation and public speech, with more detailed procedures around conduct-based removal.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: ss. 2–6",
+        "approval_reference": "Assessment Approval!A101:L101",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp9": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "The Project Team prepares agendas in consultation with the LAC and asks members about future items at meeting end; members may bring alternatives and comment on materials from members or others (ss. 5, 7; p. 2–3).",
+        "rationale": "Members' written consultation role in agenda preparation exceeds LJOVPF's discretion to consider suggested items.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: ss. 5, 7; p. 2–3",
+        "approval_reference": "Assessment Approval!A102:L102",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The LAC offers recommendations with consensus preferred, disagreement recorded, and a project-team undertaking to incorporate advice where feasible (ss. 5–6; p. 2–3).",
+        "rationale": "A collective recommendation process and incorporation commitment are stronger than LJOVPF's obligation only to consider comments.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: ss. 5–6; p. 2–3",
+        "approval_reference": "Assessment Approval!A103:L103",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "Three to four roughly 2.5–3-hour sessions are scheduled from December 2021 to April 2023, plus a design charrette, during vision/master-planning and design-guideline work (ss. 2, 7; p. 1, 3).",
+        "rationale": "A longer multi-stage period, more meetings and a required charrette offer more influence than two final-phase virtual sessions.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: ss. 2, 7; p. 1, 3",
+        "approval_reference": "Assessment Approval!A104:L104",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "The team develops agendas in consultation with members and circulates materials five to seven days in advance; members report back to constituencies and review material for public forums (ss. 5, 7; p. 2–4).",
+        "rationale": "Specified preparation time and neighbourhood reporting-back responsibilities exceed LJOVPF's no-minimum notice and no outreach assignment.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: ss. 5, 7; p. 2–4",
+        "approval_reference": "Assessment Approval!A105:L105",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "The LAC has 12–15 representatives spanning renters, homeowners, specified streets, associations, businesses and planning professionals; alternates may attend (ss. 4–5; p. 2). No formal vacancy process is stated.",
+        "rationale": "The defined size, neighbourhood-based composition and alternates provide more concrete membership safeguards, despite LJOVPF's explicit cultural interests.",
+        "source_section": "LJOVPF: p. 3\nComparator: ss. 4–5; p. 2",
+        "approval_reference": "Assessment Approval!A106:L106",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 0,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "Meetings are virtual until a local venue becomes available, with technical/project resource people expected; no compensation, interpretation or accommodation entitlement is mentioned (ss. 5, 7; p. 3–4).",
+        "rationale": "Both provide virtual participation and information support, while LJOVPF states written and accommodation options and Kingston identifies expert resource people.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: ss. 5, 7; p. 3–4",
+        "approval_reference": "Assessment Approval!A107:L107",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "The Project Team must produce draft/final minutes with action items within ten business days for member review and finalization; differences of opinion are recorded (ss. 6–7; p. 3–4).",
+        "rationale": "Fixed deadlines and explicit member review of formal minutes exceed LJOVPF's staff-only summaries.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: ss. 6–7; p. 3–4",
+        "approval_reference": "Assessment Approval!A108:L108",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "The TOR details the 2021 development application and Council's October 1 direction to study the area (s. 1; p. 1). Members may review public-facing materials and attend forums; the TOR is silent on open LAC meetings or posting LAC minutes (s. 7; p. 4).",
+        "rationale": "Identifying the triggering development and Council direction, plus a role in public material, provide greater traceability than LJOVPF's general origin statement.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: s. 1; p. 1; s. 7; p. 4",
+        "approval_reference": "Assessment Approval!A109:L109",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "Project staff commit to considering and where feasible incorporating advice; member-reviewable minutes list action items. No duty to give written reasons for rejecting specific recommendations is written (ss. 5, 7).",
+        "rationale": "Neither establishes a response-and-reasons mechanism for unadopted advice; the documents provide different general reporting obligations.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: ss. 5, 7",
+        "approval_reference": "Assessment Approval!A110:L110",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "Staff prepare agendas in consultation with the LAC and members propose future discussion items (s. 7; p. 3), but there is no prescribed member role in TOR amendment, endorsement or co-chairing.",
+        "rationale": "Even without authority over TOR changes, the explicit consultation on operating agendas exceeds LJOVPF's staff-selected topics.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: s. 7; p. 3",
+        "approval_reference": "Assessment Approval!A111:L111",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "The TOR names two project contacts, Kerri Unger and Francis Kwashie; it allocates staff duties for understandable materials, expert resources, feasible incorporation, notices and minutes (ss. 5, 7; p. 3–4).",
+        "rationale": "Named staff and timed coordination/recordkeeping obligations are more clear than LJOVPF's unnamed staff-led arrangement.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: ss. 5, 7; p. 3–4",
+        "approval_reference": "Assessment Approval!A112:L112",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "Membership is at City discretion and the LAC is non-political; the TOR does not expressly preserve independent public advocacy, outside Council participation, or separate media expression (ss. 3–8).",
+        "rationale": "LJOVPF expressly protects those democratic channels and describes a staged response to persistent misconduct.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: ss. 3–8",
+        "approval_reference": "Assessment Approval!A113:L113",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    },
+    "comp10": {
+      "G1-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "City staff establish working-session objectives and agendas and decide which matters are referred for advice (p. 4). Issues raised by members may inform later agendas 'where appropriate', but staff decide whether they are taken up (p. 5). Members review draft directions and suggest refinements; no right to co-set the study scope or engagement method is specified (p. 1, 5).",
+        "comparator_excerpt": "The Accountability Table is established as a multi-sectoral partnership charged with helping the City refine the Seniors Strategy by identifying adjustments, new actions and partnership opportunities (Appendix 2, p. 56). No agenda-setting procedure is specified.",
+        "rationale": "An express role in proposing strategy adjustments and actions offers greater substantive initiative than LJOVPF's final-draft comment role.",
+        "source_section": "LJOVPF: p. 4; p. 5; p. 1, 5\nComparator: Appendix 2, p. 56",
+        "approval_reference": "Assessment Approval!A114:L114",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G1-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Members give individual advice on the draft Framework; the SAC is not to establish a single community position and consensus is neither required nor expected (p. 1, 7). Staff document differing perspectives and consider all advice but expressly have no obligation to adopt a recommendation (p. 7–8). Staff retain final recommendation authority (p. 4).",
+        "comparator_excerpt": "The Table partners with City staff to ensure implementation and refine the Strategy; the Council-designated Executive Director must report on progress annually (Appendix 2, p. 56). No formal consensus or dissent rules are described.",
+        "rationale": "The TOR assigns sustained influence on implementation and a Council reporting channel, unlike LJOVPF's limited feedback remit.",
+        "source_section": "LJOVPF: p. 1, 7; p. 7–8; p. 4\nComparator: Appendix 2, p. 56",
+        "approval_reference": "Assessment Approval!A115:L115",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-01": {
+        "rating": 1,
+        "ljovpf_excerpt": "The SAC is convened specifically for the final phase, to review and refine an already-drafted non-statutory Framework; it ends when staff finish the engagement needed for the final report (p. 1). two fall working sessions are anticipated, approximately 60–75 minutes and generally virtual; more may be added at staff discretion (p. 4–5).",
+        "comparator_excerpt": "The TOR describes an ongoing implementation partnership after the 2013 Council adoption and annual progress reports; it specifies no meeting frequency, length or fixed end date (Appendix 2, p. 56).",
+        "rationale": "The implementation role is longer-lived but lacks enforceable meeting opportunities; its citywide strategy mandate is materially different from a planning-study SAC.",
+        "source_section": "LJOVPF: p. 1; p. 4–5\nComparator: Appendix 2, p. 56",
+        "approval_reference": "Assessment Approval!A116:L116",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G2-02": {
+        "rating": -1,
+        "ljovpf_excerpt": "Staff provide agendas, background and questions in advance, without a specified minimum notice period (p. 5). Members may offer written submissions before or after working sessions and through the project email (p. 7). The TOR does not assign members a formal neighbourhood outreach, feedback-gathering or report-back role (p. 3–5, 7).",
+        "comparator_excerpt": "Appendix 2 does not specify advance agendas, circulation deadlines, public outreach by members or procedures for community feedback at Table meetings (p. 56–58).",
+        "rationale": "LJOVPF requires advance study material and written input channels, which the shorter Accountability Table TOR omits.",
+        "source_section": "LJOVPF: p. 5; p. 7; p. 3–5, 7\nComparator: p. 56–58",
+        "approval_reference": "Assessment Approval!A117:L117",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "Members are drawn from previous participants whose feedback staff seek to explore and other people with relevant interests; area councillors can suggest names (p. 3). The TOR lists residents, businesses, Black and Caribbean interests, housing, culture, accessibility and other sectors, but sets no target size, open-call or vacancy procedure. One organizational representative attends, with an alternate permitted (p. 3).",
+        "comparator_excerpt": "The TOR names co-chairs, aging experts, City senior managers, the Toronto Seniors Forum and a broad roster of service providers, advocates and institutions (Appendix 2, p. 56–58). It does not state an open recruitment, vacancy or alternate process.",
+        "rationale": "The Seniors Table is more explicit about institutional membership; LJOVPF identifies neighbourhood and equity interests. Neither gives a full community-controlled recruitment process.",
+        "source_section": "LJOVPF: p. 3\nComparator: Appendix 2, p. 56–58",
+        "approval_reference": "Assessment Approval!A118:L118",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G3-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "Participation is voluntary, with no honorarium or expense provision (p. 3, 9). General accessibility commitments include virtual meetings, alternative written feedback and accommodation requests to the project team (p. 7, 9). Staff provide brief contextual presentations, but no explicit orientation, interpretation entitlement or member-initiated process to obtain outside technical experts is described (p. 4–5, 9).",
+        "comparator_excerpt": "Technical expertise is embedded in membership through geriatricians, community agencies, hospitals and City divisions (Appendix 2, p. 56–58). No honoraria, accessibility arrangements, interpretation or written-feedback methods are specified.",
+        "rationale": "The Table guarantees an extensive expert network but offers few explicit participant-access supports, whereas LJOVPF provides some virtual/written accommodations.",
+        "source_section": "LJOVPF: p. 3, 9; p. 7, 9; p. 4–5, 9\nComparator: Appendix 2, p. 56–58",
+        "approval_reference": "Assessment Approval!A119:L119",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-01": {
+        "rating": -1,
+        "ljovpf_excerpt": "The TOR rules out traditional minutes and verbatim transcripts. Staff alone prepare non-attributed summaries of advice, shared interests, disagreements and follow-up issues; the summaries require no member approval or adoption (p. 7–8). No draft-circulation deadline or member correction procedure is specified (p. 8).",
+        "comparator_excerpt": "The Accountability Table TOR lists its partnership, reporting relationship and membership, but contains no procedure for meeting minutes, dissent records, member correction or approval of meeting notes (Appendix 2, p. 56–58).",
+        "rationale": "LJOVPF commits to summarizing disagreements and advice, even without member approval.",
+        "source_section": "LJOVPF: p. 7–8; p. 8\nComparator: Appendix 2, p. 56–58",
+        "approval_reference": "Assessment Approval!A120:L120",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The background credits several years of community advocacy, City studies, engagement and Council direction, without specifying the direction establishing this SAC (p. 1–3). No public access to SAC meetings, agendas or summaries is promised; official communications are assigned to City staff (p. 8–9). Non-personal information is described as part of the public record, not necessarily proactively published (p. 9).",
+        "comparator_excerpt": "The TOR traces the body to Council's unanimous adoption of the 2013 Strategy, explains the earlier expert/staff tables and names members and co-chairs; an annual Council progress report is required (Appendix 2, p. 56–58).",
+        "rationale": "The explicitly stated origin, membership and public Council reporting offer greater institutional transparency than LJOVPF's broad historical reference.",
+        "source_section": "LJOVPF: p. 1–3; p. 8–9; p. 9\nComparator: Appendix 2, p. 56–58",
+        "approval_reference": "Assessment Approval!A121:L121",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G5-03": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff commit to synthesizing advice and, through subsequent materials and final reporting 'as appropriate', explaining how engagement informed refinements (p. 8). The TOR does not require a written, recommendation-by-recommendation response or reasons for not accepting particular SAC advice; staff are expressly not required to adopt any proposal (p. 7).",
+        "comparator_excerpt": "The Council-designated executive must report annually on Strategy progress and staff collaborate with the Table to refine actions (Appendix 2, p. 56). The TOR does not require a response with reasons to each Table recommendation.",
+        "rationale": "There is a stronger formal reporting line but no explicit written non-adoption explanation; LJOVPF promises an account of how engagement informed the draft.",
+        "source_section": "LJOVPF: p. 8; p. 7\nComparator: Appendix 2, p. 56",
+        "approval_reference": "Assessment Approval!A122:L122",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-01": {
+        "rating": 0,
+        "ljovpf_excerpt": "Staff may amend the TOR to address operational and project needs; members must be advised of substantive changes but no member consent, joint drafting, endorsement, co-chair or vote is required (p. 2, 9). The SAC is expressly staff-led, with staff choosing the meeting agendas, objectives and discussion formats (p. 4–5).",
+        "comparator_excerpt": "The Table has a City Executive Director and an external clinical expert as named co-chairs (Appendix 2, p. 56). It does not set out TOR amendment or member voting procedures.",
+        "rationale": "A designated community-expert co-chair supplies shared leadership unavailable to LJOVPF, though neither TOR gives members an explicit rule-change vote.",
+        "source_section": "LJOVPF: p. 2, 9; p. 4–5\nComparator: Appendix 2, p. 56",
+        "approval_reference": "Assessment Approval!A123:L123",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-02": {
+        "rating": 1,
+        "ljovpf_excerpt": "The TOR lists substantial staff responsibilities: set agendas, prepare materials, facilitate, support equitable participation, document and analyze feedback, identify follow-up and prepare the Framework (p. 4). It identifies City staff as the lead but no named officer or responsible division; the only contact is the project email and website (p. 9).",
+        "comparator_excerpt": "Council designates the Executive Director, Social Development, Finance and Administration as clear lead, alongside a named external co-chair and specified division/expert members; annual reporting is mandated (Appendix 2, p. 56–58).",
+        "rationale": "Identified authority and a standing annual accountability duty are more specific than LJOVPF's unnamed staff leadership.",
+        "source_section": "LJOVPF: p. 4; p. 9\nComparator: Appendix 2, p. 56–58",
+        "approval_reference": "Assessment Approval!A124:L124",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      },
+      "G4-03": {
+        "rating": -1,
+        "ljovpf_excerpt": "Members retain democratic participation rights, including public speech in personal or organizational capacities and independent written submissions (p. 8). They must not present their position as a SAC position unless staff document a collective finding; staff handle official communications (p. 8–9). Conduct rules require respectful participation and disclosure of conflicts; staff may remove a persistently non-compliant member after attempting resolution (p. 6).",
+        "comparator_excerpt": "The short TOR identifies membership and reporting duties but does not address independent political expression, media, dissent, conflict-of-interest, removal or public advocacy rights (Appendix 2, p. 56–58).",
+        "rationale": "LJOVPF expressly protects members' democratic participation and public speech, while the Seniors TOR is silent on those matters.",
+        "source_section": "LJOVPF: p. 8; p. 8–9; p. 6\nComparator: Appendix 2, p. 56–58",
+        "approval_reference": "Assessment Approval!A125:L125",
+        "evidence_format": "TOR provision summaries, not verbatim quotations"
+      }
+    }
+  },
+  "instructions": "Approved 120 written-TOR comparator judgments. Maintain the five governance areas and the 30/25/20/15/10 starting rank schedule. Participant rankings reassign the weights; they do not change the approved evidence. Re-review every rating against cited TOR text before editing the assessment.",
+  "approved_on": "2026-11-22",
+  "assessment_revision": "tor12-approved-20261122-120rows",
+  "assessment_source_workbook": "LJOVPF_SAC_TOR_Comparison_Approved_Weighted_Key_Findings_Updated.xlsx",
+  "assessment_evidence_note": "Each comparative provision is a source-based summary with a TOR page/section citation. Do not present these summaries as verbatim excerpts. Only written TOR rules are scored."
+}

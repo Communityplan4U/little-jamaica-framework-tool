@@ -1,0 +1,648 @@
+{
+  "people": [
+    {
+      "id": "diana-chan-mcnally",
+      "name": "Diana Chan McNally",
+      "ward": 4,
+      "portrait": "diana-chan-mcnally.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2026/11/90b2-Councillor-Diana-Chan-McNally-350x438.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-4/",
+      "bytes": 16105,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "chiara-padovani",
+      "name": "Chiara Padovani",
+      "ward": 5,
+      "portrait": "chiara-padovani.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2026/11/90ae-Councillor-Chiara-Padovani-350x438.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-5/",
+      "bytes": 16394,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "james-pasternak",
+      "name": "James Pasternak",
+      "ward": 6,
+      "portrait": "james-pasternak.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/96dc-Cllr-Pasternak-poster.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-6/",
+      "bytes": 176345,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "anthony-perruzza",
+      "name": "Anthony Perruzza",
+      "ward": 7,
+      "portrait": "anthony-perruzza.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/9937-Cllr-Perruzza-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-7/",
+      "bytes": 65550,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "mike-colle",
+      "name": "Mike Colle",
+      "ward": 8,
+      "portrait": "mike-colle.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/98c1-Cllr-Colle-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-8/",
+      "bytes": 63487,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "alejandra-bravo",
+      "name": "Alejandra Bravo",
+      "ward": 9,
+      "portrait": "alejandra-bravo.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/904a-Cllr-Bravo-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-9/",
+      "bytes": 71635,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "ausma-malik",
+      "name": "Ausma Malik",
+      "ward": 10,
+      "portrait": "ausma-malik.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/8f46-Cllr-Malik-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-10/",
+      "bytes": 68695,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "josh-matlow",
+      "name": "Josh Matlow",
+      "ward": 12,
+      "portrait": "josh-matlow.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/12/9504-9808-jmatlow-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-12/",
+      "bytes": 55031,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "sara-ehrhardt",
+      "name": "Sara Ehrhardt",
+      "ward": 14,
+      "portrait": "sara-ehrhardt.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2026/11/97f6-Councillor-Sara-Ehrhardt-350x438.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-14/",
+      "bytes": 21570,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "lily-cheng",
+      "name": "Lily Cheng",
+      "ward": 18,
+      "portrait": "lily-cheng.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2023/03/94e3-2216710W18CouncillorLilyCheng2-500x625.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-18/",
+      "bytes": 38294,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "frances-nunziata",
+      "name": "Frances Nunziata",
+      "ward": 5,
+      "portrait": "frances-nunziata.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/8fcc-Cllr-Nunziata-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+      "bytes": 72877,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "dianne-saxe",
+      "name": "Dianne Saxe",
+      "ward": 11,
+      "portrait": "dianne-saxe.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/981d-Cllr-Saxe-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+      "bytes": 65591,
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "paula-fletcher",
+      "name": "Paula Fletcher",
+      "ward": 14,
+      "portrait": "paula-fletcher.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2022/11/910e-Cllr-Fletcher-web.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "ana-bailao",
+      "name": "Ana Bailão",
+      "ward": 9,
+      "portrait": "ana-bailao.jpg",
+      "portraitSource": "https://upload.wikimedia.org/wikipedia/commons/1/15/Ana_Bailao_portrait_%28cropped%29.jpg",
+      "portraitCredit": "City of Toronto Archives, Fonds 219, Series 2311, File 3162, Item 1. Photo: Jose San Juan.",
+      "profileUrl": "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Ana_Bailao_portrait_(cropped).jpg",
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "mike-layton",
+      "name": "Mike Layton",
+      "ward": 11,
+      "portrait": "mike-layton.jpg",
+      "portraitSource": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Mike_Layton_2026_cropped.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=original",
+      "portraitCredit": "Hoovy Boovy / Wikimedia Commons; CC0 1.0",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Mike_Layton_2026_cropped.jpg",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-11/",
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "mary-fragedakis",
+      "name": "Mary Fragedakis",
+      "ward": 29,
+      "portrait": "mary-fragedakis.jpg",
+      "portraitSource": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Mary_Fragedakis_portrait%2C_2010_%28S2311_fl3163_it0001%29.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=original",
+      "portraitCredit": "City of Toronto Archives, Fonds 219, Series 2311, File 3163, Item 1. Photo: Jose San Juan.",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Mary_Fragedakis_portrait,_2010_(S2311_fl3163_it0001).jpg",
+      "profileUrl": "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "paul-ainslie",
+      "name": "Paul Ainslie",
+      "ward": 24,
+      "portrait": "paul-ainslie.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2026/11/9744-Councillor-Paul-Ainslie-350x438.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-24/",
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "rachel-chernos-lin",
+      "name": "Rachel Chernos Lin",
+      "ward": 15,
+      "portrait": "rachel-chernos-lin.jpg",
+      "portraitSource": "https://www.toronto.ca/wp-content/uploads/2024/11/9882-2423595CouncillorRachelChernosLin-500x625.jpg",
+      "portraitCredit": "City of Toronto",
+      "profileUrl": "https://www.toronto.ca/city-government/council/members-of-council/councillor-ward-15/",
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "sarah-doucette",
+      "name": "Sarah Doucette",
+      "ward": 13,
+      "portrait": "sarah-doucette.jpg",
+      "portraitSource": "https://upload.wikimedia.org/wikipedia/commons/5/53/Sarah_Doucette_portrait%2C_2010_%28S2311_fl3157_it0001%29.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=original",
+      "portraitCredit": "City of Toronto Archives, Fonds 219, Series 2311, File 3157, Item 1. Photo: Jose San Juan.",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Sarah_Doucette_portrait,_2010_(S2311_fl3157_it0001).jpg",
+      "profileUrl": "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+      "objectPosition": "50% 20%"
+    },
+    {
+      "id": "jaye-robinson",
+      "name": "Jaye Robinson",
+      "ward": 15,
+      "portrait": "jaye-robinson.jpg",
+      "portraitSource": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Jaye_Robinson_portrait%2C_2010_%28S2311_fl3159_it0001%29.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=original",
+      "portraitCredit": "City of Toronto Archives, Fonds 219, Series 2311, File 3159, Item 1. Photo: Jose San Juan.",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Jaye_Robinson_portrait,_2010_(S2311_fl3159_it0001).jpg",
+      "profileUrl": "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+      "objectPosition": "50% 20%"
+    }
+  ],
+  "mapping": {
+    "checkedOn": "2026-11-26",
+    "portraitNote": "Portraits identify elected representatives, not authorship, endorsement or personal performance. Historical mode uses the documented study/committee period; current mode identifies the present representative for the same ward.",
+    "framework": {
+      "ljovpf": {
+        "historical": [
+          "frances-nunziata",
+          "mike-colle",
+          "alejandra-bravo",
+          "josh-matlow"
+        ],
+        "current": [
+          "chiara-padovani",
+          "mike-colle",
+          "alejandra-bravo",
+          "josh-matlow"
+        ],
+        "wards": [
+          5,
+          8,
+          9,
+          12
+        ],
+        "historicalPeriod": "2026, before the November Council-term change",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2026.PH29.2",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "Study proposals were issued in March 2026. The assessed vision draft is from the 2026 study. Chiara Padovani succeeded Frances Nunziata in November 2026. Historical portraits identify the earlier study period, not authorship or approval of the vision draft.",
+        "historicalWardLabels": {}
+      },
+      "chinatown": {
+        "historical": [
+          "ausma-malik",
+          "dianne-saxe"
+        ],
+        "current": [
+          "ausma-malik",
+          "mike-layton"
+        ],
+        "wards": [
+          10,
+          11
+        ],
+        "historicalPeriod": "June 2026",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2026.TE34.17",
+          "https://secure.toronto.ca/council/agenda-item.do?item=2026.TE31.20",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "Mike Layton succeeded Dianne Saxe in November 2026.",
+        "historicalWardLabels": {}
+      },
+      "picture-mount-dennis": {
+        "historical": [
+          "frances-nunziata"
+        ],
+        "current": [
+          "chiara-padovani"
+        ],
+        "wards": [
+          5
+        ],
+        "historicalPeriod": "December 2021",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2022.EY29.2",
+          "https://secure.toronto.ca/council/agenda-item.do?item=2022.EY33.11",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "mount-dennis-community": {
+        "historical": [
+          "frances-nunziata"
+        ],
+        "current": [
+          "chiara-padovani"
+        ],
+        "wards": [
+          5
+        ],
+        "historicalPeriod": "November 2025",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2025.EC25.4",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "st-clair-bathurst": {
+        "historical": [
+          "josh-matlow"
+        ],
+        "current": [
+          "josh-matlow"
+        ],
+        "wards": [
+          12
+        ],
+        "historicalPeriod": "February 2026",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2026.TE29.15",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "bloor": {
+        "historical": [
+          "ana-bailao"
+        ],
+        "current": [
+          "alejandra-bravo"
+        ],
+        "wards": [
+          9
+        ],
+        "historicalPeriod": "May 2021",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2021.TE26.31",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "yonge-st-clair": {
+        "historical": [
+          "josh-matlow"
+        ],
+        "current": [
+          "josh-matlow"
+        ],
+        "wards": [
+          12
+        ],
+        "historicalPeriod": "December 2019",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2020.TE12.30",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "port-lands": {
+        "historical": [
+          "paula-fletcher"
+        ],
+        "current": [
+          "sara-ehrhardt"
+        ],
+        "wards": [
+          14
+        ],
+        "historicalPeriod": "September 2017",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/legdocs/mmis/2017/pg/bgrd/backgroundfile-107844.pdf",
+          "https://secure.toronto.ca/council/agenda-item.do?item=2017.PG24.6",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "The study area was Ward 30 in 2017; it is now Ward 14. Sara Ehrhardt succeeded Paula Fletcher in November 2026.",
+        "historicalWardLabels": {
+          "paula-fletcher": "Ward 30"
+        }
+      }
+    },
+    "tor": {
+      "ljovpf": {
+        "historical": [
+          "frances-nunziata",
+          "mike-colle",
+          "alejandra-bravo",
+          "josh-matlow"
+        ],
+        "current": [
+          "chiara-padovani",
+          "mike-colle",
+          "alejandra-bravo",
+          "josh-matlow"
+        ],
+        "wards": [
+          5,
+          8,
+          9,
+          12
+        ],
+        "historicalPeriod": "2026, before the November Council-term change",
+        "verification": "study-period-verified-exact-tor-date-unconfirmed",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2026.PH29.2",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "Council direction establishing the SAC was issued April 2026. Exact issue date of the user-supplied TOR is not established in the published dataset; this mapping identifies the earlier study-period council.",
+        "historicalWardLabels": {}
+      },
+      "comp1": {
+        "historical": [
+          "ausma-malik",
+          "dianne-saxe"
+        ],
+        "current": [
+          "ausma-malik",
+          "mike-layton"
+        ],
+        "wards": [
+          10,
+          11
+        ],
+        "historicalPeriod": "2025 working group",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/legdocs/mmis/2026/te/bgrd/backgroundfile-285268.pdf",
+          "https://secure.toronto.ca/council/agenda-item.do?item=2026.TE31.20",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "comp2": {
+        "historical": [
+          "frances-nunziata"
+        ],
+        "current": [
+          "chiara-padovani"
+        ],
+        "wards": [
+          5
+        ],
+        "historicalPeriod": "2025–2026 LAC",
+        "verification": "study-period-verified-exact-tor-date-unconfirmed",
+        "sources": [
+          "https://www.toronto.ca/city-government/planning-development/planning-studies-initiatives/weston-in-gear-planning-study/",
+          "https://www.toronto.ca/wp-content/uploads/2025/11/992b-city-planning-weston-in-gear-local-advisory-committee-meeting-1-minutes.pdf",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "First LAC meeting October 15, 2025. Exact date on the user-supplied TOR not confirmed.",
+        "historicalWardLabels": {}
+      },
+      "comp3": {
+        "historical": [
+          "lily-cheng"
+        ],
+        "current": [
+          "lily-cheng"
+        ],
+        "wards": [
+          18
+        ],
+        "historicalPeriod": "2023–2024 LAC",
+        "verification": "verified",
+        "sources": [
+          "https://secure.toronto.ca/council/agenda-item.do?item=2025.IA30.2",
+          "https://www.lilycheng.ca/event-details-registration/information-session-introduce-north-york-at-the-centre-secondary-plan",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "comp4": {
+        "historical": [
+          "frances-nunziata"
+        ],
+        "current": [
+          "chiara-padovani"
+        ],
+        "wards": [
+          5
+        ],
+        "historicalPeriod": "2020–2021 study",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/city-government/planning-development/planning-studies-initiatives/mount-dennis-planning-framework-study/",
+          "https://secure.toronto.ca/council/agenda-item.do?item=2022.EY29.2",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "comp5": {
+        "historical": [
+          "sarah-doucette"
+        ],
+        "current": [
+          "diana-chan-mcnally"
+        ],
+        "wards": [
+          4
+        ],
+        "historicalPeriod": "2017–2018 working group",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/wp-content/uploads/2018/02/8c1a-CityPlanning-HighParkApartmentStudy_WG_meeting_summary_9Dec2018.pdf",
+          "https://www.toronto.ca/city-government/planning-development/planning-studies-initiatives/high-park-apartment-neighbourhood-area-character-study/meetings-events-high-park-apartment-neighbourhood-study/",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "Then Ward 13, now Ward 4. Official meeting summary identifies Sarah Doucette as local councillor at the first working group meeting, December 9, 2017. Filename includes 2018 but document itself says 2017.",
+        "historicalWardLabels": {
+          "sarah-doucette": "Ward 13"
+        }
+      },
+      "comp6": {
+        "historical": [
+          "anthony-perruzza"
+        ],
+        "current": [
+          "anthony-perruzza"
+        ],
+        "wards": [
+          7
+        ],
+        "historicalPeriod": "2021 CAC",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/wp-content/uploads/2021/08/950f-CP-June-24-2021-JFI-CAC-Meeting-Minutes.pdf",
+          "https://www.toronto.ca/legdocs/mmis/2020/ec/bgrd/backgroundfile-146426.pdf",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "comp7": {
+        "historical": [
+          "josh-matlow",
+          "mike-colle",
+          "jaye-robinson"
+        ],
+        "current": [
+          "josh-matlow",
+          "mike-colle",
+          "rachel-chernos-lin"
+        ],
+        "wards": [
+          12,
+          8,
+          15
+        ],
+        "historicalPeriod": "May 2021 working group",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/legdocs/mmis/2021/ph/bgrd/backgroundfile-168157.pdf",
+          "https://secure.toronto.ca/council/agenda-item.do?item=2021.MM31.27",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "Canada Square site is in Ward 12. TOR explicitly includes neighbouring councillors for Wards 8 and 15; all three are shown. Current view shows representatives for the same wards, not a claim of current membership in the former working group.",
+        "historicalWardLabels": {}
+      },
+      "comp8": {
+        "historical": [
+          "mary-fragedakis"
+        ],
+        "current": [
+          "sara-ehrhardt"
+        ],
+        "wards": [
+          14
+        ],
+        "historicalPeriod": "August 2014 TOR",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/wp-content/uploads/2017/08/881c-Broadview-Avenue-Planning-Study-SAC-TOR.pdf",
+          "https://www.toronto.ca/wp-content/uploads/2017/08/978d-Broadview-Avenue-Planning-Study-Agenda.pdf",
+          "https://www.toronto.ca/city-government/planning-development/planning-studies-initiatives/broadview-avenue-planning-study/",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "Then Ward 29, now Ward 14. Study began 2014 and completed in 2016, when Mary Fragedakis represented Ward 29.",
+        "historicalWardLabels": {
+          "mary-fragedakis": "Ward 29"
+        }
+      },
+      "comp9": {
+        "historical": [
+          "paul-ainslie"
+        ],
+        "current": [
+          "paul-ainslie"
+        ],
+        "wards": [
+          24
+        ],
+        "historicalPeriod": "2021 LAC",
+        "verification": "verified",
+        "sources": [
+          "https://www.toronto.ca/wp-content/uploads/2022/02/94cc-CityPlanning-Kingston-Road-Guildwood-LAC-Terms-of-Reference-2021.pdf",
+          "https://www.toronto.ca/wp-content/uploads/2022/02/94a3-CityPlanning-Kingston-Road-Guildwood-First-LAC-Meeting-Summary.pdf",
+          "https://www.toronto.ca/explore-enjoy/history-art-culture/mayors-councillors-reeves-chairmen/city-of-toronto-councillors/",
+          "https://www.toronto.ca/city-government/council/members-of-council/"
+        ],
+        "note": "",
+        "historicalWardLabels": {}
+      },
+      "comp10": {
+        "historical": [],
+        "current": [],
+        "wards": [],
+        "historicalPeriod": "Citywide accountability body",
+        "verification": "verified",
+        "sources": [],
+        "note": "Citywide body. No single local ward councillor is assigned. Use a civic/collective icon.",
+        "historicalWardLabels": {}
+      }
+    }
+  }
+}

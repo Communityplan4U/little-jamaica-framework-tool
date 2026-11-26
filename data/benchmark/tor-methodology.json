@@ -1,0 +1,47 @@
+{
+  "version": "tor12-v1",
+  "title": "SAC Terms of Reference governance assessment",
+  "governance_areas": [
+    {
+      "id": "G1",
+      "name": "Community decision-making and influence",
+      "rank": 1,
+      "weight": 30
+    },
+    {
+      "id": "G2",
+      "name": "Timing and meaningful participation",
+      "rank": 2,
+      "weight": 25
+    },
+    {
+      "id": "G3",
+      "name": "Representation, equity and support",
+      "rank": 3,
+      "weight": 20
+    },
+    {
+      "id": "G5",
+      "name": "Transparency",
+      "rank": 4,
+      "weight": 15
+    },
+    {
+      "id": "G4",
+      "name": "Committee governance and responsibilities",
+      "rank": 5,
+      "weight": 10
+    }
+  ],
+  "position_weights": [
+    30,
+    25,
+    20,
+    15,
+    10
+  ],
+  "method": "Assessments are based only on written Terms of Reference. Governance areas are weighted by their ranked positions (30%, 25%, 20%, 15%, 10%), with criteria weighted equally within each area.",
+  "publication_status": "approved",
+  "assessment_revision": "tor12-approved-20261122-120rows",
+  "approval_source_workbook": "LJOVPF_SAC_TOR_Comparison_Approved_Weighted_Key_Findings_Updated.xlsx"
+}
